@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soft_beige"
+    android:gravity="center">
+
+    <FrameLayout
+        android:id="@+id/circleContainer"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_background"> <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Score"
+            android:textColor="@color/earth_brown"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvFinalScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/deep_brown"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLevelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Beginner"
+            android:textColor="@color/accent_tan"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnStartLearning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/circleContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/deep_brown"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="15dp"
+        android:text="START LEARNING"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>
