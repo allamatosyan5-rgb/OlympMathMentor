@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/soft_beige" android:padding="20dp">
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="My Profile" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/deep_brown" android:gravity="center" android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnAchievements"
+        android:layout_width="263dp"
+        android:layout_height="149dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/earth_brown"
+        android:text=" Achievements" />
+
+    <Button
+        android:id="@+id/btnGoals"
+        android:layout_width="257dp"
+        android:layout_height="152dp"
+        android:backgroundTint="@color/accent_tan"
+        android:text=" My Goals" />
+</LinearLayout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124620336681",
+    "project_id": "olympmath-mentor-e70a9",
+    "storage_bucket": "olympmath-mentor-e70a9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124620336681:android:c67816e222626ff668b638",
+        "android_client_info": {
+          "package_name": "lilit.hakobyan.olympmathmentor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhWohCPuvuWEMG53iJ-kP1hUpq4RrX0mE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
