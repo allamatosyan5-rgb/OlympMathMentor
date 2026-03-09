@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,8 +109,10 @@ public class EntryTestActivity extends AppCompatActivity {
 
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId != null) {
-            FirebaseFirestore.getInstance().collection("users").document(userId)
-                    .update("score", totalScore, "level", level);
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("score", totalScore);
+            updates.put("level", level);
+            FirebaseDatabase.getInstance().getReference("users").child(userId).updateChildren(updates);
         }
 
         Intent intent = new Intent(this, ResultActivity.class);

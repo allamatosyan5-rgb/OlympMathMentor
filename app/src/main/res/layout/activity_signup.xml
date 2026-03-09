@@ -32,5 +32,15 @@
             android:text="REGISTER"
             android:textColor="@color/white"
             android:backgroundTint="@color/deep_brown" />
+        <TextView
+            android:id="@+id/tvGoToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Already have an account? Login"
+            android:textColor="@color/deep_brown"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="24dp" />
     </LinearLayout>
 </ScrollView>

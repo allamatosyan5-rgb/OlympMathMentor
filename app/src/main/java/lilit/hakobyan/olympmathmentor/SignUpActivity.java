@@ -1,6 +1,5 @@
 package lilit.hakobyan.olympmathmentor;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,14 +7,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    private DatabaseReference mDatabase;
     private EditText etEmail, etPassword, etName, etSurname;
     private Button btnRegister;
 
@@ -23,8 +23,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -57,13 +58,17 @@ public class SignUpActivity extends AppCompatActivity {
                     user.put("score", 0);
                     user.put("level", "Pending");
 
-                    db.collection("users").document(userId)
-                            .set(user)
+                    mDatabase.child("users").child(userId).setValue(user)
                             .addOnSuccessListener(aVoid -> {
                                 startActivity(new Intent(SignUpActivity.this, EntryTestActivity.class));
                                 finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(SignUpActivity.this, "Database Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                             });
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }
