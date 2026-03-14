@@ -1,21 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/soft_beige" android:padding="20dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soft_beige">
 
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="My Profile" android:textSize="28sp" android:textStyle="bold" android:textColor="@color/deep_brown" android:gravity="center" android:layout_marginBottom="30dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <Button
-        android:id="@+id/btnAchievements"
-        android:layout_width="263dp"
-        android:layout_height="149dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/earth_brown"
-        android:text=" Achievements" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/deep_brown"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
 
-    <Button
-        android:id="@+id/btnGoals"
-        android:layout_width="257dp"
-        android:layout_height="152dp"
-        android:backgroundTint="@color/accent_tan"
-        android:text=" My Goals" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_camera"
+            android:background="@color/earth_brown"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name Surname"
+            android:textColor="@color/deep_brown"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="email@example.com"
+            android:textColor="@color/earth_brown"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Achievements"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/deep_brown"/>
+            <Button
+                android:id="@+id/btnAddAchievement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:backgroundTint="@color/earth_brown"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/containerAchievements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Goals"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/deep_brown"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Current Goals"
+                android:textColor="@color/earth_brown"/>
+            <Button
+                android:id="@+id/btnAddGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:backgroundTint="@color/accent_tan"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/containerCurrentGoals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Completed Goals"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/deep_brown"
+            android:textStyle="italic"/>
+
+        <LinearLayout
+            android:id="@+id/containerCompletedGoals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>
