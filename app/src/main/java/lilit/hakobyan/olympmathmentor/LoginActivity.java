@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,6 +23,20 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+
+        // ԱՀԱ ԱՎՏՈՄԱՏ ՄՈՒՏՔԻ ԿՈԴԸ (Թարմացված)
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // Ստուգում ենք՝ արդյոք նամակը հաստատված է նույնիսկ ավտոմատ մուտքի ժամանակ
+            if (currentUser.isEmailVerified()) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+                return; // Դադարեցնում ենք Login էջի բեռնումը
+            } else {
+                // Եթե մնացել է համակարգում, բայց չի հաստատել, հանում ենք (Sign Out)
+                mAuth.signOut();
+            }
+        }
 
         etEmail = findViewById(R.id.etLoginEmail);
         etPassword = findViewById(R.id.etLoginPassword);
@@ -47,8 +62,21 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    FirebaseUser user = mAuth.getCurrentUser();
+
+                    if (user != null) {
+                        // ԱՀԱ ԿԱՐԵՎՈՐ ՍՏՈՒԳՈՒՄԸ. Արդյո՞ք email-ը հաստատված է
+                        if (user.isEmailVerified()) {
+                            // Ամեն ինչ ճիշտ է, թողնում ենք գլխավոր էջ
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            // Գաղտնաբառը ճիշտ է, բայց նամակը հաստատված չէ
+                            Toast.makeText(LoginActivity.this, "Please verify your email address to login.", Toast.LENGTH_LONG).show();
+                            // Անմիջապես հանում ենք համակարգից
+                            mAuth.signOut();
+                        }
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();

@@ -25,9 +25,10 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@android:drawable/ic_menu_camera"
             android:background="@color/earth_brown"
-            android:padding="10dp" />
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera" />
 
         <TextView
             android:id="@+id/tvFullName"
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -61,6 +63,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/deep_brown"/>
+
             <Button
                 android:id="@+id/btnAddAchievement"
                 android:layout_width="wrap_content"
@@ -87,20 +90,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Current Goals"
-                android:textColor="@color/earth_brown"/>
+                android:textColor="@color/earth_brown" />
+
             <Button
                 android:id="@+id/btnAddGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:backgroundTint="@color/accent_tan"/>
+                android:backgroundTint="@color/accent_tan"
+                android:text="+" />
         </LinearLayout>
 
         <LinearLayout

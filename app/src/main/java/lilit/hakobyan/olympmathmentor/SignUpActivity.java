@@ -4,20 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
-import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
-    private EditText etEmail, etPassword, etName, etSurname;
+    private EditText etName, etSurname, etEmail, etPassword;
     private Button btnRegister;
+    private TextView tvGoToLogin;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,50 +26,80 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
         etName = findViewById(R.id.etName);
         etSurname = findViewById(R.id.etSurname);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
         btnRegister = findViewById(R.id.btnRegister);
+        tvGoToLogin = findViewById(R.id.tvGoToLogin);
 
-        btnRegister.setOnClickListener(v -> registerStudent());
+        btnRegister.setOnClickListener(v -> registerUser());
+
+        tvGoToLogin.setOnClickListener(v -> {
+            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            finish();
+        });
     }
 
-    private void registerStudent() {
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+    private void registerUser() {
         String name = etName.getText().toString().trim();
         String surname = etSurname.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
-        if (password.length() < 8 || !password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*") || !password.matches(".*[0-9].*")) {
-            Toast.makeText(this, "Password must be 8+ chars with upper, lower, and numbers.", Toast.LENGTH_LONG).show();
+        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (password.length() < 8) {
+            Toast.makeText(this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Ստեղծում ենք հաշիվը
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
-                    String userId = mAuth.getCurrentUser().getUid();
+                    FirebaseUser user = mAuth.getCurrentUser();
 
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("firstName", name);
-                    user.put("lastName", surname);
-                    user.put("role", "student");
-                    user.put("score", 0);
-                    user.put("level", "Pending");
+                    if (user != null) {
+                        String userId = user.getUid();
 
-                    mDatabase.child("users").child(userId).setValue(user)
-                            .addOnSuccessListener(aVoid -> {
-                                startActivity(new Intent(SignUpActivity.this, EntryTestActivity.class));
-                                finish();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(SignUpActivity.this, "Database Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                            });
+                        // Պահպանում ենք անունը և ազգանունը Realtime Database-ում
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId);
+                        HashMap<String, String> userMap = new HashMap<>();
+                        userMap.put("name", name);
+                        userMap.put("surname", surname);
+                        userMap.put("email", email);
+
+                        ref.setValue(userMap).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+
+                                // --- ՀԱՍՏԱՏՄԱՆ ՆԱՄԱԿԻ ՈՒՂԱՐԿՈՒՄ ---
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(verificationTask -> {
+                                            if (verificationTask.isSuccessful()) {
+                                                Toast.makeText(SignUpActivity.this,
+                                                        "Registration successful! Please check your email to verify.",
+                                                        Toast.LENGTH_LONG).show();
+
+                                                // Անմիջապես հանում ենք համակարգից (Sign Out), որ առանց հաստատել չմտնի
+                                                mAuth.signOut();
+
+                                                // Տանում ենք Login էջ
+                                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                                finish();
+                                            } else {
+                                                Toast.makeText(SignUpActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        });
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 }

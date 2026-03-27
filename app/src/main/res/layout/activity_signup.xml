@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_beige">
+    android:background="@color/soft_beige"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,18 +21,56 @@
             android:gravity="center"
             android:layout_marginBottom="24dp" />
 
-        <EditText android:id="@+id/etName" android:layout_width="match_parent" android:layout_height="50dp" android:hint="First Name" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="12dp" />
-        <EditText android:id="@+id/etSurname" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Last Name" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="12dp" />
-        <EditText android:id="@+id/etEmail" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Email" android:inputType="textEmailAddress" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="12dp" />
-        <EditText android:id="@+id/etPassword" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Password (8+ chars)" android:inputType="textPassword" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="24dp" />
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="First Name"
+            android:textColorHint="#6D4C41"
+            android:backgroundTint="@color/earth_brown"
+            android:layout_marginBottom="12dp"
+            android:textColor="#000000" />
+
+        <EditText
+            android:id="@+id/etSurname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Last Name"
+            android:textColorHint="#6D4C41"
+            android:backgroundTint="@color/earth_brown"
+            android:layout_marginBottom="12dp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Email"
+            android:textColorHint="#6D4C41"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="@color/earth_brown"
+            android:layout_marginBottom="12dp"
+            android:textColor="#000000"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Password (8+ chars)"
+            android:textColorHint="#6D4C41"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/earth_brown"
+            android:layout_marginBottom="24dp"
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="REGISTER"
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
             android:backgroundTint="@color/deep_brown" />
+
         <TextView
             android:id="@+id/tvGoToLogin"
             android:layout_width="match_parent"
@@ -42,5 +81,6 @@
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginTop="24dp" />
+
     </LinearLayout>
 </ScrollView>
