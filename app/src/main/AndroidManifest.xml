@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <queries>
         <intent>
@@ -64,6 +65,14 @@
 
         <activity
             android:name=".BookCategoriesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Lesson1Activity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Test1Activity"
             android:exported="false" />
 
     </application>

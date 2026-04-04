@@ -1,46 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#FDF5E6"> <ScrollView
-    android:id="@+id/scrollViewChat"
+    android:background="#F5F5DC"> <LinearLayout
+    android:id="@+id/chat_header"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:layout_marginBottom="10dp">
+    android:layout_height="wrap_content"
+    android:background="#3E2723" android:padding="16dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
     <TextView
-        android:id="@+id/tvAiResponse"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ask your AI OlympMath Mentor anything about Math..."
-        android:textColor="#3E2723"
-        android:textSize="20sp" />
-</ScrollView>
+        android:text="Math Mentor AI" android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+</LinearLayout>
+
+    <ScrollView
+        android:id="@+id/chat_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/chat_header"
+        android:layout_above="@id/layout_typing_area"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/chat_messages_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hi! I am your OlympMath AI Mentor. I can help you understand math concepts, solve problems, or prepare for the Olympiad. What do you need help with?"
+                android:background="#E0D5C1" android:padding="12dp"
+                android:textColor="#212121"
+                android:layout_marginBottom="8dp"
+                android:maxWidth="280dp"/>
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/layout_typing_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:elevation="8dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <EditText
-            android:id="@+id/etUserMessage"
+            android:id="@+id/et_chat_input"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:hint="Type your problem here..."
-            android:textColorHint="#A9A9A9" />
+            android:hint="Ask your math question..." android:background="@android:color/transparent"
+            android:textColor="#212121"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
 
-        <Button
-            android:id="@+id/btnAskGemini"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="#3E2723"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_send_message"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@android:drawable/ic_menu_send"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="#3E2723"/> </LinearLayout>
+
+</RelativeLayout>

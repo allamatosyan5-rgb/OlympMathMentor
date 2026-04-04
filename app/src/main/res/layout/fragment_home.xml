@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/soft_beige" android:gravity="center">
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Home Courses" android:textSize="24sp" android:textColor="@color/deep_brown"/>
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5DC" /> <TextView
+    android:id="@+id/tvHeader"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="50dp"
+    android:text="Home Courses"
+    android:textColor="#3E2723"
+    android:textSize="28sp"
+    android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCourses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvHeader"
+        android:paddingTop="20dp"
+        android:clipToPadding="false" />
+
+</RelativeLayout>

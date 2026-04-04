@@ -3,6 +3,7 @@ package lilit.hakobyan.olympmathmentor;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout containerAchievements, containerCurrentGoals, containerCompletedGoals;
     private TextView tvFullName, tvEmail;
     private ImageView profileImage;
+    private Button btnLogout; // Նախորդ քայլերից եկած LogOut կոճակը
 
     private FirebaseUser currentUser;
     private DatabaseReference userRef;
@@ -45,6 +49,7 @@ public class ProfileFragment extends Fragment {
     private List<String> currentGoalsList = new ArrayList<>();
     private List<String> completedGoalsList = new ArrayList<>();
 
+    // 1. ԳԱԼԵՐԵԱՅԻՑ ՆԿԱՐ ԸՆՏՐԵԼՈՒ ԳՈՐԾԻՔԸ
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -52,17 +57,30 @@ public class ProfileFragment extends Fragment {
                     Uri imageUri = result.getData().getData();
                     if (imageUri != null) {
                         try {
-                            // Սա փորձում է վերցնել մշտական իրավունք նկարը կարդալու համար
                             requireContext().getContentResolver().takePersistableUriPermission(imageUri,
                                     Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             profileImage.setImageURI(imageUri);
                             userRef.child("profileImageUrl").setValue(imageUri.toString());
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            // Եթե չստացվի իրավունք վերցնել, պարզապես ցույց կտա նկարը
                             profileImage.setImageURI(imageUri);
                             userRef.child("profileImageUrl").setValue(imageUri.toString());
                         }
+                    }
+                }
+            }
+    );
+
+    // 2. ՏԵՍԱԽՑԻԿՈՎ (CAMERA) ՆԿԱՐԵԼՈՒ ԳՈՐԾԻՔԸ
+    private final ActivityResultLauncher<Void> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.TakePicturePreview(),
+            bitmap -> {
+                if (bitmap != null) {
+                    // Եթե նկարել է, դնում ենք էկրանին
+                    profileImage.setImageBitmap(bitmap);
+                    // Պահպանում ենք հեռախոսի հիշողության մեջ և հղումը պահում Firebase-ում
+                    Uri tempUri = saveBitmapToLocalCache(bitmap);
+                    if (tempUri != null) {
+                        userRef.child("profileImageUrl").setValue(tempUri.toString());
                     }
                 }
             }
@@ -79,6 +97,7 @@ public class ProfileFragment extends Fragment {
         tvFullName = view.findViewById(R.id.tvFullName);
         tvEmail = view.findViewById(R.id.tvEmail);
         profileImage = view.findViewById(R.id.profileImage);
+        btnLogout = view.findViewById(R.id.btnLogout);
 
         Button btnAddAchievement = view.findViewById(R.id.btnAddAchievement);
         Button btnAddGoal = view.findViewById(R.id.btnAddGoal);
@@ -91,25 +110,75 @@ public class ProfileFragment extends Fragment {
             loadDataFromFirebase();
         }
 
-        profileImage.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/*");
-            imagePickerLauncher.launch(intent);
-        });
+        // ԵՐԲ ՍԵՂՄՈՒՄ ԵՆ ՆԿԱՐԻ ՎՐԱ, ԲԱՑՎՈՒՄ Է ԸՆՏՐՈՒԹՅԱՆ ՊԱՏՈՒՀԱՆԸ
+        profileImage.setOnClickListener(v -> showImageOptionsDialog());
 
         tvFullName.setOnClickListener(v -> showEditNameDialog());
         btnAddAchievement.setOnClickListener(v -> showInputDialog("Add Achievement", true));
         btnAddGoal.setOnClickListener(v -> showInputDialog("Add Goal", false));
 
+        // Log out ֆունկցիան
+        if(btnLogout != null) {
+            btnLogout.setOnClickListener(v -> {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                if (getActivity() != null) getActivity().finish();
+            });
+        }
+
         return view;
+    }
+
+    // --- ՆԿԱՐԻ ԸՆՏՐՈՒԹՅԱՆ ՄԵՆՅՈՒ ---
+    private void showImageOptionsDialog() {
+        String[] options = {"Take Photo", "Choose from Gallery", "Delete Photo"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Profile Picture");
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                // 1. Միացնել տեսախցիկը
+                cameraLauncher.launch(null);
+            } else if (which == 1) {
+                // 2. Բացել գալերեան
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                imagePickerLauncher.launch(intent);
+            } else if (which == 2) {
+                // 3. Ջնջել նկարը
+                profileImage.setImageResource(android.R.drawable.ic_menu_camera); // Դնում ենք դատարկ նկար
+                if (userRef != null) {
+                    userRef.child("profileImageUrl").removeValue(); // Ջնջում ենք բազայից
+                }
+                Toast.makeText(getContext(), "Photo removed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.show();
+    }
+
+    // --- ՖՈՒՆԿՑԻԱ ՏԵՍԱԽՑԻԿԻ ՆԿԱՐԸ ՀԵՌԱԽՈՍՈՒՄ ՊԱՀԵԼՈՒ ՀԱՄԱՐ ---
+    private Uri saveBitmapToLocalCache(Bitmap bitmap) {
+        try {
+            File cachePath = new File(requireContext().getCacheDir(), "images");
+            cachePath.mkdirs();
+            File newFile = new File(cachePath, "profile_pic.png");
+            FileOutputStream stream = new FileOutputStream(newFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.close();
+            return Uri.fromFile(newFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void loadDataFromFirebase() {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!isAdded()) return; // Ստուգում ենք՝ արդյոք Fragment-ը դեռ կապված է Activity-ի հետ
+                if (!isAdded()) return;
 
                 if (snapshot.exists()) {
                     achievementsList.clear();
@@ -128,15 +197,15 @@ public class ProfileFragment extends Fragment {
                         tvFullName.setText("Tap to set Name & Surname");
                     }
 
-                    // --- ԱՆՎՏԱՆԳ ՆԿԱՐԻ ԲԵՌՆՈՒՄ ---
                     String imageUrl = snapshot.child("profileImageUrl").getValue(String.class);
                     if (imageUrl != null) {
                         try {
                             profileImage.setImageURI(Uri.parse(imageUrl));
                         } catch (Exception e) {
-                            // Եթե սխալ տա, ծրագիրը չի փակվի, պարզապես կմնա լռելյայն նկարը
                             profileImage.setImageResource(android.R.drawable.ic_menu_camera);
                         }
+                    } else {
+                        profileImage.setImageResource(android.R.drawable.ic_menu_camera);
                     }
 
                     for (DataSnapshot item : snapshot.child("achievements").getChildren()) {

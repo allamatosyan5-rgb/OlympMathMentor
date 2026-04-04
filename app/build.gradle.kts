@@ -1,10 +1,7 @@
 plugins {
-
-        id("com.android.application")
-
-        // Add the Google services Gradle plugin
-        id("com.google.gms.google-services")
-
+    id("com.android.application")
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -54,4 +51,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
 
+    // ԱՀԱ ԱՅՍՏԵՂ ԱՎԵԼԱՑՎԱԾ Է OKHTTP ԳՐԱԴԱՐԱՆԸ AI-Ի ՀԱՄԱՐ
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

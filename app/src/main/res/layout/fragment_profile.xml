@@ -127,6 +127,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
-
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/deep_brown"
+            android:textColor="@color/white" />
     </LinearLayout>
 </ScrollView>
