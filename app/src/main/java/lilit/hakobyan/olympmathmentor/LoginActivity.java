@@ -24,16 +24,16 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // ԱՀԱ ԱՎՏՈՄԱՏ ՄՈՒՏՔԻ ԿՈԴԸ (Թարմացված)
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            // Ստուգում ենք՝ արդյոք նամակը հաստատված է նույնիսկ ավտոմատ մուտքի ժամանակ
+
             if (currentUser.isEmailVerified()) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
-                return; // Դադարեցնում ենք Login էջի բեռնումը
+                return;
             } else {
-                // Եթե մնացել է համակարգում, բայց չի հաստատել, հանում ենք (Sign Out)
+
                 mAuth.signOut();
             }
         }
@@ -65,15 +65,15 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
 
                     if (user != null) {
-                        // ԱՀԱ ԿԱՐԵՎՈՐ ՍՏՈՒԳՈՒՄԸ. Արդյո՞ք email-ը հաստատված է
+
                         if (user.isEmailVerified()) {
-                            // Ամեն ինչ ճիշտ է, թողնում ենք գլխավոր էջ
+
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         } else {
-                            // Գաղտնաբառը ճիշտ է, բայց նամակը հաստատված չէ
+
                             Toast.makeText(LoginActivity.this, "Please verify your email address to login.", Toast.LENGTH_LONG).show();
-                            // Անմիջապես հանում ենք համակարգից
+
                             mAuth.signOut();
                         }
                     }

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"> <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lesson 4: Appending Digits"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Advanced Manipulations of Natural Numbers"
+        android:textSize="16sp"
+        android:textColor="#5D4037"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:textStyle="italic"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#D7CCC8"
+        android:layout_marginBottom="24dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_dialog_info"
+            app:tint="#3E2723"
+            android:layout_marginEnd="12dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Appending to the Right"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Appending a digit to the right of a natural number is not merely placing a symbol next to another; it fundamentally alters the positional value of the original number. Every existing digit is shifted one place to the left, which mathematically translates to multiplying the entire original number by 10."
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:lineSpacingExtra="5dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FORMULA:\nIf we append a single digit 'd' to the right of a number 'x', the new number becomes:\nNew Number = 10x + d\n\nExtension: If we append a two-digit block 'yz' to the right of 'x', we shift 'x' by two positions:\nNew Number = 100x + yz"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:background="#C8E6C9"
+        android:padding="20dp"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Appending to the Left"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="When a digit is appended to the left side of a number, the original number's positional values remain perfectly intact. The new digit simply assumes a place value that is one order of magnitude higher than the largest existing place value of the original number."
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:lineSpacingExtra="5dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="FORMULA:\nIf we append a digit 'd' to the left of a 'k'-digit number 'x', the new digit 'd' takes the 10ᵏ position:\nNew Number = d × 10ᵏ + x\n\nExample: Let x = 84 (a 2-digit number, so k = 2). Append d = 3 to the left.\nNew = 3 × 10² + 84 = 300 + 84 = 384."
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:background="#FCE4EC"
+        android:padding="20dp"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginBottom="24dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D7CCC8"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3. Masterclass: Problem Solving"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Problem 1: The Unknown Appendage"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#5D4037"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Question: A single digit is appended to the right of an unknown number, increasing its value by 322. Find the original number and the appended digit.\n\nStep-by-Step Solution:\n1. Let the original number be x, and the appended digit be d (where 0 ≤ d ≤ 9).\n2. The new number is 10x + d.\n3. The problem states the increase is 322:\n   (10x + d) - x = 322\n   9x + d = 322\n4. We know 9x must be close to 322. Let's divide 322 by 9 to find x.\n   322 ÷ 9 = 35 with a remainder of 7.\n5. Therefore, x = 35. The remainder is our digit d = 7.\n\nAnswer: The original number is 35, and the appended digit is 7. (Check: 357 - 35 = 322)."
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:lineSpacingExtra="5dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Problem 2: The Multiplier Effect"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#5D4037"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Question: A digit is appended to the left of a two-digit number, causing the number to become exactly 5 times larger. Find all such possible two-digit numbers.\n\nStep-by-Step Solution:\n1. Let the two-digit number be x. Since it's a two-digit number, k = 2.\n2. Let the appended digit be d (1 ≤ d ≤ 9).\n3. The new number is formed on the left: 100d + x.\n4. The problem states this new number is 5 times the original:\n   100d + x = 5x\n5. Rearrange the equation:\n   100d = 4x  ⇒  x = 25d\n6. Now, substitute possible digits for d to find two-digit numbers for x:\n   • If d = 1, x = 25 (Check: 125 = 5 × 25) - Valid!\n   • If d = 2, x = 50 (Check: 250 = 5 × 50) - Valid!\n   • If d = 3, x = 75 (Check: 375 = 5 × 75) - Valid!\n   • If d = 4, x = 100 (Invalid, x must be a two-digit number).\n\nAnswer: The possible original numbers are 25, 50, and 75."
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:lineSpacingExtra="5dp"
+        android:layout_marginBottom="24dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D7CCC8"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4. Golden Rules of Appending"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="★ Bounding the Remainder: When solving equations like 9x + d = N, always remember that 'd' is a single digit (0 to 9). It acts exactly like a remainder in division!\n\n★ Digit Count Matters: Always determine 'k' (the number of digits) before writing the equation for appending to the left. Appending '5' to a 2-digit number adds 500, but appending it to a 3-digit number adds 5000."
+        android:textColor="#212121"
+        android:textSize="16sp"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginBottom="32dp"
+        android:background="#E8E0C5"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/btnGoToTest4"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="TAKE TEST 4"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:backgroundTint="#C8E6C9"
+        android:textColor="#3E2723"
+        android:elevation="4dp"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>
+</ScrollView>

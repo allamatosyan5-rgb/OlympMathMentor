@@ -191,7 +191,7 @@
             android:id="@+id/btnStartTest"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="START TEST"
+            android:text="START TEST 1"
             android:textSize="18sp"
             android:backgroundTint="#5D4037"
             android:textColor="#FFFFFF"

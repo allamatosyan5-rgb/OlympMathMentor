@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How would you rate this video?"
+        android:textSize="18sp"
+        android:textColor="#3E2723"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginBottom="16dp"/>
+
+    <RatingBar
+        android:id="@+id/rbUserRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:rating="0"
+        android:progressTint="#FFC107"
+        android:progressBackgroundTint="#E0E0E0"
+        android:secondaryProgressTint="#FFC107"/>
+
+</LinearLayout>

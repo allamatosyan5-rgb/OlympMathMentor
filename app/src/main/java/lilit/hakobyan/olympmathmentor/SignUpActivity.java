@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        // Ստեղծում ենք հաշիվը
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser user = mAuth.getCurrentUser();
@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (user != null) {
                         String userId = user.getUid();
 
-                        // Պահպանում ենք անունը և ազգանունը Realtime Database-ում
+
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId);
                         HashMap<String, String> userMap = new HashMap<>();
                         userMap.put("name", name);
@@ -76,18 +76,16 @@ public class SignUpActivity extends AppCompatActivity {
                         ref.setValue(userMap).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
 
-                                // --- ՀԱՍՏԱՏՄԱՆ ՆԱՄԱԿԻ ՈՒՂԱՐԿՈՒՄ ---
+
                                 user.sendEmailVerification()
                                         .addOnCompleteListener(verificationTask -> {
                                             if (verificationTask.isSuccessful()) {
                                                 Toast.makeText(SignUpActivity.this,
                                                         "Registration successful! Please check your email to verify.",
                                                         Toast.LENGTH_LONG).show();
+                                                             mAuth.signOut();
 
-                                                // Անմիջապես հանում ենք համակարգից (Sign Out), որ առանց հաստատել չմտնի
-                                                mAuth.signOut();
 
-                                                // Տանում ենք Login էջ
                                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                                                 finish();
                                             } else {

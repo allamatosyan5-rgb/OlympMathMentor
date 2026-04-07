@@ -15,12 +15,12 @@ public class LibraryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
 
-        // Սեղմում ենք Գրքերի վրա -> Գնում ենք ԿԱՏԵԳՈՐԻԱՆԵՐԻ էջ
+
         view.findViewById(R.id.cardBooks).setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), BookCategoriesActivity.class));
         });
 
-        // Սեղմում ենք Վիդեոների վրա -> Գնում ենք Վիդեոների էջ
+
         view.findViewById(R.id.cardVideos).setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), VideoListActivity.class));
         });

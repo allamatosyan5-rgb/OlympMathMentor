@@ -40,7 +40,7 @@ public class ProfileFragment extends Fragment {
     private LinearLayout containerAchievements, containerCurrentGoals, containerCompletedGoals;
     private TextView tvFullName, tvEmail;
     private ImageView profileImage;
-    private Button btnLogout; // Նախորդ քայլերից եկած LogOut կոճակը
+    private Button btnLogout;
 
     private FirebaseUser currentUser;
     private DatabaseReference userRef;
@@ -49,7 +49,7 @@ public class ProfileFragment extends Fragment {
     private List<String> currentGoalsList = new ArrayList<>();
     private List<String> completedGoalsList = new ArrayList<>();
 
-    // 1. ԳԱԼԵՐԵԱՅԻՑ ՆԿԱՐ ԸՆՏՐԵԼՈՒ ԳՈՐԾԻՔԸ
+
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -70,14 +70,14 @@ public class ProfileFragment extends Fragment {
             }
     );
 
-    // 2. ՏԵՍԱԽՑԻԿՈՎ (CAMERA) ՆԿԱՐԵԼՈՒ ԳՈՐԾԻՔԸ
+
     private final ActivityResultLauncher<Void> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicturePreview(),
             bitmap -> {
                 if (bitmap != null) {
-                    // Եթե նկարել է, դնում ենք էկրանին
+
                     profileImage.setImageBitmap(bitmap);
-                    // Պահպանում ենք հեռախոսի հիշողության մեջ և հղումը պահում Firebase-ում
+
                     Uri tempUri = saveBitmapToLocalCache(bitmap);
                     if (tempUri != null) {
                         userRef.child("profileImageUrl").setValue(tempUri.toString());
@@ -110,14 +110,14 @@ public class ProfileFragment extends Fragment {
             loadDataFromFirebase();
         }
 
-        // ԵՐԲ ՍԵՂՄՈՒՄ ԵՆ ՆԿԱՐԻ ՎՐԱ, ԲԱՑՎՈՒՄ Է ԸՆՏՐՈՒԹՅԱՆ ՊԱՏՈՒՀԱՆԸ
+
         profileImage.setOnClickListener(v -> showImageOptionsDialog());
 
         tvFullName.setOnClickListener(v -> showEditNameDialog());
         btnAddAchievement.setOnClickListener(v -> showInputDialog("Add Achievement", true));
         btnAddGoal.setOnClickListener(v -> showInputDialog("Add Goal", false));
 
-        // Log out ֆունկցիան
+
         if(btnLogout != null) {
             btnLogout.setOnClickListener(v -> {
                 FirebaseAuth.getInstance().signOut();
@@ -131,23 +131,23 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    // --- ՆԿԱՐԻ ԸՆՏՐՈՒԹՅԱՆ ՄԵՆՅՈՒ ---
+
     private void showImageOptionsDialog() {
         String[] options = {"Take Photo", "Choose from Gallery", "Delete Photo"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Profile Picture");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
-                // 1. Միացնել տեսախցիկը
+
                 cameraLauncher.launch(null);
             } else if (which == 1) {
-                // 2. Բացել գալերեան
+
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
                 imagePickerLauncher.launch(intent);
             } else if (which == 2) {
-                // 3. Ջնջել նկարը
+
                 profileImage.setImageResource(android.R.drawable.ic_menu_camera); // Դնում ենք դատարկ նկար
                 if (userRef != null) {
                     userRef.child("profileImageUrl").removeValue(); // Ջնջում ենք բազայից
@@ -158,7 +158,7 @@ public class ProfileFragment extends Fragment {
         builder.show();
     }
 
-    // --- ՖՈՒՆԿՑԻԱ ՏԵՍԱԽՑԻԿԻ ՆԿԱՐԸ ՀԵՌԱԽՈՍՈՒՄ ՊԱՀԵԼՈՒ ՀԱՄԱՐ ---
+
     private Uri saveBitmapToLocalCache(Bitmap bitmap) {
         try {
             File cachePath = new File(requireContext().getCacheDir(), "images");

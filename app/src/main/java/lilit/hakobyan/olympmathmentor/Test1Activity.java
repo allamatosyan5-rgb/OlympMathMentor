@@ -1,10 +1,10 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Test1Activity extends AppCompatActivity {
-
 
     private String[] questions = {
             "1. What is the sum of the first five odd natural numbers?",
@@ -27,7 +26,6 @@ public class Test1Activity extends AppCompatActivity {
             "10. How many even natural numbers exist between 1 and 11?"
     };
 
-    // --- THE EXACT ANSWER KEY ---
     private String[] correctAnswers = {
             "25",
             "Even",
@@ -41,7 +39,6 @@ public class Test1Activity extends AppCompatActivity {
             "5"
     };
 
-    // Array to store the input fields so we can check them later
     private EditText[] answerInputs;
     private TextView[] feedbackViews;
 
@@ -55,7 +52,7 @@ public class Test1Activity extends AppCompatActivity {
         feedbackViews = new TextView[questions.length];
 
         for (int i = 0; i < questions.length; i++) {
-            // 1. Create the Question Text
+
             TextView tvQuestion = new TextView(this);
             tvQuestion.setText(questions[i]);
             tvQuestion.setTextSize(16f);
@@ -63,7 +60,6 @@ public class Test1Activity extends AppCompatActivity {
             tvQuestion.setPadding(0, 30, 0, 10);
             questionsContainer.addView(tvQuestion);
 
-            // 2. Create the Answer Input Field (typing area)
             EditText etAnswer = new EditText(this);
             etAnswer.setHint("Type your answer here...");
             etAnswer.setTextSize(16f);
@@ -71,7 +67,6 @@ public class Test1Activity extends AppCompatActivity {
             answerInputs[i] = etAnswer;
             questionsContainer.addView(etAnswer);
 
-            // 3. Create the Feedback Text (Hidden initially)
             TextView tvFeedback = new TextView(this);
             tvFeedback.setTextSize(14f);
             tvFeedback.setVisibility(View.GONE);
@@ -80,9 +75,15 @@ public class Test1Activity extends AppCompatActivity {
             questionsContainer.addView(tvFeedback);
         }
 
-        // Button Actions
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-        findViewById(R.id.btnNextLesson).setOnClickListener(v -> finish());
+
+        // ԱՅՍՏԵՂ Է ՓՈՓՈԽՎԱԾ ՄԱՍԸ. Հաջորդ դասը բացելու տրամաբանությունը
+        findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
+            Intent intent = new Intent(Test1Activity.this, Lesson2Activity.class);
+            startActivity(intent);
+            finish(); // Փակում ենք թեստի էջը
+        });
+
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
 
@@ -90,11 +91,10 @@ public class Test1Activity extends AppCompatActivity {
         int score = 0;
 
         for (int i = 0; i < questions.length; i++) {
-            // Get user's typed answer, remove extra spaces, and make it lowercase to avoid case-sensitivity issues
+
             String userAnswer = answerInputs[i].getText().toString().trim().toLowerCase();
             String correctAnswer = correctAnswers[i].toLowerCase();
 
-            // Freeze the input field so they can't change it after clicking finish
             answerInputs[i].setEnabled(false);
             feedbackViews[i].setVisibility(View.VISIBLE);
 
@@ -138,12 +138,10 @@ public class Test1Activity extends AppCompatActivity {
             ImageView medal2 = findViewById(R.id.medal2);
             ImageView medal3 = findViewById(R.id.medal3);
 
-            // Reset all to gray initially
             medal1.setColorFilter(Color.LTGRAY);
             medal2.setColorFilter(Color.LTGRAY);
             medal3.setColorFilter(Color.LTGRAY);
 
-            // Color medals gold based on score
             if (score == 6 || score == 7) {
                 medal1.setColorFilter(Color.parseColor("#FFD700"));
             } else if (score == 8 || score == 9) {
@@ -155,9 +153,9 @@ public class Test1Activity extends AppCompatActivity {
                 medal3.setColorFilter(Color.parseColor("#FFD700"));
             }
 
-            // UNLOCK LESSON 2
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit().putBoolean("lesson2_unlocked", true).apply();
+            prefs.edit().putInt("test1_score", score).apply(); // Պահպանում ենք նաև միավորը
         }
     }
 }

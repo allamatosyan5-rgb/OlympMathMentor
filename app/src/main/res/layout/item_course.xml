@@ -40,9 +40,41 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_gravity="center"
+            android:layout_marginBottom="6dp"
             android:drawableEnd="@android:drawable/ic_media_play"
             android:drawablePadding="4dp"
             android:visibility="gone"/>
 
+        <LinearLayout
+            android:id="@+id/starsContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivStar1"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@android:drawable/star_on"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/ivStar2"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@android:drawable/star_on"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/ivStar3"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@android:drawable/star_on"
+                android:visibility="gone"/>
+        </LinearLayout>
+
     </FrameLayout>
+
 </RelativeLayout>

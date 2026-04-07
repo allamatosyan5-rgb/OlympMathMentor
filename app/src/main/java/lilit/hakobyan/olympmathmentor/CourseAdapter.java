@@ -2,6 +2,7 @@ package lilit.hakobyan.olympmathmentor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
@@ -38,34 +38,109 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseModel course = courseList.get(position);
         holder.tvTitle.setText(course.getTitle());
 
-        // Շրջանակի դիզայնը
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        // --- 1. ԿՈՂՊԵՔԻ ՍՏՈՒԳՈՒՄ ---
+        boolean isUnlocked = false;
+
+        // 1, 3, 4 և 5-րդ դասերը ՄԻՇՏ ԲԱՑ ԵՆ
+        if (course.getId() == 1 || course.getId() == 3 || course.getId() == 4 || course.getId() == 5) {
+            isUnlocked = true;
+        } else {
+            // Մնացածը ստուգում ենք հիշողությունից
+            isUnlocked = prefs.getBoolean("lesson" + course.getId() + "_unlocked", false);
+        }
+
+        course.setLocked(!isUnlocked);
+
+        // --- 2. ԳՈՒՅՆԵՐԻ ՀԱՋՈՐԴԱԿԱՆՈՒԹՅՈՒՆԸ ---
+        int unlockedColor;
+
+        if (position == 0) {
+            unlockedColor = Color.parseColor("#C9ADA3"); // Lesson 1 (Pastel Brown)
+        } else {
+            // Բաժանում ենք 4-ի վրա, որպեսզի ունենանք 4 տարբեր պաստելային գույներ
+            int colorSequence = position % 4;
+            switch (colorSequence) {
+                case 1:
+                    unlockedColor = Color.parseColor("#BBDEFB"); // Lesson 2 (Pastel Blue)
+                    break;
+                case 2:
+                    unlockedColor = Color.parseColor("#FCE4EC"); // Lesson 3 (Pastel Pink)
+                    break;
+                case 3:
+                    unlockedColor = Color.parseColor("#C8E6C9"); // Lesson 4 (Pastel Green)
+                    break;
+                case 0:
+                default:
+                    unlockedColor = Color.parseColor("#FFF9C4"); // Lesson 5 (Pastel Yellow)
+                    break;
+            }
+        }
+
+        // --- 3. ՎԻԶՈՒԱԼ ՁԵՎԱՎՈՐՈՒՄ ---
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.OVAL);
-        shape.setColor(ContextCompat.getColor(context, course.getColorResId()));
-        shape.setStroke(8, Color.parseColor("#BDBDBD")); // Հաստ եզրագիծ նկարի պես
-        holder.courseCircle.setBackground(shape);
 
         if (course.isLocked()) {
+            shape.setColor(Color.parseColor("#F5F5F5"));
+            shape.setStroke(6, Color.parseColor("#E0E0E0"));
+            holder.tvGo.setTextColor(Color.parseColor("#BDBDBD"));
             holder.ivLock.setVisibility(View.VISIBLE);
             holder.tvGo.setVisibility(View.GONE);
         } else {
+            shape.setColor(unlockedColor);
+            shape.setStroke(10, Color.parseColor("#3E2723"));
+            holder.tvGo.setTextColor(Color.parseColor("#3E2723"));
             holder.ivLock.setVisibility(View.GONE);
             holder.tvGo.setVisibility(View.VISIBLE);
         }
+        holder.courseCircle.setBackground(shape);
 
-        // --- ՄԱԳԻԱՆ ԱՅՍՏԵՂ Է (Օձաձև դասավորում) ---
-        // Օգտագործում ենք Sin ֆունկցիան՝ ալիքաձև շարժում ստանալու համար
+        // --- 4. ԱՍՏՂԻԿՆԵՐԻ ՑՈՒՑԱԴՐՈՒՄ ---
+        int score = prefs.getInt("test" + course.getId() + "_score", 0);
+        holder.ivStar1.setVisibility(View.GONE);
+        holder.ivStar2.setVisibility(View.GONE);
+        holder.ivStar3.setVisibility(View.GONE);
+
+        if (score >= 6) {
+            int goldColor = Color.parseColor("#FFC107");
+            holder.ivStar1.setVisibility(View.VISIBLE);
+            holder.ivStar1.setColorFilter(goldColor);
+            if (score >= 8) {
+                holder.ivStar2.setVisibility(View.VISIBLE);
+                holder.ivStar2.setColorFilter(goldColor);
+            }
+            if (score == 10) {
+                holder.ivStar3.setVisibility(View.VISIBLE);
+                holder.ivStar3.setColorFilter(goldColor);
+            }
+        }
+
+        // Ալիքաձև դիրքավորում
         float offset = (float) Math.sin(position * 1.2) * 280f;
         holder.itemView.setTranslationX(offset);
-        // Այս 1 տողը տարրերը կտանի՝ մեջտեղ, աջ, նորից մեջտեղ, ձախ... ստեղծելով իդեալական S-աձև ճանապարհ
 
-        // Քլիքի գործողությունը
+        // --- 5. ՍԵՂՄԵԼՈՒ ՏՐԱՄԱԲԱՆՈՒԹՅՈՒՆ ---
         holder.courseCircle.setOnClickListener(v -> {
             if (course.isLocked()) {
-                Toast.makeText(context, "This lesson is locked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Lesson is locked!", Toast.LENGTH_SHORT).show();
             } else {
+                Intent intent = null;
+
                 if (course.getId() == 1) {
-                    Intent intent = new Intent(context, Lesson1Activity.class);
+                    intent = new Intent(context, Lesson1Activity.class);
+                } else if (course.getId() == 2) {
+                    intent = new Intent(context, Lesson2Activity.class);
+                } else if (course.getId() == 3) {
+                    intent = new Intent(context, Lesson3Activity.class);
+                } else if (course.getId() == 4) {
+                    intent = new Intent(context, Lesson4Activity.class);
+                } else if (course.getId() == 5) {
+                    intent = new Intent(context, Lesson5Activity.class); // Բացում է Դաս 5-ը
+                }
+
+                if (intent != null) {
                     context.startActivity(intent);
                 }
             }
@@ -80,7 +155,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvGo;
         FrameLayout courseCircle;
-        ImageView ivLock;
+        ImageView ivLock, ivStar1, ivStar2, ivStar3;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +163,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             courseCircle = itemView.findViewById(R.id.courseCircle);
             ivLock = itemView.findViewById(R.id.ivLock);
             tvGo = itemView.findViewById(R.id.tvGo);
+            ivStar1 = itemView.findViewById(R.id.ivStar1);
+            ivStar2 = itemView.findViewById(R.id.ivStar2);
+            ivStar3 = itemView.findViewById(R.id.ivStar3);
         }
     }
 }

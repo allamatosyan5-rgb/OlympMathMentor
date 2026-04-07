@@ -1,76 +1,141 @@
 package lilit.hakobyan.olympmathmentor;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class VideoListActivity extends AppCompatActivity {
 
-    private String[] lessonNames = {
-            "Lesson 1", "Lesson 2", "Lesson 3", "Lesson 4",
-            "Lesson 5", "Lesson 6", "Lesson 7", "Lesson 8",
-            "Lesson 9", "Lesson 10", "Lesson 11", "Lesson 12",
-            "Lesson 13", "Lesson 14", "Lesson 15", "Lesson 16"
-    };
-
-    private String[] videoUrls = {
-            "https://youtu.be/hEN6_v6gSEo?si=BnFMFdFLATvnldrC",
-            "https://youtu.be/2LTtg3clc9g?si=d0cy8Q99akB2ac9Z",
-            "https://youtu.be/P4LxK9Uek5U?si=oa5MEPXYRhjVhse-",
-            "https://youtu.be/VHKZSugBzhA?si=8Ca17ikiIWm1RySn",
-            "https://youtu.be/bVbtqn4-Df8?si=MMBiRfSpCDIW8HVO",
-            "https://youtu.be/FFEtckUNtz0?si=vd8EQ5uyy2Wmdxhd",
-            "https://youtu.be/FFEtckUNtz0?si=gSxRjAi9cLQm4MvG",
-            "https://youtu.be/i5Tv1hlrwL8?si=o5auc_eYp3y13deo",
-            "https://youtu.be/fNBzjgWzf_Y?si=RP7Gtj020Yp3gfYW",
-            "https://youtu.be/LCPLWDlX1ZI?si=ekIWKQl9yTTywKxD",
-            "https://youtu.be/qEyFpMBw3wA?si=eQn_pm_qDX7j218h",
-            "https://youtu.be/mq4mHa2lBi8?si=euTt4uUydoyicuT8",
-            "https://youtu.be/QRXtyVRlNqg?si=-rpCMSDAycHXSgZR",
-            "https://youtu.be/TrDVV0xcACI?si=uUD8RMtvQvbeJ7tc",
-            "https://youtu.be/T09Iq9Q61Wc?si=TlwoxuJtcA0iEyjo",
-            "https://youtu.be/O3krHAFyxH4?si=m3ydIubuIHXb5CA5"
-    };
+    private DatabaseReference dbRef;
+    private SharedPreferences localPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
 
-        ListView listView = findViewById(R.id.listViewVideos);
+        LinearLayout videoContainer = findViewById(R.id.videoContainer);
+        dbRef = FirebaseDatabase.getInstance().getReference("video_ratings");
+        localPrefs = getSharedPreferences("VideoStatus", MODE_PRIVATE);
 
-        // Ստեղծում ենք հատուկ Adapter, որը կփոխի տեքստի գույնը
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lessonNames) {
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView textView = view.findViewById(android.R.id.text1);
 
-                // ԱՀԱ ՓՐԿԻՉ ԿՈԴԸ. Տեքստը դարձնում ենք ՍԵՎ և մի փոքր ավելի մեծ
-                textView.setTextColor(Color.BLACK);
-                textView.setTextSize(18f);
+        String[][] videos = {
 
-                return view;
-            }
+                {"Video Lesson 1", "https://youtu.be/hEN6_v6gSEo?si=BnFMFdFLATvnldrC"},
+                {"Video Lesson 2", "https://youtu.be/2LTtg3clc9g?si=d0cy8Q99akB2ac9Z"},
+                {"Video Lesson 3", "https://youtu.be/P4LxK9Uek5U?si=oa5MEPXYRhjVhse-"},
+                {"Video Lesson 4", "https://youtu.be/VHKZSugBzhA?si=8Ca17ikiIWm1RySn"},
+                {"Video Lesson 5", "https://youtu.be/bVbtqn4-Df8?si=MMBiRfSpCDIW8HVO"},
+                {"Video Lesson 6", "https://youtu.be/FFEtckUNtz0?si=vd8EQ5uyy2Wmdxhd"},
+                {"Video Lesson 7", "https://youtu.be/FFEtckUNtz0?si=gSxRjAi9cLQm4MvG"},
+                {"Video Lesson 8", "https://youtu.be/i5Tv1hlrwL8?si=o5auc_eYp3y13deo"},
+                {"Video Lesson 9", "https://youtu.be/fNBzjgWzf_Y?si=RP7Gtj020Yp3gfYW"},
+                {"Video Lesson 10", "https://youtu.be/LCPLWDlX1ZI?si=ekIWKQl9yTTywKxD"},
+                {"Video Lesson 11", "https://youtu.be/qEyFpMBw3wA?si=eQn_pm_qDX7j218h"},
+                {"Video Lesson 12", "https://youtu.be/mq4mHa2lBi8?si=euTt4uUydoyicuT8"},
+                {"Video Lesson 13", "https://youtu.be/QRXtyVRlNqg?si=-rpCMSDAycHXSgZR"},
+                {"Video Lesson 14", "https://youtu.be/TrDVV0xcACI?si=uUD8RMtvQvbeJ7tc"},
+                {"Video Lesson 15", "https://youtu.be/T09Iq9Q61Wc?si=TlwoxuJtcA0iEyjo"},
+                {"Video Lesson 16", "https://youtu.be/O3krHAFyxH4?si=m3ydIubuIHXb5CA5"}
         };
 
-        listView.setAdapter(adapter);
 
-        // Քլիքի հրամանը
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            String url = videoUrls[position];
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        for (String[] video : videos) {
+            View card = inflater.inflate(R.layout.item_video, videoContainer, false);
+            TextView tvTitle = card.findViewById(R.id.tvVideoTitle);
+            TextView tvAvg = card.findViewById(R.id.tvAverageRating);
+            RatingBar rbAvg = card.findViewById(R.id.rbVideoRating);
+            Button btnWatch = card.findViewById(R.id.btnWatchVideo);
+
+            String videoId = video[0].replace(" ", "_");
+            tvTitle.setText(video[0]);
+
+
+            if (localPrefs.getBoolean(videoId + "_watched", false)) {
+                btnWatch.setText("✅ WATCHED BEFORE");
+                btnWatch.setBackgroundTintList(getColorStateList(R.color.earth_brown));
+            }
+
+
+            dbRef.child(videoId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        double sum = snapshot.child("sum").getValue(Double.class);
+                        int count = snapshot.child("count").getValue(Integer.class);
+                        float avg = (float) (sum / count);
+                        tvAvg.setText("Avg. Rating: " + String.format("%.1f", avg));
+                        rbAvg.setRating(avg);
+                    }
+                }
+                @Override public void onCancelled(@NonNull DatabaseError error) {}
+            });
+
+
+            btnWatch.setOnClickListener(v -> {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video[1])));
+
+
+                localPrefs.edit().putBoolean(videoId + "_watched", true).apply();
+                btnWatch.setText("✅ WATCHED BEFORE");
+
+
+                showRatingDialog(video[0], videoId);
+            });
+
+            videoContainer.addView(card);
+        }
+    }
+
+    private void showRatingDialog(String title, String videoId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_rate_video, null);
+        RatingBar rbUser = dialogView.findViewById(R.id.rbUserRating);
+
+        builder.setView(dialogView)
+                .setTitle("Rate: " + title)
+                .setPositiveButton("Submit", (dialog, which) -> {
+                    float rating = rbUser.getRating();
+                    updateGlobalRating(videoId, rating);
+                })
+                .setNegativeButton("Maybe Later", null)
+                .show();
+    }
+
+    private void updateGlobalRating(String videoId, float userRating) {
+        dbRef.child(videoId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                double sum = userRating;
+                int count = 1;
+                if (snapshot.exists()) {
+                    sum += snapshot.child("sum").getValue(Double.class);
+                    count += snapshot.child("count").getValue(Integer.class);
+                }
+                dbRef.child(videoId).child("sum").setValue(sum);
+                dbRef.child(videoId).child("count").setValue(count);
+                Toast.makeText(VideoListActivity.this, "Rating Shared!", Toast.LENGTH_SHORT).show();
+            }
+            @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 }
