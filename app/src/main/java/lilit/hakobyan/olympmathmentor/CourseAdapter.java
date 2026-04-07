@@ -43,11 +43,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         // --- 1. ԿՈՂՊԵՔԻ ՍՏՈՒԳՈՒՄ ---
         boolean isUnlocked = false;
 
-        // 1, 3, 4 և 5-րդ դասերը ՄԻՇՏ ԲԱՑ ԵՆ
-        if (course.getId() == 1 || course.getId() == 3 || course.getId() == 4 || course.getId() == 5) {
+        // 1, 3, 4, 5, 6, 7 և 8-րդ դասերը ՄԻՇՏ ԲԱՑ ԵՆ
+        if (course.getId() == 1 || course.getId() == 3 || course.getId() == 4 || course.getId() == 5 || course.getId() == 6 || course.getId() == 7 || course.getId() == 8) {
             isUnlocked = true;
         } else {
-            // Մնացածը ստուգում ենք հիշողությունից
             isUnlocked = prefs.getBoolean("lesson" + course.getId() + "_unlocked", false);
         }
 
@@ -59,8 +58,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         if (position == 0) {
             unlockedColor = Color.parseColor("#C9ADA3"); // Lesson 1 (Pastel Brown)
         } else {
-            // Բաժանում ենք 4-ի վրա, որպեսզի ունենանք 4 տարբեր պաստելային գույներ
-            int colorSequence = position % 4;
+            // Բաժանում ենք 7-ի վրա, որպեսզի ունենանք 7 տարբեր պաստելային գույներ
+            int colorSequence = position % 7;
             switch (colorSequence) {
                 case 1:
                     unlockedColor = Color.parseColor("#BBDEFB"); // Lesson 2 (Pastel Blue)
@@ -71,9 +70,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 case 3:
                     unlockedColor = Color.parseColor("#C8E6C9"); // Lesson 4 (Pastel Green)
                     break;
+                case 4:
+                    unlockedColor = Color.parseColor("#FFF9C4"); // Lesson 5 (Pastel Yellow)
+                    break;
+                case 5:
+                    unlockedColor = Color.parseColor("#E1BEE7"); // Lesson 6 (Pastel Purple)
+                    break;
+                case 6:
+                    unlockedColor = Color.parseColor("#FFE0B2"); // Lesson 7 (Pastel Orange)
+                    break;
                 case 0:
                 default:
-                    unlockedColor = Color.parseColor("#FFF9C4"); // Lesson 5 (Pastel Yellow)
+                    unlockedColor = Color.parseColor("#B2DFDB"); // Lesson 8 (Pastel Teal/Cyan)
                     break;
             }
         }
@@ -137,7 +145,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 } else if (course.getId() == 4) {
                     intent = new Intent(context, Lesson4Activity.class);
                 } else if (course.getId() == 5) {
-                    intent = new Intent(context, Lesson5Activity.class); // Բացում է Դաս 5-ը
+                    intent = new Intent(context, Lesson5Activity.class);
+                } else if (course.getId() == 6) {
+                    intent = new Intent(context, Lesson6Activity.class);
+                } else if (course.getId() == 7) {
+                    intent = new Intent(context, Lesson7Activity.class);
+                } else if (course.getId() == 8) {
+                    intent = new Intent(context, Lesson8Activity.class); // Բացում է Դաս 8-ը
                 }
 
                 if (intent != null) {

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5DC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lesson 7: Work and Time"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Efficiency, Pools, Pipes, and Cooperative Labor"
+            android:textSize="16sp"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:textStyle="italic" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_dialog_info"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. The Analogy to Motion"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Work and Time problems are mathematically identical to Motion problems. Instead of 'Distance', we have 'Total Work'. Instead of 'Speed', we have 'Efficiency' or 'Rate of Work'. The 'Time' remains the same."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="THE CORE FORMULA:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• Total Work = Efficiency × Time  (W = E × T)\n• Efficiency = Total Work ÷ Time  (E = W / T)\n• Time = Total Work ÷ Efficiency  (T = W / E)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:background="#FFE0B2"
+            android:padding="20dp"
+            android:lineSpacingExtra="8dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. The 'Unit Work' Method"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In most problems, the exact amount of work isn't given (e.g., 'build a wall', 'fill a pool'). In these cases, we assume the Total Work is exactly 1 unit (100%)."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If a person can complete 1 whole job in 'x' days, then their Efficiency (how much they do in 1 day) is exactly 1/x of the job."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: If John paints a room in 5 hours, his efficiency is 1/5 of the room per hour. In 3 hours, he will paint 3 × (1/5) = 3/5 of the room."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#E8E0C5"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Cooperative Work (Working Together)"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="When two people work together, you NEVER add their times. You add their EFFICIENCIES."
+            android:textColor="#D32F2F"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RULE 1: If Person A takes 'a' days, and Person B takes 'b' days, their combined efficiency is (1/a) + (1/b)."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shortcut Formula for 2 people working together:\nTime together = (a × b) / (a + b)"
+            android:textColor="#3E2723"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#FFE0B2"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. The 'LCM' Method (The Olympiad Secret)"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Working with fractions (1/x) can be slow and prone to errors. Olympiad champions use the LCM (Least Common Multiple) method. Instead of setting Total Work to 1, we set it to the LCM of all given times. This turns all efficiencies into whole numbers!"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: A takes 10 days, B takes 15 days.\nStep 1: LCM of 10 and 15 is 30. Let Total Work = 30 units.\nStep 2: A's efficiency = 30/10 = 3 units/day.\nStep 3: B's efficiency = 30/15 = 2 units/day.\nStep 4: Combined efficiency = 3 + 2 = 5 units/day.\nStep 5: Time together = 30 / 5 = 6 days."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#C8E6C9"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5. Pipes and Cisterns (Pools)"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pipes filling a tank are exactly like people doing work. But there is a twist: A leak or an emptying pipe acts as 'Negative Work'."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="► Inlet Pipe (Fills): Positive Efficiency (+E)\n► Outlet Pipe (Empties): Negative Efficiency (-E)\n\nNet Efficiency = (+E_fill) - (-E_empty)"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#BBDEFB"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masterclass: Advanced Problem Solving"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="24dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 1: The Quitter"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E65100"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: Alice can build a wall in 20 days, Bob in 30 days. They start working together, but after 6 days, Alice leaves. How many days will it take Bob alone to finish the remaining work?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Use LCM method. LCM(20, 30) = 60 units (Total Work)."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Alice's efficiency = 60/20 = 3 units/day. Bob's efficiency = 60/30 = 2 units/day."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: Together, they do 3+2 = 5 units/day. In 6 days, they complete: 6 × 5 = 30 units."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: Remaining work = 60 - 30 = 30 units."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 5: Bob must finish these 30 units alone. Bob's Time = 30 units / 2 units/day = 15 days."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 2: The Leaky Pool"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E65100"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: Pipe A fills a pool in 4 hours. Pipe B fills it in 6 hours. However, a drain at the bottom can empty the full pool in 12 hours. If all three are opened simultaneously, how long will it take to fill the pool?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: LCM(4, 6, 12) = 12 units (Pool Capacity)."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Pipe A = +3 units/hr. Pipe B = +2 units/hr. Drain = -1 unit/hr."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: Net Efficiency = 3 + 2 - 1 = 4 units/hr."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: Total Time = 12 units / 4 units/hr = 3 hours."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGoToTest7"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="TAKE TEST 7"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            app:backgroundTint="#FFB74D"
+            android:textColor="#3E2723"
+            android:elevation="6dp"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+</ScrollView>

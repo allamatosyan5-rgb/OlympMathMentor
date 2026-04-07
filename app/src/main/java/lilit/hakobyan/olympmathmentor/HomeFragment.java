@@ -47,23 +47,18 @@ public class HomeFragment extends Fragment {
         // Կարդում ենք 2-րդ դասի վիճակը
         boolean isLesson2Unlocked = prefs.getBoolean("lesson2_unlocked", false);
 
-        // Lesson 1: Միշտ բաց է
+        // --- ՄԵՐ ՍՏԵՂԾԱԾ ԴԱՍԵՐԸ (1-ԻՑ 8) ---
         courseList.add(new CourseModel(1, "Lesson 1:\nNatural Numbers", false, R.color.accent_tan));
-
-        // Lesson 2: Բացվում է, եթե Test 1-ը հանձնված է
         courseList.add(new CourseModel(2, "Lesson 2:\nDivision with Remainder", !isLesson2Unlocked, R.color.course_circle_blue));
-
-        // Lesson 3: Միշտ բաց է դրված
         courseList.add(new CourseModel(3, "Lesson 3:\nPositional Notation", false, R.color.pastel_pink));
-
-        // Lesson 4: Միշտ բաց է
         courseList.add(new CourseModel(4, "Lesson 4:\nAppending Digits", false, R.color.course_circle_grey));
-
-        // ԱՅՍՏԵՂ ԱՎԵԼԱՑՆՈՒՄ ԵՆՔ 5-ՐԴ ԴԱՍԸ (Միշտ բաց)
         courseList.add(new CourseModel(5, "Lesson 5:\nDivisibility Rules", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(6, "Lesson 6:\nMotion Problems", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(7, "Lesson 7:\nWork & Time Problems", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(8, "Lesson 8:\nMixtures & Solutions", false, R.color.course_circle_grey));
 
-        // Մնացած դասերը հիմա սկսվում են 6-ից (6-20)
-        for (int i = 6; i <= 20; i++) {
+        // --- ՄՆԱՑԱԾ ԴԱՍԵՐԸ (ՀԻՄԱ ՍԿՍՎՈՒՄ ԵՆ 9-ԻՑ) ---
+        for (int i = 9; i <= 20; i++) {
             boolean isUnlocked = prefs.getBoolean("lesson" + i + "_unlocked", false);
             courseList.add(new CourseModel(i, "Lesson " + i + ":\nAdvanced Topic", !isUnlocked, R.color.course_circle_grey));
         }
@@ -72,7 +67,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // Այս հատվածը ապահովում է, որ էջը վերադառնալիս թարմանա
         if (adapter != null) {
             createCourseList();
             adapter = new CourseAdapter(getContext(), courseList);
