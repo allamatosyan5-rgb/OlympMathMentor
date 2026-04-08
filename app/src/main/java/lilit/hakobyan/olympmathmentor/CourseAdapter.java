@@ -21,6 +21,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private List<CourseModel> courseList;
     private Context context;
 
+    // Քո նշած 4 հիմնական պաստելային գույները
+    private final int[] pastelColors = {
+            Color.parseColor("#C9ADA3"), // 0. Շագանակագույն (Brown)
+            Color.parseColor("#BBDEFB"), // 1. Կապույտ (Blue)
+            Color.parseColor("#FCE4EC"), // 2. Վարդագույն (Pink)
+            Color.parseColor("#C8E6C9")  // 3. Կանաչ (Green)
+    };
+
     public CourseAdapter(Context context, List<CourseModel> courseList) {
         this.context = context;
         this.courseList = courseList;
@@ -40,63 +48,43 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-        // --- 1. ԿՈՂՊԵՔԻ ՍՏՈՒԳՈՒՄ ---
+        // --- 1. ԽՍՏԱՑՎԱԾ ԿՈՂՊԵՔԻ ՏՐԱՄԱԲԱՆՈՒԹՅՈՒՆԸ ---
         boolean isUnlocked = false;
 
-        // 1, 3, 4, 5, 6, 7 և 8-րդ դասերը ՄԻՇՏ ԲԱՑ ԵՆ
-        if (course.getId() == 1 || course.getId() == 3 || course.getId() == 4 || course.getId() == 5 || course.getId() == 6 || course.getId() == 7 || course.getId() == 8) {
+        if (course.getId() == 1) {
+            // Դաս 1-ը միշտ բաց է բոլորի համար
             isUnlocked = true;
         } else {
-            isUnlocked = prefs.getBoolean("lesson" + course.getId() + "_unlocked", false);
+            // Մյուս դասերը բացվում են ՄԻԱՅՆ այն դեպքում, եթե ՆԱԽՈՐԴ թեստի արդյունքը 6 կամ ավելի է
+            int previousLessonId = course.getId() - 1;
+            int previousTestScore = prefs.getInt("test" + previousLessonId + "_score", 0);
+
+            if (previousTestScore >= 6) {
+                isUnlocked = true;
+            } else {
+                isUnlocked = false;
+            }
         }
 
         course.setLocked(!isUnlocked);
 
-        // --- 2. ԳՈՒՅՆԵՐԻ ՀԱՋՈՐԴԱԿԱՆՈՒԹՅՈՒՆԸ ---
-        int unlockedColor;
-
-        if (position == 0) {
-            unlockedColor = Color.parseColor("#C9ADA3"); // Lesson 1 (Pastel Brown)
-        } else {
-            // Բաժանում ենք 7-ի վրա, որպեսզի ունենանք 7 տարբեր պաստելային գույներ
-            int colorSequence = position % 7;
-            switch (colorSequence) {
-                case 1:
-                    unlockedColor = Color.parseColor("#BBDEFB"); // Lesson 2 (Pastel Blue)
-                    break;
-                case 2:
-                    unlockedColor = Color.parseColor("#FCE4EC"); // Lesson 3 (Pastel Pink)
-                    break;
-                case 3:
-                    unlockedColor = Color.parseColor("#C8E6C9"); // Lesson 4 (Pastel Green)
-                    break;
-                case 4:
-                    unlockedColor = Color.parseColor("#FFF9C4"); // Lesson 5 (Pastel Yellow)
-                    break;
-                case 5:
-                    unlockedColor = Color.parseColor("#E1BEE7"); // Lesson 6 (Pastel Purple)
-                    break;
-                case 6:
-                    unlockedColor = Color.parseColor("#FFE0B2"); // Lesson 7 (Pastel Orange)
-                    break;
-                case 0:
-                default:
-                    unlockedColor = Color.parseColor("#B2DFDB"); // Lesson 8 (Pastel Teal/Cyan)
-                    break;
-            }
-        }
+        // --- 2. ԳՈՒՅՆԵՐԻ ԱՎՏՈՄԱՏ ԲԱՇԽՈՒՄ (ՄԻԱՅՆ 4 ԳՈՒՅՆ) ---
+        // position % 4-ը կապահովի, որ գույները միշտ պտտվեն այս 4-ի մեջ (0,1,2,3, 0,1,2,3...)
+        int unlockedColor = pastelColors[position % 4];
 
         // --- 3. ՎԻԶՈՒԱԼ ՁԵՎԱՎՈՐՈՒՄ ---
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.OVAL);
 
         if (course.isLocked()) {
+            // Եթե փակ է՝ դառնում է մոխրագույն և հայտնվում է կողպեքը
             shape.setColor(Color.parseColor("#F5F5F5"));
             shape.setStroke(6, Color.parseColor("#E0E0E0"));
             holder.tvGo.setTextColor(Color.parseColor("#BDBDBD"));
             holder.ivLock.setVisibility(View.VISIBLE);
             holder.tvGo.setVisibility(View.GONE);
         } else {
+            // Եթե բաց է՝ ստանում է իր գույնը և կողպեքը անհետանում է
             shape.setColor(unlockedColor);
             shape.setStroke(10, Color.parseColor("#3E2723"));
             holder.tvGo.setTextColor(Color.parseColor("#3E2723"));
@@ -105,7 +93,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
         holder.courseCircle.setBackground(shape);
 
-        // --- 4. ԱՍՏՂԻԿՆԵՐԻ ՑՈՒՑԱԴՐՈՒՄ ---
+        // --- 4. ԱՍՏՂԻԿՆԵՐԻ ՑՈՒՑԱԴՐՈՒՄ (Տվյալ դասի թեստի արդյունքով) ---
         int score = prefs.getInt("test" + course.getId() + "_score", 0);
         holder.ivStar1.setVisibility(View.GONE);
         holder.ivStar2.setVisibility(View.GONE);
@@ -132,30 +120,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         // --- 5. ՍԵՂՄԵԼՈՒ ՏՐԱՄԱԲԱՆՈՒԹՅՈՒՆ ---
         holder.courseCircle.setOnClickListener(v -> {
             if (course.isLocked()) {
-                Toast.makeText(context, "Lesson is locked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Locked! Score 6+ on Test " + (course.getId() - 1) + " to unlock.", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = null;
-
-                if (course.getId() == 1) {
-                    intent = new Intent(context, Lesson1Activity.class);
-                } else if (course.getId() == 2) {
-                    intent = new Intent(context, Lesson2Activity.class);
-                } else if (course.getId() == 3) {
-                    intent = new Intent(context, Lesson3Activity.class);
-                } else if (course.getId() == 4) {
-                    intent = new Intent(context, Lesson4Activity.class);
-                } else if (course.getId() == 5) {
-                    intent = new Intent(context, Lesson5Activity.class);
-                } else if (course.getId() == 6) {
-                    intent = new Intent(context, Lesson6Activity.class);
-                } else if (course.getId() == 7) {
-                    intent = new Intent(context, Lesson7Activity.class);
-                } else if (course.getId() == 8) {
-                    intent = new Intent(context, Lesson8Activity.class); // Բացում է Դաս 8-ը
-                }
-
-                if (intent != null) {
+                try {
+                    // Ավտոմատ գտնում և բացում է ճիշտ LessonActivity-ն
+                    String className = "lilit.hakobyan.olympmathmentor.Lesson" + course.getId() + "Activity";
+                    Class<?> activityClass = Class.forName(className);
+                    Intent intent = new Intent(context, activityClass);
                     context.startActivity(intent);
+                } catch (ClassNotFoundException e) {
+                    Toast.makeText(context, "Lesson " + course.getId() + " is coming soon!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -125,6 +125,18 @@
             android:name=".Test8Activity"
             android:exported="false" />
 
+        <activity android:name=".Lesson9Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test9Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson10Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test10Activity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

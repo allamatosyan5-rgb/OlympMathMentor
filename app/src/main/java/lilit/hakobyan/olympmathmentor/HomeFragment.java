@@ -56,9 +56,11 @@ public class HomeFragment extends Fragment {
         courseList.add(new CourseModel(6, "Lesson 6:\nMotion Problems", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(7, "Lesson 7:\nWork & Time Problems", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(8, "Lesson 8:\nMixtures & Solutions", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(9, "Lesson 9:\nBoats & Streams", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(10, "Lesson 10:\nJoint Work & Time", false, R.color.course_circle_grey));
 
-        // --- ՄՆԱՑԱԾ ԴԱՍԵՐԸ (ՀԻՄԱ ՍԿՍՎՈՒՄ ԵՆ 9-ԻՑ) ---
-        for (int i = 9; i <= 20; i++) {
+
+        for (int i = 11; i <= 20; i++) {
             boolean isUnlocked = prefs.getBoolean("lesson" + i + "_unlocked", false);
             courseList.add(new CourseModel(i, "Lesson " + i + ":\nAdvanced Topic", !isUnlocked, R.color.course_circle_grey));
         }
