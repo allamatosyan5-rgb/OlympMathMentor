@@ -5,29 +5,40 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Test9Activity extends AppCompatActivity {
+public class Test20Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. A boat's speed downstream is 15 km/h and upstream is 9 km/h. What is the boat's speed in still water?",
-            "2. A boat's speed downstream is 20 km/h and upstream is 14 km/h. What is the speed of the current?",
-            "3. A boat travels 48 km downstream in 3 hours and 48 km upstream in 4 hours. Find the stream speed.",
-            "4. A boat's speed in still water is 8 km/h. River flows at 2 km/h. It travels downstream for 15km. How many hours did it take?",
-            "5. A boat takes twice as long to go upstream as it does to go downstream. What is the ratio of the boat's speed to the stream's speed? (e.g. if 5:1, type 5)",
-            "6. A boat goes 36 km downstream and 36 km upstream in exactly 5 hours. If the current is 3 km/h, find the boat's speed in still water.",
-            "7. A raft is floating down a 2 km/h river. A boat (speed 10 km/h in still water) leaves the same port 4 hours later to catch the raft. How many hours will the boat drive until it catches the raft?",
-            "8. Distance between A and B is 20 km. Boat goes A to B and back in 7 hours. Current is 3 km/h. What is the boat speed?",
-            "9. Boat goes 24km upstream and 36km down in 6 hours. Same boat goes 36km up and 24km down in 6.5 hours. Find current speed.",
-            "10. A hat falls into the river. Boat goes downstream 15 mins, turns back, and catches it 2 km away from the drop point. What is the river speed? (km/h)"
+            "1. Two chords intersect. PA=4, PB=6, PC=3. Find PD.",
+            "2. Secant external PA=4, internal AB=5. Find tangent PT.",
+            "3. The Centroid divides the distance between the Orthocenter and Circumcenter in what ratio? (Format: if 5:1 type 5)",
+            "4. If the circumradius of a triangle is 10, what is the radius of the Nine-Point Circle?",
+            "5. The Euler line connects Orthocenter, Centroid, and which other center? (1 for Incenter, 2 for Circumcenter)",
+            "6. Two chords intersect. PA=2, PB=10, PC=4. Find PD.",
+            "7. Does the Incenter always lie on the Euler Line? (1 for YES, 0 for NO)",
+            "8. Does Stewart's Theorem apply to a right-angled triangle? (1 for YES, 0 for NO)",
+            "9. How many distinct points precisely define the 'Feuerbach's Circle' (Nine-Point Circle)?",
+            "10. If the distance from Orthocenter (H) to Centroid (G) is 12, what is the distance from Centroid (G) to Circumcenter (O)?"
     };
 
+    // Q1: 4*6 = 3*PD -> 24=3*PD -> 8
+    // Q2: PT^2 = 4*(4+5) = 36 -> 6
+    // Q3: 2
+    // Q4: R/2 = 5
+    // Q5: Circumcenter -> 2
+    // Q6: 2*10 = 4*PD -> 20=4*PD -> 5
+    // Q7: No. Only in specific cases (like isosceles) -> 0
+    // Q8: Yes, it applies to EVERY triangle -> 1
+    // Q9: 9
+    // Q10: HG = 2 * GO -> 12 = 2 * GO -> 6
     private String[] correctAnswers = {
-            "12", "3", "2", "1.5", "3", "15", "1", "7", "2", "4"
+            "8", "6", "2", "5", "2", "5", "0", "1", "9", "6"
     };
 
     private EditText[] answerInputs;
@@ -36,7 +47,7 @@ public class Test9Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test9);
+        setContentView(R.layout.activity_test20);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
         answerInputs = new EditText[questions.length];
@@ -68,18 +79,13 @@ public class Test9Activity extends AppCompatActivity {
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-
-        findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
-            try {
-
-                Class<?> lesson10Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson10Activity");
-                Intent intent = new Intent(Test9Activity.this, lesson10Class);
-                startActivity(intent);
-                finish();
-            } catch (ClassNotFoundException e) {
-
-                finish();
-            }
+        // --- FINAL EXAM LOGIC: OPENS THE 50-QUESTION EXAM ---
+        Button btnNextLesson = findViewById(R.id.btnNextLesson);
+        btnNextLesson.setText("TAKE FINAL EXAM");
+        btnNextLesson.setOnClickListener(v -> {
+            Intent intent = new Intent(Test20Activity.this, FinalExamActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -116,12 +122,12 @@ public class Test9Activity extends AppCompatActivity {
         tvScore.setText("Your Score: " + score + " / " + questions.length);
 
         if (score < 6) {
-            tvFeedbackResult.setText("River problems are tricky. Review the Hat Paradox and try again!");
+            tvFeedbackResult.setText("You are so close to the end! Review the Euler Line and try again.");
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
         } else {
-            tvFeedbackResult.setText("Masterful! You navigated the river currents perfectly.");
+            tvFeedbackResult.setText("🏆 YOU DID IT! You unlocked the Grand Final Exam.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
@@ -139,10 +145,11 @@ public class Test9Activity extends AppCompatActivity {
             if (score >= 8) m2.setColorFilter(gold);
             if (score == 10) m3.setColorFilter(gold);
 
+            // Save score
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
-                    .putBoolean("lesson10_unlocked", true)
-                    .putInt("test9_score", score)
+                    .putInt("test20_score", score)
+                    .putBoolean("course_completed", true)
                     .apply();
         }
     }

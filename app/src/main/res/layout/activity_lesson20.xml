@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5DC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lesson 20: Advanced Circles &amp; Euler Line"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Power of a Point, Stewart's Theorem, and The Nine-Point Circle"
+            android:textSize="16sp"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:textStyle="italic" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_dialog_info"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Power of a Point"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The 'Power of a Point' theorem is a magnificent property of circles. It states that if you draw any line through a fixed point P that intersects a circle, the product of the distances from P to the intersection points is strictly CONSTANT."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Case A: Intersecting Chords (Inside the Circle)\nIf two chords AB and CD intersect at a point P INSIDE the circle:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgPowerInside"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_power_inside" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PA × PB = PC × PD"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="#00695C"
+            android:padding="16dp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Case B: Secant and Tangent (Outside the Circle)\nIf a secant line cuts the circle at A and B, and a tangent line touches it at T, originating from an outside point P:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgPowerOutside"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_power_outside" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PT² = PA × PB"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="#C62828"
+            android:padding="16dp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Stewart's Theorem"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How do you find the length of ANY random line segment (Cevian) drawn from a vertex to the opposite side? Pythagoras only works for right triangles. Stewart's Theorem works for EVERYTHING."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgStewart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_stewart" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To memorize it, use the famous 'A man and his dad put a bomb in the sink' mnemonic (man + dad = bmb + cnc):"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="m·a·n + d·a·d = b·m·b + c·n·c\n\nWhich means:\nman + da² = b²m + c²n"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:background="#E1BEE7"
+            android:padding="20dp"
+            android:lineSpacingExtra="8dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. The Euler Line"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In Lesson 17, we learned about the Orthocenter (H), Centroid (G), and Circumcenter (O). Leonhard Euler discovered a mind-blowing fact: In ANY triangle, these three distinct centers ALWAYS lie on a perfectly straight line!"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgEulerLine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_euler_line" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="THE EULER RATIO:\nNot only are they on a straight line, but the Centroid (G) always divides the distance between H and O in a precise 2:1 ratio!\n\nDistance(H, G) = 2 × Distance(G, O)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="#E65100"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. The Nine-Point Circle"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If you think the Euler Line is crazy, wait until you hear about the Nine-Point Circle (or Feuerbach's Circle). In EVERY triangle, there is a single magical circle that passes exactly through 9 specific points:"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgNinePoint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_nine_point" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1-3: The midpoints of the 3 sides.\n4-6: The feet of the 3 altitudes.\n7-9: The midpoints of the lines connecting the Orthocenter (H) to the 3 vertices."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#C8E6C9"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Secret: The radius of this Nine-Point Circle is EXACTLY HALF of the Circumradius (R/2) of the original triangle!"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masterclass: Advanced Problems"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="24dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 1: Intersecting Chords"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#00695C"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: Two chords AB and CD intersect at point P inside a circle. If PA = 4, PB = 9, and PC = 6, what is the length of PD?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Apply the Power of a Point theorem for internal chords.\nPA × PB = PC × PD"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Plug in the numbers.\n4 × 9 = 6 × PD"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: Solve for PD.\n36 = 6 × PD \nPD = 36 / 6 = 6."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: The length of PD is 6."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 2: The Tangent's Power"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#C62828"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: From a point P outside a circle, a tangent PT and a secant PAB are drawn. The external part of the secant PA is 4, and the internal chord AB is 5. What is the length of the tangent PT?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Be very careful! The formula uses the WHOLE secant length (PB), not just the inner chord."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Calculate PB (the whole secant). \nPB = PA + AB = 4 + 5 = 9."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: Apply the Secant-Tangent formula.\nPT² = PA × PB\nPT² = 4 × 9 = 36"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: Take the square root. \nPT = √36 = 6."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: The length of the tangent is 6."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 3: Euler Line Ratio"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E65100"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: In a given triangle, the distance from the Orthocenter (H) to the Circumcenter (O) is 30 units. What is the distance from the Centroid (G) to the Circumcenter (O)?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Recall the Euler Line ratio. \nDistance(H, G) = 2 × Distance(G, O)."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: This means the entire distance HO is divided into 3 equal parts (2 parts for HG, 1 part for GO)."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: Calculate the size of 1 part. \n1 part = Total Distance / 3 = 30 / 3 = 10."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: The distance GO is exactly 1 part. Therefore, GO = 10 units."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: The distance GO is 10."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGoToTest20"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="TAKE FINAL TEST (TEST 20)"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            app:backgroundTint="#C5E1A5"
+            android:textColor="#3E2723"
+            android:elevation="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -11,23 +11,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Test9Activity extends AppCompatActivity {
+public class Test14Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. A boat's speed downstream is 15 km/h and upstream is 9 km/h. What is the boat's speed in still water?",
-            "2. A boat's speed downstream is 20 km/h and upstream is 14 km/h. What is the speed of the current?",
-            "3. A boat travels 48 km downstream in 3 hours and 48 km upstream in 4 hours. Find the stream speed.",
-            "4. A boat's speed in still water is 8 km/h. River flows at 2 km/h. It travels downstream for 15km. How many hours did it take?",
-            "5. A boat takes twice as long to go upstream as it does to go downstream. What is the ratio of the boat's speed to the stream's speed? (e.g. if 5:1, type 5)",
-            "6. A boat goes 36 km downstream and 36 km upstream in exactly 5 hours. If the current is 3 km/h, find the boat's speed in still water.",
-            "7. A raft is floating down a 2 km/h river. A boat (speed 10 km/h in still water) leaves the same port 4 hours later to catch the raft. How many hours will the boat drive until it catches the raft?",
-            "8. Distance between A and B is 20 km. Boat goes A to B and back in 7 hours. Current is 3 km/h. What is the boat speed?",
-            "9. Boat goes 24km upstream and 36km down in 6 hours. Same boat goes 36km up and 24km down in 6.5 hours. Find current speed.",
-            "10. A hat falls into the river. Boat goes downstream 15 mins, turns back, and catches it 2 km away from the drop point. What is the river speed? (km/h)"
+            "1. Using the Divisor Formula, how many TOTAL divisors does the number 120 have?",
+            "2. What is the smallest positive integer that has EXACTLY 6 divisors?",
+            "3. Find the LCM of the fractions 3/4 and 5/6. (Format: decimal e.g. 7.5)",
+            "4. A courtyard is 42m by 30m. What is the MINIMUM number of identical square tiles needed to pave it?",
+            "5. Two interlocking gears have 24 and 36 teeth. How many revolutions must the SMALLER gear make for the same teeth to touch again?",
+            "6. The product of two numbers is 300 and their GCD is 5. If neither number is 5, what is their sum?",
+            "7. The equation 6x + 9y = C has integer solutions. Which of these can be C: 43, 44, or 45?",
+            "8. Find the smallest positive integer 'x' that satisfies the equation: 17x - 12y = 1 (where y is also positive).",
+            "9. If GCD(2^A - 1, 2^B - 1) = 2^C - 1, and A=45, B=75, what is the value of C?",
+            "10. A number N has prime factorization 2³ × 3². How many of its divisors are EVEN numbers?"
     };
 
+
     private String[] correctAnswers = {
-            "12", "3", "2", "1.5", "3", "15", "1", "7", "2", "4"
+            "16", "12", "7.5", "35", "3", "35", "45", "5", "15", "9"
     };
 
     private EditText[] answerInputs;
@@ -36,7 +37,7 @@ public class Test9Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test9);
+        setContentView(R.layout.activity_test14);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
         answerInputs = new EditText[questions.length];
@@ -68,16 +69,14 @@ public class Test9Activity extends AppCompatActivity {
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-
+        // --- NEXT LESSON LOGIC: OPENS LESSON 15 ---
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             try {
-
-                Class<?> lesson10Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson10Activity");
-                Intent intent = new Intent(Test9Activity.this, lesson10Class);
+                Class<?> lesson15Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson15Activity");
+                Intent intent = new Intent(Test14Activity.this, lesson15Class);
                 startActivity(intent);
                 finish();
             } catch (ClassNotFoundException e) {
-
                 finish();
             }
         });
@@ -116,12 +115,12 @@ public class Test9Activity extends AppCompatActivity {
         tvScore.setText("Your Score: " + score + " / " + questions.length);
 
         if (score < 6) {
-            tvFeedbackResult.setText("River problems are tricky. Review the Hat Paradox and try again!");
+            tvFeedbackResult.setText("These are very advanced! Review Bezout's Identity and the Divisor formula.");
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
         } else {
-            tvFeedbackResult.setText("Masterful! You navigated the river currents perfectly.");
+            tvFeedbackResult.setText("Elite performance! You've mastered Advanced Number Theory.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
@@ -141,8 +140,8 @@ public class Test9Activity extends AppCompatActivity {
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
-                    .putBoolean("lesson10_unlocked", true)
-                    .putInt("test9_score", score)
+                    .putBoolean("lesson15_unlocked", true)
+                    .putInt("test14_score", score)
                     .apply();
         }
     }

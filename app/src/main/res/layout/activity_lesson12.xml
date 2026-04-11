@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5DC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lesson 12: Dirichlet's Principle"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Pigeonhole Principle in Combinatorics, Geometry, and Number Theory"
+            android:textSize="16sp"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:textStyle="italic" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_dialog_info"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. The Basic Formulation"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Named after the German mathematician Peter Gustav Lejeune Dirichlet, this principle is elegantly simple but profoundly powerful. It is the ultimate tool for proving that a certain condition MUST exist without needing to know exactly WHERE it exists."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CLASSIC STATEMENT:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If you have N holes (boxes) and N+1 pigeons (items), and you put all the pigeons into the holes, then at least one hole MUST contain 2 or more pigeons."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:background="#C9ADA3"
+            android:padding="20dp"
+            android:lineSpacingExtra="8dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. The Generalized Principle"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What happens if we have many more pigeons than holes? The principle scales up perfectly."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GENERAL RULE:\nIf you distribute (N × k + 1) items into N boxes, then at least one box is guaranteed to contain at least (k + 1) items."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#BBDEFB"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: If you have 100 pigeons and 9 holes. Here N=9. We can write 100 as (9 × 11 + 1). Thus, k=11. At least one hole must contain k+1 = 12 pigeons!"
+            android:textColor="#424242"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Geometric Dirichlet"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dirichlet's principle is widely used in Geometry to prove that points must be close to each other. The 'holes' become geometric regions, and the 'pigeons' are points."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Strategy:\nTo prove that out of N points in a shape, 2 points are closer than distance D, you must divide the shape into N-1 smaller regions. By Dirichlet, one region gets 2 points. Then prove the max distance inside that small region is D."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:background="#FCE4EC"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Number Theory &amp; Remainders"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="When dividing any number by N, there are exactly N possible remainders (0, 1, 2, ..., N-1). These remainders act as our 'Holes'. If we pick N+1 random numbers (our 'Pigeons'), Dirichlet guarantees that at least two numbers will have the EXACT same remainder."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crucial Olympiad Fact:\nIf two numbers have the same remainder when divided by N, their DIFFERENCE is perfectly divisible by N."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:background="#C8E6C9"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masterclass: Advanced Problem Solving"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="24dp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 1: The Blind Draw"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#D32F2F"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: A drawer contains 10 Black socks, 12 Blue socks, and 14 White socks. In complete darkness, what is the minimum number of socks you must pull out to guarantee you have a matching pair?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Identify the 'Holes'. The holes are the COLORS. There are 3 holes (Black, Blue, White)."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Identify the goal. We need 2 pigeons in any single hole."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: What is the worst-case scenario? The worst luck is pulling 1 Black, 1 Blue, and 1 White. You pulled 3 socks, but have no pair."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: The very next sock (the 4th one) MUST be Black, Blue, or White. Since you already have one of each, it guarantees a pair!"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: You must pull 4 socks. (N=3, target is N+1)."
+                android:textColor="#B71C1C"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 2: The Left/Right Glove Trap"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1565C0"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: A box has 10 Left gloves and 10 Right gloves (all identical in color). What is the minimum number to draw to guarantee a valid pair (one Left and one Right)?"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Gloves are DIFFERENT from socks because they are chiral (Left vs Right). You can't just match any two."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Think of the absolute worst-case scenario. You keep drawing gloves, but you are incredibly unlucky."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: The worst case is drawing ALL 10 Left gloves in a row! You have 10 gloves, but 0 pairs."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: Now, the box ONLY contains Right gloves. The very next draw (the 11th glove) MUST be a Right glove. It will finally match with one of your 10 Left gloves."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: You must draw 11 gloves."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 3: The Social Network"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E65100"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: At a party of N people (N ≥ 2), prove that there are ALWAYS two people who have the exact same number of friends at the party. (Friendship is mutual)."
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: The 'Holes' are the possible number of friends. For N people, a person can have 0, 1, 2, ..., up to N-1 friends. That is N possible holes."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: The 'Pigeons' are the N people."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: But wait! Can the '0 friends' hole and the 'N-1 friends' hole be occupied at the SAME time?"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: No! If someone has N-1 friends, they are friends with EVERYONE. Therefore, NO ONE can have 0 friends. Thus, the holes '0' and 'N-1' are mutually exclusive."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 5: This means there are actually only N-1 available holes for our N pigeons. By Dirichlet, 2 people MUST fall into the same hole."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: It is mathematically guaranteed. Two people always have the same number of friends."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 4: Points in a Square"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#4A148C"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: 5 points are placed randomly inside a 2x2 square. Prove that at least two points are at a distance of √2 or less from each other."
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Pigeons = 5 points."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: We need 4 holes. Let's divide the 2x2 square into four smaller 1x1 squares."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: By Dirichlet, since we have 5 points and 4 regions, at least one 1x1 square must contain 2 points."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: What is the maximum possible distance between any two points inside a 1x1 square? It's the diagonal!"
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 5: By Pythagorean theorem, diagonal = √(1² + 1²) = √2. So they cannot be further apart than √2."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: Proved! Geometry + Dirichlet is beautiful."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGoToTest12"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="TAKE TEST 12"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            app:backgroundTint="#E6EE9C"
+            android:textColor="#3E2723"
+            android:elevation="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+</ScrollView>

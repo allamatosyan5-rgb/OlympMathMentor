@@ -27,17 +27,7 @@ public class Test1Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "25",
-            "Even",
-            "No",
-            "0",
-            "Odd",
-            "0",
-            "0",
-            "No",
-            "Odd",
-            "5"
-    };
+            "25", "Even", "No", "0", "Odd", "0", "0", "No", "Odd", "5" };
 
     private EditText[] answerInputs;
     private TextView[] feedbackViews;
@@ -56,7 +46,7 @@ public class Test1Activity extends AppCompatActivity {
             TextView tvQuestion = new TextView(this);
             tvQuestion.setText(questions[i]);
             tvQuestion.setTextSize(16f);
-            tvQuestion.setTextColor(Color.parseColor("#3E2723")); // Deep Brown
+            tvQuestion.setTextColor(Color.parseColor("#3E2723"));
             tvQuestion.setPadding(0, 30, 0, 10);
             questionsContainer.addView(tvQuestion);
 
@@ -77,11 +67,11 @@ public class Test1Activity extends AppCompatActivity {
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
-        // ԱՅՍՏԵՂ Է ՓՈՓՈԽՎԱԾ ՄԱՍԸ. Հաջորդ դասը բացելու տրամաբանությունը
+
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             Intent intent = new Intent(Test1Activity.this, Lesson2Activity.class);
             startActivity(intent);
-            finish(); // Փակում ենք թեստի էջը
+            finish();
         });
 
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
@@ -100,14 +90,14 @@ public class Test1Activity extends AppCompatActivity {
 
             if (userAnswer.isEmpty()) {
                 feedbackViews[i].setText("❌ You didn't answer. Correct answer: " + correctAnswers[i]);
-                feedbackViews[i].setTextColor(Color.parseColor("#D32F2F")); // Red
+                feedbackViews[i].setTextColor(Color.parseColor("#D32F2F"));
             } else if (userAnswer.equals(correctAnswer)) {
                 score++;
                 feedbackViews[i].setText("✅ Correct!");
-                feedbackViews[i].setTextColor(Color.parseColor("#2E7D32")); // Green
+                feedbackViews[i].setTextColor(Color.parseColor("#2E7D32"));
             } else {
                 feedbackViews[i].setText("❌ Incorrect. Correct answer: " + correctAnswers[i]);
-                feedbackViews[i].setTextColor(Color.parseColor("#D32F2F")); // Red
+                feedbackViews[i].setTextColor(Color.parseColor("#D32F2F"));
             }
         }
 
@@ -115,7 +105,7 @@ public class Test1Activity extends AppCompatActivity {
     }
 
     private void showFinalResult(int score) {
-        // Hide Finish button, show results layout
+
         findViewById(R.id.btnFinish).setVisibility(View.GONE);
         findViewById(R.id.resultLayout).setVisibility(View.VISIBLE);
 
@@ -155,7 +145,7 @@ public class Test1Activity extends AppCompatActivity {
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit().putBoolean("lesson2_unlocked", true).apply();
-            prefs.edit().putInt("test1_score", score).apply(); // Պահպանում ենք նաև միավորը
+            prefs.edit().putInt("test1_score", score).apply();
         }
     }
 }

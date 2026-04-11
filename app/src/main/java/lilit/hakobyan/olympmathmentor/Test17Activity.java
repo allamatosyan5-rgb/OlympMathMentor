@@ -11,23 +11,33 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Test9Activity extends AppCompatActivity {
+public class Test17Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. A boat's speed downstream is 15 km/h and upstream is 9 km/h. What is the boat's speed in still water?",
-            "2. A boat's speed downstream is 20 km/h and upstream is 14 km/h. What is the speed of the current?",
-            "3. A boat travels 48 km downstream in 3 hours and 48 km upstream in 4 hours. Find the stream speed.",
-            "4. A boat's speed in still water is 8 km/h. River flows at 2 km/h. It travels downstream for 15km. How many hours did it take?",
-            "5. A boat takes twice as long to go upstream as it does to go downstream. What is the ratio of the boat's speed to the stream's speed? (e.g. if 5:1, type 5)",
-            "6. A boat goes 36 km downstream and 36 km upstream in exactly 5 hours. If the current is 3 km/h, find the boat's speed in still water.",
-            "7. A raft is floating down a 2 km/h river. A boat (speed 10 km/h in still water) leaves the same port 4 hours later to catch the raft. How many hours will the boat drive until it catches the raft?",
-            "8. Distance between A and B is 20 km. Boat goes A to B and back in 7 hours. Current is 3 km/h. What is the boat speed?",
-            "9. Boat goes 24km upstream and 36km down in 6 hours. Same boat goes 36km up and 24km down in 6.5 hours. Find current speed.",
-            "10. A hat falls into the river. Boat goes downstream 15 mins, turns back, and catches it 2 km away from the drop point. What is the river speed? (km/h)"
+            "1. The centroid divides the median in what ratio? (e.g. if 5:1, type 5)",
+            "2. In an obtuse triangle, does the orthocenter lie INSIDE the triangle? (1 for YES, 0 for NO)",
+            "3. In a right-angled triangle, the circumcenter lies on the midpoint of the hypotenuse. If the hypotenuse is 10, what is the circumradius (R)?",
+            "4. A triangle has Area = 24 and Perimeter = 24. What is the radius of the incircle (r)? (Hint: Area = r * s)",
+            "5. An inscribed angle is 45°. What is the measure of the central angle standing on the same arc?",
+            "6. A central angle is 120°. What is the measure of the inscribed angle standing on the same arc?",
+            "7. An angle is inscribed in a semicircle. What is its measure in degrees?",
+            "8. The total length of a median is 21cm. How far is the centroid from the vertex? (in cm)",
+            "9. True or False: The INCENTER is always equidistant from the three vertices of the triangle. (1 for True, 0 for False)",
+            "10. True or False: The incenter of ANY triangle is always inside the triangle. (1 for True, 0 for False)"
     };
 
+    // Q1: 2 (2:1 ratio)
+    // Q2: 0 (lies outside)
+    // Q3: Hypotenuse = diameter. R = 10/2 = 5.
+    // Q4: s = Perim/2 = 12. Area = r*s -> 24 = r*12 -> r=2.
+    // Q5: Central = 2 * Inscribed = 2 * 45 = 90.
+    // Q6: Inscribed = Central / 2 = 120 / 2 = 60.
+    // Q7: Thales theorem = 90.
+    // Q8: 2/3 of 21 = 14.
+    // Q9: 0 (Circumcenter is equidistant from vertices. Incenter is equidistant from sides).
+    // Q10: 1 (Yes, angle bisectors always meet inside).
     private String[] correctAnswers = {
-            "12", "3", "2", "1.5", "3", "15", "1", "7", "2", "4"
+            "2", "0", "5", "2", "90", "60", "90", "14", "0", "1"
     };
 
     private EditText[] answerInputs;
@@ -36,7 +46,7 @@ public class Test9Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test9);
+        setContentView(R.layout.activity_test17);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
         answerInputs = new EditText[questions.length];
@@ -51,7 +61,7 @@ public class Test9Activity extends AppCompatActivity {
             questionsContainer.addView(tvQuestion);
 
             EditText etAnswer = new EditText(this);
-            etAnswer.setHint("Type a number...");
+            etAnswer.setHint("Type your answer...");
             etAnswer.setTextSize(16f);
             etAnswer.setTextColor(Color.parseColor("#212121"));
             answerInputs[i] = etAnswer;
@@ -68,16 +78,14 @@ public class Test9Activity extends AppCompatActivity {
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-
+        // --- NEXT LESSON LOGIC: OPENS LESSON 18 ---
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             try {
-
-                Class<?> lesson10Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson10Activity");
-                Intent intent = new Intent(Test9Activity.this, lesson10Class);
+                Class<?> lesson18Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson18Activity");
+                Intent intent = new Intent(Test17Activity.this, lesson18Class);
                 startActivity(intent);
                 finish();
             } catch (ClassNotFoundException e) {
-
                 finish();
             }
         });
@@ -116,12 +124,12 @@ public class Test9Activity extends AppCompatActivity {
         tvScore.setText("Your Score: " + score + " / " + questions.length);
 
         if (score < 6) {
-            tvFeedbackResult.setText("River problems are tricky. Review the Hat Paradox and try again!");
+            tvFeedbackResult.setText("Geometry centers can be confusing. Review the 2:1 ratio and try again!");
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
         } else {
-            tvFeedbackResult.setText("Masterful! You navigated the river currents perfectly.");
+            tvFeedbackResult.setText("Fantastic! You have a great eye for geometric centers.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
@@ -141,8 +149,8 @@ public class Test9Activity extends AppCompatActivity {
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
-                    .putBoolean("lesson10_unlocked", true)
-                    .putInt("test9_score", score)
+                    .putBoolean("lesson18_unlocked", true)
+                    .putInt("test17_score", score)
                     .apply();
         }
     }

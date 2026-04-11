@@ -1,7 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,14 +41,9 @@ public class HomeFragment extends Fragment {
     private void createCourseList() {
         courseList = new ArrayList<>();
 
-        SharedPreferences prefs = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-        // Կարդում ենք 2-րդ դասի վիճակը
-        boolean isLesson2Unlocked = prefs.getBoolean("lesson2_unlocked", false);
-
-        // --- ՄԵՐ ՍՏԵՂԾԱԾ ԴԱՍԵՐԸ (1-ԻՑ 8) ---
         courseList.add(new CourseModel(1, "Lesson 1:\nNatural Numbers", false, R.color.accent_tan));
-        courseList.add(new CourseModel(2, "Lesson 2:\nDivision with Remainder", !isLesson2Unlocked, R.color.course_circle_blue));
+        courseList.add(new CourseModel(2, "Lesson 2:\nDivision with Remainder", false, R.color.course_circle_blue));
         courseList.add(new CourseModel(3, "Lesson 3:\nPositional Notation", false, R.color.pastel_pink));
         courseList.add(new CourseModel(4, "Lesson 4:\nAppending Digits", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(5, "Lesson 5:\nDivisibility Rules", false, R.color.course_circle_grey));
@@ -58,12 +52,19 @@ public class HomeFragment extends Fragment {
         courseList.add(new CourseModel(8, "Lesson 8:\nMixtures & Solutions", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(9, "Lesson 9:\nBoats & Streams", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(10, "Lesson 10:\nJoint Work & Time", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(11, "Lesson 11:\nParity", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(12, "Lesson 12:\nDirichlet's Principle", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(13, "Lesson 13:\nGCD & LCM", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(14, "Lesson 14:\nAdvanced GCD & LCM", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(15, "Lesson 15:\nPrimes & Composites", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(16, "Lesson 16:\nTriangle Foundations", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(17, "Lesson 17:\nCenters & Circles", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(18, "Lesson 18:\nAreas & Adv. Theorems", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(19, "Lesson 19:\nPolygons & Ptolemy", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(20, "Lesson 20:\nAdvanced Circles", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(21, "FINAL TEST 1", false, R.color.course_circle_grey));
 
 
-        for (int i = 11; i <= 20; i++) {
-            boolean isUnlocked = prefs.getBoolean("lesson" + i + "_unlocked", false);
-            courseList.add(new CourseModel(i, "Lesson " + i + ":\nAdvanced Topic", !isUnlocked, R.color.course_circle_grey));
-        }
     }
 
     @Override

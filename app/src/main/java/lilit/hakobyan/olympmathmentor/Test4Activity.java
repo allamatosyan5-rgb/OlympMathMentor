@@ -73,7 +73,6 @@ public class Test4Activity extends AppCompatActivity {
     private void checkResults() {
         int score = 0;
         for (int i = 0; i < questions.length; i++) {
-            // Մաքրում ենք բացատները ստուգելիս (օր.՝ 10x+d)
             String userAnswer = answerInputs[i].getText().toString().trim().toLowerCase().replaceAll("\\s+", "");
             String correctAnswer = correctAnswers[i].toLowerCase().replaceAll("\\s+", "");
 

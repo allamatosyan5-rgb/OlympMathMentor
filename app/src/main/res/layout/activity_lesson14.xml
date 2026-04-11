@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lesson 11: Parity"
+            android:text="Lesson 14: Advanced GCD &amp; LCM"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Odd and Even Dynamics, Invariants, and Colorings"
+            android:text="Extended Euclidean Algorithm, Bezout's Identity, and Divisor Functions"
             android:textSize="16sp"
             android:textColor="#5D4037"
             android:layout_marginBottom="24dp"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. The Basics of Parity"
+                android:text="1. Number of Divisors"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#3E2723" />
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Parity refers to whether an integer is Even (divisible by 2) or Odd (not divisible by 2). While this seems simple, it is one of the most powerful tools in Olympiad mathematics for proving whether a certain state is possible or impossible."
+            android:text="In Olympiads, you are rarely asked to simply list divisors. Instead, you are asked HOW MANY divisors a massive number has. Counting them manually is impossible. We use Prime Factorization."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
@@ -73,7 +73,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ARITHMETIC RULES:"
+            android:text="THE DIVISOR FORMULA (τ):"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -82,11 +82,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Addition and Subtraction:\n• Even ± Even = Even\n• Odd ± Odd = Even\n• Even ± Odd = Odd"
+            android:text="Step 1: Write the number 'N' in its prime factored form:\nN = p^a × q^b × r^c ...\n(where p, q, r are primes and a, b, c are their powers).\n\nStep 2: Add 1 to every power and multiply them together:\nTotal Divisors = (a + 1) × (b + 1) × (c + 1) ..."
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#C9ADA3"
+            android:background="#C8E6C9"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="16dp" />
@@ -94,13 +94,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Multiplication:\n• Even × Any Number = Even\n• Odd × Odd = Odd\n\n(If a product of many numbers is Odd, it means EVERY SINGLE number in the product MUST be Odd!)"
+            android:text="Example: How many divisors does 120 have?\n120 = 2³ × 3¹ × 5¹.\nThe powers are 3, 1, and 1.\nFormula: (3+1) × (1+1) × (1+1) = 4 × 2 × 2 = 16 divisors."
+            android:textColor="#212121"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:background="#BBDEFB"
-            android:padding="20dp"
-            android:lineSpacingExtra="8dp"
+            android:background="#E8E0C5"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
 
         <View
@@ -126,7 +125,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2. Parity of a Sum"
+                android:text="2. Bezout's Identity"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#3E2723" />
@@ -135,7 +134,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The parity of a sum of many numbers depends EXCLUSIVELY on the quantity of Odd numbers in the sum. The Even numbers do not affect the parity at all."
+            android:text="Bezout's Identity is a magical theorem in Number Theory. It states that for any two integers 'a' and 'b', their Greatest Common Divisor (GCD) can ALWAYS be written as a linear combination of 'a' and 'b'."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
@@ -144,12 +143,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="► Rule 1: The sum of an EVEN number of Odds is EVEN. (e.g., 3 + 5 = 8; or 1 + 3 + 5 + 7 = 16)\n\n► Rule 2: The sum of an ODD number of Odds is ODD. (e.g., 3 + 5 + 7 = 15)"
-            android:textColor="#212121"
-            android:textSize="16sp"
-            android:background="#FCE4EC"
+            android:text="ax + by = GCD(a, b)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="#D32F2F"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Here, 'x' and 'y' are integers (one of them will usually be negative). \n\nExample: Let a = 12, b = 15. The GCD is 3. \nCan we find x, y such that 12x + 15y = 3? \nYes! If x = -1 and y = 1, then 12(-1) + 15(1) = 3."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
             android:layout_marginBottom="24dp" />
 
         <View
@@ -161,7 +171,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3. The Concept of Invariant (Անփոփոխ)"
+            android:text="3. Linear Diophantine Equations"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -170,7 +180,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="In many logic puzzles, objects are transformed step by step. An 'Invariant' is a property that NEVER changes during these steps. Most of the time, this invariant is Parity."
+            android:text="An equation of the form ax + by = c, where you only want integer solutions, is called a Linear Diophantine Equation."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
@@ -179,13 +189,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Example: There are 7 glasses upside down. You are allowed to flip exactly 2 glasses at a time. Can you make all glasses face up?\n\nSolution: When you flip 2 glasses, the number of upside-down glasses can change by +2, -2, or 0. Notice that all these changes are EVEN numbers. Therefore, the parity of upside-down glasses is an INVARIANT! It starts as 7 (Odd). It can NEVER reach 0 (Even). It is impossible."
+            android:text="THE SOLVABILITY TEST:\nThe equation ax + by = c has integer solutions IF AND ONLY IF 'c' is perfectly divisible by GCD(a, b)."
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#5D4037"
-            android:background="#C8E6C9"
+            android:background="#BBDEFB"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: Can you buy exactly $43 worth of items using only $6 and $9 coins? \nEquation: 6x + 9y = 43. \nGCD(6, 9) = 3. \nSince 43 is NOT divisible by 3, this is IMPOSSIBLE!"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
             android:layout_marginBottom="24dp" />
 
         <View
@@ -197,7 +216,37 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Masterclass: Advanced Problem Solving"
+            android:text="4. GCD &amp; LCM of Fractions"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What if you need the LCM of fractions? For example, bells ringing every 3/4 of a minute and 5/6 of a minute. There are special formulas for this:"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• LCM of Fractions = LCM(Numerators) / GCD(Denominators)\n\n• GCD of Fractions = GCD(Numerators) / LCM(Denominators)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:background="#C8E6C9"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masterclass: Advanced Problems"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -216,16 +265,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Problem 1: The Magic Apples"
+                android:text="Problem 1: The Gear Synchronization"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#D32F2F"
+                android:textColor="#00695C"
                 android:layout_marginBottom="8dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question: In a basket, there are 13 Red apples and 14 Green apples. A wizard tells you:\n- If you eat 2 apples of the SAME color, he gives you 1 Green apple.\n- If you eat 2 apples of DIFFERENT colors, he gives you 1 Red apple.\nYou eat apples until only 1 apple is left. What color is it?"
+                android:text="Question: Two interlocking gears have 24 teeth and 36 teeth respectively. We mark the two teeth that are currently touching. How many FULL REVOLUTIONS must the smaller gear make before the exact same two marked teeth touch again?"
                 android:textColor="#212121"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
@@ -234,7 +283,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 1: Let's track the RED apples. We start with 13 (Odd)."
+                android:text="Step 1: For the same teeth to touch again, the total number of teeth that pass the contact point must be a perfect multiple of BOTH 24 and 36."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -242,7 +291,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 2: Scenario A - You eat 2 Red apples. You get 1 Green. The number of Red apples changes by -2."
+                android:text="Step 2: This means we need the Least Common Multiple (LCM) of 24 and 36."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -250,7 +299,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 3: Scenario B - You eat 2 Green apples. You get 1 Green. The number of Red apples changes by 0."
+                android:text="Step 3: LCM(24, 36) = 72. This means 72 teeth must pass the contact point."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: The problem asks for the number of revolutions of the SMALLER gear (which has 24 teeth). \nRevolutions = 72 / 24 = 3."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -258,25 +316,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 4: Scenario C - You eat 1 Red and 1 Green. You get 1 Red. You lost 1 Red, but gained 1 Red. The number of Red apples changes by 0."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 5: Notice the pattern! The number of Red apples only changes by -2 or 0. This means the PARITY of Red apples is Invariant."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Answer: Since we started with an Odd number of Red apples (13), we must always have an Odd number. When 1 apple is left, it CANNOT be 0 Red apples (because 0 is Even). It MUST be 1 Red apple!"
-                android:textColor="#B71C1C"
+                android:text="Answer: The smaller gear makes 3 revolutions."
+                android:textColor="#2E7D32"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
@@ -294,7 +335,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Problem 2: The Chessboard and Dominoes"
+                android:text="Problem 2: The Mysterious Pair"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#1565C0"
@@ -303,7 +344,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question: A standard 8x8 chessboard has 64 squares. We cut off two diagonally opposite corners (e.g., top-left and bottom-right). We have 31 dominoes, each covering exactly 2 adjacent squares. Can we cover the remaining 62 squares perfectly?"
+                android:text="Question: The product of two numbers 'a' and 'b' is 300. Their GCD is 5. Find the sum of these two numbers (assuming neither number is equal to the GCD itself)."
                 android:textColor="#212121"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
@@ -312,7 +353,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 1: Color Parity. A chessboard is colored alternately Black and White. Total: 32 Black, 32 White."
+                android:text="Step 1: If GCD(a,b) = 5, then both numbers are multiples of 5. \nLet a = 5m and b = 5n, where 'm' and 'n' are coprime (their GCD is 1)."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -320,7 +361,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 2: A domino covers EXACTLY 2 adjacent squares. One will always be Black, and one will always be White."
+                android:text="Step 2: We know a × b = 300. \nSo, (5m) × (5n) = 300 \n25mn = 300 \nmn = 12."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -328,7 +369,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 3: This means 31 dominoes MUST cover exactly 31 Black squares and 31 White squares."
+                android:text="Step 3: We need pairs of integers (m, n) that multiply to 12 and are coprime. \nPairs for 12: (1, 12), (2, 6), (3, 4). \n(2, 6) is NOT coprime because they are both even. So we can only use (1, 12) or (3, 4)."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -336,16 +377,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 4: Now look at the missing corners. Diagonally opposite corners on a chessboard are ALWAYS the SAME color. Let's say they are both White."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:textStyle="italic"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 5: The remaining board has 32 Black squares, but only 30 White squares."
+                android:text="Step 4: If m=1, n=12, then a=5, b=60. But the problem said neither number is the GCD itself (so 'a' cannot be 5). \nWe must use m=3, n=4. \nSo a = 5×3 = 15, and b = 5×4 = 20."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -353,7 +385,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer: Since we need to cover 32 Black and 30 White squares, but our dominoes require equal amounts (31 and 31), it is absolutely IMPOSSIBLE."
+                android:text="Answer: The numbers are 15 and 20. Their sum is 35."
                 android:textColor="#2E7D32"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -361,13 +393,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnGoToTest11"
+            android:id="@+id/btnGoToTest14"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="TAKE TEST 11"
+            android:text="TAKE TEST 14"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#FFCDD2"
+            app:backgroundTint="#FFCC80"
             android:textColor="#3E2723"
             android:elevation="6dp"
             android:layout_marginTop="10dp"

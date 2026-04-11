@@ -11,23 +11,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Test9Activity extends AppCompatActivity {
+public class Test13Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. A boat's speed downstream is 15 km/h and upstream is 9 km/h. What is the boat's speed in still water?",
-            "2. A boat's speed downstream is 20 km/h and upstream is 14 km/h. What is the speed of the current?",
-            "3. A boat travels 48 km downstream in 3 hours and 48 km upstream in 4 hours. Find the stream speed.",
-            "4. A boat's speed in still water is 8 km/h. River flows at 2 km/h. It travels downstream for 15km. How many hours did it take?",
-            "5. A boat takes twice as long to go upstream as it does to go downstream. What is the ratio of the boat's speed to the stream's speed? (e.g. if 5:1, type 5)",
-            "6. A boat goes 36 km downstream and 36 km upstream in exactly 5 hours. If the current is 3 km/h, find the boat's speed in still water.",
-            "7. A raft is floating down a 2 km/h river. A boat (speed 10 km/h in still water) leaves the same port 4 hours later to catch the raft. How many hours will the boat drive until it catches the raft?",
-            "8. Distance between A and B is 20 km. Boat goes A to B and back in 7 hours. Current is 3 km/h. What is the boat speed?",
-            "9. Boat goes 24km upstream and 36km down in 6 hours. Same boat goes 36km up and 24km down in 6.5 hours. Find current speed.",
-            "10. A hat falls into the river. Boat goes downstream 15 mins, turns back, and catches it 2 km away from the drop point. What is the river speed? (km/h)"
+            "1. Find the Greatest Common Divisor (GCD) of 48 and 18.",
+            "2. Find the Least Common Multiple (LCM) of 12 and 15.",
+            "3. The product of two numbers is 360, and their GCD is 6. What is their LCM?",
+            "4. Three bells ring every 8, 10, and 12 minutes. If they ring together now, in how many minutes will they ring together again?",
+            "5. A room is 24m by 36m. What is the largest square tile size (side length in meters) that can perfectly tile the floor?",
+            "6. Using the Euclidean algorithm, find the GCD of 105 and 35.",
+            "7. Find the LCM of two prime numbers: 7 and 13.",
+            "8. What is the GCD of two consecutive positive integers? (e.g. 14 and 15)",
+            "9. Find the TOTAL NUMBER of common divisors for 60 and 90.",
+            "10. A boy has 45 red marbles and 75 blue marbles. He wants to put them in identical bags. What is the maximum number of bags he can make?"
     };
 
+
     private String[] correctAnswers = {
-            "12", "3", "2", "1.5", "3", "15", "1", "7", "2", "4"
+            "6", "60", "60", "120", "12", "35", "91", "1", "8", "15"
     };
 
     private EditText[] answerInputs;
@@ -36,7 +37,7 @@ public class Test9Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test9);
+        setContentView(R.layout.activity_test13);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
         answerInputs = new EditText[questions.length];
@@ -68,16 +69,14 @@ public class Test9Activity extends AppCompatActivity {
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-
+        // --- NEXT LESSON LOGIC: OPENS LESSON 14 ---
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             try {
-
-                Class<?> lesson10Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson10Activity");
-                Intent intent = new Intent(Test9Activity.this, lesson10Class);
+                Class<?> lesson14Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson14Activity");
+                Intent intent = new Intent(Test13Activity.this, lesson14Class);
                 startActivity(intent);
                 finish();
             } catch (ClassNotFoundException e) {
-
                 finish();
             }
         });
@@ -116,12 +115,12 @@ public class Test9Activity extends AppCompatActivity {
         tvScore.setText("Your Score: " + score + " / " + questions.length);
 
         if (score < 6) {
-            tvFeedbackResult.setText("River problems are tricky. Review the Hat Paradox and try again!");
+            tvFeedbackResult.setText("Review the Magic Formula and the Euclidean Algorithm!");
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
         } else {
-            tvFeedbackResult.setText("Masterful! You navigated the river currents perfectly.");
+            tvFeedbackResult.setText("Magnificent! You understand Divisors and Multiples perfectly.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
@@ -141,8 +140,8 @@ public class Test9Activity extends AppCompatActivity {
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
-                    .putBoolean("lesson10_unlocked", true)
-                    .putInt("test9_score", score)
+                    .putBoolean("lesson14_unlocked", true)
+                    .putInt("test13_score", score)
                     .apply();
         }
     }

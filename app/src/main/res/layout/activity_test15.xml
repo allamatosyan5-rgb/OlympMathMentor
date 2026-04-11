@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Test 11: Parity &amp; Logic"
+            android:text="Test 15: Primes &amp; Composites"
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Instructions: Type 1 for ODD/YES/RED. Type 2 for EVEN. Type 0 for NO."
+            android:text="Type numbers only. (Type 1 for YES, 0 for NO where asked)."
             android:textSize="14sp"
             android:textColor="#D32F2F"
             android:gravity="center"
@@ -46,7 +46,7 @@
             android:text="FINISH TEST"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:backgroundTint="#FFCDD2"
+            app:backgroundTint="#FFCCBC"
             android:textColor="#3E2723"
             android:layout_marginBottom="20dp"/>
 

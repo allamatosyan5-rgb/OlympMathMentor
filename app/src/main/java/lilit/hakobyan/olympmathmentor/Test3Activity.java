@@ -28,25 +28,14 @@ public class Test3Activity extends AppCompatActivity {
     };
 
     // Ճշգրիտ պատասխանները
-    private String[] correctAnswers = {
-            "9",    // 10a+b - (10b+a) = 9(a-b)
-            "11",   // 10a+b + 10b+a = 11(a+b)
-            "99",   // 100a+10b+c - (100c+10b+a) = 99(a-c)
-            "7",    // n ≡ S(n) (mod 9)
-            "35",   // 10x + 2 = x + 317 => 9x = 315 => x = 35
-            "13",   // 11(a+b) = 143 => a+b = 13
-            "399",  // Smallest means first digit should be as small as possible: 3+9+9=21
-            "48",   // 10a+b = 4(a+b) => 6a = 3b => 2a = b. Max is a=4, b=8.
-            "15",   // 15 = 3 * (1 * 5)
-            "5"     // Divisible by 5 means B is 0 or 5. Max is 5.
-    };
+    private String[] correctAnswers = {"9", "11", "99", "7", "35", "13", "399", "48", "15", "5"};
     private EditText[] answerInputs;
     private TextView[] feedbackViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Օգտագործում ենք test2-ի դիզայնը, քանի որ կառուցվածքը նույնն է
+
         setContentView(R.layout.activity_test2);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
@@ -78,7 +67,7 @@ public class Test3Activity extends AppCompatActivity {
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
-        // Test 3-ից հետո փակում ենք, որ վերադառնանք գլխավոր էջ (կամ կարող ես դնել Lesson 4)
+
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> finish());
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }

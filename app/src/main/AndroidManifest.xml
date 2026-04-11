@@ -137,6 +137,69 @@
         <activity android:name=".Test10Activity"
             android:exported="false" />
 
+        <activity android:name=".Lesson11Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test11Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson12Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test12Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson13Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test13Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson14Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test14Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson15Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test15Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson16Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test16Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson17Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test17Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson18Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test18Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson19Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test19Activity"
+            android:exported="false" />
+
+        <activity android:name=".Lesson20Activity"
+            android:exported="false" />
+
+        <activity android:name=".Test20Activity"
+            android:exported="false" />
+
+        <activity android:name=".FinalExamActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -67,11 +67,11 @@ public class Test2Activity extends AppCompatActivity {
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
-        // NEXT LESSON ԿՈՃԱԿԻ ՈՒՂՂՈՒՄԸ
+
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             Intent intent = new Intent(Test2Activity.this, Lesson3Activity.class);
             startActivity(intent);
-            finish(); // Փակում ենք թեստի էջը, որ հետ գնալիս նորից թեստը չլինի
+            finish();
         });
 
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
@@ -120,7 +120,7 @@ public class Test2Activity extends AppCompatActivity {
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
 
-            // Աստղիկների գունավորումը (ըստ քո ցանկության ոսկեգույն)
+
             int gold = Color.parseColor("#FFD700");
             ImageView m1 = findViewById(R.id.medal1);
             ImageView m2 = findViewById(R.id.medal2);
@@ -134,7 +134,6 @@ public class Test2Activity extends AppCompatActivity {
             if (score >= 8) m2.setColorFilter(gold);
             if (score == 10) m3.setColorFilter(gold);
 
-            // Պահպանում ենք թե՛ միավորը, թե՛ բացված լինելը
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
                     .putBoolean("lesson3_unlocked", true)

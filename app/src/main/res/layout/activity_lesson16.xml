@@ -15,8 +15,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lesson 11: Parity"
-            android:textSize="28sp"
+            android:text="Lesson 16: Triangle Foundations"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
             android:layout_marginBottom="8dp"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Odd and Even Dynamics, Invariants, and Colorings"
+            android:text="Inequalities, Pythagoras, Similarity, and Thales's Theorem"
             android:textSize="16sp"
             android:textColor="#5D4037"
             android:layout_marginBottom="24dp"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. The Basics of Parity"
+                android:text="1. The Triangle Inequality"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#3E2723" />
@@ -64,29 +64,36 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Parity refers to whether an integer is Even (divisible by 2) or Odd (not divisible by 2). While this seems simple, it is one of the most powerful tools in Olympiad mathematics for proving whether a certain state is possible or impossible."
+            android:text="Not every three lengths can form a triangle. If you have sticks of length 2cm, 3cm, and 10cm, you can never connect them. The longest stick is just too long to be bridged by the other two!"
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
             android:layout_marginBottom="16dp" />
 
-        <TextView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ARITHMETIC RULES:"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgTriangleInequality"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_triangle_inequality" />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Addition and Subtraction:\n• Even ± Even = Even\n• Odd ± Odd = Even\n• Even ± Odd = Odd"
+            android:text="THE GOLDEN RULE:\nThe sum of the lengths of any two sides of a triangle MUST be strictly greater than the length of the third side."
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#C9ADA3"
+            android:background="#C8E6C9"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="16dp" />
@@ -94,13 +101,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Multiplication:\n• Even × Any Number = Even\n• Odd × Odd = Odd\n\n(If a product of many numbers is Odd, it means EVERY SINGLE number in the product MUST be Odd!)"
+            android:text="• a + b &gt; c\n• a + c &gt; b\n• b + c &gt; a\n\nShortcut: Just check if (Shortest + Middle) &gt; Longest."
+            android:textColor="#212121"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:background="#BBDEFB"
-            android:padding="20dp"
-            android:lineSpacingExtra="8dp"
+            android:background="#E8E0C5"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
 
         <View
@@ -126,7 +133,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2. Parity of a Sum"
+                android:text="2. Pythagorean Theorem"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#3E2723" />
@@ -135,19 +142,47 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The parity of a sum of many numbers depends EXCLUSIVELY on the quantity of Odd numbers in the sum. The Even numbers do not affect the parity at all."
+            android:text="In a right-angled triangle (where one angle is exactly 90 degrees), the square of the hypotenuse (the longest side) equals the sum of the squares of the other two sides (legs)."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
             android:layout_marginBottom="16dp" />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgPythagoras"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_pythagoras" />
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="► Rule 1: The sum of an EVEN number of Odds is EVEN. (e.g., 3 + 5 = 8; or 1 + 3 + 5 + 7 = 16)\n\n► Rule 2: The sum of an ODD number of Odds is ODD. (e.g., 3 + 5 + 7 = 15)"
+            android:text="FORMULA: a² + b² = c²"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#D32F2F"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pythagorean Triples to Memorize:\nOlympiad problems rarely require long square root calculations. They use these famous integer sets:\n• 3, 4, 5 (and its multiples: 6, 8, 10)\n• 5, 12, 13\n• 8, 15, 17\n• 7, 24, 25"
             android:textColor="#212121"
             android:textSize="16sp"
-            android:background="#FCE4EC"
+            android:background="#BBDEFB"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -161,7 +196,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3. The Concept of Invariant (Անփոփոխ)"
+            android:text="3. Similarity &amp; Scaling"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -170,20 +205,48 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="In many logic puzzles, objects are transformed step by step. An 'Invariant' is a property that NEVER changes during these steps. Most of the time, this invariant is Parity."
+            android:text="Two triangles are SIMILAR if they have the exact same shape, but not necessarily the same size. Think of it like zooming in or out on a photo."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
             android:layout_marginBottom="16dp" />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgSimilarity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_similarity" />
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Example: There are 7 glasses upside down. You are allowed to flip exactly 2 glasses at a time. Can you make all glasses face up?\n\nSolution: When you flip 2 glasses, the number of upside-down glasses can change by +2, -2, or 0. Notice that all these changes are EVEN numbers. Therefore, the parity of upside-down glasses is an INVARIANT! It starts as 7 (Odd). It can NEVER reach 0 (Even). It is impossible."
+            android:text="Conditions for Similarity:\n1. AA (Angle-Angle): If two angles of one triangle are equal to two angles of another.\n2. SSS (Side-Side-Side) in ratio: If all three corresponding sides are proportional."
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#5D4037"
-            android:background="#C8E6C9"
+            android:background="#FCE4EC"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="THE SCALING TRAP:\nIf the sides of a triangle are multiplied by a factor of 'k' (e.g., k=3), then the AREA is multiplied by 'k²' (Area gets 9 times bigger, not 3 times!)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#C62828"
+            android:background="#FFCDD2"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -197,7 +260,53 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Masterclass: Advanced Problem Solving"
+            android:text="4. Thales's Theorem"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If a line is drawn parallel to one side of a triangle intersecting the other two sides, then it divides the two sides in the same ratio."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imgThales"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:background="#FFFFFF"
+                android:src="@drawable/img_thales" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ratio Formula:\nAD / DB = AE / EC\n\nAlso, triangle ADE is perfectly similar to triangle ABC."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:background="#C8E6C9"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masterclass: Advanced Problems"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -216,16 +325,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Problem 1: The Magic Apples"
+                android:text="Problem 1: Bounding the Third Side"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#D32F2F"
+                android:textColor="#E65100"
                 android:layout_marginBottom="8dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question: In a basket, there are 13 Red apples and 14 Green apples. A wizard tells you:\n- If you eat 2 apples of the SAME color, he gives you 1 Green apple.\n- If you eat 2 apples of DIFFERENT colors, he gives you 1 Red apple.\nYou eat apples until only 1 apple is left. What color is it?"
+                android:text="Question: Two sides of a triangle are 8 and 15. The third side is an integer. What is the maximum possible perimeter of this triangle?"
                 android:textColor="#212121"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
@@ -234,7 +343,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 1: Let's track the RED apples. We start with 13 (Odd)."
+                android:text="Step 1: Use the Triangle Inequality. Let the third side be 'x'."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -242,7 +351,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 2: Scenario A - You eat 2 Red apples. You get 1 Green. The number of Red apples changes by -2."
+                android:text="Step 2: The absolute rules for 'x' are:\nx &lt; 8 + 15 (x must be less than the sum)\nx &gt; 15 - 8 (x must be greater than the difference)"
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -250,93 +359,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 3: Scenario B - You eat 2 Green apples. You get 1 Green. The number of Red apples changes by 0."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 4: Scenario C - You eat 1 Red and 1 Green. You get 1 Red. You lost 1 Red, but gained 1 Red. The number of Red apples changes by 0."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 5: Notice the pattern! The number of Red apples only changes by -2 or 0. This means the PARITY of Red apples is Invariant."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Answer: Since we started with an Odd number of Red apples (13), we must always have an Odd number. When 1 apple is left, it CANNOT be 0 Red apples (because 0 is Even). It MUST be 1 Red apple!"
-                android:textColor="#B71C1C"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#F5F5F5"
-            android:padding="16dp"
-            android:layout_marginBottom="20dp"
-            android:elevation="2dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Problem 2: The Chessboard and Dominoes"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#1565C0"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Question: A standard 8x8 chessboard has 64 squares. We cut off two diagonally opposite corners (e.g., top-left and bottom-right). We have 31 dominoes, each covering exactly 2 adjacent squares. Can we cover the remaining 62 squares perfectly?"
-                android:textColor="#212121"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginBottom="12dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 1: Color Parity. A chessboard is colored alternately Black and White. Total: 32 Black, 32 White."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 2: A domino covers EXACTLY 2 adjacent squares. One will always be Black, and one will always be White."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 3: This means 31 dominoes MUST cover exactly 31 Black squares and 31 White squares."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 4: Now look at the missing corners. Diagonally opposite corners on a chessboard are ALWAYS the SAME color. Let's say they are both White."
+                android:text="Step 3: So, 7 &lt; x &lt; 23. \nSince x must be an integer, the maximum possible value for x is 22."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:textStyle="italic"
@@ -345,7 +368,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 5: The remaining board has 32 Black squares, but only 30 White squares."
+                android:text="Step 4: The problem asks for the PERIMETER. \nPerimeter = 8 + 15 + 22 = 45."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -353,7 +376,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer: Since we need to cover 32 Black and 30 White squares, but our dominoes require equal amounts (31 and 31), it is absolutely IMPOSSIBLE."
+                android:text="Answer: The maximum perimeter is 45."
                 android:textColor="#2E7D32"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -361,13 +384,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnGoToTest11"
+            android:id="@+id/btnGoToTest16"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="TAKE TEST 11"
+            android:text="TAKE TEST 16"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#FFCDD2"
+            app:backgroundTint="#C5E1A5"
             android:textColor="#3E2723"
             android:elevation="6dp"
             android:layout_marginTop="10dp"

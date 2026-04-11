@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Test6Activity extends AppCompatActivity {
 
-    // Խնդիրների պատասխանները կազմված են բացառապես թվերով
     private String[] questions = {
             "1. A car travels 150 km in 2.5 hours. What is its speed in km/h?",
             "2. A car drives to a city at 60 km/h and returns at 40 km/h. What is the average speed for the whole trip in km/h?",

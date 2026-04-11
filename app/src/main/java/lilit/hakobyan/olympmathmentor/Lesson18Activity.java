@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Lesson11Activity extends AppCompatActivity {
+public class Lesson18Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lesson11);
+        setContentView(R.layout.activity_lesson18);
 
-        Button btnGoToTest11 = findViewById(R.id.btnGoToTest11);
-        btnGoToTest11.setOnClickListener(v -> {
-            Intent intent = new Intent(Lesson11Activity.this, Test11Activity.class);
+        Button btnGoToTest18 = findViewById(R.id.btnGoToTest18);
+        btnGoToTest18.setOnClickListener(v -> {
+            Intent intent = new Intent(Lesson18Activity.this, Test18Activity.class);
             startActivity(intent);
         });
     }

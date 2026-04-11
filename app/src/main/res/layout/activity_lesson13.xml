@@ -15,8 +15,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lesson 11: Parity"
-            android:textSize="28sp"
+            android:text="Lesson 13: GCD &amp; LCM"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
             android:layout_marginBottom="8dp"
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Odd and Even Dynamics, Invariants, and Colorings"
+            android:text="Divisors, Multiples, and the Euclidean Algorithm"
             android:textSize="16sp"
             android:textColor="#5D4037"
             android:layout_marginBottom="24dp"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1. The Basics of Parity"
+                android:text="1. Divisors and Multiples"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="#3E2723" />
@@ -64,92 +64,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Parity refers to whether an integer is Even (divisible by 2) or Odd (not divisible by 2). While this seems simple, it is one of the most powerful tools in Olympiad mathematics for proving whether a certain state is possible or impossible."
+            android:text="Before we find the 'Greatest' or 'Least', we must understand the foundation:\n\n► Divisor (Բաժանարար): A number that divides another number completely without a remainder. \nExample: The divisors of 12 are 1, 2, 3, 4, 6, and 12.\n\n► Multiple (Բազմապատիկ): A number that is the product of a given number and an integer. \nExample: The multiples of 5 are 5, 10, 15, 20, 25..."
             android:textColor="#212121"
             android:textSize="16sp"
-            android:lineSpacingExtra="5dp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ARITHMETIC RULES:"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Addition and Subtraction:\n• Even ± Even = Even\n• Odd ± Odd = Even\n• Even ± Odd = Odd"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:background="#C9ADA3"
-            android:padding="20dp"
-            android:lineSpacingExtra="8dp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Multiplication:\n• Even × Any Number = Even\n• Odd × Odd = Odd\n\n(If a product of many numbers is Odd, it means EVERY SINGLE number in the product MUST be Odd!)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:background="#BBDEFB"
-            android:padding="20dp"
-            android:lineSpacingExtra="8dp"
-            android:layout_marginBottom="24dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#D7CCC8"
-            android:layout_marginBottom="24dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_sort_by_size"
-                app:tint="#3E2723"
-                android:layout_marginEnd="12dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2. Parity of a Sum"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="#3E2723" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="The parity of a sum of many numbers depends EXCLUSIVELY on the quantity of Odd numbers in the sum. The Even numbers do not affect the parity at all."
-            android:textColor="#212121"
-            android:textSize="16sp"
-            android:lineSpacingExtra="5dp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="► Rule 1: The sum of an EVEN number of Odds is EVEN. (e.g., 3 + 5 = 8; or 1 + 3 + 5 + 7 = 16)\n\n► Rule 2: The sum of an ODD number of Odds is ODD. (e.g., 3 + 5 + 7 = 15)"
-            android:textColor="#212121"
-            android:textSize="16sp"
-            android:background="#FCE4EC"
+            android:background="#E8E0C5"
             android:padding="16dp"
-            android:lineSpacingExtra="6dp"
+            android:lineSpacingExtra="5dp"
             android:layout_marginBottom="24dp" />
 
         <View
@@ -161,7 +81,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3. The Concept of Invariant (Անփոփոխ)"
+            android:text="2. Greatest Common Divisor (GCD / ԱԸԲ)"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -170,7 +90,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="In many logic puzzles, objects are transformed step by step. An 'Invariant' is a property that NEVER changes during these steps. Most of the time, this invariant is Parity."
+            android:text="The GCD of two numbers is the largest positive integer that divides BOTH numbers without a remainder. It is the absolute maximum size of a 'piece' you can cut both numbers into."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
@@ -179,11 +99,57 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Example: There are 7 glasses upside down. You are allowed to flip exactly 2 glasses at a time. Can you make all glasses face up?\n\nSolution: When you flip 2 glasses, the number of upside-down glasses can change by +2, -2, or 0. Notice that all these changes are EVEN numbers. Therefore, the parity of upside-down glasses is an INVARIANT! It starts as 7 (Odd). It can NEVER reach 0 (Even). It is impossible."
+            android:text="How to find GCD using Prime Factorization:\n1. Find the prime factors of both numbers.\n2. Identify the COMMON prime factors.\n3. Multiply the lowest powers of these common factors."
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#5D4037"
-            android:background="#C8E6C9"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: GCD(24, 36)\n• 24 = 2³ × 3¹\n• 36 = 2² × 3²\nCommon bases are 2 and 3. Lowest powers: 2² and 3¹.\nGCD = 2² × 3¹ = 4 × 3 = 12."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#B2DFDB"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Least Common Multiple (LCM / ԱՓԲ)"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The LCM is the smallest positive integer that is perfectly divisible by both numbers. If two runners run on a circular track, the LCM is the time when they will meet again at the start."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How to find LCM using Prime Factorization:\n1. Take ALL prime factors present in either number.\n2. Multiply the HIGHEST powers of these factors."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: LCM(24, 36)\n• 24 = 2³ × 3¹\n• 36 = 2² × 3²\nHighest powers: 2³ and 3².\nLCM = 2³ × 3² = 8 × 9 = 72."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:background="#FFE0B2"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -197,7 +163,84 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Masterclass: Advanced Problem Solving"
+            android:text="4. The Magic Formula"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#D32F2F"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="There is a beautiful, universal relationship between two numbers (a and b), their GCD, and their LCM. Memorize this:"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GCD(a, b) × LCM(a, b) = a × b"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#D32F2F"
+            android:padding="20dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5. The Euclidean Algorithm"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="When numbers are huge (like 1071 and 462), finding prime factors is a nightmare. The ancient Greek mathematician Euclid invented an algorithm to find the GCD easily using division with remainder."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Algorithm Steps:\n1. Divide the larger number by the smaller number.\n2. Take the REMAINDER.\n3. Now divide the previous smaller number by this new remainder.\n4. Repeat until the remainder is 0.\n5. The LAST NON-ZERO REMAINDER is the GCD."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:background="#BBDEFB"
+            android:padding="16dp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example: GCD(1071, 462)\n• 1071 ÷ 462 = 2, Remainder 147\n• 462 ÷ 147 = 3, Remainder 21\n• 147 ÷ 21 = 7, Remainder 0\nSince 21 is the last non-zero remainder, GCD = 21!"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:padding="8dp"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masterclass: Advanced Problems"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -216,16 +259,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Problem 1: The Magic Apples"
+                android:text="Problem 1: The Tiling Puzzle (GCD)"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#D32F2F"
+                android:textColor="#00695C"
                 android:layout_marginBottom="8dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question: In a basket, there are 13 Red apples and 14 Green apples. A wizard tells you:\n- If you eat 2 apples of the SAME color, he gives you 1 Green apple.\n- If you eat 2 apples of DIFFERENT colors, he gives you 1 Red apple.\nYou eat apples until only 1 apple is left. What color is it?"
+                android:text="Question: A rectangular floor is 56 meters long and 40 meters wide. What is the side length of the LARGEST square tile you can use to tile the floor perfectly without cutting any tiles?"
                 android:textColor="#212121"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
@@ -234,7 +277,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 1: Let's track the RED apples. We start with 13 (Odd)."
+                android:text="Step 1: The side length of the square tile must perfectly divide both the length (56) and the width (40). This means it must be a Common Divisor."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -242,7 +285,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 2: Scenario A - You eat 2 Red apples. You get 1 Green. The number of Red apples changes by -2."
+                android:text="Step 2: Since we want the LARGEST square tile, we need the Greatest Common Divisor (GCD) of 56 and 40."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -250,33 +293,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 3: Scenario B - You eat 2 Green apples. You get 1 Green. The number of Red apples changes by 0."
+                android:text="Step 3: Let's use Euclidean Algorithm:\n56 = 40 × 1 + 16 (Remainder 16)\n40 = 16 × 2 + 8 (Remainder 8)\n16 = 8 × 2 + 0 (Remainder 0)"
                 android:textColor="#424242"
                 android:textSize="15sp"
+                android:textStyle="italic"
                 android:layout_marginBottom="6dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 4: Scenario C - You eat 1 Red and 1 Green. You get 1 Red. You lost 1 Red, but gained 1 Red. The number of Red apples changes by 0."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Step 5: Notice the pattern! The number of Red apples only changes by -2 or 0. This means the PARITY of Red apples is Invariant."
-                android:textColor="#424242"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Answer: Since we started with an Odd number of Red apples (13), we must always have an Odd number. When 1 apple is left, it CANNOT be 0 Red apples (because 0 is Even). It MUST be 1 Red apple!"
-                android:textColor="#B71C1C"
+                android:text="Answer: The GCD is 8. The largest square tile is 8x8 meters."
+                android:textColor="#2E7D32"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
@@ -294,7 +321,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Problem 2: The Chessboard and Dominoes"
+                android:text="Problem 2: The Synchronized Bells (LCM)"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#1565C0"
@@ -303,7 +330,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Question: A standard 8x8 chessboard has 64 squares. We cut off two diagonally opposite corners (e.g., top-left and bottom-right). We have 31 dominoes, each covering exactly 2 adjacent squares. Can we cover the remaining 62 squares perfectly?"
+                android:text="Question: Three church bells ring at intervals of 12, 15, and 20 minutes respectively. If they all ring together at 12:00 PM, at what time will they next ring together?"
                 android:textColor="#212121"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
@@ -312,7 +339,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 1: Color Parity. A chessboard is colored alternately Black and White. Total: 32 Black, 32 White."
+                android:text="Step 1: The next time they ring together must be a multiple of 12, a multiple of 15, and a multiple of 20."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -320,7 +347,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 2: A domino covers EXACTLY 2 adjacent squares. One will always be Black, and one will always be White."
+                android:text="Step 2: We need the Least Common Multiple (LCM) of 12, 15, and 20."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -328,7 +355,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 3: This means 31 dominoes MUST cover exactly 31 Black squares and 31 White squares."
+                android:text="Step 3: Prime factorization:\n12 = 2² × 3\n15 = 3 × 5\n20 = 2² × 5"
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -336,7 +363,60 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 4: Now look at the missing corners. Diagonally opposite corners on a chessboard are ALWAYS the SAME color. Let's say they are both White."
+                android:text="Step 4: Take the highest powers: 2², 3¹, 5¹. \nLCM = 4 × 3 × 5 = 60 minutes."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Answer: They will ring together in exactly 60 minutes (1 hour), which is at 1:00 PM."
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Problem 3: The Missing Number"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#E65100"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Question: The GCD of two numbers is 6, and their LCM is 120. If one of the numbers is 24, find the other number."
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Use the Magic Formula: \nGCD(a,b) × LCM(a,b) = a × b."
+                android:textColor="#424242"
+                android:textSize="15sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: Plug in the known values: \n6 × 120 = 24 × b"
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:textStyle="italic"
@@ -345,7 +425,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 5: The remaining board has 32 Black squares, but only 30 White squares."
+                android:text="Step 3: Solve for b: \n720 = 24 × b \nb = 720 / 24 = 30."
                 android:textColor="#424242"
                 android:textSize="15sp"
                 android:layout_marginBottom="6dp" />
@@ -353,7 +433,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Answer: Since we need to cover 32 Black and 30 White squares, but our dominoes require equal amounts (31 and 31), it is absolutely IMPOSSIBLE."
+                android:text="Answer: The other number is 30."
                 android:textColor="#2E7D32"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -361,13 +441,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnGoToTest11"
+            android:id="@+id/btnGoToTest13"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="TAKE TEST 11"
+            android:text="TAKE TEST 13"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#FFCDD2"
+            app:backgroundTint="#B2EBF2"
             android:textColor="#3E2723"
             android:elevation="6dp"
             android:layout_marginTop="10dp"
