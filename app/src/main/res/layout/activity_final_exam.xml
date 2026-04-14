@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🏆 GRAND FINAL EXAM"
+            android:text="🏆 GRAND FINAL EXAM "
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="#4A148C"
@@ -92,7 +92,7 @@
                 android:id="@+id/btnFinishApp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="CLAIM OLYMPIAD CERTIFICATE"
+                android:text="START INTERMIDATE LEVEL"
                 android:visibility="gone"
                 app:backgroundTint="#FFD700"
                 android:textColor="#3E2723"

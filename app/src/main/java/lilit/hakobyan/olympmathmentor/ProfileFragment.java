@@ -2,7 +2,9 @@ package lilit.hakobyan.olympmathmentor;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +44,9 @@ public class ProfileFragment extends Fragment {
     private ImageView profileImage;
     private Button btnLogout;
 
+    // NEW: Variable for total stars TextView
+    private TextView tvTotalStars;
+
     private FirebaseUser currentUser;
     private DatabaseReference userRef;
 
@@ -75,9 +80,7 @@ public class ProfileFragment extends Fragment {
             new ActivityResultContracts.TakePicturePreview(),
             bitmap -> {
                 if (bitmap != null) {
-
                     profileImage.setImageBitmap(bitmap);
-
                     Uri tempUri = saveBitmapToLocalCache(bitmap);
                     if (tempUri != null) {
                         userRef.child("profileImageUrl").setValue(tempUri.toString());
@@ -99,6 +102,9 @@ public class ProfileFragment extends Fragment {
         profileImage = view.findViewById(R.id.profileImage);
         btnLogout = view.findViewById(R.id.btnLogout);
 
+        // NEW: Connect the stars TextView from XML
+        tvTotalStars = view.findViewById(R.id.tvTotalStars);
+
         Button btnAddAchievement = view.findViewById(R.id.btnAddAchievement);
         Button btnAddGoal = view.findViewById(R.id.btnAddGoal);
 
@@ -110,13 +116,10 @@ public class ProfileFragment extends Fragment {
             loadDataFromFirebase();
         }
 
-
         profileImage.setOnClickListener(v -> showImageOptionsDialog());
-
         tvFullName.setOnClickListener(v -> showEditNameDialog());
         btnAddAchievement.setOnClickListener(v -> showInputDialog("Add Achievement", true));
         btnAddGoal.setOnClickListener(v -> showInputDialog("Add Goal", false));
-
 
         if(btnLogout != null) {
             btnLogout.setOnClickListener(v -> {
@@ -128,9 +131,28 @@ public class ProfileFragment extends Fragment {
             });
         }
 
+        // NEW: Call the method to calculate and display total stars
+        loadAndDisplayTotalStars();
+
         return view;
     }
 
+    // NEW METHOD: Calculate total best scores from all lessons
+    private void loadAndDisplayTotalStars() {
+        if (getContext() == null || tvTotalStars == null) return;
+
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int totalStars = 0;
+        int totalLessons = 20;
+
+        for (int i = 1; i <= totalLessons; i++) {
+            int lessonStars = prefs.getInt("stars_lesson_" + i, 0);
+            totalStars += lessonStars;
+        }
+
+        int maxPossibleStars = totalLessons * 3;
+        tvTotalStars.setText(totalStars + " / " + maxPossibleStars);
+    }
 
     private void showImageOptionsDialog() {
         String[] options = {"Take Photo", "Choose from Gallery", "Delete Photo"};
@@ -138,26 +160,22 @@ public class ProfileFragment extends Fragment {
         builder.setTitle("Profile Picture");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
-
                 cameraLauncher.launch(null);
             } else if (which == 1) {
-
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
                 imagePickerLauncher.launch(intent);
             } else if (which == 2) {
-
-                profileImage.setImageResource(android.R.drawable.ic_menu_camera); // Դնում ենք դատարկ նկար
+                profileImage.setImageResource(android.R.drawable.ic_menu_camera);
                 if (userRef != null) {
-                    userRef.child("profileImageUrl").removeValue(); // Ջնջում ենք բազայից
+                    userRef.child("profileImageUrl").removeValue();
                 }
                 Toast.makeText(getContext(), "Photo removed", Toast.LENGTH_SHORT).show();
             }
         });
         builder.show();
     }
-
 
     private Uri saveBitmapToLocalCache(Bitmap bitmap) {
         try {

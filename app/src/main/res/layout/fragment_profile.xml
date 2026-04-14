@@ -48,12 +48,37 @@
             android:textColor="@color/earth_brown"
             android:gravity="center"
             android:layout_marginBottom="20dp"/>
-
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_star" />
+
+            <TextView
+                android:id="@+id/tvTotalStars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 / 60"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+        <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
+
 
             <TextView
                 android:layout_width="0dp"
@@ -135,5 +160,6 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/deep_brown"
             android:textColor="@color/white" />
+
     </LinearLayout>
 </ScrollView>

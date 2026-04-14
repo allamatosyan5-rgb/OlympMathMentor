@@ -30,10 +30,12 @@
             android:id="@+id/btnFinish"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="FINISH"
+            android:text="FINISH TEST"
+            android:textSize="18sp"
             android:backgroundTint="#5D4037"
             android:textColor="#FFFFFF"
             android:layout_marginTop="20dp"/>
+
 
         <LinearLayout
             android:id="@+id/resultLayout"
