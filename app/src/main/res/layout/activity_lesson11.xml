@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 11: Parity"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Odd and Even Dynamics, Invariants, and Colorings"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Basics of Parity"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Parity refers to whether an integer is Even (divisible by 2) or Odd (not divisible by 2). While this seems simple, it is one of the most powerful tools in Olympiad mathematics for proving whether a certain state is possible or impossible."
@@ -71,6 +85,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1RuleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ARITHMETIC RULES:"
@@ -80,6 +95,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1Rules1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Addition and Subtraction:\n• Even ± Even = Even\n• Odd ± Odd = Even\n• Even ± Odd = Odd"
@@ -92,6 +108,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1Rules2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Multiplication:\n• Even × Any Number = Even\n• Odd × Odd = Odd\n\n(If a product of many numbers is Odd, it means EVERY SINGLE number in the product MUST be Odd!)"
@@ -124,6 +141,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Parity of a Sum"
@@ -133,6 +151,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The parity of a sum of many numbers depends EXCLUSIVELY on the quantity of Odd numbers in the sum. The Even numbers do not affect the parity at all."
@@ -142,6 +161,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Rules"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► Rule 1: The sum of an EVEN number of Odds is EVEN. (e.g., 3 + 5 = 8; or 1 + 3 + 5 + 7 = 16)\n\n► Rule 2: The sum of an ODD number of Odds is ODD. (e.g., 3 + 5 + 7 = 15)"
@@ -159,6 +179,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. The Concept of Invariant (Անփոփոխ)"
@@ -168,6 +189,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="In many logic puzzles, objects are transformed step by step. An 'Invariant' is a property that NEVER changes during these steps. Most of the time, this invariant is Parity."
@@ -177,6 +199,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: There are 7 glasses upside down. You are allowed to flip exactly 2 glasses at a time. Can you make all glasses face up?\n\nSolution: When you flip 2 glasses, the number of upside-down glasses can change by +2, -2, or 0. Notice that all these changes are EVEN numbers. Therefore, the parity of upside-down glasses is an INVARIANT! It starts as 7 (Odd). It can NEVER reach 0 (Even). It is impossible."
@@ -195,6 +218,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problem Solving"
@@ -214,6 +238,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Magic Apples"
@@ -223,6 +248,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: In a basket, there are 13 Red apples and 14 Green apples. A wizard tells you:\n- If you eat 2 apples of the SAME color, he gives you 1 Green apple.\n- If you eat 2 apples of DIFFERENT colors, he gives you 1 Red apple.\nYou eat apples until only 1 apple is left. What color is it?"
@@ -232,6 +258,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Let's track the RED apples. We start with 13 (Odd)."
@@ -240,6 +267,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Scenario A - You eat 2 Red apples. You get 1 Green. The number of Red apples changes by -2."
@@ -248,6 +276,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Scenario B - You eat 2 Green apples. You get 1 Green. The number of Red apples changes by 0."
@@ -256,6 +285,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Scenario C - You eat 1 Red and 1 Green. You get 1 Red. You lost 1 Red, but gained 1 Red. The number of Red apples changes by 0."
@@ -264,6 +294,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Notice the pattern! The number of Red apples only changes by -2 or 0. This means the PARITY of Red apples is Invariant."
@@ -273,6 +304,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: Since we started with an Odd number of Red apples (13), we must always have an Odd number. When 1 apple is left, it CANNOT be 0 Red apples (because 0 is Even). It MUST be 1 Red apple!"
@@ -292,6 +324,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Chessboard and Dominoes"
@@ -301,6 +334,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A standard 8x8 chessboard has 64 squares. We cut off two diagonally opposite corners (e.g., top-left and bottom-right). We have 31 dominoes, each covering exactly 2 adjacent squares. Can we cover the remaining 62 squares perfectly?"
@@ -310,6 +344,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Color Parity. A chessboard is colored alternately Black and White. Total: 32 Black, 32 White."
@@ -318,6 +353,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: A domino covers EXACTLY 2 adjacent squares. One will always be Black, and one will always be White."
@@ -326,6 +362,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: This means 31 dominoes MUST cover exactly 31 Black squares and 31 White squares."
@@ -334,6 +371,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Now look at the missing corners. Diagonally opposite corners on a chessboard are ALWAYS the SAME color. Let's say they are both White."
@@ -343,6 +381,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: The remaining board has 32 Black squares, but only 30 White squares."
@@ -351,6 +390,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: Since we need to cover 32 Black and 30 White squares, but our dominoes require equal amounts (31 and 31), it is absolutely IMPOSSIBLE."

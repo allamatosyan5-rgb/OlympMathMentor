@@ -12,6 +12,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 8: Mixtures and Solutions"
@@ -22,14 +23,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Concentrations, Alloys, and The Rule of Cross"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -52,6 +64,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Anatomy of a Solution"
@@ -61,6 +74,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A solution consists of two parts: the Solute (the pure substance like salt, sugar, or acid) and the Solvent (the liquid doing the dissolving, usually water). Together, they make up the Total Mass."
@@ -70,6 +84,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1FormulaTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="FORMULA FOR CONCENTRATION:"
@@ -79,6 +94,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1Formulas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Concentration (%) = (Mass of Pure Solute / Total Mass of Solution) × 100%\n\nTotal Mass = Mass of Solute + Mass of Solvent"
@@ -111,6 +127,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Law of Conservation of Mass"
@@ -120,6 +137,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When you mix two solutions, evaporate water, or add pure substances, the mass of the individual components doesn't magically disappear. This is the key to solving 90% of mixture problems."
@@ -129,6 +147,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► Adding Water: Total mass increases, but the mass of the pure solute stays EXACTLY the same. The concentration goes down (Dilution).\n\n► Evaporating Water: Total mass decreases, but the mass of pure solute stays the same. The concentration goes up.\n\n► Adding Pure Solute (e.g., adding salt): BOTH the pure solute mass AND the total mass increase by that amount."
@@ -146,6 +165,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. The Rule of Cross (Pearson's Square)"
@@ -155,6 +175,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When you need to mix two different concentrations to get a target concentration, Olympiad champions use the 'Rule of Cross' to find the exact ratio of the two solutions."
@@ -164,6 +185,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How it works:\n1. Write the two starting concentrations on the left.\n2. Write the target concentration in the middle.\n3. Subtract diagonally (Big - Small).\n4. The resulting numbers on the right give you the required RATIO of the two mixtures."
@@ -182,6 +204,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. The 'Dry Matter' Trap (Mushrooms)"
@@ -191,6 +214,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A classic Olympiad problem involves drying fruits or mushrooms. 'Fresh mushrooms contain 90% water. Dry mushrooms contain 12% water.' This looks confusing because BOTH percentages refer to water."
@@ -200,6 +224,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE SECRET TRICK:\nIgnore the water! Focus ONLY on the 'Dry Matter' (the pulp). The mass of the dry pulp never changes during evaporation. If it's 90% water, it means it is 10% Dry Matter. If it's 12% water, it is 88% Dry Matter."
@@ -218,6 +243,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problem Solving"
@@ -237,6 +263,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: Adding Pure Solute"
@@ -246,6 +273,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: How many grams of pure salt must be added to 400g of a 15% salt solution to turn it into a 32% salt solution?"
@@ -255,6 +283,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Find the initial pure salt. \n15% of 400g = 0.15 × 400 = 60g of pure salt."
@@ -263,6 +292,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Let the added pure salt be 'x' grams. Because it is pure salt, it adds to the top (solute) AND the bottom (total mass)."
@@ -271,6 +301,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Set up the equation for the new 32% concentration (which is 0.32):\n(60 + x) / (400 + x) = 0.32"
@@ -280,6 +311,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Solve the equation. \n60 + x = 0.32(400 + x) \n60 + x = 128 + 0.32x \n1x - 0.32x = 128 - 60 \n0.68x = 68 \nx = 100"
@@ -288,6 +320,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: You must add 100 grams of pure salt."
@@ -307,6 +340,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Mushroom Paradox"
@@ -316,6 +350,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Fresh mushrooms contain 90% water by weight. Dried mushrooms contain 12% water. How many kilograms of fresh mushrooms do you need to produce exactly 10 kg of dried mushrooms?"
@@ -325,6 +360,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Ignore the water. Focus on the Dry Pulp. \nFresh = 10% pulp. \nDried = 88% pulp."
@@ -333,6 +369,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Calculate the mass of the pulp in the final product. \nWe want 10 kg of dried mushrooms. \nMass of pulp = 88% of 10 kg = 0.88 × 10 = 8.8 kg."
@@ -341,6 +378,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: This 8.8 kg of pulp must come entirely from the fresh mushrooms. In fresh mushrooms, pulp makes up only 10% of the total mass."
@@ -349,6 +387,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Let 'x' be the mass of fresh mushrooms. \n10% of x = 8.8 kg \n0.10 × x = 8.8 \nx = 8.8 / 0.10 \nx = 88 kg."
@@ -357,6 +396,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: You need 88 kg of fresh mushrooms."
@@ -376,6 +416,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb3Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 3: The Rule of Cross"
@@ -385,6 +426,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb3Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: You have two acid solutions: one is 20% and the other is 50%. You want to mix them to create exactly 300g of a 30% acid solution. How many grams of the 50% solution do you need?"
@@ -394,6 +436,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb3S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Set up Pearson's Square. \nTop Left: 20 \nBottom Left: 50 \nCenter: 30"
@@ -402,6 +445,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Subtract diagonally. \nTop Right = |50 - 30| = 20 parts. \nBottom Right = |20 - 30| = 10 parts."
@@ -410,6 +454,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: The ratio of 20% solution to 50% solution is 20:10, which simplifies to 2:1."
@@ -418,6 +463,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Total parts = 2 + 1 = 3 parts. \nWe need to split 300g into 3 parts. \n1 part = 300 / 3 = 100g."
@@ -426,6 +472,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: The 50% solution requires 1 part. So we need exactly 100g of it."
@@ -434,6 +481,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: You need 100 grams of the 50% solution."

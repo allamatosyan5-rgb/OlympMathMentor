@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5DC">
+
+    <Button
+        android:id="@+id/btnBackToBeginner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="#8B4513"
+        android:text="← Back to Beginner Courses"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="12dp"
+        android:elevation="4dp"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Intermediate Level"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#3E2723"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvIntermediateCourses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp"
+        android:clipToPadding="false"/>
+
+</LinearLayout>

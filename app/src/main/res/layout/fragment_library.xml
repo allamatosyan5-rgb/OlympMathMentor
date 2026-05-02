@@ -14,7 +14,7 @@
         android:layout_marginBottom="40dp"
         android:text="Olympiad Resources"
         android:textColor="@color/deep_brown"
-        android:textSize="28sp"
+        android:textSize="36sp"
         android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView

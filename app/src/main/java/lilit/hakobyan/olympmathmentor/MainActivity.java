@@ -16,8 +16,18 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(navListener);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment()).commit();
+            // ՆՈՐՈՒԹՅՈՒՆ. Ստուգում ենք՝ արդյոք եկել ենք FinalExamActivity-ից
+            boolean openIntermediate = getIntent().getBooleanExtra("open_intermediate", false);
+
+            if (openIntermediate) {
+                // Եթե եկել ենք քննությունը 35+ հանձնելուց հետո, բացում ենք IntermediateFragment-ը
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new IntermediateFragment()).commit();
+            } else {
+                // Սովորական դեպքերում բացում ենք HomeFragment-ը (Beginner)
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new HomeFragment()).commit();
+            }
         }
     }
 

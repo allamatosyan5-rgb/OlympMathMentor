@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 14: Advanced GCD &amp; LCM"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Extended Euclidean Algorithm, Bezout's Identity, and Divisor Functions"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. Number of Divisors"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="In Olympiads, you are rarely asked to simply list divisors. Instead, you are asked HOW MANY divisors a massive number has. Counting them manually is impossible. We use Prime Factorization."
@@ -71,6 +85,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1FormulaTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE DIVISOR FORMULA (τ):"
@@ -80,6 +95,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1FormulaText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Step 1: Write the number 'N' in its prime factored form:\nN = p^a × q^b × r^c ...\n(where p, q, r are primes and a, b, c are their powers).\n\nStep 2: Add 1 to every power and multiply them together:\nTotal Divisors = (a + 1) × (b + 1) × (c + 1) ..."
@@ -92,6 +108,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1Example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: How many divisors does 120 have?\n120 = 2³ × 3¹ × 5¹.\nThe powers are 3, 1, and 1.\nFormula: (3+1) × (1+1) × (1+1) = 4 × 2 × 2 = 16 divisors."
@@ -123,6 +140,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Bezout's Identity"
@@ -132,6 +150,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Bezout's Identity is a magical theorem in Number Theory. It states that for any two integers 'a' and 'b', their Greatest Common Divisor (GCD) can ALWAYS be written as a linear combination of 'a' and 'b'."
@@ -141,6 +160,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Equation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ax + by = GCD(a, b)"
@@ -154,6 +174,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Here, 'x' and 'y' are integers (one of them will usually be negative). \n\nExample: Let a = 12, b = 15. The GCD is 3. \nCan we find x, y such that 12x + 15y = 3? \nYes! If x = -1 and y = 1, then 12(-1) + 15(1) = 3."
@@ -169,6 +190,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Linear Diophantine Equations"
@@ -178,6 +200,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="An equation of the form ax + by = c, where you only want integer solutions, is called a Linear Diophantine Equation."
@@ -187,6 +210,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE SOLVABILITY TEST:\nThe equation ax + by = c has integer solutions IF AND ONLY IF 'c' is perfectly divisible by GCD(a, b)."
@@ -199,6 +223,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: Can you buy exactly $43 worth of items using only $6 and $9 coins? \nEquation: 6x + 9y = 43. \nGCD(6, 9) = 3. \nSince 43 is NOT divisible by 3, this is IMPOSSIBLE!"
@@ -214,6 +239,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. GCD &amp; LCM of Fractions"
@@ -223,6 +249,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="What if you need the LCM of fractions? For example, bells ringing every 3/4 of a minute and 5/6 of a minute. There are special formulas for this:"
@@ -232,6 +259,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Formulas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="• LCM of Fractions = LCM(Numerators) / GCD(Denominators)\n\n• GCD of Fractions = GCD(Numerators) / LCM(Denominators)"
@@ -244,6 +272,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problems"
@@ -263,6 +292,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Gear Synchronization"
@@ -272,6 +302,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Two interlocking gears have 24 teeth and 36 teeth respectively. We mark the two teeth that are currently touching. How many FULL REVOLUTIONS must the smaller gear make before the exact same two marked teeth touch again?"
@@ -281,6 +312,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: For the same teeth to touch again, the total number of teeth that pass the contact point must be a perfect multiple of BOTH 24 and 36."
@@ -289,6 +321,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: This means we need the Least Common Multiple (LCM) of 24 and 36."
@@ -297,6 +330,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: LCM(24, 36) = 72. This means 72 teeth must pass the contact point."
@@ -306,6 +340,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: The problem asks for the number of revolutions of the SMALLER gear (which has 24 teeth). \nRevolutions = 72 / 24 = 3."
@@ -314,6 +349,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The smaller gear makes 3 revolutions."
@@ -333,6 +369,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Mysterious Pair"
@@ -342,6 +379,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: The product of two numbers 'a' and 'b' is 300. Their GCD is 5. Find the sum of these two numbers (assuming neither number is equal to the GCD itself)."
@@ -351,6 +389,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: If GCD(a,b) = 5, then both numbers are multiples of 5. \nLet a = 5m and b = 5n, where 'm' and 'n' are coprime (their GCD is 1)."
@@ -359,6 +398,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: We know a × b = 300. \nSo, (5m) × (5n) = 300 \n25mn = 300 \nmn = 12."
@@ -367,6 +407,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: We need pairs of integers (m, n) that multiply to 12 and are coprime. \nPairs for 12: (1, 12), (2, 6), (3, 4). \n(2, 6) is NOT coprime because they are both even. So we can only use (1, 12) or (3, 4)."
@@ -375,6 +416,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: If m=1, n=12, then a=5, b=60. But the problem said neither number is the GCD itself (so 'a' cannot be 5). \nWe must use m=3, n=4. \nSo a = 5×3 = 15, and b = 5×4 = 20."
@@ -383,6 +425,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The numbers are 15 and 20. Their sum is 35."

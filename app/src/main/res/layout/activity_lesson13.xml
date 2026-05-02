@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 13: GCD &amp; LCM"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Divisors, Multiples, and the Euclidean Algorithm"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. Divisors and Multiples"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Before we find the 'Greatest' or 'Least', we must understand the foundation:\n\n► Divisor (Բաժանարար): A number that divides another number completely without a remainder. \nExample: The divisors of 12 are 1, 2, 3, 4, 6, and 12.\n\n► Multiple (Բազմապատիկ): A number that is the product of a given number and an integer. \nExample: The multiples of 5 are 5, 10, 15, 20, 25..."
@@ -79,6 +93,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec2Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2. Greatest Common Divisor (GCD / ԱԸԲ)"
@@ -88,6 +103,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The GCD of two numbers is the largest positive integer that divides BOTH numbers without a remainder. It is the absolute maximum size of a 'piece' you can cut both numbers into."
@@ -97,6 +113,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How to find GCD using Prime Factorization:\n1. Find the prime factors of both numbers.\n2. Identify the COMMON prime factors.\n3. Multiply the lowest powers of these common factors."
@@ -106,6 +123,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: GCD(24, 36)\n• 24 = 2³ × 3¹\n• 36 = 2² × 3²\nCommon bases are 2 and 3. Lowest powers: 2² and 3¹.\nGCD = 2² × 3¹ = 4 × 3 = 12."
@@ -117,6 +135,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Least Common Multiple (LCM / ԱՓԲ)"
@@ -126,6 +145,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The LCM is the smallest positive integer that is perfectly divisible by both numbers. If two runners run on a circular track, the LCM is the time when they will meet again at the start."
@@ -135,6 +155,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How to find LCM using Prime Factorization:\n1. Take ALL prime factors present in either number.\n2. Multiply the HIGHEST powers of these factors."
@@ -144,6 +165,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: LCM(24, 36)\n• 24 = 2³ × 3¹\n• 36 = 2² × 3²\nHighest powers: 2³ and 3².\nLCM = 2³ × 3² = 8 × 9 = 72."
@@ -161,6 +183,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. The Magic Formula"
@@ -170,6 +193,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="There is a beautiful, universal relationship between two numbers (a and b), their GCD, and their LCM. Memorize this:"
@@ -179,6 +203,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GCD(a, b) × LCM(a, b) = a × b"
@@ -198,6 +223,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec5Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="5. The Euclidean Algorithm"
@@ -207,6 +233,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When numbers are huge (like 1071 and 462), finding prime factors is a nightmare. The ancient Greek mathematician Euclid invented an algorithm to find the GCD easily using division with remainder."
@@ -216,6 +243,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Algorithm Steps:\n1. Divide the larger number by the smaller number.\n2. Take the REMAINDER.\n3. Now divide the previous smaller number by this new remainder.\n4. Repeat until the remainder is 0.\n5. The LAST NON-ZERO REMAINDER is the GCD."
@@ -228,6 +256,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: GCD(1071, 462)\n• 1071 ÷ 462 = 2, Remainder 147\n• 462 ÷ 147 = 3, Remainder 21\n• 147 ÷ 21 = 7, Remainder 0\nSince 21 is the last non-zero remainder, GCD = 21!"
@@ -238,6 +267,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problems"
@@ -257,6 +287,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Tiling Puzzle (GCD)"
@@ -266,6 +297,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A rectangular floor is 56 meters long and 40 meters wide. What is the side length of the LARGEST square tile you can use to tile the floor perfectly without cutting any tiles?"
@@ -275,6 +307,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: The side length of the square tile must perfectly divide both the length (56) and the width (40). This means it must be a Common Divisor."
@@ -283,6 +316,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Since we want the LARGEST square tile, we need the Greatest Common Divisor (GCD) of 56 and 40."
@@ -291,6 +325,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Let's use Euclidean Algorithm:\n56 = 40 × 1 + 16 (Remainder 16)\n40 = 16 × 2 + 8 (Remainder 8)\n16 = 8 × 2 + 0 (Remainder 0)"
@@ -300,6 +335,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The GCD is 8. The largest square tile is 8x8 meters."
@@ -319,6 +355,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Synchronized Bells (LCM)"
@@ -328,6 +365,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Three church bells ring at intervals of 12, 15, and 20 minutes respectively. If they all ring together at 12:00 PM, at what time will they next ring together?"
@@ -337,6 +375,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: The next time they ring together must be a multiple of 12, a multiple of 15, and a multiple of 20."
@@ -345,6 +384,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: We need the Least Common Multiple (LCM) of 12, 15, and 20."
@@ -353,6 +393,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Prime factorization:\n12 = 2² × 3\n15 = 3 × 5\n20 = 2² × 5"
@@ -361,6 +402,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Take the highest powers: 2², 3¹, 5¹. \nLCM = 4 × 3 × 5 = 60 minutes."
@@ -369,6 +411,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: They will ring together in exactly 60 minutes (1 hour), which is at 1:00 PM."
@@ -388,6 +431,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb3Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 3: The Missing Number"
@@ -397,6 +441,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb3Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: The GCD of two numbers is 6, and their LCM is 120. If one of the numbers is 24, find the other number."
@@ -406,6 +451,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb3S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Use the Magic Formula: \nGCD(a,b) × LCM(a,b) = a × b."
@@ -414,6 +460,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Plug in the known values: \n6 × 120 = 24 × b"
@@ -423,6 +470,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Solve for b: \n720 = 24 × b \nb = 720 / 24 = 30."
@@ -431,6 +479,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The other number is 30."

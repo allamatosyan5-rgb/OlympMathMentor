@@ -12,6 +12,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 5: Divisibility Rules"
@@ -22,14 +23,25 @@
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Advanced Number Theory &amp; Factorization"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -52,6 +64,7 @@
                 android:layout_marginEnd="12dp"/>
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. Powers of 2 and 5"
@@ -61,6 +74,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Because our number system is based on 10 (which is 2 × 5), the divisibility rules for powers of 2 and powers of 5 strictly depend on the last digits of a number."
@@ -70,6 +84,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/tvSec1Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="• Divisibility by 2 or 5: Look at the LAST 1 digit. It must be divisible by 2 (even) or 5 (0 or 5).\n• Divisibility by 4 or 25: Look at the LAST 2 digits. They must form a number divisible by 4 (e.g., ...312) or 25 (00, 25, 50, 75).\n• Divisibility by 8 or 125: Look at the LAST 3 digits."
@@ -82,6 +97,7 @@
             android:layout_marginBottom="24dp"/>
 
         <TextView
+            android:id="@+id/tvSec2Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2. The Magic of 3 and 9"
@@ -91,6 +107,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The rules for 3 and 9 are independent of the last digit. Instead, they depend on the sum of all digits, denoted as S(n)."
@@ -100,6 +117,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rule: A number n is divisible by 3 (or 9) if and only if S(n) is divisible by 3 (or 9).\n\nTheorem: n ≡ S(n) (mod 9). This means the remainder of the number when divided by 9 is exactly equal to the remainder of its sum of digits divided by 9."
@@ -112,6 +130,7 @@
             android:layout_marginBottom="24dp"/>
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. The Alternating Sum: Rule of 11"
@@ -121,6 +140,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="To check if a number is divisible by 11, we calculate the alternating sum of its digits. Starting from the rightmost digit, we alternately subtract and add the digits."
@@ -130,6 +150,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/tvSec3Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rule: Calculate S_odd (sum of digits in odd positions) and S_even (sum of digits in even positions). If the difference (S_odd - S_even) is 0 or a multiple of 11, the original number is divisible by 11.\n\nExample: 86427.\nS_odd = 7 + 4 + 8 = 19.\nS_even = 2 + 6 = 8.\nDifference = 19 - 8 = 11. Yes, it is divisible!"
@@ -148,6 +169,7 @@
             android:layout_marginBottom="24dp"/>
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. Composite Divisors (72, 99, 45, etc.)"
@@ -157,6 +179,7 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="What if a problem asks for divisibility by 72? There is no direct trick for 72. Instead, we break it down into mutually prime factors (factors that share no common divisor other than 1).\n\nSince 72 = 8 × 9 (and 8, 9 are coprime), a number is divisible by 72 ONLY IF it is simultaneously divisible by 8 AND 9.\n\nCommon Coprime Pairs:\n• 12 = 3 × 4\n• 36 = 4 × 9\n• 45 = 5 × 9\n• 99 = 9 × 11"
@@ -166,6 +189,7 @@
             android:layout_marginBottom="20dp"/>
 
         <TextView
+            android:id="@+id/tvProbTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Olympiad Problem Example"
@@ -175,6 +199,7 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvProbText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Question: The 5-digit number 3A42B is divisible by 72. Find digits A and B.\n\nSolution:\n1. 72 = 8 × 9. We must check rule of 8 and rule of 9.\n2. Rule of 8: The last three digits '42B' must be divisible by 8. Let's divide 420 by 8. 420 / 8 = 52.5. The nearest multiples are 416 and 424. So, B MUST be 4.\n3. Now the number is 3A424.\n4. Rule of 9: Sum of digits S(n) = 3 + A + 4 + 2 + 4 = 13 + A.\n5. For 13 + A to be divisible by 9, A must be 5 (since 13+5=18).\nAnswer: A = 5, B = 4."

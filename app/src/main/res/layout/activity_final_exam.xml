@@ -92,7 +92,7 @@
                 android:id="@+id/btnFinishApp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="START INTERMIDATE LEVEL"
+                android:text="🚀 START INTERMIDATE LEVEL"
                 android:visibility="gone"
                 app:backgroundTint="#FFD700"
                 android:textColor="#3E2723"
@@ -109,6 +109,31 @@
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="03:00:00"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723"
+                android:gravity="center"
+                android:padding="10dp"
+                android:background="#EFEBE5"
+                android:layout_marginBottom="16dp"/>
+            <Button
+                android:id="@+id/btnStartIntermediate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🚀 Start Intermediate Level"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#FF9800"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+
         </LinearLayout>
 
     </LinearLayout>

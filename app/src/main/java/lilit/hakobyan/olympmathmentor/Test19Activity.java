@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,16 +27,7 @@ public class Test19Activity extends AppCompatActivity {
             "10. Is every rectangle a cyclic quadrilateral? (Type 1 for YES, 0 for NO)"
     };
 
-    // Q1: 180
-    // Q2: (3+4+5+6)/2 = 9
-    // Q3: (9-3)(9-4)(9-5)(9-6) = 6 * 5 * 4 * 3 = 360
-    // Q4: 3*4 + 2*6 = 12 + 12 = 24
-    // Q5: (6-2)*180 = 720
-    // Q6: 1080 / 8 = 135
-    // Q7: 10 * 7 / 2 = 35
-    // Q8: 180 - 144 = 36. 360/36 = 10
-    // Q9: 180 - 70 = 110
-    // Q10: 1 (90+90=180)
+
     private String[] correctAnswers = {
             "180", "9", "360", "24", "720", "135", "35", "10", "110", "1"
     };
@@ -152,6 +144,15 @@ public class Test19Activity extends AppCompatActivity {
                     .putBoolean("lesson20_unlocked", true)
                     .putInt("test19_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

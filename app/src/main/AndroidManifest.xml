@@ -43,162 +43,119 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
+        <activity android:name=".SignUpActivity" android:exported="false" />
+        <activity android:name=".EntryTestActivity" android:exported="false" />
+        <activity android:name=".ResultActivity" android:exported="false" />
+        <activity android:name=".VideoListActivity" android:exported="false" />
+        <activity android:name=".BookListActivity" android:exported="false" />
+        <activity android:name=".BookCategoriesActivity" android:exported="false" />
+
+        <activity android:name=".Lesson1Activity" android:exported="false" />
+        <activity android:name=".Test1Activity" android:exported="false" />
+        <activity android:name=".Lesson2Activity" android:exported="false" />
+        <activity android:name=".Test2Activity" android:exported="false" />
+        <activity android:name=".Lesson3Activity" android:exported="false" />
+        <activity android:name=".Test3Activity" android:exported="false" />
+        <activity android:name=".Lesson4Activity" android:exported="false" />
+        <activity android:name=".Test4Activity" android:exported="false" />
+        <activity android:name=".Lesson5Activity" android:exported="false" />
+        <activity android:name=".Test5Activity" android:exported="false" />
+        <activity android:name=".Lesson6Activity" android:exported="false" />
+        <activity android:name=".Test6Activity" android:exported="false" />
+        <activity android:name=".Lesson7Activity" android:exported="false" />
+        <activity android:name=".Test7Activity" android:exported="false" />
+        <activity android:name=".Lesson8Activity" android:exported="false" />
+        <activity android:name=".Test8Activity" android:exported="false" />
+        <activity android:name=".Lesson9Activity" android:exported="false" />
+        <activity android:name=".Test9Activity" android:exported="false" />
+        <activity android:name=".Lesson10Activity" android:exported="false" />
+        <activity android:name=".Test10Activity" android:exported="false" />
+        <activity android:name=".Lesson11Activity" android:exported="false" />
+        <activity android:name=".Test11Activity" android:exported="false" />
+        <activity android:name=".Lesson12Activity" android:exported="false" />
+        <activity android:name=".Test12Activity" android:exported="false" />
+        <activity android:name=".Lesson13Activity" android:exported="false" />
+        <activity android:name=".Test13Activity" android:exported="false" />
+        <activity android:name=".Lesson14Activity" android:exported="false" />
+        <activity android:name=".Test14Activity" android:exported="false" />
+        <activity android:name=".Lesson15Activity" android:exported="false" />
+        <activity android:name=".Test15Activity" android:exported="false" />
+        <activity android:name=".Lesson16Activity" android:exported="false" />
+        <activity android:name=".Test16Activity" android:exported="false" />
+        <activity android:name=".Lesson17Activity" android:exported="false" />
+        <activity android:name=".Test17Activity" android:exported="false" />
+        <activity android:name=".Lesson18Activity" android:exported="false" />
+        <activity android:name=".Test18Activity" android:exported="false" />
+        <activity android:name=".Lesson19Activity" android:exported="false" />
+        <activity android:name=".Test19Activity" android:exported="false" />
+        <activity android:name=".Lesson20Activity" android:exported="false" />
+        <activity android:name=".Test20Activity" android:exported="false" />
 
         <activity
-            android:name=".EntryTestActivity"
+            android:name=".FinalExamActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
-        <activity
-            android:name=".ResultActivity"
-            android:exported="false" />
+        <activity android:name=".IntLesson1Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest1Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".VideoListActivity"
-            android:exported="false" />
+        <activity android:name=".IntLesson2Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest2Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".BookListActivity"
-            android:exported="false" />
+        <activity android:name=".IntLesson3Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest3Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".BookCategoriesActivity"
-            android:exported="false" />
+        <activity android:name=".IntLesson4Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest4Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Lesson1Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson5Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest5Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Test1Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson6Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest6Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Lesson2Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson7Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest7Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Test2Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson8Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest8Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Lesson3Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson9Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest9Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Test3Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson10Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest10Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Lesson4Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson11Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest11Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Test4Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson12Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest12Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Lesson5Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson13Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest13Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Test5Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson14Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest14Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Lesson6Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson15Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest15Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Test6Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson16Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest16Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Lesson7Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson17Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest17Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Test7Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson18Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest18Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Lesson8Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson19Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest19Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Test8Activity"
-            android:exported="false" />
+        <activity android:name=".IntLesson20Activity" android:exported="false" android:screenOrientation="portrait" />
+        <activity android:name=".IntTest20Activity" android:exported="false" android:screenOrientation="portrait" />
 
-        <activity android:name=".Lesson9Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test9Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson10Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test10Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson11Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test11Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson12Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test12Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson13Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test13Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson14Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test14Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson15Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test15Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson16Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test16Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson17Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test17Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson18Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test18Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson19Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test19Activity"
-            android:exported="false" />
-
-        <activity android:name=".Lesson20Activity"
-            android:exported="false" />
-
-        <activity android:name=".Test20Activity"
-            android:exported="false" />
-
-        <activity android:name=".FinalExamActivity"
-            android:exported="false" />
 
     </application>
 

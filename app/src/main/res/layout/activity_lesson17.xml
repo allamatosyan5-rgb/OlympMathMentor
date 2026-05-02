@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 17: Centers &amp; Circles"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Medians, Altitudes, Incenters, and Circle Angles"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Centroid"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A MEDIAN is a line connecting a vertex to the midpoint of the opposite side. The three medians of a triangle always meet at a single magical point called the Centroid (G)."
@@ -87,6 +101,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec1Rule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE 2:1 RATIO RULE:\nThe Centroid divides every median into two segments in a 2:1 ratio, with the longer part being closer to the vertex. \nAG : GM = 2 : 1"
@@ -119,6 +134,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. The Orthocenter"
@@ -128,6 +144,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="An ALTITUDE  is a perpendicular line dropped from a vertex to the opposite side. The three altitudes meet at the Orthocenter (H)."
@@ -153,6 +170,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec2Trick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TRICKY FACT:\nIf the triangle is Acute, 'H' is inside. If it is Right-angled, 'H' is exactly on the 90° vertex. If it is Obtuse, 'H' is OUTSIDE the triangle!"
@@ -170,6 +188,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Circumcenter &amp; Incenter"
@@ -179,6 +198,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Circum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► CIRCUMCENTER (O): The intersection of the perpendicular bisectors of the sides. It is the center of the circle that passes through all 3 vertices (Circumcircle). \nRule: O is EQUIDISTANT from all vertices (OA = OB = OC = R)."
@@ -188,6 +208,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Incenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► INCENTER (I): The intersection of the angle bisectors. It is the center of the circle that fits perfectly INSIDE, touching all 3 sides (Incircle). \nRule: I is EQUIDISTANT from all sides (distance = r)."
@@ -197,6 +218,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Formula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Crucial Area Formula:\nArea = r × s \n(where 'r' is inradius, and 's' is the semi-perimeter: (a+b+c)/2 )"
@@ -215,6 +237,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. Angles in a Circle"
@@ -224,6 +247,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The relationship between Central Angles (vertex at the center) and Inscribed Angles (vertex on the circle's edge) is a favorite Olympiad trap."
@@ -249,6 +273,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec4Rule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE DOUBLE ANGLE THEOREM:\nThe Central Angle (AOB) is always exactly TWICE the size of the Inscribed Angle (ACB) if they both stand on the same arc (AB).\n\nAOB = 2 × ACB"
@@ -261,6 +286,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problems"
@@ -280,6 +306,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Median Length"
@@ -289,6 +316,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: In triangle ABC, median AM has a total length of 15cm. G is the centroid. What is the length of AG?"
@@ -298,6 +326,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: We know the Centroid (G) divides the median AM in a 2:1 ratio."
@@ -306,6 +335,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: This means the whole median consists of 2 parts + 1 part = 3 parts total."
@@ -314,6 +344,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Total length is 15. So 1 part = 15 / 3 = 5cm. This is the shorter segment (GM)."
@@ -322,6 +353,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: AG is the longer segment (2 parts). \nAG = 2 × 5 = 10cm."
@@ -331,6 +363,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: AG = 10 cm."
@@ -350,6 +383,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: Thales in the Circle"
@@ -359,6 +393,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: AB is the diameter of a circle. Point C is on the circle. What is the exact measure of the inscribed angle ACB?"
@@ -368,6 +403,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Look at the Central Angle. Since AB is a diameter, it forms a straight line. Therefore, the central angle AOB is exactly 180°."
@@ -376,6 +412,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Use the Double Angle Theorem. The central angle (180°) is TWICE the inscribed angle (ACB) because they stand on the same arc (a semi-circle)."
@@ -384,6 +421,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: So, ACB = 180° / 2 = 90°."
@@ -393,6 +431,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: It is a 90° angle. (This is known as Thales's Theorem for circles: An angle inscribed in a semicircle is always a right angle)."

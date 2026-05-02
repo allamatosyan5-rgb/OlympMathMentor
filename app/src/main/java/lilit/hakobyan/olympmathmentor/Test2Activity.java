@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -67,7 +68,6 @@ public class Test2Activity extends AppCompatActivity {
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
-
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             Intent intent = new Intent(Test2Activity.this, Lesson3Activity.class);
             startActivity(intent);
@@ -114,12 +114,14 @@ public class Test2Activity extends AppCompatActivity {
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
+
+            // ՆՈՐ. Եթե տապալել է, պահում ենք 0 աստղ (Lesson 2)
+            saveLessonStars(2, 0);
         } else {
             tvFeedbackResult.setText("Congratulations! Lesson 3 is now unlocked.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
-
 
             int gold = Color.parseColor("#FFD700");
             ImageView m1 = findViewById(R.id.medal1);
@@ -130,15 +132,40 @@ public class Test2Activity extends AppCompatActivity {
             m2.setColorFilter(Color.LTGRAY);
             m3.setColorFilter(Color.LTGRAY);
 
-            if (score >= 6) m1.setColorFilter(gold);
-            if (score >= 8) m2.setColorFilter(gold);
-            if (score == 10) m3.setColorFilter(gold);
+            int earnedStars = 0; // ՆՈՐ. Փոփոխական աստղերը հաշվելու համար
+
+            if (score >= 6) {
+                m1.setColorFilter(gold);
+                earnedStars = 1;
+            }
+            if (score >= 8) {
+                m2.setColorFilter(gold);
+                earnedStars = 2;
+            }
+            if (score == 10) {
+                m3.setColorFilter(gold);
+                earnedStars = 3;
+            }
+
+            // ՆՈՐ. Պահպանում ենք 2-րդ դասի վաստակած աստղերը Պրոֆիլի համար
+            saveLessonStars(2, earnedStars);
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
                     .putBoolean("lesson3_unlocked", true)
                     .putInt("test2_score", score)
                     .apply();
+        }
+    }
+
+    // ՆՈՐ ՄԵԹՈԴ. Պահպանում է աստղերը հատուկ "UserProgress" ֆայլում, որտեղից կարդում է ProfileFragment-ը
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

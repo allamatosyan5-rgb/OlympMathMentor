@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -26,34 +27,30 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
-    private LinearLayout containerAchievements, containerCurrentGoals, containerCompletedGoals;
-    private TextView tvFullName, tvEmail;
+    private LinearLayout badgeContainer, containerAchievements, containerCurrentGoals, containerCompletedGoals;
+    private TextView tvFullName, tvEmail, tvUserStatus;
+    private TextView tvTotalStars, tvStreakDays, tvSolvedProblems, tvAccuracy;
     private ImageView profileImage;
-    private Button btnLogout;
-
-    // NEW: Variable for total stars TextView
-    private TextView tvTotalStars;
-
-    private FirebaseUser currentUser;
-    private DatabaseReference userRef;
+    private Button btnLogout, btnAddAchievement, btnAddGoal;
 
     private List<String> achievementsList = new ArrayList<>();
     private List<String> currentGoalsList = new ArrayList<>();
     private List<String> completedGoalsList = new ArrayList<>();
 
+    private int totalEarnedStars = 0;
+    private int currentStreakCount = 0;
+
+    // ԴԱՍԵՐԻ ԸՆԴՀԱՆՈՒՐ ՔԱՆԱԿԸ
+    private final int TOTAL_LESSONS_IN_APP = 20;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -62,19 +59,14 @@ public class ProfileFragment extends Fragment {
                     Uri imageUri = result.getData().getData();
                     if (imageUri != null) {
                         try {
-                            requireContext().getContentResolver().takePersistableUriPermission(imageUri,
-                                    Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            profileImage.setImageURI(imageUri);
-                            userRef.child("profileImageUrl").setValue(imageUri.toString());
-                        } catch (Exception e) {
-                            profileImage.setImageURI(imageUri);
-                            userRef.child("profileImageUrl").setValue(imageUri.toString());
-                        }
+                            requireContext().getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } catch (Exception ignored) {}
+                        profileImage.setImageURI(imageUri);
+                        saveImageUriLocally(imageUri.toString());
                     }
                 }
             }
     );
-
 
     private final ActivityResultLauncher<Void> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicturePreview(),
@@ -82,9 +74,7 @@ public class ProfileFragment extends Fragment {
                 if (bitmap != null) {
                     profileImage.setImageBitmap(bitmap);
                     Uri tempUri = saveBitmapToLocalCache(bitmap);
-                    if (tempUri != null) {
-                        userRef.child("profileImageUrl").setValue(tempUri.toString());
-                    }
+                    if (tempUri != null) saveImageUriLocally(tempUri.toString());
                 }
             }
     );
@@ -94,32 +84,35 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        badgeContainer = view.findViewById(R.id.badgeContainer);
         containerAchievements = view.findViewById(R.id.containerAchievements);
         containerCurrentGoals = view.findViewById(R.id.containerCurrentGoals);
         containerCompletedGoals = view.findViewById(R.id.containerCompletedGoals);
+
         tvFullName = view.findViewById(R.id.tvFullName);
         tvEmail = view.findViewById(R.id.tvEmail);
+        tvUserStatus = view.findViewById(R.id.tvUserStatus);
         profileImage = view.findViewById(R.id.profileImage);
+
+        tvTotalStars = view.findViewById(R.id.tvTotalStars);
+        tvStreakDays = view.findViewById(R.id.tvStreakDays);
+        tvSolvedProblems = view.findViewById(R.id.tvSolvedProblems);
+        tvAccuracy = view.findViewById(R.id.tvAccuracy);
+
+        btnAddAchievement = view.findViewById(R.id.btnAddAchievement);
+        btnAddGoal = view.findViewById(R.id.btnAddGoal);
         btnLogout = view.findViewById(R.id.btnLogout);
 
-        // NEW: Connect the stars TextView from XML
-        tvTotalStars = view.findViewById(R.id.tvTotalStars);
-
-        Button btnAddAchievement = view.findViewById(R.id.btnAddAchievement);
-        Button btnAddGoal = view.findViewById(R.id.btnAddGoal);
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             tvEmail.setText(currentUser.getEmail());
-            userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
-            loadDataFromFirebase();
         }
 
         profileImage.setOnClickListener(v -> showImageOptionsDialog());
         tvFullName.setOnClickListener(v -> showEditNameDialog());
-        btnAddAchievement.setOnClickListener(v -> showInputDialog("Add Achievement", true));
-        btnAddGoal.setOnClickListener(v -> showInputDialog("Add Goal", false));
+
+        if(btnAddAchievement != null) btnAddAchievement.setOnClickListener(v -> showInputDialog("Add Achievement", true));
+        if(btnAddGoal != null) btnAddGoal.setOnClickListener(v -> showInputDialog("Add Goal", false));
 
         if(btnLogout != null) {
             btnLogout.setOnClickListener(v -> {
@@ -131,27 +124,202 @@ public class ProfileFragment extends Fragment {
             });
         }
 
-        // NEW: Call the method to calculate and display total stars
-        loadAndDisplayTotalStars();
+        loadAllLocalData();
+        calculateStatsAndBadges();
 
         return view;
     }
 
-    // NEW METHOD: Calculate total best scores from all lessons
-    private void loadAndDisplayTotalStars() {
-        if (getContext() == null || tvTotalStars == null) return;
+    private void saveImageUriLocally(String uri) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+        prefs.edit().putString("profile_image_uri", uri).apply();
+    }
 
-        SharedPreferences prefs = requireContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-        int totalStars = 0;
-        int totalLessons = 20;
+    private void saveNameLocally(String name, String surname) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+        prefs.edit().putString("name", name).putString("surname", surname).apply();
+    }
 
-        for (int i = 1; i <= totalLessons; i++) {
-            int lessonStars = prefs.getInt("stars_lesson_" + i, 0);
-            totalStars += lessonStars;
+    private void saveListLocally(String key, List<String> list) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
+            if (i < list.size() - 1) sb.append(";;;");
+        }
+        prefs.edit().putString(key, sb.toString()).apply();
+    }
+
+    private List<String> loadListLocally(String key) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+        String data = prefs.getString(key, "");
+        List<String> list = new ArrayList<>();
+        if (!data.isEmpty()) list.addAll(Arrays.asList(data.split(";;;")));
+        return list;
+    }
+
+    private void loadAllLocalData() {
+        if (getContext() == null) return;
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+
+        String name = prefs.getString("name", "");
+        String surname = prefs.getString("surname", "");
+        if (!name.isEmpty() && !surname.isEmpty()) tvFullName.setText(name + " " + surname);
+
+        String imageUrl = prefs.getString("profile_image_uri", "");
+        if (!imageUrl.isEmpty()) {
+            try {
+                profileImage.setImageURI(Uri.parse(imageUrl));
+            } catch (Exception e) {
+                profileImage.setImageResource(android.R.drawable.ic_menu_camera);
+            }
         }
 
-        int maxPossibleStars = totalLessons * 3;
-        tvTotalStars.setText(totalStars + " / " + maxPossibleStars);
+        if(containerAchievements != null) containerAchievements.removeAllViews();
+        achievementsList = loadListLocally("achievements");
+        for (String ach : achievementsList) addManualAchievementToView(ach);
+
+        if(containerCurrentGoals != null) containerCurrentGoals.removeAllViews();
+        if(containerCompletedGoals != null) containerCompletedGoals.removeAllViews();
+
+        currentGoalsList = loadListLocally("currentGoals");
+        for (String goal : currentGoalsList) addGoalToView(goal, false);
+
+        completedGoalsList = loadListLocally("completedGoals");
+        for (String goal : completedGoalsList) addGoalToView(goal, true);
+    }
+
+    private void calculateStatsAndBadges() {
+        if (getContext() == null) return;
+        SharedPreferences prefs = requireContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+
+        totalEarnedStars = 0;
+        int solvedCount = 0;
+
+        for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
+            int lessonStars = prefs.getInt("stars_lesson_" + i, 0);
+            if (lessonStars > 0) {
+                totalEarnedStars += lessonStars;
+                solvedCount++;
+            }
+        }
+
+        tvTotalStars.setText(String.valueOf(totalEarnedStars));
+        tvSolvedProblems.setText(String.valueOf(solvedCount));
+
+        int completionPercentage = (int) (((float) solvedCount / TOTAL_LESSONS_IN_APP) * 100);
+        tvAccuracy.setText(completionPercentage + "%");
+
+        long currentTimeMillis = System.currentTimeMillis();
+        long currentDay = currentTimeMillis / (1000 * 60 * 60 * 24);
+        long lastLoginDay = prefs.getLong("last_login_day", 0);
+        currentStreakCount = prefs.getInt("current_streak", 0);
+
+        if (lastLoginDay == 0) {
+            currentStreakCount = 1;
+        } else if (currentDay == lastLoginDay + 1) {
+            currentStreakCount++;
+        } else if (currentDay > lastLoginDay + 1) {
+            currentStreakCount = 1;
+        }
+
+        prefs.edit().putLong("last_login_day", currentDay).putInt("current_streak", currentStreakCount).apply();
+        tvStreakDays.setText(currentStreakCount + " Days");
+
+        if (totalEarnedStars >= 50) tvUserStatus.setText("Math Olympian");
+        else if (totalEarnedStars >= 25) tvUserStatus.setText("Advanced Thinker");
+        else if (totalEarnedStars >= 10) tvUserStatus.setText("Intermediate Problem Solver");
+        else tvUserStatus.setText("Beginner Explorer");
+
+        generateBadges();
+    }
+
+    private void generateBadges() {
+        if (badgeContainer == null) return;
+        badgeContainer.removeAllViews();
+
+
+        if (totalEarnedStars >= 1) createBadgeUI("🌱", "Seed of Logic", true);
+        else createBadgeUI("🔒", "Seed of Logic", false);
+
+
+        if (totalEarnedStars >= 3) createBadgeUI("🔢", "Number Cruncher", true);
+        else createBadgeUI("🔒", "Number Cruncher", false);
+
+        if (currentStreakCount >= 3) createBadgeUI("⚡", "Spark", true);
+        else createBadgeUI("🔒", "Spark", false);
+
+        if (totalEarnedStars >= 6) createBadgeUI("📐", "Geometry Novice", true);
+        else createBadgeUI("🔒", "Geometry Novice", false);
+
+        if (currentStreakCount >= 7) createBadgeUI("🔥", "7 Day Fire", true);
+        else createBadgeUI("🔒", "7 Day Fire", false);
+
+        if (totalEarnedStars >= 12) createBadgeUI("🧩", "Puzzle Solver", true);
+        else createBadgeUI("🔒", "Puzzle Solver", false);
+
+        if (currentStreakCount >= 14) createBadgeUI("🗓️", "Consistency", true);
+        else createBadgeUI("🔒", "Consistency", false);
+
+        if (totalEarnedStars >= 18) createBadgeUI("⚔️", "Math Warrior", true);
+        else createBadgeUI("🔒", "Math Warrior", false);
+
+        if (totalEarnedStars >= 25) createBadgeUI("➗", "Algebra Guru", true);
+        else createBadgeUI("🔒", "Algebra Guru", false);
+
+        if (currentStreakCount >= 21) createBadgeUI("🕒", "Habit Builder", true);
+        else createBadgeUI("🔒", "Habit Builder", false);
+
+        if (totalEarnedStars >= 35) createBadgeUI("🔬", "Scientist", true);
+        else createBadgeUI("🔒", "Scientist", false);
+
+        if (currentStreakCount >= 30) createBadgeUI("💎", "Unstoppable", true);
+        else createBadgeUI("🔒", "Unstoppable", false);
+
+        if (totalEarnedStars >= 45) createBadgeUI("🧠", "Brain Power", true);
+        else createBadgeUI("🔒", "Brain Power", false);
+
+        if (totalEarnedStars >= 55) createBadgeUI("👑", "Math Royalty", true);
+        else createBadgeUI("🔒", "Math Royalty", false);
+
+        if (totalEarnedStars == (TOTAL_LESSONS_IN_APP * 3)) createBadgeUI("🏆", "Olympian Legend", true);
+        else createBadgeUI("🔒", "Olympian Legend", false);
+    }
+
+    private void createBadgeUI(String emoji, String title, boolean isUnlocked) {
+        LinearLayout badgeLayout = new LinearLayout(getContext());
+        badgeLayout.setOrientation(LinearLayout.VERTICAL);
+        badgeLayout.setGravity(Gravity.CENTER);
+        badgeLayout.setPadding(30, 20, 30, 20);
+
+        badgeLayout.setBackgroundResource(R.drawable.rounded_header_bg);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                180,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(12, 0, 12, 0);
+        badgeLayout.setLayoutParams(params);
+
+        if (!isUnlocked) {
+            badgeLayout.setAlpha(0.4f);
+        }
+
+        TextView tvEmoji = new TextView(getContext());
+        tvEmoji.setText(emoji);
+        tvEmoji.setTextSize(34);
+        tvEmoji.setGravity(Gravity.CENTER);
+
+        TextView tvTitle = new TextView(getContext());
+        tvTitle.setText(title);
+        tvTitle.setTextSize(11);
+        tvTitle.setGravity(Gravity.CENTER);
+        tvTitle.setTextColor(Color.BLACK);
+        tvTitle.setMaxLines(2);
+
+        badgeLayout.addView(tvEmoji);
+        badgeLayout.addView(tvTitle);
+
+        badgeContainer.addView(badgeLayout);
     }
 
     private void showImageOptionsDialog() {
@@ -159,19 +327,15 @@ public class ProfileFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Profile Picture");
         builder.setItems(options, (dialog, which) -> {
-            if (which == 0) {
-                cameraLauncher.launch(null);
-            } else if (which == 1) {
+            if (which == 0) cameraLauncher.launch(null);
+            else if (which == 1) {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
                 imagePickerLauncher.launch(intent);
             } else if (which == 2) {
                 profileImage.setImageResource(android.R.drawable.ic_menu_camera);
-                if (userRef != null) {
-                    userRef.child("profileImageUrl").removeValue();
-                }
-                Toast.makeText(getContext(), "Photo removed", Toast.LENGTH_SHORT).show();
+                saveImageUriLocally("");
             }
         });
         builder.show();
@@ -192,62 +356,6 @@ public class ProfileFragment extends Fragment {
         return null;
     }
 
-    private void loadDataFromFirebase() {
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!isAdded()) return;
-
-                if (snapshot.exists()) {
-                    achievementsList.clear();
-                    currentGoalsList.clear();
-                    completedGoalsList.clear();
-                    containerAchievements.removeAllViews();
-                    containerCurrentGoals.removeAllViews();
-                    containerCompletedGoals.removeAllViews();
-
-                    String name = snapshot.child("name").getValue(String.class);
-                    String surname = snapshot.child("surname").getValue(String.class);
-
-                    if (name != null && surname != null && !name.isEmpty()) {
-                        tvFullName.setText(name + " " + surname);
-                    } else {
-                        tvFullName.setText("Tap to set Name & Surname");
-                    }
-
-                    String imageUrl = snapshot.child("profileImageUrl").getValue(String.class);
-                    if (imageUrl != null) {
-                        try {
-                            profileImage.setImageURI(Uri.parse(imageUrl));
-                        } catch (Exception e) {
-                            profileImage.setImageResource(android.R.drawable.ic_menu_camera);
-                        }
-                    } else {
-                        profileImage.setImageResource(android.R.drawable.ic_menu_camera);
-                    }
-
-                    for (DataSnapshot item : snapshot.child("achievements").getChildren()) {
-                        String val = item.getValue(String.class);
-                        if (val != null) { achievementsList.add(val); addAchievementToView(val); }
-                    }
-                    for (DataSnapshot item : snapshot.child("currentGoals").getChildren()) {
-                        String val = item.getValue(String.class);
-                        if (val != null) { currentGoalsList.add(val); addGoalToView(val, false); }
-                    }
-                    for (DataSnapshot item : snapshot.child("completedGoals").getChildren()) {
-                        String val = item.getValue(String.class);
-                        if (val != null) { completedGoalsList.add(val); addGoalToView(val, true); }
-                    }
-                } else {
-                    tvFullName.setText("Tap to set Name & Surname");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-    }
-
     private void showEditNameDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Edit Profile Name");
@@ -266,8 +374,7 @@ public class ProfileFragment extends Fragment {
             String surname = etSurname.getText().toString().trim();
             if (!name.isEmpty() && !surname.isEmpty()) {
                 tvFullName.setText(name + " " + surname);
-                userRef.child("name").setValue(name);
-                userRef.child("surname").setValue(surname);
+                saveNameLocally(name, surname);
             }
         });
         builder.setNegativeButton("Cancel", null);
@@ -283,11 +390,13 @@ public class ProfileFragment extends Fragment {
             String text = input.getText().toString().trim();
             if (!text.isEmpty()) {
                 if (isAchievement) {
-                    achievementsList.add(text); addAchievementToView(text);
-                    userRef.child("achievements").setValue(achievementsList);
+                    achievementsList.add(text);
+                    addManualAchievementToView(text);
+                    saveListLocally("achievements", achievementsList);
                 } else {
-                    currentGoalsList.add(text); addGoalToView(text, false);
-                    userRef.child("currentGoals").setValue(currentGoalsList);
+                    currentGoalsList.add(text);
+                    addGoalToView(text, false);
+                    saveListLocally("currentGoals", currentGoalsList);
                 }
             }
         });
@@ -295,17 +404,17 @@ public class ProfileFragment extends Fragment {
         builder.show();
     }
 
-    private void addAchievementToView(String text) {
+    private void addManualAchievementToView(String text) {
         TextView newItem = new TextView(getContext());
-        newItem.setText("🏆 " + text);
-        newItem.setTextColor(getResources().getColor(R.color.deep_brown));
+        newItem.setText("🌟 " + text);
+        newItem.setTextColor(Color.BLACK);
         newItem.setPadding(0, 15, 0, 15);
         newItem.setOnClickListener(v -> new AlertDialog.Builder(getContext())
                 .setTitle("Delete Achievement?")
                 .setPositiveButton("Delete", (dialog, which) -> {
                     containerAchievements.removeView(newItem);
                     achievementsList.remove(text);
-                    userRef.child("achievements").setValue(achievementsList);
+                    saveListLocally("achievements", achievementsList);
                 }).setNegativeButton("Cancel", null).show());
         containerAchievements.addView(newItem);
     }
@@ -313,7 +422,7 @@ public class ProfileFragment extends Fragment {
     private void addGoalToView(String text, boolean isCompleted) {
         TextView goalItem = new TextView(getContext());
         goalItem.setText(isCompleted ? "✅ " + text : "📌 " + text);
-        goalItem.setTextColor(getResources().getColor(isCompleted ? R.color.deep_brown : R.color.earth_brown));
+        goalItem.setTextColor(isCompleted ? Color.GRAY : Color.BLACK);
         goalItem.setPadding(0, 15, 0, 15);
         goalItem.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -323,19 +432,20 @@ public class ProfileFragment extends Fragment {
                 if (isCompleted) {
                     containerCompletedGoals.removeView(goalItem);
                     completedGoalsList.remove(text);
-                    userRef.child("completedGoals").setValue(completedGoalsList);
+                    saveListLocally("completedGoals", completedGoalsList);
                 } else {
                     if (which == 0) {
                         containerCurrentGoals.removeView(goalItem);
                         currentGoalsList.remove(text);
-                        userRef.child("currentGoals").setValue(currentGoalsList);
+                        saveListLocally("currentGoals", currentGoalsList);
+
                         completedGoalsList.add(text);
                         addGoalToView(text, true);
-                        userRef.child("completedGoals").setValue(completedGoalsList);
+                        saveListLocally("completedGoals", completedGoalsList);
                     } else if (which == 1) {
                         containerCurrentGoals.removeView(goalItem);
                         currentGoalsList.remove(text);
-                        userRef.child("currentGoals").setValue(currentGoalsList);
+                        saveListLocally("currentGoals", currentGoalsList);
                     }
                 }
             });

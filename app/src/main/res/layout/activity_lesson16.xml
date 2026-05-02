@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 16: Triangle Foundations"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Inequalities, Pythagoras, Similarity, and Thales's Theorem"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Triangle Inequality"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Not every three lengths can form a triangle. If you have sticks of length 2cm, 3cm, and 10cm, you can never connect them. The longest stick is just too long to be bridged by the other two!"
@@ -87,6 +101,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec1RuleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE GOLDEN RULE:\nThe sum of the lengths of any two sides of a triangle MUST be strictly greater than the length of the third side."
@@ -99,9 +114,10 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1RuleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="• a + b &gt; c\n• a + c &gt; b\n• b + c &gt; a\n\nShortcut: Just check if (Shortest + Middle) &gt; Longest."
+            android:text="• a + b > c\n• a + c > b\n• b + c > a\n\nShortcut: Just check if (Shortest + Middle) > Longest."
             android:textColor="#212121"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -131,6 +147,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Pythagorean Theorem"
@@ -140,6 +157,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="In a right-angled triangle (where one angle is exactly 90 degrees), the square of the hypotenuse (the longest side) equals the sum of the squares of the other two sides (legs)."
@@ -165,6 +183,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec2Formula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="FORMULA: a² + b² = c²"
@@ -177,6 +196,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Triples"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pythagorean Triples to Memorize:\nOlympiad problems rarely require long square root calculations. They use these famous integer sets:\n• 3, 4, 5 (and its multiples: 6, 8, 10)\n• 5, 12, 13\n• 8, 15, 17\n• 7, 24, 25"
@@ -194,6 +214,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Similarity &amp; Scaling"
@@ -203,6 +224,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Two triangles are SIMILAR if they have the exact same shape, but not necessarily the same size. Think of it like zooming in or out on a photo."
@@ -228,6 +250,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec3Conditions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Conditions for Similarity:\n1. AA (Angle-Angle): If two angles of one triangle are equal to two angles of another.\n2. SSS (Side-Side-Side) in ratio: If all three corresponding sides are proportional."
@@ -240,6 +263,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Trap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE SCALING TRAP:\nIf the sides of a triangle are multiplied by a factor of 'k' (e.g., k=3), then the AREA is multiplied by 'k²' (Area gets 9 times bigger, not 3 times!)"
@@ -258,6 +282,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. Thales's Theorem"
@@ -267,6 +292,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="If a line is drawn parallel to one side of a triangle intersecting the other two sides, then it divides the two sides in the same ratio."
@@ -292,6 +318,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec4Ratio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ratio Formula:\nAD / DB = AE / EC\n\nAlso, triangle ADE is perfectly similar to triangle ABC."
@@ -304,6 +331,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problems"
@@ -323,6 +351,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: Bounding the Third Side"
@@ -332,6 +361,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Two sides of a triangle are 8 and 15. The third side is an integer. What is the maximum possible perimeter of this triangle?"
@@ -341,6 +371,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Use the Triangle Inequality. Let the third side be 'x'."
@@ -349,6 +380,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: The absolute rules for 'x' are:\nx &lt; 8 + 15 (x must be less than the sum)\nx &gt; 15 - 8 (x must be greater than the difference)"
@@ -357,6 +389,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: So, 7 &lt; x &lt; 23. \nSince x must be an integer, the maximum possible value for x is 22."
@@ -366,6 +399,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: The problem asks for the PERIMETER. \nPerimeter = 8 + 15 + 22 = 45."
@@ -374,6 +408,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The maximum perimeter is 45."

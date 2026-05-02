@@ -12,6 +12,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 6: Motion Problems"
@@ -22,14 +23,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Kinematics, Relative Speed, River Currents, \nand The Average Speed Trap"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -52,6 +64,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Fundamental Triangle"
@@ -61,6 +74,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Every single motion problem in mathematics, no matter how complex it seems, is built entirely upon one single, unbreakable relationship between Distance (D), Speed (V for Velocity), and Time (T)."
@@ -70,6 +84,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1FormulasTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="FORMULAS TO MEMORIZE:"
@@ -79,6 +94,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1Formulas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="• D = V × T  (Distance equals Speed multiplied by Time)\n• V = D / T  (Speed equals Distance divided by Time)\n• T = D / V  (Time equals Distance divided by Speed)"
@@ -111,6 +127,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Conversions (Crucial Step!)"
@@ -120,6 +137,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Olympiad problems often try to trick you by mixing units. A car might travel at km/h, but the time given is in seconds. You MUST convert all units to match before calculating."
@@ -129,6 +147,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How to convert Speed units:"
@@ -138,6 +157,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► From km/h to m/s: Multiply the speed by 5/18.\nExample: 72 km/h = 72 × (5/18) = 20 m/s.\n\n► From m/s to km/h: Multiply the speed by 18/5.\nExample: 15 m/s = 15 × (18/5) = 54 km/h."
@@ -155,6 +175,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Relative Velocity: Opposite Directions"
@@ -164,6 +185,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When two objects start from different points and move TOWARDS each other, the distance between them decreases rapidly. To simplify the problem, we use Relative Speed."
@@ -173,6 +195,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RULE 1: When moving in opposite directions, their relative speed is the SUM of their individual speeds."
@@ -182,6 +205,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Relative Speed = V1 + V2\nTime to Meet = Total Distance / (V1 + V2)"
@@ -193,6 +217,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. Relative Velocity: Same Direction"
@@ -202,6 +227,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When two objects move in the SAME direction (for example, a police car chasing a thief), the faster object is gradually closing the gap. The rate at which the gap closes is their relative speed."
@@ -211,6 +237,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RULE 2: When moving in the same direction, their relative speed is the DIFFERENCE of their speeds."
@@ -220,6 +247,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Relative Speed = V_fast - V_slow\nTime to Catch Up = Initial Gap / (V_fast - V_slow)"
@@ -237,6 +265,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec5Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="5. Motion on Water (River Currents)"
@@ -246,6 +275,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When a boat moves on a river, the water itself is moving. This water current either helps the boat or fights against it. Let V_b be the boat's speed in still water, and V_w be the water's current speed."
@@ -255,6 +285,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► Downstream (With the current):\nThe river pushes the boat. Effective Speed = V_b + V_w\n\n► Upstream (Against the current):\nThe river resists the boat. Effective Speed = V_b - V_w"
@@ -266,6 +297,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec6Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="6. The Average Speed Trap"
@@ -275,6 +307,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec6Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE MOST COMMON OLYMPIAD MISTAKE:\nIf you go from City A to City B at 60 km/h, and return from B to A at 40 km/h, your average speed is NOT (60+40)/2 = 50 km/h!"
@@ -285,6 +318,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec6Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Why? Because you spent a lot more time driving at the slower speed of 40 km/h, which pulls your average down."
@@ -294,6 +328,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec6Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Average Speed = (Total Distance) / (Total Time)\n\nShortcut formula (Harmonic Mean) for equal distances:\nV_avg = (2 × V1 × V2) / (V1 + V2)"
@@ -312,6 +347,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec7Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="7. Trains, Tunnels, and Bridges"
@@ -321,6 +357,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec7Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A train is not a single point; it has length. When a train crosses a pole or a standing man, the distance it must cover is just its own length."
@@ -330,6 +367,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec7Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="However, when a train crosses a tunnel, a bridge, or a platform, the train is not considered 'crossed' until its very last car exits the structure."
@@ -339,6 +377,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec7Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rule: Total Distance (D) = Length of Train + Length of Tunnel/Bridge"
@@ -350,6 +389,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problem Solving"
@@ -368,6 +408,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Classic Chase"
@@ -377,6 +418,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A thief steals a car at 1:30 PM and drives at 60 km/h. The theft is discovered at 2:00 PM, and the police chase him in another car at 75 km/h. At what time will the police catch the thief?"
@@ -386,6 +428,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Calculate the head start. The thief drives for 30 minutes (0.5 hours) before the police start. Distance = 60 km/h × 0.5 h = 30 km."
@@ -394,6 +437,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Calculate Relative Speed. They are moving in the same direction. V_rel = 75 - 60 = 15 km/h."
@@ -402,6 +446,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Calculate Time. T = Distance / V_rel = 30 / 15 = 2 hours."
@@ -410,6 +455,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Find the clock time. The police started at 2:00 PM. 2:00 PM + 2 hours = 4:00 PM."
@@ -428,6 +474,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Escalator Math"
@@ -437,6 +484,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A man can walk up a stationary escalator in 90 seconds. When he stands still on the moving escalator, it carries him up in 60 seconds. How long will it take him to walk up the moving escalator?"
@@ -446,6 +494,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Let the total distance (length of escalator) be D."
@@ -454,6 +503,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Man's speed (V_m) = D / 90. Escalator's speed (V_e) = D / 60."
@@ -462,6 +512,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: When walking on the moving escalator, their speeds combine: V_total = V_m + V_e = (D/90) + (D/60)."
@@ -470,6 +521,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Common denominator is 180. V_total = (2D/180) + (3D/180) = 5D/180 = D/36."
@@ -478,6 +530,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Time = Distance / V_total = D / (D/36) = 36 seconds."
@@ -496,6 +549,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tvProb3Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 3: Meeting of the Trains"
@@ -505,6 +559,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb3Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Train A (120m long) is traveling at 60 km/h. Train B (180m long) is traveling in the opposite direction at 48 km/h. How many seconds does it take for them to completely cross each other?"
@@ -514,6 +569,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb3S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Convert speeds to m/s. \n60 km/h = 60 × (5/18) = 50/3 m/s. \n48 km/h = 48 × (5/18) = 40/3 m/s."
@@ -522,6 +578,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb3S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Calculate Relative Speed. Since they are moving opposite, we add them: V_rel = (50/3) + (40/3) = 90/3 = 30 m/s."
@@ -530,6 +587,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb3S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Determine Total Distance. To cross each other entirely, they must cover the sum of their lengths: D = 120 + 180 = 300m."
@@ -538,6 +596,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb3S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Time = D / V = 300 / 30 = 10 seconds."
@@ -548,6 +607,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvAdviceTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Final Advice for the Test:"
@@ -557,6 +617,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvAdviceText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Always sketch the problem. If a car leaves 1 hour later, draw it. If they move in opposite directions, draw arrows. Write down what D, V, and T represent in every single scenario. Good luck!"

@@ -1,138 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_beige">
+    android:background="#F5F5DC">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="My Profile"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="@color/deep_brown"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"/>
-
-        <ImageView
-            android:id="@+id/profileImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:background="@color/earth_brown"
-            android:padding="2dp"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_camera" />
-
-        <TextView
-            android:id="@+id/tvFullName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name Surname"
-            android:textColor="@color/deep_brown"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="email@example.com"
-            android:textColor="@color/earth_brown"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"/>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center"
-            android:padding="12dp">
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/rounded_header_bg"
+            android:elevation="4dp">
 
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_star" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                android:src="@android:drawable/ic_menu_camera"
+                app:strokeColor="#8B4513"
+                app:strokeWidth="2dp" />
 
             <TextView
-                android:id="@+id/tvTotalStars"
+                android:id="@+id/tvFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 / 60"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:text="Name Surname"
                 android:textColor="#3E2723"
-                android:layout_marginStart="8dp" />
-
-        </LinearLayout>
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:id="@+id/tvUserStatus"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Achievements"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/deep_brown"/>
+                android:text="Beginner Explorer"
+                android:textColor="#5D4037"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="email@example.com"
+                android:textColor="#8D6E63"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:rowCount="2">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+                    <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_star" app:tint="#FFC107"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Stars" android:textSize="12sp" android:textColor="#795548"/>
+                    <TextView android:id="@+id/tvTotalStars" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥" android:textSize="20sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Day Streak" android:textSize="12sp" android:textColor="#795548"/>
+                    <TextView android:id="@+id/tvStreakDays" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 Days" android:textSize="18sp" android:textStyle="bold" android:textColor="#E64A19"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📝" android:textSize="20sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Solved" android:textSize="12sp" android:textColor="#795548"/>
+                    <TextView android:id="@+id/tvSolvedProblems" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="6dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎯" android:textSize="20sp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Progress" android:textSize="12sp" android:textColor="#795548"/>
+                    <TextView android:id="@+id/tvAccuracy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0%" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Badges"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/badgeContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="My Achievements"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
             <Button
                 android:id="@+id/btnAddAchievement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:backgroundTint="@color/earth_brown"/>
+                android:backgroundTint="#8B4513"
+                android:textColor="@color/white"
+                android:text="+" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/containerAchievements"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="My Goals"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/deep_brown"/>
+            android:orientation="vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Current Goals"
-                android:textColor="@color/earth_brown" />
-
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723" />
             <Button
                 android:id="@+id/btnAddGoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/accent_tan"
+                android:backgroundTint="#8B4513"
+                android:textColor="@color/white"
                 android:text="+" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/containerCurrentGoals"
             android:layout_width="match_parent"
@@ -144,21 +229,22 @@
             android:layout_height="wrap_content"
             android:text="Completed Goals"
             android:layout_marginTop="20dp"
-            android:textColor="@color/deep_brown"
+            android:textSize="16sp"
+            android:textColor="#5D4037"
             android:textStyle="italic"/>
-
         <LinearLayout
             android:id="@+id/containerCompletedGoals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
+
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Log Out"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/deep_brown"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#3E2723"
             android:textColor="@color/white" />
 
     </LinearLayout>

@@ -7,7 +7,8 @@
     android:id="@+id/chat_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#3E2723" android:padding="16dp"
+    android:background="@color/soft_beige"
+    android:padding="16dp"
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
@@ -36,11 +37,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hi! I am your OlympMath AI Mentor. I can help you understand math concepts, solve problems, or prepare for the Olympiad. What do you need help with?"
-                android:background="#E0D5C1" android:padding="12dp"
-                android:textColor="#212121"
                 android:layout_marginBottom="8dp"
-                android:maxWidth="280dp"/>
+                android:background="#E0D5C1"
+                android:maxWidth="280dp"
+                android:padding="12dp"
+                android:text="Hi! I am your OlympMath AI Mentor. I can help you understand math concepts, solve problems, or prepare for the Olympiad. What do you need help with?"
+                android:textColor="#212121" />
 
         </LinearLayout>
     </ScrollView>
