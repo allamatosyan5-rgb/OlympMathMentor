@@ -18,9 +18,7 @@ public class CourseModel {
     public boolean isLocked() { return isLocked; }
     public int getColorResId() { return colorResId; }
 
-    // Այս ֆունկցիան թույլ է տալիս ծրագրին դրսից փոխել դասի կողպված/բացված վիճակը
     public void setLocked(boolean locked) {
         this.isLocked = locked;
-        // Նշում. եթե քո մոտ փոփոխականը կոչվում է ուղղակի 'locked', գրիր this.locked = locked;
     }
 }

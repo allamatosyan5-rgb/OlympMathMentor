@@ -105,10 +105,9 @@ public class BookListActivity extends AppCompatActivity {
             tvAuthor.setText(book[1]);
             String url = book[2];
 
-            // Ստեղծում ենք ապահով բանալի Firebase-ի համար (մաքրում ենք հատուկ նշանները)
+
             String bookId = book[0].replaceAll("[^a-zA-Z0-9]", "_");
 
-            // 1. ՍՏՈՒԳԵԼ ԵՎ ԲԵՌՆԵԼ ԳԼՈԲԱԼ ԳՆԱՀԱՏԱԿԱՆԸ
             dbRef.child(bookId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,7 +127,7 @@ public class BookListActivity extends AppCompatActivity {
                 btnRead.setText("COMING SOON");
                 btnRead.setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));
             } else {
-                // 2. ՍՏՈՒԳԵԼ ԱՐԴՅՈՔ ԲԱՑՎԵԼ Է ԱՌԱՋ
+
                 boolean isOpenedBefore = localPrefs.getBoolean(bookId + "_opened", false);
 
                 if (isOpenedBefore) {
@@ -145,15 +144,13 @@ public class BookListActivity extends AppCompatActivity {
                         return;
                     }
 
-                    // Պահպանում ենք, որ արդեն բացել է
+
                     localPrefs.edit().putBoolean(bookId + "_opened", true).apply();
                     btnRead.setText("✅ OPENED BEFORE");
                     btnRead.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8D6E63")));
 
-                    // Բացում ենք հղումը
                     openLink(url);
 
-                    // Բացում ենք Գնահատման Պատուհանը (որն ունի Maybe Later կոճակ)
                     showRatingDialog(book[0], bookId);
                 });
             }

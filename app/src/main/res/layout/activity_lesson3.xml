@@ -3,242 +3,273 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC"> <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lesson 3: Positional Notation"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Deep Dive into Double, Triple, and Multi-Digit Numbers"
-        android:textSize="16sp"
-        android:textColor="#5D4037"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:textStyle="italic"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#D7CCC8"
-        android:layout_marginBottom="24dp"/>
+    android:background="#F5F5DC">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_dialog_info"
-            app:tint="#3E2723"
-            android:layout_marginEnd="12dp"/>
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1. The Architecture of Numbers"
+            android:text="Lesson 3: Positional Notation"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deep Dive into Double, Triple, and Multi-Digit Numbers"
+            android:textSize="16sp"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:textStyle="italic"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_dialog_info"
+                app:tint="#3E2723"
+                android:layout_marginEnd="12dp"/>
+
+            <TextView
+                android:id="@+id/tvSec1Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. The Architecture of Numbers"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSec1Text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In mathematics, the number system we use every day is called the 'Decimal Positional Numeral System'. The word 'positional' is crucial here: it means that the true value of a single digit is entirely determined by its position (or place) within the number.\n\nFor instance, in the number 737, the first '7' represents seven hundreds (700), while the last '7' represents exactly seven ones (7). Without positional notation, complex arithmetic would be nearly impossible."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSec1Text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To solve Olympiad problems, we must write numbers algebraically. We use a bar over the letters to show it is a single number, not a multiplication of variables (ab means a × b, but a bar over ab means a two-digit number)."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvFormulas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="#FCE4EC"
+            android:lineSpacingExtra="6dp"
+            android:padding="20dp"
+            android:text="FORMULAS TO MEMORIZE:\n\nTwo-digit: ab = 10a + b\nThree-digit: abc = 100a + 10b + c\nFour-digit: abcd = 1000a + 100b + 10c + d"
+            android:textColor="#3E2723"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvSec2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Magic of Number Reversals"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="#3E2723"/>
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSec2Text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Many Olympiad problems involve reversing the digits of a number. Let's explore the hidden mathematical patterns when we add or subtract a number and its reverse."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSec2Text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subtraction Properties:\n• ab - ba = (10a + b) - (10b + a) = 9a - 9b = 9(a - b)\nConclusion: The difference is ALWAYS a multiple of 9.\n\n• abc - cba = (100a + 10b + c) - (100c + 10b + a) = 99(a - c)\nConclusion: The difference is ALWAYS a multiple of 99.\n\nAddition Property:\n• ab + ba = (10a + b) + (10b + a) = 11a + 11b = 11(a + b)\nConclusion: The sum is ALWAYS a multiple of 11."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="24dp"
+            android:background="#E8E0C5"
+            android:padding="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvSec3Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Sum of Digits Concept — S(n)"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSec3Text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let S(n) represent the sum of the digits of a number n. There is a beautiful relationship between any number and the sum of its digits."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/tvSec3Text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rule: n ≡ S(n) (mod 9)\n\nThis means that if you divide a number by 9, the remainder will be exactly the same as if you divided the sum of its digits by 9. For example, to find the remainder of 458 divided by 9, just add 4+5+8 = 17. Then 17 ÷ 9 gives a remainder of 8. Thus, 458 divided by 9 also leaves a remainder of 8!"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvSec4Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Masterclass: Problem Solving"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvProb1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Problem 1: Appending a Digit"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvProb1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question: A digit '5' is placed to the left of a two-digit number. The new three-digit number is 21 times larger than the original two-digit number. Find the original number.\n\nStep-by-Step Solution:\n1. Let the original unknown two-digit number be x.\n2. When we write '5' to its left, the 5 occupies the hundreds place. So the new number is mathematically written as 500 + x.\n3. According to the problem, the new number is 21 times the old one. We set up the equation: 500 + x = 21x\n4. Subtract x from both sides: 500 = 20x\n5. Divide by 20: x = 25.\n\nAnswer: The original number is 25. (Check: 525 is indeed 21 × 25)."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProb2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Problem 2: Arithmetic Rebus"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvProb2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question: Find digits A and B (where A ≠ B) such that AB + AB + AB = BBB.\n\nStep-by-Step Solution:\n1. The left side is 3 × AB.\n2. The right side is a three-digit number with identical digits: BBB. We can expand BBB as 100B + 10B + B = 111B.\n3. Equation: 3 × (10A + B) = 111B\n4. Divide both sides by 3: 10A + B = 37B\n5. Subtract B from both sides: 10A = 36B\n6. Simplify the ratio by dividing by 2: 5A = 18B\n7. For this equation to hold true for single digits (0-9), A must be 18 and B must be 5. But A is a single digit, so it cannot be 18! Therefore, there is no non-zero solution for this specific rebus.\n\n(Wait, let's look closer! If B=0, then 5A = 0, so A=0. But if A=0, AB is '00', which is not a two-digit number. Hence, no valid solution exists!)"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="5dp"
+            android:layout_marginBottom="24dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvSec5Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5. Golden Rules for Olympiads"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvRules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="★ Rule 1: The leading digit (the very first digit on the left) of any multi-digit number can never be zero (e.g., '05' is just 5, a single-digit number).\n\n★ Rule 2: Digits are strictly integers from 0 to 9. If you solve an equation and get a decimal or a number larger than 9 for a digit, your approach is wrong.\n\n★ Rule 3: If a number ends in zero, it is a multiple of 10. If it ends in two zeros, it is a multiple of 100."
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="32dp"
+            android:background="#C9ADA3"
+            android:textColorHint="#FFFFFF"
+            android:padding="16dp"/>
+
+        <Button
+            android:id="@+id/btnGoToTest3"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="TAKE TEST 3"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            app:backgroundTint="#F8BBD0"
+            android:textColor="#3E2723"
+            android:elevation="4dp"
+            android:layout_marginBottom="20dp"/>
+
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="In mathematics, the number system we use every day is called the 'Decimal Positional Numeral System'. The word 'positional' is crucial here: it means that the true value of a single digit is entirely determined by its position (or place) within the number.\n\nFor instance, in the number 737, the first '7' represents seven hundreds (700), while the last '7' represents exactly seven ones (7). Without positional notation, complex arithmetic would be nearly impossible."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="5dp"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="To solve Olympiad problems, we must write numbers algebraically. We use a bar over the letters to show it is a single number, not a multiplication of variables (ab means a × b, but a bar over ab means a two-digit number)."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="5dp"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="#FCE4EC"
-        android:lineSpacingExtra="6dp"
-        android:padding="20dp"
-        android:text="FORMULAS TO MEMORIZE:\n\nTwo-digit: ab = 10a + b\nThree-digit: abc = 100a + 10b + c\nFour-digit: abcd = 1000a + 100b + 10c + d"
-        android:textColor="#3E2723"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="2. The Magic of Number Reversals"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Many Olympiad problems involve reversing the digits of a number. Let's explore the hidden mathematical patterns when we add or subtract a number and its reverse."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="5dp"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Subtraction Properties:\n• ab - ba = (10a + b) - (10b + a) = 9a - 9b = 9(a - b)\nConclusion: The difference is ALWAYS a multiple of 9.\n\n• abc - cba = (100a + 10b + c) - (100c + 10b + a) = 99(a - c)\nConclusion: The difference is ALWAYS a multiple of 99.\n\nAddition Property:\n• ab + ba = (10a + b) + (10b + a) = 11a + 11b = 11(a + b)\nConclusion: The sum is ALWAYS a multiple of 11."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="6dp"
-        android:layout_marginBottom="24dp"
-        android:background="#E8E0C5"
-        android:padding="16dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#D7CCC8"
-        android:layout_marginBottom="24dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="3. Sum of Digits Concept — S(n)"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Let S(n) represent the sum of the digits of a number n. There is a beautiful relationship between any number and the sum of its digits."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="4dp"
-        android:layout_marginBottom="12dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rule: n ≡ S(n) (mod 9)\n\nThis means that if you divide a number by 9, the remainder will be exactly the same as if you divided the sum of its digits by 9. For example, to find the remainder of 458 divided by 9, just add 4+5+8 = 17. Then 17 ÷ 9 gives a remainder of 8. Thus, 458 divided by 9 also leaves a remainder of 8!"
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="4dp"
-        android:layout_marginBottom="24dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#D7CCC8"
-        android:layout_marginBottom="24dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="4. Masterclass: Problem Solving"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Problem 1: Appending a Digit"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#5D4037"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Question: A digit '5' is placed to the left of a two-digit number. The new three-digit number is 21 times larger than the original two-digit number. Find the original number.\n\nStep-by-Step Solution:\n1. Let the original unknown two-digit number be x.\n2. When we write '5' to its left, the 5 occupies the hundreds place. So the new number is mathematically written as 500 + x.\n3. According to the problem, the new number is 21 times the old one. We set up the equation: 500 + x = 21x\n4. Subtract x from both sides: 500 = 20x\n5. Divide by 20: x = 25.\n\nAnswer: The original number is 25. (Check: 525 is indeed 21 × 25)."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="5dp"
-        android:layout_marginBottom="20dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Problem 2: Arithmetic Rebus"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#5D4037"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Question: Find digits A and B (where A ≠ B) such that AB + AB + AB = BBB.\n\nStep-by-Step Solution:\n1. The left side is 3 × AB.\n2. The right side is a three-digit number with identical digits: BBB. We can expand BBB as 100B + 10B + B = 111B.\n3. Equation: 3 × (10A + B) = 111B\n4. Divide both sides by 3: 10A + B = 37B\n5. Subtract B from both sides: 10A = 36B\n6. Simplify the ratio by dividing by 2: 5A = 18B\n7. For this equation to hold true for single digits (0-9), A must be 18 and B must be 5. But A is a single digit, so it cannot be 18! Therefore, there is no non-zero solution for this specific rebus.\n\n(Wait, let's look closer! If B=0, then 5A = 0, so A=0. But if A=0, AB is '00', which is not a two-digit number. Hence, no valid solution exists!)"
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="5dp"
-        android:layout_marginBottom="24dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#D7CCC8"
-        android:layout_marginBottom="24dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="5. Golden Rules for Olympiads"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="★ Rule 1: The leading digit (the very first digit on the left) of any multi-digit number can never be zero (e.g., '05' is just 5, a single-digit number).\n\n★ Rule 2: Digits are strictly integers from 0 to 9. If you solve an equation and get a decimal or a number larger than 9 for a digit, your approach is wrong.\n\n★ Rule 3: If a number ends in zero, it is a multiple of 10. If it ends in two zeros, it is a multiple of 100."
-        android:textColor="#212121"
-        android:textSize="16sp"
-        android:lineSpacingExtra="6dp"
-        android:layout_marginBottom="32dp"
-        android:background="#C9ADA3"
-        android:textColorHint="#FFFFFF"
-        android:padding="16dp"/>
-
-    <Button
-        android:id="@+id/btnGoToTest3"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:text="TAKE TEST 3"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        app:backgroundTint="#F8BBD0"
-        android:textColor="#3E2723"
-        android:elevation="4dp"
-        android:layout_marginBottom="20dp"/>
-
-</LinearLayout>
 </ScrollView>

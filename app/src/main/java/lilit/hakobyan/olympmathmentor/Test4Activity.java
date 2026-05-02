@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -131,6 +132,15 @@ public class Test4Activity extends AppCompatActivity {
                     .putBoolean("lesson5_unlocked", true)
                     .putInt("test4_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

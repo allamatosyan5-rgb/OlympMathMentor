@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 1: Natural Numbers"
@@ -18,9 +19,20 @@
             android:textStyle="bold"
             android:textColor="#3E2723"
             android:gravity="center"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
 
         <TextView
+            android:id="@+id/tvSubtitle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="1. Even and Odd Natural Numbers"
@@ -30,6 +42,7 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvContent1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Numbers used for counting are called natural numbers. They are 1; 2; 3; ...; n; ... The set of natural numbers is denoted by the letter N. The set of natural numbers is infinite."
@@ -46,6 +59,7 @@
             android:layout_marginBottom="16dp">
 
             <TextView
+                android:id="@+id/tvExamples1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="• Even natural numbers: 2, 4, 6, ..., 2n\n• Odd natural numbers: 1, 3, 5, ..., 2n-1"
@@ -55,6 +69,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvProperties1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Properties:\n• The sum of even natural numbers is even.\n• The sum of an even quantity of odd numbers is even.\n• The sum of an odd quantity of odd numbers is odd.\n• The product of even natural numbers is even.\n• The product of odd natural numbers is odd."
@@ -64,6 +79,7 @@
             android:layout_marginBottom="20dp"/>
 
         <TextView
+            android:id="@+id/tvProblem1Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Problem 1:"
@@ -71,12 +87,14 @@
             android:textSize="18sp"
             android:textColor="#5D4037"/>
         <TextView
+            android:id="@+id/tvProblem1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Prove that the equation 2x + 4y = 2003 has no solution in the set of natural numbers."
             android:textSize="16sp"
             android:textColor="#212121"/>
         <TextView
+            android:id="@+id/tvSolution1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Solution: If x, y are natural, then 2x and 4y are even. Their sum is even, which cannot be 2003 (odd). No solution."
@@ -86,29 +104,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Problem 2:"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#5D4037"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Is it possible to place odd numbers from 1 to 99 in a 5x5 grid such that the sum in any direction is 50?"
-            android:textSize="16sp"
-            android:textColor="#212121"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Solution: No, because the sum of any 5 natural odd numbers is odd (and 50 is even)."
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="#2E7D32"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="24dp"/>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -116,6 +111,7 @@
             android:layout_marginBottom="24dp"/>
 
         <TextView
+            android:id="@+id/tvSubtitle2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2. Consecutive Natural Numbers"
@@ -125,6 +121,7 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
+            android:id="@+id/tvContent2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Natural numbers that differ from each other by 1 are called consecutive numbers.\nExample: n; n+1; n+2; ..."
@@ -133,6 +130,7 @@
             android:layout_marginBottom="12dp"/>
 
         <TextView
+            android:id="@+id/tvProperties2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Properties of consecutive numbers:\na) The sum of two consecutive numbers is odd: n + (n+1) = 2n + 1.\nb) The product of two or more consecutive numbers is even.\nc) The product of two consecutive numbers ends in 0, 2, or 6.\nd) The sum of two consecutive odd numbers is divisible by 4."
@@ -140,52 +138,6 @@
             android:textColor="#212121"
             android:lineSpacingExtra="4dp"
             android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Problem 1:"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#5D4037"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Prove that (x+1)(x+2) + (y+3)(y+4) = 2001 has no natural number solutions."
-            android:textSize="16sp"
-            android:textColor="#212121"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Solution: The products (x+1)(x+2) and (y+3)(y+4) are products of consecutive numbers, so they are even. Their sum is even, but 2001 is odd. No solution."
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="#2E7D32"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Problem 2:"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#5D4037"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Does x(x+1) + (y+2000)(y+2001) = 5•15•...•95 have a solution?"
-            android:textSize="16sp"
-            android:textColor="#212121"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Solution: The left side is a sum of two even products (ending in 0, 2, or 6), so it ends in 0, 2, 4, 6, or 8. The right side ends in 5. No solution."
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="#2E7D32"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="30dp"/>
 
         <Button
             android:id="@+id/btnStartTest"

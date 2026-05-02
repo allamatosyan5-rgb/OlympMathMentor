@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -27,16 +28,7 @@ public class Test20Activity extends AppCompatActivity {
             "10. If the distance from Orthocenter (H) to Centroid (G) is 12, what is the distance from Centroid (G) to Circumcenter (O)?"
     };
 
-    // Q1: 4*6 = 3*PD -> 24=3*PD -> 8
-    // Q2: PT^2 = 4*(4+5) = 36 -> 6
-    // Q3: 2
-    // Q4: R/2 = 5
-    // Q5: Circumcenter -> 2
-    // Q6: 2*10 = 4*PD -> 20=4*PD -> 5
-    // Q7: No. Only in specific cases (like isosceles) -> 0
-    // Q8: Yes, it applies to EVERY triangle -> 1
-    // Q9: 9
-    // Q10: HG = 2 * GO -> 12 = 2 * GO -> 6
+
     private String[] correctAnswers = {
             "8", "6", "2", "5", "2", "5", "0", "1", "9", "6"
     };
@@ -151,6 +143,15 @@ public class Test20Activity extends AppCompatActivity {
                     .putInt("test20_score", score)
                     .putBoolean("course_completed", true)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

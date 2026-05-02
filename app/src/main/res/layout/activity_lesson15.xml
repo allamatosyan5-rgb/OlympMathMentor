@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 15: Primes &amp; Composites"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The Atoms of Mathematics, Prime Factorization, and Infinity"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Mathematical Atoms"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="In the universe of mathematics, numbers are not created equal. Just like all physical matter in the universe is made of atoms, all whole numbers are built from fundamental, indivisible blocks. We classify numbers strictly by how many divisors they have."
@@ -79,6 +93,7 @@
             android:layout_marginBottom="24dp">
 
             <TextView
+                android:id="@+id/tvSec1PrimesTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="► PRIME NUMBERS (The Atoms):"
@@ -88,6 +103,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvSec1PrimesText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="A prime number is a number strictly greater than 1 that has EXACTLY TWO distinct positive divisors: 1 and the number itself. They cannot be broken down any further.\nExamples: 2, 3, 5, 7, 11, 13, 17, 19...\n\n(Olympiad Trap: 2 is the ONLY even prime number in existence! All others are odd.)"
@@ -96,6 +112,7 @@
                 android:layout_marginBottom="16dp" />
 
             <TextView
+                android:id="@+id/tvSec1CompTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="► COMPOSITE NUMBERS (The Molecules):"
@@ -105,6 +122,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvSec1CompText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="A composite number has MORE THAN TWO positive divisors. They can be broken down into smaller primes.\nExamples: 4 (divisors: 1, 2, 4), 6 (divisors: 1, 2, 3, 6)."
@@ -113,6 +131,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1TrapTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE LONE WOLF EXCEPTION:"
@@ -122,6 +141,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1TrapText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The number 1 is a very special case. It has only ONE divisor (itself). Therefore, 1 is NEITHER prime NOR composite. It stands completely alone in the rules of arithmetic."
@@ -154,6 +174,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. The Mathematical DNA"
@@ -163,6 +184,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The Fundamental Theorem of Arithmetic is one of the most important discoveries in human history. It states that EVERY integer greater than 1 is either a prime number itself, or it can be written as a unique product of prime numbers."
@@ -172,6 +194,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Tree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="       60\n      /  \\\n    10    6\n   /  \\  / \\\n  2   5 2   3"
@@ -182,6 +205,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Just like your DNA is unique to you, the prime factorization of a number is completely unique to that number. No matter how you draw the factor tree, the bottom branches will always be the same primes."
@@ -193,6 +217,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Equation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="60 = 2 × 2 × 3 × 5 = 2² × 3¹ × 5¹"
@@ -209,6 +234,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. The Primality Hack"
@@ -218,6 +244,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="How do you check if a large number, say 173, is prime? Do you really have to divide it by every single number from 2 to 172? Absolutely not. That would take a lifetime for large numbers."
@@ -227,6 +254,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3RuleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE SQUARE ROOT LIMIT:"
@@ -236,6 +264,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec3RuleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="To check if a number 'N' is prime, you ONLY need to try dividing it by the prime numbers that are LESS THAN OR EQUAL TO the square root of N (√N). If none of them work, the number is guaranteed to be prime!"
@@ -248,6 +277,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: Is 103 prime?\nStep 1: The square root of 103 is just over 10 (since 10² = 100).\nStep 2: We only need to test prime numbers up to 10. These are 2, 3, 5, and 7.\nStep 3: 103 is not divisible by 2 (it's odd). Not by 3 (1+0+3=4). Not by 5 (doesn't end in 0 or 5). Not by 7 (103 = 7×14 + 5).\nConclusion: Since none of these worked, 103 is definitely PRIME! We saved so much time."
@@ -263,6 +293,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. The Infinity of Primes"
@@ -272,6 +303,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Is there a 'largest' prime number hiding somewhere at the end of the universe? Over 2000 years ago, the Greek mathematician Euclid proved that there are infinitely many prime numbers using a breathtakingly elegant contradiction."
@@ -281,6 +313,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Euclid's Proof:\n1. Imagine there is a finite list of all the primes in the world: p₁, p₂, ... pₙ.\n2. Let's multiply them ALL together and add exactly 1. We create a massive new number: N = (p₁ × p₂ × ... × pₙ) + 1.\n3. If you try to divide N by ANY of the primes on our 'complete' list, it will perfectly divide the first part, but it will always leave a remainder of 1.\n4. Thus, N is either a brand new prime itself, or it is divisible by some new prime that wasn't on our list. Either way, our list was incomplete. The primes go on forever!"
@@ -292,6 +325,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problems"
@@ -311,6 +345,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Parity Trap"
@@ -320,6 +355,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Find two prime numbers, p and q, such that p + q = 105."
@@ -329,6 +365,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Look very closely at the sum. The number 105 is an ODD number."
@@ -337,6 +374,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: From the rules of parity, we know that the only way to add two integers and get an ODD result is if one of them is EVEN and the other is ODD (Even + Odd = Odd)."
@@ -345,6 +383,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: This means one of our prime numbers MUST be even. What is the only even prime number in the entire universe? It's the number 2!"
@@ -354,6 +393,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: So, let p = 2. \n2 + q = 105 \nq = 103."
@@ -362,6 +402,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Check if 103 is prime. (We verified this earlier using the square root trick; yes, it is!)."
@@ -370,6 +411,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The primes are 2 and 103."
@@ -389,6 +431,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Prime Triplets"
@@ -398,6 +441,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Find a prime number 'p' such that p, p+2, and p+4 are ALL prime numbers simultaneously."
@@ -407,6 +451,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: If you pick ANY three consecutive odd numbers (like p, p+2, p+4), the rules of arithmetic dictate that exactly ONE of them MUST be a multiple of 3."
@@ -415,6 +460,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Why? Because when you divide them by 3, their remainders will always be 0, 1, and 2 in some order. \nTry it: 17, 19, 21 (21 is div by 3). Or 11, 13, 15 (15 is div by 3)."
@@ -423,6 +469,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: But the problem strictly states that ALL THREE of them must be prime numbers!"
@@ -431,6 +478,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: How can a number be a multiple of 3 AND be a prime number at the same time? It can only happen if the number is exactly 3 itself."
@@ -440,6 +488,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Therefore, the very first number in our sequence must be 3. Let's verify: \np = 3 (prime) \np+2 = 5 (prime) \np+4 = 7 (prime)."
@@ -448,6 +497,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The only solution is p = 3. In fact, (3, 5, 7) is the ONLY prime triplet in all of mathematics!"
@@ -467,6 +517,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb3Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 3: The Factorial Ending"
@@ -476,6 +527,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb3Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: How many trailing zeros are there at the end of the number 100! (100 factorial)?"
@@ -485,6 +537,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb3S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: 100! means 1 × 2 × 3 × ... × 100. A trailing zero is created every time you multiply by 10."
@@ -493,6 +546,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Since 10 is composed of the prime factors 2 and 5 (10 = 2 × 5), we need to count how many pairs of (2 and 5) exist in the prime factorization of 100!."
@@ -501,6 +555,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: In the numbers from 1 to 100, there are way more multiples of 2 than multiples of 5. Therefore, the number of 5s will be the limiting factor. We just need to count the 5s."
@@ -510,6 +565,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Count multiples of 5: 100 / 5 = 20. \nBut wait! Numbers like 25, 50, 75, and 100 contain an extra factor of 5 (since 25 = 5²). \nWe count them by dividing by 25: 100 / 25 = 4."
@@ -518,6 +574,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Total number of 5s = 20 + 4 = 24. This means we can make exactly 24 pairs of (2×5)."
@@ -526,6 +583,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb3Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: 100! ends with exactly 24 zeros."

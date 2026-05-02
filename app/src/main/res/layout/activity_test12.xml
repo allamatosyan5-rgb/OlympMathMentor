@@ -46,8 +46,8 @@
             android:text="FINISH TEST"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:backgroundTint="#E6EE9C"
-            android:textColor="#3E2723"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="20dp"/>
 
         <LinearLayout

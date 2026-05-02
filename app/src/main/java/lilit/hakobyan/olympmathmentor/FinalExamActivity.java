@@ -3,6 +3,7 @@ package lilit.hakobyan.olympmathmentor;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,23 +14,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class FinalExamActivity extends AppCompatActivity {
 
+    // --- ԹԱՅՄԵՐԻ ՓՈՓՈԽԱԿԱՆՆԵՐԸ ---
+    private TextView tvTimer;
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis = 3 * 60 * 60 * 1000; // 3 ժամ
+
     // 50 EPIC OLYMPIAD QUESTIONS
     private String[] questions = {
-            // Numbers & Divisibility (Lessons 1-5)
             "1. What is the remainder when 245 is divided by 9?",
             "2. What is the smallest prime number strictly greater than 10?",
             "3. If the four-digit number 4A72 is perfectly divisible by 9, what is the digit A?",
             "4. What single digit should be appended to the end of 56 to make a three-digit number divisible by 9?",
             "5. What is the Least Common Multiple (LCM) of 12 and 18?",
-
-            // Motion, Work & Mixtures (Lessons 6-10)
             "6. A car travels at 60 km/h for 2.5 hours. What is the distance in km?",
             "7. Alice paints a wall in 6 hours. Bob does it in 3. How many hours will they take working together?",
             "8. A boat goes 20 km/h downstream and 10 km/h upstream. What is the speed of the stream?",
             "9. 100g of 10% salt solution is mixed with 100g of 30% salt solution. What is the total mass of salt in grams?",
             "10. If 3 pumps fill a tank in 4 hours, how many hours will 2 pumps take to fill the same tank?",
-
-            // Number Theory & Logic (Lessons 11-15)
             "11. Is the sum of an odd number and an even number always ODD? (1 for YES, 0 for NO)",
             "12. There are 5 colors of balls in a bag. How many balls must you pick blindly to guarantee at least 3 of the same color?",
             "13. What is the Greatest Common Divisor (GCD) of 48 and 72?",
@@ -40,8 +41,6 @@ public class FinalExamActivity extends AppCompatActivity {
             "18. Dirichlet's Principle: 10 pigeons fly into 9 holes. At least one hole has a minimum of how many pigeons?",
             "19. What is the largest two-digit prime number?",
             "20. Are there infinitely many prime numbers? (1 for YES, 0 for NO)",
-
-            // Plane Geometry Foundations (Lessons 16-18)
             "21. A right-angled triangle has legs of 5 and 12. What is the length of the hypotenuse?",
             "22. A triangle has sides of 7 and 10. What is the MAXIMUM possible integer length of the third side?",
             "23. Two similar triangles have a side ratio of 1:3. What is their area ratio? (1 to X. Type X)",
@@ -52,8 +51,6 @@ public class FinalExamActivity extends AppCompatActivity {
             "28. What is the radius of the incircle (r) of a right triangle with sides 3, 4, and 5?",
             "29. A median of a triangle is 18cm long. How far is the centroid from the vertex? (in cm)",
             "30. A right triangle has a hypotenuse of 10. What is its circumradius (R)?",
-
-            // Advanced Geometry (Lessons 19-20)
             "31. In a cyclic quadrilateral, Angle A is 80°. What is the measure of the opposite Angle C in degrees?",
             "32. Ptolemy's theorem: Opposite sides are (2 and 5) and (3 and 4). What is the product of the diagonals?",
             "33. What is the measure of ONE interior angle of a regular hexagon (in degrees)?",
@@ -64,8 +61,6 @@ public class FinalExamActivity extends AppCompatActivity {
             "38. If the circumradius of a triangle is 20, what is the radius of its Nine-Point Circle?",
             "39. How many distinct points precisely define Feuerbach's circle?",
             "40. In an acute triangle, does the orthocenter lie INSIDE the triangle? (1 for YES, 0 for NO)",
-
-            // Mixed Extreme Challenge (41-50)
             "41. What is the remainder when 2^2024 is divided by 3? (Hint: Parity of powers)",
             "42. What is the total sum of all interior angles in a decagon (10 sides)?",
             "43. Brahmagupta's formula: A cyclic quadrilateral has sides 1, 2, 3, and 4. What is the SQUARE of its area?",
@@ -99,6 +94,12 @@ public class FinalExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_exam);
 
+        tvTimer = findViewById(R.id.tvTimer);
+
+        if (tvTimer != null) {
+            startTimer();
+        }
+
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
         answerInputs = new EditText[questions.length];
         feedbackViews = new TextView[questions.length];
@@ -109,8 +110,6 @@ public class FinalExamActivity extends AppCompatActivity {
             tvQuestion.setTextSize(16f);
             tvQuestion.setTextColor(Color.parseColor("#3E2723"));
             tvQuestion.setPadding(0, 30, 0, 10);
-
-            // ԱՅՍՏԵՂ Է ՈՒՂՂՎԱԾ ԿՈԴԸ՝ setTypeface ենք օգտագործում
             tvQuestion.setTypeface(null, android.graphics.Typeface.BOLD);
 
             questionsContainer.addView(tvQuestion);
@@ -129,7 +128,6 @@ public class FinalExamActivity extends AppCompatActivity {
             feedbackViews[i] = tvFeedback;
             questionsContainer.addView(tvFeedback);
 
-            // Add a divider line between questions
             View divider = new View(this);
             divider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2));
             divider.setBackgroundColor(Color.parseColor("#E0E0E0"));
@@ -149,10 +147,44 @@ public class FinalExamActivity extends AppCompatActivity {
         });
     }
 
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateTimerText();
+            }
+
+            @Override
+            public void onFinish() {
+                tvTimer.setText("00:00:00");
+                Toast.makeText(FinalExamActivity.this, "Time is up! Auto-submitting...", Toast.LENGTH_LONG).show();
+                checkResults();
+            }
+        }.start();
+    }
+
+    private void updateTimerText() {
+        int hours = (int) (timeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((timeLeftInMillis / 1000) % 3600) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+
+        String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        tvTimer.setText(timeFormatted);
+
+        if (timeLeftInMillis < 10 * 60 * 1000) {
+            tvTimer.setTextColor(Color.RED);
+        }
+    }
+
     private void checkResults() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+
         int score = 0;
         for (int i = 0; i < questions.length; i++) {
-            // Get user text, trim spaces, convert commas to dots just in case
+
             String userAnswer = answerInputs[i].getText().toString().trim().replaceAll("\\s+", "").replace(",", ".");
             String correctAnswer = correctAnswers[i];
 
@@ -173,7 +205,6 @@ public class FinalExamActivity extends AppCompatActivity {
         }
         showFinalResult(score);
     }
-
     private void showFinalResult(int score) {
         findViewById(R.id.btnFinish).setVisibility(View.GONE);
         findViewById(R.id.resultLayout).setVisibility(View.VISIBLE);
@@ -183,20 +214,42 @@ public class FinalExamActivity extends AppCompatActivity {
         Button btnFinishApp = findViewById(R.id.btnFinishApp);
         Button btnRetry = findViewById(R.id.btnRetry);
 
+        Button btnStartIntermediate = findViewById(R.id.btnStartIntermediate);
+
         tvScore.setText("Final Score: " + score + " / " + questions.length);
 
-        if (score < 30) {
-            tvFeedbackResult.setText("You fought hard, but to clear the Final Exam you need at least 30 correct answers. Review the lessons and try again!");
+        if (score < 35) {
+            tvFeedbackResult.setText("You fought hard! But you need at least 35 correct answers to unlock the Intermediate Level. Try again!");
             btnRetry.setVisibility(View.VISIBLE);
             btnFinishApp.setVisibility(View.GONE);
-        } else if (score < 45) {
-            tvFeedbackResult.setText("OUTSTANDING! You have a solid grasp of Olympiad Mathematics. You passed the Final Exam!");
-            btnRetry.setVisibility(View.GONE);
-            btnFinishApp.setVisibility(View.VISIBLE);
+            btnStartIntermediate.setVisibility(View.GONE);
         } else {
-            tvFeedbackResult.setText("🏆 OLYMPIAD CHAMPION! 🏆\nA near-perfect score. You are a mathematical prodigy. The universe has no more secrets for you.");
+            tvFeedbackResult.setText("🏆 OLYMPIAD CHAMPION! 🏆\nYou have successfully unlocked the Intermediate Level!");
             btnRetry.setVisibility(View.GONE);
-            btnFinishApp.setVisibility(View.VISIBLE);
+            btnFinishApp.setVisibility(View.GONE);
+            btnStartIntermediate.setVisibility(View.VISIBLE);
+
+            android.content.SharedPreferences prefs = getSharedPreferences("MyPrefs", android.content.Context.MODE_PRIVATE);
+            prefs.edit().putBoolean("intermediate_unlocked", true).apply();
+        }
+
+        btnStartIntermediate.setOnClickListener(v -> {
+            Toast.makeText(this, "Welcome to the Intermediate Level!", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(FinalExamActivity.this, MainActivity.class);
+            intent.putExtra("open_intermediate", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
         }
     }
 }

@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Test3Activity extends AppCompatActivity {
 
-    // Օլիմպիական մակարդակի 10 հարցեր 3-րդ դասի համար
+
     private String[] questions = {
             "1. The difference between any double-digit number and its reverse is always completely divisible by what number?",
             "2. The sum of any double-digit number and its reverse is always a multiple of what prime number?",
@@ -27,7 +28,7 @@ public class Test3Activity extends AppCompatActivity {
             "10. If the 4-digit number 5A3B is completely divisible by 45, what is the maximum possible value for the digit B?"
     };
 
-    // Ճշգրիտ պատասխանները
+
     private String[] correctAnswers = {"9", "11", "99", "7", "35", "13", "399", "48", "15", "5"};
     private EditText[] answerInputs;
     private TextView[] feedbackViews;
@@ -133,6 +134,15 @@ public class Test3Activity extends AppCompatActivity {
                     .putBoolean("lesson4_unlocked", true) // Բացում ենք Դաս 4-ը
                     .putInt("test3_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

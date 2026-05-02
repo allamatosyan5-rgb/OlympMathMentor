@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,16 +27,7 @@ public class Test17Activity extends AppCompatActivity {
             "10. True or False: The incenter of ANY triangle is always inside the triangle. (1 for True, 0 for False)"
     };
 
-    // Q1: 2 (2:1 ratio)
-    // Q2: 0 (lies outside)
-    // Q3: Hypotenuse = diameter. R = 10/2 = 5.
-    // Q4: s = Perim/2 = 12. Area = r*s -> 24 = r*12 -> r=2.
-    // Q5: Central = 2 * Inscribed = 2 * 45 = 90.
-    // Q6: Inscribed = Central / 2 = 120 / 2 = 60.
-    // Q7: Thales theorem = 90.
-    // Q8: 2/3 of 21 = 14.
-    // Q9: 0 (Circumcenter is equidistant from vertices. Incenter is equidistant from sides).
-    // Q10: 1 (Yes, angle bisectors always meet inside).
+
     private String[] correctAnswers = {
             "2", "0", "5", "2", "90", "60", "90", "14", "0", "1"
     };
@@ -152,6 +144,15 @@ public class Test17Activity extends AppCompatActivity {
                     .putBoolean("lesson18_unlocked", true)
                     .putInt("test17_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

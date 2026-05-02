@@ -12,6 +12,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 7: Work and Time"
@@ -22,14 +23,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Efficiency, Pools, Pipes, and Cooperative Labor"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -52,6 +64,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Analogy to Motion"
@@ -61,6 +74,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Work and Time problems are mathematically identical to Motion problems. Instead of 'Distance', we have 'Total Work'. Instead of 'Speed', we have 'Efficiency' or 'Rate of Work'. The 'Time' remains the same."
@@ -70,6 +84,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1FormulasTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE CORE FORMULA:"
@@ -79,6 +94,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1Formulas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="• Total Work = Efficiency × Time  (W = E × T)\n• Efficiency = Total Work ÷ Time  (E = W / T)\n• Time = Total Work ÷ Efficiency  (T = W / E)"
@@ -111,6 +127,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. The 'Unit Work' Method"
@@ -120,6 +137,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="In most problems, the exact amount of work isn't given (e.g., 'build a wall', 'fill a pool'). In these cases, we assume the Total Work is exactly 1 unit (100%)."
@@ -129,6 +147,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="If a person can complete 1 whole job in 'x' days, then their Efficiency (how much they do in 1 day) is exactly 1/x of the job."
@@ -138,6 +157,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec2Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: If John paints a room in 5 hours, his efficiency is 1/5 of the room per hour. In 3 hours, he will paint 3 × (1/5) = 3/5 of the room."
@@ -155,6 +175,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Cooperative Work (Working Together)"
@@ -164,6 +185,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When two people work together, you NEVER add their times. You add their EFFICIENCIES."
@@ -174,6 +196,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RULE 1: If Person A takes 'a' days, and Person B takes 'b' days, their combined efficiency is (1/a) + (1/b)."
@@ -183,6 +206,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Shortcut Formula for 2 people working together:\nTime together = (a × b) / (a + b)"
@@ -194,6 +218,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. The 'LCM' Method (The Olympiad Secret)"
@@ -203,6 +228,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Working with fractions (1/x) can be slow and prone to errors. Olympiad champions use the LCM (Least Common Multiple) method. Instead of setting Total Work to 1, we set it to the LCM of all given times. This turns all efficiencies into whole numbers!"
@@ -212,6 +238,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example: A takes 10 days, B takes 15 days.\nStep 1: LCM of 10 and 15 is 30. Let Total Work = 30 units.\nStep 2: A's efficiency = 30/10 = 3 units/day.\nStep 3: B's efficiency = 30/15 = 2 units/day.\nStep 4: Combined efficiency = 3 + 2 = 5 units/day.\nStep 5: Time together = 30 / 5 = 6 days."
@@ -229,6 +256,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec5Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="5. Pipes and Cisterns (Pools)"
@@ -238,6 +266,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pipes filling a tank are exactly like people doing work. But there is a twist: A leak or an emptying pipe acts as 'Negative Work'."
@@ -247,6 +276,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec5Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► Inlet Pipe (Fills): Positive Efficiency (+E)\n► Outlet Pipe (Empties): Negative Efficiency (-E)\n\nNet Efficiency = (+E_fill) - (-E_empty)"
@@ -264,6 +294,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problem Solving"
@@ -282,6 +313,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Quitter"
@@ -291,6 +323,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Alice can build a wall in 20 days, Bob in 30 days. They start working together, but after 6 days, Alice leaves. How many days will it take Bob alone to finish the remaining work?"
@@ -300,6 +333,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Use LCM method. LCM(20, 30) = 60 units (Total Work)."
@@ -308,6 +342,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Alice's efficiency = 60/20 = 3 units/day. Bob's efficiency = 60/30 = 2 units/day."
@@ -316,6 +351,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Together, they do 3+2 = 5 units/day. In 6 days, they complete: 6 × 5 = 30 units."
@@ -324,6 +360,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Remaining work = 60 - 30 = 30 units."
@@ -332,6 +369,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb1S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Bob must finish these 30 units alone. Bob's Time = 30 units / 2 units/day = 15 days."
@@ -350,6 +388,7 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: The Leaky Pool"
@@ -359,6 +398,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: Pipe A fills a pool in 4 hours. Pipe B fills it in 6 hours. However, a drain at the bottom can empty the full pool in 12 hours. If all three are opened simultaneously, how long will it take to fill the pool?"
@@ -368,6 +408,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: LCM(4, 6, 12) = 12 units (Pool Capacity)."
@@ -376,6 +417,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Pipe A = +3 units/hr. Pipe B = +2 units/hr. Drain = -1 unit/hr."
@@ -384,6 +426,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Net Efficiency = 3 + 2 - 1 = 4 units/hr."
@@ -392,6 +435,7 @@
                 android:layout_marginBottom="4dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Total Time = 12 units / 4 units/hr = 3 hours."

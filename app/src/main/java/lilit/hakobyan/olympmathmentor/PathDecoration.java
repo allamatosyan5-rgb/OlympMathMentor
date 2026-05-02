@@ -13,10 +13,10 @@ public class PathDecoration extends RecyclerView.ItemDecoration {
 
     public PathDecoration() {
         paint = new Paint();
-        // Գույնը հիմա դինամիկ է որոշվում, այստեղ միայն հաստությունն ու ոճն ենք տալիս
-        paint.setStrokeWidth(20f); // Գծի հաստությունը
+
+        paint.setStrokeWidth(20f);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setAntiAlias(true); // Որպեսզի գիծը հարթ լինի
+        paint.setAntiAlias(true);
     }
 
     @Override
@@ -30,17 +30,14 @@ public class PathDecoration extends RecyclerView.ItemDecoration {
 
             View circle1 = child.findViewById(R.id.courseCircle);
             View circle2 = nextChild.findViewById(R.id.courseCircle);
-            // Գտնում ենք հաջորդ դասի կողպեքի նկարը
             ImageView nextLock = nextChild.findViewById(R.id.ivLock);
 
             if (circle1 != null && circle2 != null && nextLock != null) {
 
-                // --- ԳՈՒՅՆԻ ՓՈՓՈԽՈՒԹՅԱՆ ՏՐԱՄԱԲԱՆՈՒԹՅՈՒՆԸ ---
-                // Եթե հաջորդ դասի կողպեքը թաքցված է (GONE), ուրեմն դասը բաց է
                 if (nextLock.getVisibility() == View.GONE) {
-                    paint.setColor(Color.parseColor("#FFD700")); // Ոսկեգույն գիծ
+                    paint.setColor(Color.parseColor("#FFD700"));
                 } else {
-                    paint.setColor(Color.parseColor("#A6A6A6")); // Մոխրագույն գիծ
+                    paint.setColor(Color.parseColor("#A6A6A6"));
                 }
 
                 float startX = child.getX() + circle1.getX() + circle1.getWidth() / 2f;

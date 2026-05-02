@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,16 +27,6 @@ public class Test16Activity extends AppCompatActivity {
             "10. Is it possible to form a triangle with sides 5, 9, and 14? (Type 1 for YES, 0 for NO)"
     };
 
-    // Q1: sqrt(36+64)=10
-    // Q2: x < 25 -> 24
-    // Q3: x > 5 -> 6
-    // Q4: A area = 6. Scaling factor k=3. New area = 6 * 3^2 = 54.
-    // Q5: sqrt(25-9) = 4
-    // Q6: h/12 = 2/3 -> h = 8
-    // Q7: Midpoints create a triangle similar with k=1/2. Area = 64 * (1/4) = 16.
-    // Q8: Perimeter scales linearly! 30 * 3 = 90.
-    // Q9: Isosceles. Altitude bisects AC into 5 and 5. Right triangle: hyp=13, leg=5 -> altitude = 12.
-    // Q10: 5+9 = 14. Must be STRICTLY greater. NO -> 0.
     private String[] correctAnswers = {
             "10", "24", "6", "54", "4", "8", "16", "90", "12", "0"
     };
@@ -152,6 +143,15 @@ public class Test16Activity extends AppCompatActivity {
                     .putBoolean("lesson17_unlocked", true)
                     .putInt("test16_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

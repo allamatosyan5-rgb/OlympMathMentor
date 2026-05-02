@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,7 +19,7 @@ public class Test6Activity extends AppCompatActivity {
             "2. A car drives to a city at 60 km/h and returns at 40 km/h. What is the average speed for the whole trip in km/h?",
             "3. A thief is 150m ahead of a cop. The thief runs at 6 m/s, the cop runs at 9 m/s. How many seconds until the cop catches the thief?",
             "4. Two trains 300 km apart head towards each other. Train A moves at 40 km/h, Train B at 60 km/h. How many hours until they meet?",
-           "5. A boat goes downstream 2 times faster than upstream. If the river current is 3 km/h, what is the boat's speed in still water in km/h?",
+            "5. A boat goes downstream 2 times faster than upstream. If the river current is 3 km/h, what is the boat's speed in still water in km/h?",
             "6. A 100m long train traveling at 20 m/s enters a 400m tunnel. How many seconds does it take for the entire train to completely exit the tunnel?",
             "7. Runners A (5 m/s) and B (3 m/s) run in opposite directions on a 400m circular track. How many seconds until they meet for the first time?",
             "8. If a vehicle doubles its speed, its total travel time is divided by what number?",
@@ -131,6 +132,15 @@ public class Test6Activity extends AppCompatActivity {
                     .putBoolean("lesson7_unlocked", true)
                     .putInt("test6_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

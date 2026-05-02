@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,16 +27,7 @@ public class Test18Activity extends AppCompatActivity {
             "10. In Pick's theorem formula (Area = I + B/2 - x), what number is 'x'?"
     };
 
-    // Q1: s=6. Area = sqrt(6*3*2*1) = 6.
-    // Q2: s=21. Area = 84.
-    // Q3: I=10, B=6. Area = 10 + 6/2 - 1 = 10 + 3 - 1 = 12.
-    // Q4: I=5, B=10. Area = 5 + 10/2 - 1 = 5 + 5 - 1 = 9.
-    // Q5: 1.
-    // Q6: 2 sides. The third intersection is on the extension.
-    // Q7: (2/1) * (4/2) * (x) = 1 -> 2 * 2 * x = 1 -> 4x = 1 -> x = 0.25.
-    // Q8: (7+8+9)/2 = 24/2 = 12.
-    // Q9: 0.5 * 10 * 8 * 0.5 = 20.
-    // Q10: 1.
+
     private String[] correctAnswers = {
             "6", "84", "12", "9", "1", "2", "0.25", "12", "20", "1"
     };
@@ -152,6 +144,15 @@ public class Test18Activity extends AppCompatActivity {
                     .putBoolean("lesson19_unlocked", true)
                     .putInt("test18_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }

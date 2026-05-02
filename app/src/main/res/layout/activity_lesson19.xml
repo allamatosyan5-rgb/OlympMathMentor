@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 19: Polygons &amp; Ptolemy"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cyclic Quadrilaterals, Brahmagupta, and Regular Polygons"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. Cyclic Quadrilaterals"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="A Cyclic Quadrilateral (Ներգծյալ քառանկյուն) is a four-sided polygon whose vertices all lie on a single circle. Not every quadrilateral can be inscribed in a circle (for example, a non-rectangular rhombus cannot)."
@@ -87,6 +101,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec1RuleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE GOLDEN PROPERTY:\nIn a cyclic quadrilateral, the sum of any pair of OPPOSITE angles is exactly 180°."
@@ -99,6 +114,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1RuleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="• Angle A + Angle C = 180°\n• Angle B + Angle D = 180°\n\n(This is why all rectangles and squares are cyclic, because 90 + 90 = 180)."
@@ -130,6 +146,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Ptolemy's Theorem"
@@ -139,6 +156,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ptolemy's Theorem is a beautiful relation between the sides and the diagonals of a cyclic quadrilateral. It is the ultimate weapon for finding missing diagonal lengths."
@@ -164,6 +182,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec2FormulaTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PTOLEMY'S FORMULA:\nThe product of the diagonals equals the sum of the products of the opposite sides."
@@ -173,6 +192,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec2Formula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="AC × BD = (AB × CD) + (BC × AD)"
@@ -191,6 +211,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. Brahmagupta's Formula"
@@ -200,6 +221,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="You already know Heron's formula for the Area of a triangle. The Indian mathematician Brahmagupta discovered the equivalent formula for a Cyclic Quadrilateral."
@@ -225,6 +247,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec3Formula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Step 1: Find the Semi-Perimeter (s)\ns = (a + b + c + d) / 2\n\nStep 2: Apply the Formula\nArea = √[ (s-a) × (s-b) × (s-c) × (s-d) ]"
@@ -243,6 +266,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec4Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="4. Polygons and Diagonals"
@@ -252,6 +276,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec4Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Let 'n' be the number of sides of a polygon. Olympiad problems often test these three fundamental formulas:"
@@ -277,6 +302,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvSec4Formulas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="1. Sum of Interior Angles:\nSum = (n - 2) × 180°\n\n2. One Interior Angle (if Regular):\nAngle = [ (n - 2) × 180° ] / n\n\n3. Total Number of Diagonals:\nDiagonals = [ n × (n - 3) ] / 2"
@@ -289,6 +315,7 @@
             android:layout_marginBottom="32dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Advanced Problems"
@@ -308,6 +335,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: Using Ptolemy"
@@ -317,6 +345,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A cyclic quadrilateral has side lengths AB=3, BC=4, CD=5, and AD=6. If the diagonal BD has a length of 7, what is the length of the diagonal AC?"
@@ -326,6 +355,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Write down Ptolemy's Theorem.\nAC × BD = (AB × CD) + (BC × AD)"
@@ -334,6 +364,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Plug in the known values.\nAC × 7 = (3 × 5) + (4 × 6)"
@@ -342,6 +373,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Calculate the products.\n7 × AC = 15 + 24\n7 × AC = 39"
@@ -351,6 +383,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Solve for AC.\nAC = 39 / 7."
@@ -359,6 +392,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: AC = 39/7 (approx 5.57)."
@@ -378,6 +412,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: Regular Polygons"
@@ -387,6 +422,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A regular polygon has 35 diagonals. How many sides does it have, and what is the measure of ONE of its interior angles?"
@@ -396,6 +432,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Use the diagonals formula to find 'n'.\n[ n × (n - 3) ] / 2 = 35\nn × (n - 3) = 70"
@@ -404,6 +441,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: We need two numbers differing by 3 that multiply to 70. \n10 × 7 = 70. So, n = 10. The polygon is a Decagon!"
@@ -412,6 +450,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Find the sum of all interior angles.\nSum = (10 - 2) × 180° = 8 × 180° = 1440°."
@@ -421,6 +460,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Divide by 10 to find ONE angle.\nAngle = 1440° / 10 = 144°."
@@ -429,6 +469,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: It has 10 sides, and the angle is 144°."

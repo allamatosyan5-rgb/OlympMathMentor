@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lesson 10: Joint Work &amp; Time"
@@ -23,14 +24,25 @@
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Complex Scenarios, Shift Work, and Variable Efficiency"
             android:textSize="16sp"
             android:textColor="#5D4037"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp" />
 
         <View
             android:layout_width="match_parent"
@@ -53,6 +65,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1. The Universal Equation"
@@ -62,6 +75,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="In advanced work problems, people don't always work from start to finish. They might join late, leave early, or take breaks. To solve these, we use the Universal Work Equation."
@@ -71,6 +85,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec1RuleTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="THE GOLDEN RULE:"
@@ -80,6 +95,7 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
+            android:id="@+id/tvSec1RuleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="(Work done by A) + (Work done by B) + ... = Total Work\n\nRemember: Work = Efficiency × Time worked."
@@ -112,6 +128,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/tvSec2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2. Managing Variable Time (The 'x' method)"
@@ -121,6 +138,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvSec2Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When you don't know the total time, let the total time the work took be 'x'. Then, express the time each person worked relative to 'x'."
@@ -130,6 +148,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec2List"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="► If A works until the end, A's time = x.\n► If B joins 3 days late, B's time = (x - 3).\n► If C leaves 2 days before the end, C's time = (x - 2)."
@@ -147,6 +166,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvSec3Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3. The 'Man-Days' Concept (Work = Workers × Time)"
@@ -156,6 +176,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="When dealing with groups of identical workers (e.g., '10 men can build a wall in 5 days'), we define the total work in 'man-days'."
@@ -165,6 +186,7 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
+            android:id="@+id/tvSec3Text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Total Work = (Number of Workers) × (Number of Days)\n\nExample: If 10 men take 5 days, Total Work = 10 × 5 = 50 man-days. If you only have 2 men, it will take them 50 / 2 = 25 days."
@@ -183,6 +205,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvMasterTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Masterclass: Olympiad Problems"
@@ -202,6 +225,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb1Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 1: The Early Departure"
@@ -211,6 +235,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb1Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A can do a job in 20 days, and B can do it in 30 days. They start together, but A leaves 5 days BEFORE the work is completed. How many days did the total work take?"
@@ -220,6 +245,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb1S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: LCM(20, 30) = 60 units (Total Work).\nEfficiency A = 3 units/day.\nEfficiency B = 2 units/day."
@@ -228,6 +254,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Let the total time be 'x' days.\nB worked for all 'x' days.\nA worked for 'x - 5' days."
@@ -236,6 +263,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Setup the equation:\n(A's work) + (B's work) = 60\n3(x - 5) + 2(x) = 60"
@@ -245,6 +273,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Solve:\n3x - 15 + 2x = 60\n5x = 75\nx = 15"
@@ -253,6 +282,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb1Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: The work took 15 days."
@@ -272,6 +302,7 @@
             android:elevation="2dp">
 
             <TextView
+                android:id="@+id/tvProb2Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Problem 2: Group Effort Dynamics"
@@ -281,6 +312,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
+                android:id="@+id/tvProb2Q"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Question: A contractor estimated that a project requires 40 workers for 30 days. After 10 days, 10 workers quit. How many extra days beyond the original estimate will it take to finish the job?"
@@ -290,6 +322,7 @@
                 android:layout_marginBottom="12dp" />
 
             <TextView
+                android:id="@+id/tvProb2S1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 1: Total required work = 40 workers × 30 days = 1200 man-days."
@@ -298,6 +331,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 2: Work done in first 10 days = 40 workers × 10 days = 400 man-days."
@@ -306,6 +340,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 3: Remaining work = 1200 - 400 = 800 man-days."
@@ -314,6 +349,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 4: Now only 30 workers are left. \nTime needed for remaining work = 800 / 30 = 26.66 days (or 26 and 2/3 days)."
@@ -322,6 +358,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2S5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Step 5: Total actual time = 10 + 26.66 = 36.66 days. \nOriginal estimate was 30 days. \nExtra time = 36.66 - 30 = 6.66 days."
@@ -330,6 +367,7 @@
                 android:layout_marginBottom="6dp" />
 
             <TextView
+                android:id="@+id/tvProb2Ans"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: It will take 6.66 (or 6 and 2/3) extra days."

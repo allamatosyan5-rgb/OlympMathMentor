@@ -1,4 +1,4 @@
 package lilit.hakobyan.olympmathmentor;
 
-public class OlympiadasFragment {
+public class IntLesson9Activity {
 }

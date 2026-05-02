@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,16 +27,7 @@ public class Test15Activity extends AppCompatActivity {
             "10. Is the number 91 a prime number? (1 for YES, 0 for NO)"
     };
 
-    // Q1: 0 (1 is neither)
-    // Q2: 2
-    // Q3: 2
-    // Q4: 2, 3, 5, 7 -> 4
-    // Q5: Sum is odd, so one is 2. The other is 73. 2 * 73 = 146.
-    // Q6: 3
-    // Q7: 97
-    // Q8: 210 = 2 * 3 * 5 * 7. Answer: 4.
-    // Q9: 2 + 3 + 5 + 7 + 11 = 28.
-    // Q10: 91 = 7 * 13. Not prime -> 0.
+
     private String[] correctAnswers = {
             "0", "2", "2", "4", "146", "3", "97", "4", "28", "0"
     };
@@ -152,6 +144,15 @@ public class Test15Activity extends AppCompatActivity {
                     .putBoolean("lesson16_unlocked", true)
                     .putInt("test15_score", score)
                     .apply();
+        }
+    }
+    private void saveLessonStars(int lessonNumber, int earnedStars) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
+
+        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+        if (earnedStars > previousBest) {
+            prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
 }
