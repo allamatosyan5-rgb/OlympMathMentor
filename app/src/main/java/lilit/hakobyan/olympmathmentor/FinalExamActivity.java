@@ -1,6 +1,8 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -250,6 +252,16 @@ public class FinalExamActivity extends AppCompatActivity {
 
         if (countDownTimer != null) {
             countDownTimer.cancel();
+        }
+    }
+    private void saveWrongQuestion(String question, String correctAns) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String existingErrors = prefs.getString("wrong_questions_list", "");
+
+
+        if (!existingErrors.contains(question)) {
+            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
+            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
     }
 }

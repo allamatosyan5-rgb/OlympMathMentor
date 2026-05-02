@@ -146,9 +146,19 @@ public class Test14Activity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
 
-        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
+        }
+    }
+    private void saveWrongQuestion(String question, String correctAns) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String existingErrors = prefs.getString("wrong_questions_list", "");
+
+
+        if (!existingErrors.contains(question)) {
+            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
+            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
     }
 }

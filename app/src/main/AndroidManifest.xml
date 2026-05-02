@@ -156,6 +156,11 @@
         <activity android:name=".IntLesson20Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest20Activity" android:exported="false" android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".MyMistakesActivity"
+            android:screenOrientation="portrait"
+            android:label="My Mistakes" />
+
 
     </application>
 

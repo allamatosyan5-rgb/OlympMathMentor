@@ -68,19 +68,15 @@ public class Test15Activity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-        // --- NEXT LESSON LOGIC: OPENS LESSON 16 ---
+
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
-            try {
-                Class<?> lesson16Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson16Activity");
-                Intent intent = new Intent(Test15Activity.this, lesson16Class);
-                startActivity(intent);
-                finish();
-            } catch (ClassNotFoundException e) {
-                finish();
-            }
+            Intent intent = new Intent(Test15Activity.this, Lesson16Activity.class);
+            startActivity(intent);
+            finish();
         });
+
+        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
 
     private void checkResults() {
@@ -150,9 +146,19 @@ public class Test15Activity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
 
-        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
+        }
+    }
+    private void saveWrongQuestion(String question, String correctAns) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String existingErrors = prefs.getString("wrong_questions_list", "");
+
+
+        if (!existingErrors.contains(question)) {
+            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
+            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
     }
 }

@@ -78,7 +78,9 @@ public class Test3Activity extends AppCompatActivity {
 
     private void checkResults() {
         int score = 0;
+
         for (int i = 0; i < questions.length; i++) {
+
             String userAnswer = answerInputs[i].getText().toString().trim().toLowerCase();
             String correctAnswer = correctAnswers[i].toLowerCase();
 
@@ -88,6 +90,10 @@ public class Test3Activity extends AppCompatActivity {
             if (userAnswer.isEmpty()) {
                 feedbackViews[i].setText("❌ No answer. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.RED);
+
+
+                saveWrongQuestion(questions[i], correctAnswers[i]);
+
             } else if (userAnswer.equals(correctAnswer)) {
                 score++;
                 feedbackViews[i].setText("✅ Correct!");
@@ -95,6 +101,8 @@ public class Test3Activity extends AppCompatActivity {
             } else {
                 feedbackViews[i].setText("❌ Incorrect. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.RED);
+
+                saveWrongQuestion(questions[i], correctAnswers[i]);
             }
         }
         showFinalResult(score);
@@ -163,6 +171,16 @@ public class Test3Activity extends AppCompatActivity {
 
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
+        }
+    }
+    private void saveWrongQuestion(String question, String correctAns) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String existingErrors = prefs.getString("wrong_questions_list", "");
+
+
+        if (!existingErrors.contains(question)) {
+            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
+            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
     }
 }

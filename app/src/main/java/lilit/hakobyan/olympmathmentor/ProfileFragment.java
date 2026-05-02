@@ -49,7 +49,7 @@ public class ProfileFragment extends Fragment {
     private int totalEarnedStars = 0;
     private int currentStreakCount = 0;
 
-    // ԴԱՍԵՐԻ ԸՆԴՀԱՆՈՒՐ ՔԱՆԱԿԸ
+
     private final int TOTAL_LESSONS_IN_APP = 20;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -102,6 +102,11 @@ public class ProfileFragment extends Fragment {
         btnAddAchievement = view.findViewById(R.id.btnAddAchievement);
         btnAddGoal = view.findViewById(R.id.btnAddGoal);
         btnLogout = view.findViewById(R.id.btnLogout);
+
+        view.findViewById(R.id.btnViewMistakes).setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MyMistakesActivity.class);
+            startActivity(intent);
+        });
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {

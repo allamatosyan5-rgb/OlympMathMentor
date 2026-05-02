@@ -68,18 +68,20 @@ public class Test20Activity extends AppCompatActivity {
             questionsContainer.addView(tvFeedback);
         }
 
-        findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-        // --- FINAL EXAM LOGIC: OPENS THE 50-QUESTION EXAM ---
-        Button btnNextLesson = findViewById(R.id.btnNextLesson);
-        btnNextLesson.setText("TAKE FINAL EXAM");
-        btnNextLesson.setOnClickListener(v -> {
+        findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
+
+
+        findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             Intent intent = new Intent(Test20Activity.this, FinalExamActivity.class);
             startActivity(intent);
             finish();
         });
+
+        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
+
+
 
     private void checkResults() {
         int score = 0;
@@ -149,9 +151,19 @@ public class Test20Activity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
 
-        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
+        }
+    }
+    private void saveWrongQuestion(String question, String correctAns) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String existingErrors = prefs.getString("wrong_questions_list", "");
+
+
+        if (!existingErrors.contains(question)) {
+            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
+            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
     }
 }

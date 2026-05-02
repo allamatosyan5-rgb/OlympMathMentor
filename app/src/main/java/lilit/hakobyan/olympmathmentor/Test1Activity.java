@@ -89,20 +89,28 @@ public class Test1Activity extends AppCompatActivity {
             feedbackViews[i].setVisibility(View.VISIBLE);
 
             if (userAnswer.isEmpty()) {
-                feedbackViews[i].setText("❌ You didn't answer. Correct answer: " + correctAnswers[i]);
-                feedbackViews[i].setTextColor(Color.parseColor("#D32F2F"));
+                feedbackViews[i].setText("❌ No answer. Correct: " + correctAnswers[i]);
+                feedbackViews[i].setTextColor(Color.RED);
+
+                // ԱՎԵԼԱՑՐՈՒ ԱՅՍ ՏՈՂԸ
+                saveWrongQuestion(questions[i], correctAnswers[i]);
+
             } else if (userAnswer.equals(correctAnswer)) {
                 score++;
                 feedbackViews[i].setText("✅ Correct!");
                 feedbackViews[i].setTextColor(Color.parseColor("#2E7D32"));
             } else {
-                feedbackViews[i].setText("❌ Incorrect. Correct answer: " + correctAnswers[i]);
-                feedbackViews[i].setTextColor(Color.parseColor("#D32F2F"));
+                feedbackViews[i].setText("❌ Incorrect. Correct: " + correctAnswers[i]);
+                feedbackViews[i].setTextColor(Color.RED);
+
+                // ԱՎԵԼԱՑՐՈՒ ԱՅՍ ՏՈՂԸ
+                saveWrongQuestion(questions[i], correctAnswers[i]);
             }
         }
-
         showFinalResult(score);
     }
+
+
 
     private void showFinalResult(int score) {
 
@@ -119,7 +127,7 @@ public class Test1Activity extends AppCompatActivity {
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
 
-            // Եթե տապալել է, պահում ենք 0 աստղ (կամ պարզապես ոչինչ չենք պահում)
+
             saveLessonStars(1, 0);
 
         } else {
@@ -152,7 +160,6 @@ public class Test1Activity extends AppCompatActivity {
                 earnedStars = 3;
             }
 
-            // ՆՈՐ. Պահպանում ենք աստղերը Պրոֆիլի համար (սա Lesson 1-ն է, ուստի գրում ենք 1)
             saveLessonStars(1, earnedStars);
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -161,14 +168,22 @@ public class Test1Activity extends AppCompatActivity {
         }
     }
 
-    // ՆՈՐ ՄԵԹՈԴ. Պահպանում է աստղերը այնտեղ, որտեղից կարդում է Պրոֆիլի էջը
+
     private void saveLessonStars(int lessonNumber, int earnedStars) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
-
-        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան անցած անգամ, ապա պահպանել
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
+        }
+    }
+    private void saveWrongQuestion(String question, String correctAns) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String existingErrors = prefs.getString("wrong_questions_list", "");
+
+
+        if (!existingErrors.contains(question)) {
+            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
+            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
     }
 }
