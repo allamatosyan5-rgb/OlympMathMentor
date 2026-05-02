@@ -68,19 +68,15 @@ public class Test11Activity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
 
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
-            try {
-                Class<?> lesson12Class = Class.forName("lilit.hakobyan.olympmathmentor.Lesson12Activity");
-                Intent intent = new Intent(Test11Activity.this, lesson12Class);
-                startActivity(intent);
-                finish();
-            } catch (ClassNotFoundException e) {
-                finish();
-            }
+            Intent intent = new Intent(Test11Activity.this, Lesson12Activity.class);
+            startActivity(intent);
+            finish();
         });
+
+        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
 
     private void checkResults() {

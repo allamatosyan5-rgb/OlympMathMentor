@@ -67,7 +67,14 @@ public class Test4Activity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-        findViewById(R.id.btnNextLesson).setOnClickListener(v -> finish());
+
+
+        findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
+            Intent intent = new Intent(Test4Activity.this, Lesson5Activity.class);
+            startActivity(intent);
+            finish();
+        });
+
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
 
@@ -103,13 +110,17 @@ public class Test4Activity extends AppCompatActivity {
         TextView tvFeedbackResult = findViewById(R.id.tvFeedback);
         tvScore.setText("Your Score: " + score + " / " + questions.length);
 
+        int earnedStars = 0;
+
         if (score < 6) {
             tvFeedbackResult.setText("Review the lesson and try again!");
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
+
+            saveLessonStars(4, 0); // Պահպանում ենք 0 աստղ
         } else {
-            tvFeedbackResult.setText("Congratulations! You passed Test 4.");
+            tvFeedbackResult.setText("Congratulations! Lesson 5 is now unlocked.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
@@ -123,9 +134,21 @@ public class Test4Activity extends AppCompatActivity {
             m2.setColorFilter(Color.LTGRAY);
             m3.setColorFilter(Color.LTGRAY);
 
-            if (score >= 6) m1.setColorFilter(gold);
-            if (score >= 8) m2.setColorFilter(gold);
-            if (score == 10) m3.setColorFilter(gold);
+            if (score >= 6) {
+                m1.setColorFilter(gold);
+                earnedStars = 1;
+            }
+            if (score >= 8) {
+                m2.setColorFilter(gold);
+                earnedStars = 2;
+            }
+            if (score == 10) {
+                m3.setColorFilter(gold);
+                earnedStars = 3;
+            }
+
+
+            saveLessonStars(4, earnedStars);
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
@@ -134,10 +157,10 @@ public class Test4Activity extends AppCompatActivity {
                     .apply();
         }
     }
+
     private void saveLessonStars(int lessonNumber, int earnedStars) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
-
 
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();

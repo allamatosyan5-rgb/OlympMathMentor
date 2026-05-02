@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Test3Activity extends AppCompatActivity {
 
-
     private String[] questions = {
             "1. The difference between any double-digit number and its reverse is always completely divisible by what number?",
             "2. The sum of any double-digit number and its reverse is always a multiple of what prime number?",
@@ -28,7 +27,6 @@ public class Test3Activity extends AppCompatActivity {
             "10. If the 4-digit number 5A3B is completely divisible by 45, what is the maximum possible value for the digit B?"
     };
 
-
     private String[] correctAnswers = {"9", "11", "99", "7", "35", "13", "399", "48", "15", "5"};
     private EditText[] answerInputs;
     private TextView[] feedbackViews;
@@ -37,7 +35,8 @@ public class Test3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_test2);
+
+        setContentView(R.layout.activity_test3);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
         answerInputs = new EditText[questions.length];
@@ -68,8 +67,12 @@ public class Test3Activity extends AppCompatActivity {
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
+        findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
+            Intent intent = new Intent(Test3Activity.this, Lesson4Activity.class);
+            startActivity(intent);
+            finish();
+        });
 
-        findViewById(R.id.btnNextLesson).setOnClickListener(v -> finish());
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
 
@@ -110,8 +113,11 @@ public class Test3Activity extends AppCompatActivity {
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
+
+
+            saveLessonStars(3, 0);
         } else {
-            tvFeedbackResult.setText("Congratulations! You passed Test 3.");
+            tvFeedbackResult.setText("Congratulations! Lesson 4 is now unlocked.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
             findViewById(R.id.medalsLayout).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNextLesson).setVisibility(View.VISIBLE);
@@ -125,21 +131,35 @@ public class Test3Activity extends AppCompatActivity {
             m2.setColorFilter(Color.LTGRAY);
             m3.setColorFilter(Color.LTGRAY);
 
-            if (score >= 6) m1.setColorFilter(gold);
-            if (score >= 8) m2.setColorFilter(gold);
-            if (score == 10) m3.setColorFilter(gold);
+            int earnedStars = 0;
+
+            if (score >= 6) {
+                m1.setColorFilter(gold);
+                earnedStars = 1;
+            }
+            if (score >= 8) {
+                m2.setColorFilter(gold);
+                earnedStars = 2;
+            }
+            if (score == 10) {
+                m3.setColorFilter(gold);
+                earnedStars = 3;
+            }
+
+
+            saveLessonStars(3, earnedStars);
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
-                    .putBoolean("lesson4_unlocked", true) // Բացում ենք Դաս 4-ը
+                    .putBoolean("lesson4_unlocked", true)
                     .putInt("test3_score", score)
                     .apply();
         }
     }
+
     private void saveLessonStars(int lessonNumber, int earnedStars) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
-
 
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();

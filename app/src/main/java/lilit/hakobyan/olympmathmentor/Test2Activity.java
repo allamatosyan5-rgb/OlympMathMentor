@@ -68,6 +68,7 @@ public class Test2Activity extends AppCompatActivity {
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
+        // Սա այն հատվածն է, որտեղ սխալ կար
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             Intent intent = new Intent(Test2Activity.this, Lesson3Activity.class);
             startActivity(intent);
@@ -115,7 +116,7 @@ public class Test2Activity extends AppCompatActivity {
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
 
-            // ՆՈՐ. Եթե տապալել է, պահում ենք 0 աստղ (Lesson 2)
+
             saveLessonStars(2, 0);
         } else {
             tvFeedbackResult.setText("Congratulations! Lesson 3 is now unlocked.");
@@ -132,7 +133,7 @@ public class Test2Activity extends AppCompatActivity {
             m2.setColorFilter(Color.LTGRAY);
             m3.setColorFilter(Color.LTGRAY);
 
-            int earnedStars = 0; // ՆՈՐ. Փոփոխական աստղերը հաշվելու համար
+            int earnedStars = 0;
 
             if (score >= 6) {
                 m1.setColorFilter(gold);
@@ -147,7 +148,7 @@ public class Test2Activity extends AppCompatActivity {
                 earnedStars = 3;
             }
 
-            // ՆՈՐ. Պահպանում ենք 2-րդ դասի վաստակած աստղերը Պրոֆիլի համար
+
             saveLessonStars(2, earnedStars);
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -158,12 +159,11 @@ public class Test2Activity extends AppCompatActivity {
         }
     }
 
-    // ՆՈՐ ՄԵԹՈԴ. Պահպանում է աստղերը հատուկ "UserProgress" ֆայլում, որտեղից կարդում է ProfileFragment-ը
     private void saveLessonStars(int lessonNumber, int earnedStars) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
 
-        // Եթե այս անգամ հավաքած աստղերն ավելի շատ են, քան նախկինում հավաքածը, ապա պահպանել
+
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }

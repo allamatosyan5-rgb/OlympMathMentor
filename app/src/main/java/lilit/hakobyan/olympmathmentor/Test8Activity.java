@@ -67,10 +67,16 @@ public class Test8Activity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-        findViewById(R.id.btnNextLesson).setOnClickListener(v -> finish());
+
+
+        findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
+            Intent intent = new Intent(Test8Activity.this, Lesson9Activity.class);
+            startActivity(intent);
+            finish();
+        });
+
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
     }
-
     private void checkResults() {
         int score = 0;
         for (int i = 0; i < questions.length; i++) {
