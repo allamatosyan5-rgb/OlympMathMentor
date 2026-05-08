@@ -20,9 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyMistakesActivity extends AppCompatActivity {
+public class FavouritesActivity extends AppCompatActivity {
 
-    private LinearLayout questionsContainer;
+    private LinearLayout favContainer;
     private Button btnCreateTest;
     private boolean isTestMode = false;
 
@@ -35,55 +35,59 @@ public class MyMistakesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_mistakes);
+        setContentView(R.layout.activity_favourites);
 
-        questionsContainer = findViewById(R.id.questionsContainer);
+        favContainer = findViewById(R.id.favContainer);
         btnCreateTest = findViewById(R.id.btnCreateTest);
 
-        loadMistakes();
+        loadFavourites();
 
-        btnCreateTest.setOnClickListener(v -> {
-            if (!isTestMode) {
-                isTestMode = true;
-                btnCreateTest.setText("Start Custom Test");
-                if (cbSelectAll != null) cbSelectAll.setVisibility(View.VISIBLE);
-                for (CheckBox cb : checkBoxes) {
-                    cb.setVisibility(View.VISIBLE);
+        if (btnCreateTest != null) {
+            btnCreateTest.setOnClickListener(v -> {
+                if (!isTestMode) {
+                    isTestMode = true;
+                    btnCreateTest.setText("Start Custom Test");
+                    if (cbSelectAll != null) cbSelectAll.setVisibility(View.VISIBLE);
+                    for (CheckBox cb : checkBoxes) {
+                        cb.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    startCustomTest();
                 }
-            } else {
-                startCustomTest();
-            }
-        });
+            });
+        }
     }
 
-    private void loadMistakes() {
-        questionsContainer.removeAllViews();
+    private void loadFavourites() {
+        favContainer.removeAllViews();
         checkBoxes.clear();
         tempQuestions.clear();
         tempAnswers.clear();
 
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-        String errors = prefs.getString("wrong_questions_list", "");
+        String favs = prefs.getString("favourite_problems", "");
 
-        if (errors.isEmpty()) {
+        if (favs.isEmpty()) {
             TextView tvEmpty = new TextView(this);
-            tvEmpty.setText("No mistakes recorded yet! Great job!");
+            tvEmpty.setText("No favourite problems yet.");
             tvEmpty.setTextSize(18f);
             tvEmpty.setPadding(20, 20, 20, 20);
             tvEmpty.setTextColor(Color.parseColor("#3E2723"));
-            questionsContainer.addView(tvEmpty);
-            btnCreateTest.setVisibility(View.GONE);
+            tvEmpty.setGravity(android.view.Gravity.CENTER);
+            favContainer.addView(tvEmpty);
+
+            if (btnCreateTest != null) btnCreateTest.setVisibility(View.GONE);
             return;
         }
 
-        btnCreateTest.setVisibility(View.VISIBLE);
+        if (btnCreateTest != null) btnCreateTest.setVisibility(View.VISIBLE);
 
-        // Ավելացնում ենք "Select All" կոճակը
+        // Select All կոճակ
         cbSelectAll = new CheckBox(this);
         cbSelectAll.setText("☑️ Select All Questions");
         cbSelectAll.setTextSize(16f);
         cbSelectAll.setTypeface(null, android.graphics.Typeface.BOLD);
-        cbSelectAll.setTextColor(Color.parseColor("#1976D2"));
+        cbSelectAll.setTextColor(Color.parseColor("#E91E63")); // Վարդագույն երանգ
         cbSelectAll.setPadding(0, 0, 0, 20);
         cbSelectAll.setVisibility(isTestMode ? View.VISIBLE : View.GONE);
         cbSelectAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -91,16 +95,21 @@ public class MyMistakesActivity extends AppCompatActivity {
                 cb.setChecked(isChecked);
             }
         });
-        questionsContainer.addView(cbSelectAll);
+        favContainer.addView(cbSelectAll);
 
-        String[] items = errors.split("###");
+        String[] items = favs.split("###");
 
         for (String item : items) {
             if (item.trim().isEmpty()) continue;
 
-            String[] parts = item.split(" \nCorrect Answer: ");
-            String qText = parts[0];
-            String aText = parts.length > 1 ? parts[1] : "N/A";
+            String qText = item;
+            String aText = "N/A";
+
+            if (item.contains(" \nCorrect Answer: ")) {
+                String[] parts = item.split(" \nCorrect Answer: ");
+                qText = parts[0];
+                aText = parts.length > 1 ? parts[1] : "N/A";
+            }
 
             LinearLayout itemLayout = new LinearLayout(this);
             itemLayout.setOrientation(LinearLayout.VERTICAL);
@@ -117,7 +126,7 @@ public class MyMistakesActivity extends AppCompatActivity {
             tempAnswers.add(aText);
 
             TextView tvQuestion = new TextView(this);
-            tvQuestion.setText(qText);
+            tvQuestion.setText("❤️ " + qText);
             tvQuestion.setTextColor(Color.BLACK);
             tvQuestion.setTextSize(16f);
             tvQuestion.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
@@ -126,85 +135,102 @@ public class MyMistakesActivity extends AppCompatActivity {
             tvDelete.setText("🗑️");
             tvDelete.setTextSize(24f);
             tvDelete.setPadding(20, 0, 0, 0);
-            tvDelete.setOnClickListener(v -> deleteMistake(item));
+            tvDelete.setOnClickListener(v -> deleteFavourite(item));
 
             headerLayout.addView(cb);
             headerLayout.addView(tvQuestion);
             headerLayout.addView(tvDelete);
 
-            TextView tvSeeAnswer = new TextView(this);
-            tvSeeAnswer.setText("👀 See Answer");
-            tvSeeAnswer.setTextColor(Color.BLUE);
-            tvSeeAnswer.setPadding(0, 15, 0, 5);
-            tvSeeAnswer.setTextSize(14f);
-
-            TextView tvAnswer = new TextView(this);
-            tvAnswer.setText("Correct Answer: " + aText);
-            tvAnswer.setTextColor(Color.parseColor("#2E7D32"));
-            tvAnswer.setVisibility(View.GONE);
-            tvAnswer.setPadding(0, 10, 0, 0);
-            tvAnswer.setTextSize(16f);
-            tvAnswer.setTypeface(null, android.graphics.Typeface.BOLD);
-
-            tvSeeAnswer.setOnClickListener(v -> {
-                if (tvAnswer.getVisibility() == View.GONE) {
-                    tvAnswer.setVisibility(View.VISIBLE);
-                    tvSeeAnswer.setText("🙈 Hide Answer");
-                } else {
-                    tvAnswer.setVisibility(View.GONE);
-                    tvSeeAnswer.setText("👀 See Answer");
-                }
-            });
-
             itemLayout.addView(headerLayout);
-            itemLayout.addView(tvSeeAnswer);
-            itemLayout.addView(tvAnswer);
+
+            if (!aText.equals("N/A")) {
+                TextView tvSeeAnswer = new TextView(this);
+                tvSeeAnswer.setText("👀 See Answer");
+                tvSeeAnswer.setTextColor(Color.BLUE);
+                tvSeeAnswer.setPadding(0, 15, 0, 5);
+                tvSeeAnswer.setTextSize(14f);
+
+                TextView tvAnswer = new TextView(this);
+                tvAnswer.setText("Correct Answer: " + aText);
+                tvAnswer.setTextColor(Color.parseColor("#2E7D32"));
+                tvAnswer.setVisibility(View.GONE);
+                tvAnswer.setPadding(0, 10, 0, 0);
+                tvAnswer.setTextSize(16f);
+                tvAnswer.setTypeface(null, android.graphics.Typeface.BOLD);
+
+                tvSeeAnswer.setOnClickListener(v -> {
+                    if (tvAnswer.getVisibility() == View.GONE) {
+                        tvAnswer.setVisibility(View.VISIBLE);
+                        tvSeeAnswer.setText("🙈 Hide Answer");
+                    } else {
+                        tvAnswer.setVisibility(View.GONE);
+                        tvSeeAnswer.setText("👀 See Answer");
+                    }
+                });
+
+                itemLayout.addView(tvSeeAnswer);
+                itemLayout.addView(tvAnswer);
+            }
 
             View divider = new View(this);
             divider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 3));
             divider.setBackgroundColor(Color.LTGRAY);
 
-            questionsContainer.addView(itemLayout);
-            questionsContainer.addView(divider);
+            favContainer.addView(itemLayout);
+            favContainer.addView(divider);
         }
     }
 
-    private void deleteMistake(String fullItem) {
+    private void deleteFavourite(String fullItem) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-        String errors = prefs.getString("wrong_questions_list", "");
+        String favs = prefs.getString("favourite_problems", "");
 
-        errors = errors.replace(fullItem + "###", "");
-        prefs.edit().putString("wrong_questions_list", errors).apply();
+        favs = favs.replace(fullItem + "###", "");
+        prefs.edit().putString("favourite_problems", favs).apply();
 
-        Toast.makeText(this, "Deleted!", Toast.LENGTH_SHORT).show();
-        loadMistakes();
+        Toast.makeText(this, "Removed from Favourites!", Toast.LENGTH_SHORT).show();
+        loadFavourites();
     }
 
     private void startCustomTest() {
         ArrayList<String> selectedQs = new ArrayList<>();
         ArrayList<String> selectedAs = new ArrayList<>();
 
+        boolean hasOldQuestions = false;
+
         for (int i = 0; i < checkBoxes.size(); i++) {
             if (checkBoxes.get(i).isChecked()) {
-                selectedQs.add(tempQuestions.get(i));
-                selectedAs.add(tempAnswers.get(i));
+                if (tempAnswers.get(i).equals("N/A")) {
+                    hasOldQuestions = true;
+                } else {
+                    selectedQs.add(tempQuestions.get(i));
+                    selectedAs.add(tempAnswers.get(i));
+                }
             }
         }
 
-        if (selectedQs.isEmpty()) {
-            Toast.makeText(this, "Please select at least one question!", Toast.LENGTH_SHORT).show();
+        if (hasOldQuestions) {
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("Oops! ⚠️")
+                    .setMessage("Some of the questions you selected are from the old version and don't have saved answers.\n\nPlease delete them (🗑️) and re-add them to your Favourites from the test pages!")
+                    .setPositiveButton("Got it", null)
+                    .show();
             return;
         }
 
-        // Հարցնում ենք Ժամանակի մասին
+        if (selectedQs.isEmpty()) {
+            Toast.makeText(this, "Please select at least one valid question!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Ժամանակի հարցումը
         new AlertDialog.Builder(this)
                 .setTitle("⏱️ Timer Option")
                 .setMessage("Do you want to take this test with a timer?")
                 .setPositiveButton("Yes", (dialog, which) -> {
-
                     EditText input = new EditText(this);
                     input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    input.setHint("Minutes (e.g., 15)");
+                    input.setHint("Minutes (e.g., 10)");
 
                     LinearLayout layout = new LinearLayout(this);
                     layout.setPadding(50, 20, 50, 20);
@@ -222,7 +248,7 @@ public class MyMistakesActivity extends AppCompatActivity {
                             .show();
                 })
                 .setNegativeButton("No", (dialog, which) -> {
-                    launchTest(selectedQs, selectedAs, 0); // Առանց ժամանակ
+                    launchTest(selectedQs, selectedAs, 0);
                 })
                 .show();
     }
@@ -231,11 +257,11 @@ public class MyMistakesActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CustomTestActivity.class);
         intent.putStringArrayListExtra("questions", qs);
         intent.putStringArrayListExtra("answers", as);
-        intent.putExtra("time_limit", timeLimit); // Ուղարկում ենք րոպեները
+        intent.putExtra("time_limit", timeLimit);
         startActivity(intent);
 
         isTestMode = false;
-        btnCreateTest.setText("Create Custom Test");
-        loadMistakes();
+        if (btnCreateTest != null) btnCreateTest.setText("Create Custom Test");
+        loadFavourites();
     }
 }

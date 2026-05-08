@@ -53,11 +53,13 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        if (password.length() < 8) {
-            Toast.makeText(this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
+        // 👇 ԱՎԵԼԱՑՎԱԾ Է ԽԻՍՏ ՍՏՈՒԳՈՒՄԸ 👇
+        if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$")) {
+            Toast.makeText(this, "Password must have at least 8 chars, 1 uppercase, 1 lowercase, and 1 number.", Toast.LENGTH_LONG).show();
             return;
         }
 
+        btnRegister.setEnabled(false); // Անջատում ենք կրկնակի սեղմումը
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
@@ -65,7 +67,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                     if (user != null) {
                         String userId = user.getUid();
-
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId);
                         HashMap<String, String> userMap = new HashMap<>();
@@ -75,28 +76,28 @@ public class SignUpActivity extends AppCompatActivity {
 
                         ref.setValue(userMap).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-
-
                                 user.sendEmailVerification()
                                         .addOnCompleteListener(verificationTask -> {
+                                            btnRegister.setEnabled(true);
                                             if (verificationTask.isSuccessful()) {
                                                 Toast.makeText(SignUpActivity.this,
                                                         "Registration successful! Please check your email to verify.",
                                                         Toast.LENGTH_LONG).show();
-                                                             mAuth.signOut();
-
-
+                                                mAuth.signOut();
                                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                                                 finish();
                                             } else {
                                                 Toast.makeText(SignUpActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                            } else {
+                                btnRegister.setEnabled(true);
                             }
                         });
                     }
                 })
                 .addOnFailureListener(e -> {
+                    btnRegister.setEnabled(true);
                     Toast.makeText(SignUpActivity.this, "Registration Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }

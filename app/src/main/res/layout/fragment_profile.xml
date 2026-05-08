@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC">
+    android:background="@color/soft_beige">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +62,6 @@
         </LinearLayout>
 
         <!-- STATS GRID -->
-        <!-- rowCount-ը դարձրել ենք 3, որպեսզի 6 քառակուսի տեղավորվի -->
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,13 +144,29 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎯" android:textSize="20sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Progress" android:textSize="12sp" android:textColor="#795548"/>
-                    <TextView android:id="@+id/tvAccuracy" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0%" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎯"
+                        android:textSize="20sp"/>
+
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Progress"
+                        android:textSize="12sp"
+                        android:textColor="#795548"/>
+
+                    <TextView android:id="@+id/tvAccuracy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0%"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#3E2723"/>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 5. MY MISTAKES (ՆՈՐ) -->
+            <!-- 5. MY MISTAKES (ՆՈՐ ID-Ն ԱՎԵԼԱՑՎԱԾ Է) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMyMistakes"
                 android:layout_width="0dp"
@@ -169,13 +184,25 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="❌" android:textSize="20sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="My Mistakes" android:textSize="12sp" android:textColor="#D32F2F" android:textStyle="bold"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Review" android:textSize="14sp" android:textColor="#795548"/>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="❌"
+                        android:textSize="20sp"/>
+
+                    <!-- ԱՅՍՏԵՂ Է ID-Ն -->
+                    <TextView
+                        android:id="@+id/tvMistakesCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="My Mistakes (0)"
+                        android:textSize="13sp"
+                        android:textColor="#D32F2F"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 6. FAVOURITE PROBLEMS (ՆՈՐ) -->
+            <!-- 6. FAVOURITE PROBLEMS (ՆՈՐ ID-Ն ԱՎԵԼԱՑՎԱԾ Է) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvFavourites"
                 android:layout_width="0dp"
@@ -193,9 +220,21 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="❤️" android:textSize="20sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Favourites" android:textSize="12sp" android:textColor="#E91E63" android:textStyle="bold"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Saved" android:textSize="14sp" android:textColor="#795548"/>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="❤️"
+                        android:textSize="20sp"/>
+
+                    <!-- ԱՅՍՏԵՂ Է ID-Ն -->
+                    <TextView
+                        android:id="@+id/tvFavsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Favourites (0)"
+                        android:textSize="13sp"
+                        android:textColor="#E91E63"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

@@ -16,20 +16,26 @@ public class ResultActivity extends AppCompatActivity {
         TextView tvFinalScore = findViewById(R.id.tvFinalScore);
         TextView tvLevelName = findViewById(R.id.tvLevelName);
         Button btnStartLearning = findViewById(R.id.btnStartLearning);
-
+        Button btnSeeAnswers = findViewById(R.id.btnSeeAnswers);
 
         int score = getIntent().getIntExtra("SCORE", 0);
         String level = getIntent().getStringExtra("LEVEL");
+        String[] userAnswers = getIntent().getStringArrayExtra("USER_ANSWERS");
 
         tvFinalScore.setText(String.valueOf(score));
-        if (level != null) {
-            tvLevelName.setText(level);
-        }
-
+        if (level != null) tvLevelName.setText(level);
 
         btnStartLearning.setOnClickListener(v -> {
-            startActivity(new Intent(ResultActivity.this, MainActivity.class));
+            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+            intent.putExtra("USER_LEVEL", level);
+            startActivity(intent);
             finish();
+        });
+
+        btnSeeAnswers.setOnClickListener(v -> {
+            Intent intent = new Intent(ResultActivity.this, ReviewAnswersActivity.class);
+            intent.putExtra("USER_ANSWERS", userAnswers);
+            startActivity(intent);
         });
     }
 }

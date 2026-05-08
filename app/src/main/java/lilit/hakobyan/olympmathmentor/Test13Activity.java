@@ -27,7 +27,6 @@ public class Test13Activity extends AppCompatActivity {
             "10. A boy has 45 red marbles and 75 blue marbles. He wants to put them in identical bags. What is the maximum number of bags he can make?"
     };
 
-
     private String[] correctAnswers = {
             "6", "60", "60", "120", "12", "35", "91", "1", "8", "15"
     };
@@ -45,12 +44,40 @@ public class Test13Activity extends AppCompatActivity {
         feedbackViews = new TextView[questions.length];
 
         for (int i = 0; i < questions.length; i++) {
+
+            // 1. Ստեղծում ենք հորիզոնական կոնտեյներ հարցի և սրտիկի համար
+            LinearLayout questionHeader = new LinearLayout(this);
+            questionHeader.setOrientation(LinearLayout.HORIZONTAL);
+            questionHeader.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            questionHeader.setPadding(0, 30, 0, 10);
+
+            // 2. Ստեղծում ենք Հարցի տեքստը
             TextView tvQuestion = new TextView(this);
             tvQuestion.setText(questions[i]);
             tvQuestion.setTextSize(16f);
             tvQuestion.setTextColor(Color.parseColor("#3E2723"));
-            tvQuestion.setPadding(0, 30, 0, 10);
-            questionsContainer.addView(tvQuestion);
+            tvQuestion.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+            // 3. Ստեղծում ենք Սրտիկը (էմոջիով) որպես TextView
+            TextView tvHeart = new TextView(this);
+            tvHeart.setPadding(20, 20, 20, 20);
+            tvHeart.setTextSize(22f); // Էմոջիի չափսը
+            final int finalI = i;
+
+            // Ստուգում ենք արդեն պահպանված է ֆավորիտներում, թե ոչ
+            if (isFavourite(questions[i])) {
+                tvHeart.setText("❤️");
+            } else {
+                tvHeart.setText("🤍");
+            }
+
+            // Սրտիկի վրա սեղմելու ֆունկցիան
+            tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], tvHeart));
+
+            // 4. Ավելացնում ենք երկուսն էլ հորիզոնական կոնտեյների մեջ, իսկ կոնտեյները՝ գլխավորին
+            questionHeader.addView(tvQuestion);
+            questionHeader.addView(tvHeart);
+            questionsContainer.addView(questionHeader);
 
             EditText etAnswer = new EditText(this);
             etAnswer.setHint("Type a number...");
@@ -68,7 +95,6 @@ public class Test13Activity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
-
 
         findViewById(R.id.btnNextLesson).setOnClickListener(v -> {
             Intent intent = new Intent(Test13Activity.this, Lesson14Activity.class);
@@ -91,6 +117,7 @@ public class Test13Activity extends AppCompatActivity {
             if (userAnswer.isEmpty()) {
                 feedbackViews[i].setText("❌ No answer. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.RED);
+                saveWrongQuestion(questions[i], correctAnswers[i]); // Ավելացված է
             } else if (userAnswer.equals(correctAnswer)) {
                 score++;
                 feedbackViews[i].setText("✅ Correct!");
@@ -98,6 +125,7 @@ public class Test13Activity extends AppCompatActivity {
             } else {
                 feedbackViews[i].setText("❌ Incorrect. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.RED);
+                saveWrongQuestion(questions[i], correctAnswers[i]); // Ավելացված է
             }
         }
         showFinalResult(score);
@@ -111,11 +139,15 @@ public class Test13Activity extends AppCompatActivity {
         TextView tvFeedbackResult = findViewById(R.id.tvFeedback);
         tvScore.setText("Your Score: " + score + " / " + questions.length);
 
+        int earnedStars = 0; // Հաշվարկում ենք աստղերը
+
         if (score < 6) {
             tvFeedbackResult.setText("Review the Magic Formula and the Euclidean Algorithm!");
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
+
+            saveLessonStars(13, 0); // Պահպանում ենք 0 աստղ
         } else {
             tvFeedbackResult.setText("Magnificent! You understand Divisors and Multiples perfectly.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
@@ -131,9 +163,11 @@ public class Test13Activity extends AppCompatActivity {
             m2.setColorFilter(Color.LTGRAY);
             m3.setColorFilter(Color.LTGRAY);
 
-            if (score >= 6) m1.setColorFilter(gold);
-            if (score >= 8) m2.setColorFilter(gold);
-            if (score == 10) m3.setColorFilter(gold);
+            if (score >= 6) { m1.setColorFilter(gold); earnedStars = 1; }
+            if (score >= 8) { m2.setColorFilter(gold); earnedStars = 2; }
+            if (score == 10) { m3.setColorFilter(gold); earnedStars = 3; }
+
+            saveLessonStars(13, earnedStars); // Պահպանում ենք աստղերը
 
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit()
@@ -142,23 +176,42 @@ public class Test13Activity extends AppCompatActivity {
                     .apply();
         }
     }
+
     private void saveLessonStars(int lessonNumber, int earnedStars) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
-
 
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
+
     private void saveWrongQuestion(String question, String correctAns) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         String existingErrors = prefs.getString("wrong_questions_list", "");
-
 
         if (!existingErrors.contains(question)) {
             String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
             prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
+    }
+
+    private void toggleFavourite(String question, TextView heartIcon) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String favourites = prefs.getString("favourite_problems", "");
+
+        if (favourites.contains(question)) {
+            favourites = favourites.replace(question + "###", "");
+            heartIcon.setText("🤍");
+        } else {
+            favourites += question + "###";
+            heartIcon.setText("❤️");
+        }
+        prefs.edit().putString("favourite_problems", favourites).apply();
+    }
+
+    private boolean isFavourite(String question) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        return prefs.getString("favourite_problems", "").contains(question);
     }
 }

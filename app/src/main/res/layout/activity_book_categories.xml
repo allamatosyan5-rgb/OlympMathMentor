@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soft_beige"
+    android:background="@drawable/bg_library_pattern"
     android:orientation="vertical"
     android:padding="20dp"
-    android:gravity="center">
+    android:gravity="center"> <!-- Ֆոնը փոխված է այստեղ -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,9 +16,44 @@
         android:textColor="@color/deep_brown"
         android:layout_marginBottom="30dp"/>
 
-    <Button android:id="@+id/btnAlgebra" android:layout_width="match_parent" android:layout_height="70dp" android:text="📐 Algebra" android:textSize="20sp" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="15dp" android:textColor="#FFFFFF"/>
-    <Button android:id="@+id/btnGeometry" android:layout_width="match_parent" android:layout_height="70dp" android:text="📏 Geometry" android:textSize="20sp" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="15dp" android:textColor="#FFFFFF"/>
-    <Button android:id="@+id/btnNumberTheory" android:layout_width="match_parent" android:layout_height="70dp" android:text="🔢 Number Theory" android:textSize="20sp" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="15dp" android:textColor="#FFFFFF"/>
-    <Button android:id="@+id/btnCombinatorics" android:layout_width="match_parent" android:layout_height="70dp" android:text="🎲 Combinatorics" android:textSize="20sp" android:backgroundTint="@color/earth_brown" android:layout_marginBottom="15dp" android:textColor="#FFFFFF"/>
+    <Button
+        android:id="@+id/btnAlgebra"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="📐 Algebra"
+        android:textSize="20sp"
+        android:backgroundTint="@color/earth_brown"
+        android:layout_marginBottom="15dp"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/btnGeometry"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="📏 Geometry"
+        android:textSize="20sp"
+        android:backgroundTint="@color/earth_brown"
+        android:layout_marginBottom="15dp"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/btnNumberTheory"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="🔢 Number Theory"
+        android:textSize="20sp"
+        android:backgroundTint="@color/earth_brown"
+        android:layout_marginBottom="15dp"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/btnCombinatorics"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="🎲 Combinatorics"
+        android:textSize="20sp"
+        android:backgroundTint="@color/earth_brown"
+        android:layout_marginBottom="15dp"
+        android:textColor="#FFFFFF"/>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -20,10 +22,10 @@ public class EntryTestActivity extends AppCompatActivity {
     private CountDownTimer timer;
 
     private int currentIdx = 0;
-    private long timeLeftInMillis = 150 * 60 * 1000;
+    private long timeLeftInMillis = 120 * 60 * 1000; // 120 րոպե
     private Map<Integer, String> userAnswers = new HashMap<>();
 
-    private final String[] questions = {
+    public static final String[] QUESTIONS = {
             "1. How many natural numbers can be formed using the digits 0, 1, 2, 5, and 7?",
             "2. Let I be the incenter of △ABC, and M be the midpoint of AB. Given AB=18, BC=21, and ∠AIM=90°, find the length of AC.",
             "3. In a football tournament, 28 matches were played. How many teams participated if each team played one match against every other team?",
@@ -38,8 +40,8 @@ public class EntryTestActivity extends AppCompatActivity {
             "12. Find the number of natural numbers n < 2025 such that 1^n+2^n+3^n+4^n ends with 0."
     };
 
-    private final String[] correctAnswers = {"260", "24", "8", "12", "24", "60", "30031", "5", "24", "5", "2", "1518"};
-    private final int[] points = {50, 50, 50, 50, 100, 100, 100, 100, 150, 150, 150, 150};
+    public static final String[] CORRECT_ANSWERS = {"260", "24", "8", "12", "24", "60", "30031", "5", "24", "5", "2", "1518"};
+    public static final int[] POINTS = {50, 50, 50, 50, 100, 100, 100, 100, 150, 150, 150, 150};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class EntryTestActivity extends AppCompatActivity {
 
         btnNext.setOnClickListener(v -> {
             saveCurrentAnswer();
-            if (currentIdx < questions.length - 1) {
+            if (currentIdx < QUESTIONS.length - 1) {
                 currentIdx++;
                 displayQuestion();
             }
@@ -76,7 +78,7 @@ public class EntryTestActivity extends AppCompatActivity {
     }
 
     private void displayQuestion() {
-        tvQuestion.setText(questions[currentIdx]);
+        tvQuestion.setText(QUESTIONS[currentIdx]);
         if (userAnswers.containsKey(currentIdx)) {
             etAnswer.setText(userAnswers.get(currentIdx));
         } else {
@@ -94,9 +96,13 @@ public class EntryTestActivity extends AppCompatActivity {
         saveCurrentAnswer();
 
         int totalScore = 0;
-        for (int i = 0; i < questions.length; i++) {
-            if (correctAnswers[i].equals(userAnswers.get(i))) {
-                totalScore += points[i];
+        String[] userAnsArray = new String[QUESTIONS.length];
+
+        for (int i = 0; i < QUESTIONS.length; i++) {
+            String ans = userAnswers.containsKey(i) ? userAnswers.get(i) : "";
+            userAnsArray[i] = ans;
+            if (CORRECT_ANSWERS[i].equals(ans)) {
+                totalScore += POINTS[i];
             }
         }
 
@@ -107,17 +113,25 @@ public class EntryTestActivity extends AppCompatActivity {
             level = "Intermediate";
         }
 
+        // 1. Պահում ենք պրոֆիլում (Մակարդակը)
+        SharedPreferences profilePrefs = getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+        profilePrefs.edit().putString("level", level).apply();
+
+        // 2. Պահում ենք UserProgress-ում, որ հաջորդ անգամ հաստատ իմանա, որ թեստը հանձնված է
+        SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        progressPrefs.edit().putBoolean("entry_test_done", true).apply();
+
+        // 3. Ուղարկում ենք Firebase ԱՆՄԻՋԱՊԵՍ
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId != null) {
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("score", totalScore);
-            updates.put("level", level);
-            FirebaseDatabase.getInstance().getReference("users").child(userId).updateChildren(updates);
+            FirebaseDatabase.getInstance().getReference("users").child(userId).child("backup").child("profile").child("level").setValue(level);
+            FirebaseDatabase.getInstance().getReference("users").child(userId).child("backup").child("progress").child("entry_test_done").setValue(true);
         }
 
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("SCORE", totalScore);
         intent.putExtra("LEVEL", level);
+        intent.putExtra("USER_ANSWERS", userAnsArray);
         startActivity(intent);
         finish();
     }
@@ -130,7 +144,6 @@ public class EntryTestActivity extends AppCompatActivity {
                 long seconds = (millisUntilFinished % 60000) / 1000;
                 tvTimer.setText(String.format("%02d:%02d", minutes, seconds));
             }
-
             @Override
             public void onFinish() {
                 finishTest();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer; // 👈 ԱՎԵԼԱՑՎԱԾ Է
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -34,8 +35,6 @@ public class Test3Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_test3);
 
         LinearLayout questionsContainer = findViewById(R.id.questionsContainer);
@@ -43,12 +42,33 @@ public class Test3Activity extends AppCompatActivity {
         feedbackViews = new TextView[questions.length];
 
         for (int i = 0; i < questions.length; i++) {
+            LinearLayout questionHeader = new LinearLayout(this);
+            questionHeader.setOrientation(LinearLayout.HORIZONTAL);
+            questionHeader.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            questionHeader.setPadding(0, 30, 0, 10);
+
             TextView tvQuestion = new TextView(this);
             tvQuestion.setText(questions[i]);
             tvQuestion.setTextSize(16f);
             tvQuestion.setTextColor(Color.parseColor("#3E2723"));
-            tvQuestion.setPadding(0, 30, 0, 10);
-            questionsContainer.addView(tvQuestion);
+            tvQuestion.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+            TextView tvHeart = new TextView(this);
+            tvHeart.setPadding(20, 20, 20, 20);
+            tvHeart.setTextSize(22f);
+            int finalI = i;
+
+            if (isFavourite(questions[i])) {
+                tvHeart.setText("❤️");
+            } else {
+                tvHeart.setText("🤍");
+            }
+
+            tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], tvHeart));
+
+            questionHeader.addView(tvQuestion);
+            questionHeader.addView(tvHeart);
+            questionsContainer.addView(questionHeader);
 
             EditText etAnswer = new EditText(this);
             etAnswer.setHint("Type answer...");
@@ -78,9 +98,7 @@ public class Test3Activity extends AppCompatActivity {
 
     private void checkResults() {
         int score = 0;
-
         for (int i = 0; i < questions.length; i++) {
-
             String userAnswer = answerInputs[i].getText().toString().trim().toLowerCase();
             String correctAnswer = correctAnswers[i].toLowerCase();
 
@@ -90,10 +108,7 @@ public class Test3Activity extends AppCompatActivity {
             if (userAnswer.isEmpty()) {
                 feedbackViews[i].setText("❌ No answer. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.RED);
-
-
                 saveWrongQuestion(questions[i], correctAnswers[i]);
-
             } else if (userAnswer.equals(correctAnswer)) {
                 score++;
                 feedbackViews[i].setText("✅ Correct!");
@@ -101,7 +116,6 @@ public class Test3Activity extends AppCompatActivity {
             } else {
                 feedbackViews[i].setText("❌ Incorrect. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.RED);
-
                 saveWrongQuestion(questions[i], correctAnswers[i]);
             }
         }
@@ -121,9 +135,10 @@ public class Test3Activity extends AppCompatActivity {
             tvFeedbackResult.setTextColor(Color.RED);
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
-
-
             saveLessonStars(3, 0);
+
+            // 👇 ՁԱՅՆ՝ ՑԱԾՐ ՄԻԱՎՈՐԻ ԴԵՊՔՈՒՄ 👇
+            MediaPlayer.create(this, R.raw.sad).start();
         } else {
             tvFeedbackResult.setText("Congratulations! Lesson 4 is now unlocked.");
             tvFeedbackResult.setTextColor(Color.parseColor("#2E7D32"));
@@ -141,19 +156,25 @@ public class Test3Activity extends AppCompatActivity {
 
             int earnedStars = 0;
 
-            if (score >= 6) {
+            if (score >= 6 && score < 8) {
                 m1.setColorFilter(gold);
                 earnedStars = 1;
-            }
-            if (score >= 8) {
+                // 👇 ՁԱՅՆ՝ 1 ԱՍՏՂԻ ԴԵՊՔՈՒՄ 👇
+                MediaPlayer.create(this, R.raw.star1).start();
+            } else if (score >= 8 && score < 10) {
+                m1.setColorFilter(gold);
                 m2.setColorFilter(gold);
                 earnedStars = 2;
-            }
-            if (score == 10) {
+                // 👇 ՁԱՅՆ՝ 2 ԱՍՏՂԻ ԴԵՊՔՈՒՄ 👇
+                MediaPlayer.create(this, R.raw.star2).start();
+            } else if (score == 10) {
+                m1.setColorFilter(gold);
+                m2.setColorFilter(gold);
                 m3.setColorFilter(gold);
                 earnedStars = 3;
+                // 👇 ՁԱՅՆ՝ 3 ԱՍՏՂԻ ԴԵՊՔՈՒՄ 👇
+                MediaPlayer.create(this, R.raw.star3).start();
             }
-
 
             saveLessonStars(3, earnedStars);
 
@@ -168,19 +189,35 @@ public class Test3Activity extends AppCompatActivity {
     private void saveLessonStars(int lessonNumber, int earnedStars) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         int previousBest = prefs.getInt("stars_lesson_" + lessonNumber, 0);
-
         if (earnedStars > previousBest) {
             prefs.edit().putInt("stars_lesson_" + lessonNumber, earnedStars).apply();
         }
     }
+
     private void saveWrongQuestion(String question, String correctAns) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         String existingErrors = prefs.getString("wrong_questions_list", "");
-
-
         if (!existingErrors.contains(question)) {
             String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
             prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
         }
+    }
+
+    private void toggleFavourite(String question, TextView heartIcon) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        String favourites = prefs.getString("favourite_problems", "");
+        if (favourites.contains(question)) {
+            favourites = favourites.replace(question + "###", "");
+            heartIcon.setText("🤍");
+        } else {
+            favourites += question + "###";
+            heartIcon.setText("❤️");
+        }
+        prefs.edit().putString("favourite_problems", favourites).apply();
+    }
+
+    private boolean isFavourite(String question) {
+        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        return prefs.getString("favourite_problems", "").contains(question);
     }
 }

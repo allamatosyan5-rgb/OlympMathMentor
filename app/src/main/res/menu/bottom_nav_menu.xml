@@ -12,10 +12,7 @@
         android:id="@+id/nav_ai"
         android:icon="@drawable/ic_ai"
         android:title="AI Assistant" />
-    <item
-        android:id="@+id/nav_olympiadas"
-        android:icon="@drawable/ic_olympiad"
-        android:title="Olympiadas" />
+
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"

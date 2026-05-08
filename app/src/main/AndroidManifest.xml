@@ -98,61 +98,42 @@
 
         <activity android:name=".IntLesson1Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest1Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson2Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest2Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson3Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest3Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson4Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest4Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson5Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest5Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson6Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest6Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson7Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest7Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson8Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest8Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson9Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest9Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson10Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest10Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson11Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest11Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson12Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest12Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson13Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest13Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson14Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest14Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson15Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest15Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson16Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest16Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson17Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest17Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson18Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest18Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson19Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest19Activity" android:exported="false" android:screenOrientation="portrait" />
-
         <activity android:name=".IntLesson20Activity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".IntTest20Activity" android:exported="false" android:screenOrientation="portrait" />
 
@@ -161,6 +142,20 @@
             android:screenOrientation="portrait"
             android:label="My Mistakes" />
 
+        <activity
+            android:name=".FavouritesActivity"
+            android:screenOrientation="portrait"
+            android:label="My Favourites" />
+
+        <activity
+            android:name=".CustomTestActivity"
+            android:screenOrientation="portrait"
+            android:label="Custom Test" />
+
+        <activity
+            android:name=".ReviewAnswersActivity"
+            android:screenOrientation="portrait"
+            android:label="Review Answers" />
 
     </application>
 

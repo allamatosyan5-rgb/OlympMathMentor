@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -36,28 +37,7 @@ public class HomeFragment extends Fragment {
         rvCourses.setLayoutManager(new LinearLayoutManager(getContext()));
 
         setDailyInsight();
-
-        Button btnGoToIntermediate = view.findViewById(R.id.btnGoToIntermediate);
-
-        if (btnGoToIntermediate != null && getContext() != null) {
-            SharedPreferences prefs = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            boolean isIntermediateUnlocked = prefs.getBoolean("intermediate_unlocked", false);
-
-            if (isIntermediateUnlocked) {
-                btnGoToIntermediate.setVisibility(View.VISIBLE);
-            } else {
-                btnGoToIntermediate.setVisibility(View.GONE);
-            }
-
-            btnGoToIntermediate.setOnClickListener(v -> {
-                if (getParentFragmentManager() != null) {
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new IntermediateFragment())
-                            .addToBackStack(null)
-                            .commit();
-                }
-            });
-        }
+        setupIntermediateButton(view);
 
         createCourseList();
         adapter = new CourseAdapter(getContext(), courseList);
@@ -65,6 +45,36 @@ public class HomeFragment extends Fragment {
         rvCourses.addItemDecoration(new PathDecoration());
 
         return view;
+    }
+
+    private void setupIntermediateButton(View view) {
+        Button btnGoToIntermediate = view.findViewById(R.id.btnGoToIntermediate);
+
+        if (btnGoToIntermediate != null && getContext() != null) {
+            SharedPreferences profilePrefs = getContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+            SharedPreferences progressPrefs = getContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+
+            String currentLevel = profilePrefs.getString("level", "Beginner");
+            int finalExamScore = progressPrefs.getInt("stars_lesson_21", 0);
+
+            // Բացվում է ՄԻԱՅՆ, եթե մուտքային թեստից արդեն բարձր է, ԿԱՄ հանձնել է 21-րդ դասը (6 և ավել)
+            if (currentLevel.equals("Intermediate") || currentLevel.equals("Advanced") || finalExamScore >= 6) {
+                btnGoToIntermediate.setAlpha(1.0f);
+                btnGoToIntermediate.setOnClickListener(v -> {
+                    if (getParentFragmentManager() != null) {
+                        getParentFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new IntermediateFragment())
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+            } else {
+                btnGoToIntermediate.setAlpha(0.5f); // Կիսաթափանցիկ
+                btnGoToIntermediate.setOnClickListener(v -> {
+                    Toast.makeText(getContext(), "🔒 Locked! Score 6+ on Final Exam (Lesson 21) to unlock.", Toast.LENGTH_LONG).show();
+                });
+            }
+        }
     }
 
     private void setDailyInsight() {
@@ -116,23 +126,24 @@ public class HomeFragment extends Fragment {
         courseList.add(new CourseModel(18, "Lesson 18:\nAreas & Adv. Theorems", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(19, "Lesson 19:\nPolygons & Ptolemy", false, R.color.course_circle_grey));
         courseList.add(new CourseModel(20, "Lesson 20:\nAdvanced Circles", false, R.color.course_circle_grey));
-        courseList.add(new CourseModel(21, "Final Test for\nBeginner Level", false, R.color.course_circle_grey));
+        courseList.add(new CourseModel(21, "Final Exam for\nBeginner Level", false, R.color.course_circle_grey));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (adapter != null) {
-            Button btnGoToIntermediate = getView().findViewById(R.id.btnGoToIntermediate);
-            if (btnGoToIntermediate != null && getContext() != null) {
-                SharedPreferences prefs = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                if (prefs.getBoolean("intermediate_unlocked", false)) {
-                    btnGoToIntermediate.setVisibility(View.VISIBLE);
-                }
+        if (rvCourses != null && getView() != null) {
+            setupIntermediateButton(getView());
+
+            // 👇 ԱՄԵՆԱԿԱՐԵՎՈՐ ՄԱՍԸ. ՄԱՔՐՈՒՄ ԵՆՔ ՀԻՆ ԳԾԵՐԸ ՆԱԽՔԱՆ ՆՈՐԵՐԸ ՆԿԱՐԵԼԸ 👇
+            while (rvCourses.getItemDecorationCount() > 0) {
+                rvCourses.removeItemDecorationAt(0);
             }
+
             createCourseList();
             adapter = new CourseAdapter(getContext(), courseList);
             rvCourses.setAdapter(adapter);
+            rvCourses.addItemDecoration(new PathDecoration());
         }
     }
 }
