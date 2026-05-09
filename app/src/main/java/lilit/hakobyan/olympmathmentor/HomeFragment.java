@@ -51,27 +51,28 @@ public class HomeFragment extends Fragment {
         Button btnGoToIntermediate = view.findViewById(R.id.btnGoToIntermediate);
 
         if (btnGoToIntermediate != null && getContext() != null) {
+            SharedPreferences myPrefs = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             SharedPreferences profilePrefs = getContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
-            SharedPreferences progressPrefs = getContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
 
+            boolean isUnlocked = myPrefs.getBoolean("intermediate_unlocked", false);
             String currentLevel = profilePrefs.getString("level", "Beginner");
-            int finalExamScore = progressPrefs.getInt("stars_lesson_21", 0);
 
-            // Բացվում է ՄԻԱՅՆ, եթե մուտքային թեստից արդեն բարձր է, ԿԱՄ հանձնել է 21-րդ դասը (6 և ավել)
-            if (currentLevel.equals("Intermediate") || currentLevel.equals("Advanced") || finalExamScore >= 6) {
+            // Եթե մուտքային թեստով արդեն Intermediate է կամ քննությունը հանձնել է
+            if (currentLevel.equals("Intermediate") || currentLevel.equals("Advanced") || isUnlocked) {
+                btnGoToIntermediate.setVisibility(View.VISIBLE); // Ցույց տալ
                 btnGoToIntermediate.setAlpha(1.0f);
                 btnGoToIntermediate.setOnClickListener(v -> {
-                    if (getParentFragmentManager() != null) {
-                        getParentFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new IntermediateFragment())
-                                .addToBackStack(null)
-                                .commit();
-                    }
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new IntermediateFragment())
+                            .addToBackStack(null)
+                            .commit();
                 });
             } else {
-                btnGoToIntermediate.setAlpha(0.5f); // Կիսաթափանցիկ
+                // Կարող ես կամ թաքցնել (GONE), կամ թողնել կիսաթափանցիկ
+                btnGoToIntermediate.setVisibility(View.VISIBLE);
+                btnGoToIntermediate.setAlpha(0.4f);
                 btnGoToIntermediate.setOnClickListener(v -> {
-                    Toast.makeText(getContext(), "🔒 Locked! Score 6+ on Final Exam (Lesson 21) to unlock.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "🔒 Locked! Pass the Final Exam (35+) to unlock.", Toast.LENGTH_SHORT).show();
                 });
             }
         }

@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 12: Circles and Cyclic Quadrilaterals"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Angles in Circles"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The circle is nature's most perfect shape, and its angles possess magical properties:\n• Central Angle: An angle formed by two radii. Its measure equals the intercepted arc.\n• Inscribed Angle: An angle formed by two chords meeting on the circle. Its measure is exactly HALF of the intercepted arc.\n• Thales's Theorem: An inscribed angle that intercepts a diameter (semicircle) is ALWAYS a right angle (90 degrees).\n• Alternate Segment Theorem: The angle between a tangent and a chord through the point of contact equals the inscribed angle in the alternate segment."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Cyclic Quadrilaterals"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A cyclic quadrilateral is a four-sided polygon where all four vertices lie on a single circle. These are the holy grail of Olympiad geometry.\nKey Properties:\n1. Opposite angles sum to 180 degrees (they are supplementary).\n2. An exterior angle is equal to the opposite interior angle.\n3. Angles subtended by the same arc (or chord) from the same side are equal. If you can prove two angles looking at the same segment are equal, the 4 points are concyclic!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Ptolemy's Theorem"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ptolemy's Theorem is a powerful equation that applies ONLY to cyclic quadrilaterals. \nIf a quadrilateral ABCD is inscribed in a circle, then the product of its diagonals equals the sum of the products of its opposite sides.\nFormula: AC * BD = (AB * CD) + (BC * AD).\nIf you have a quadrilateral and this equation holds true, it is guaranteed to be cyclic."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Power of a Point Theorem"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Power of a Point defines the relationship between lines intersecting a circle.\n• Intersecting Chords (Inside): If chords AB and CD intersect at point P, then PA * PB = PC * PD.\n• Secants (Outside): If secants from external point P cut the circle at A,B and C,D, then PA * PB = PC * PD (where PA is the whole secant, PB is the external part).\n• Tangent-Secant: If PT is a tangent and PAB is a secant, then PT^2 = PA * PB.\nThis value (d^2 - R^2) is constant for any specific point relative to a circle."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Cyclic Angles"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In a cyclic quadrilateral ABCD, angle A = 70° and angle ABD = 40°. What is the measure of angle ACD?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: This is a classic angle chasing problem using arcs. \nAngle ABD is an inscribed angle that intercepts arc AD. So, arc AD is 2 * 40° = 80°. \nNow look at angle ACD. It is also an inscribed angle, and it intercepts the EXACT SAME arc AD! \nTherefore, angle ACD must be equal to angle ABD. Angle ACD = 40°. \n(Note: Angle A = 70° was extra information meant to test your confidence in the inscribed angle theorem!)."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Power of a Point"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="From an external point P, a tangent PT and a secant PAB are drawn to a circle. If the external part of the secant PB = 4 and the internal chord BA = 5, what is the length of the tangent PT?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We use the Tangent-Secant version of the Power of a Point theorem: PT^2 = PA * PB. \nBe very careful here: PA is the ENTIRE length of the secant, not just the inside chord. \nPA = PB + BA = 4 + 5 = 9. \nNow apply the formula: PT^2 = 9 * 4 = 36. \nTaking the square root, PT = 6. The length of the tangent is 6."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 12"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

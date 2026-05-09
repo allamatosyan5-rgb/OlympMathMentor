@@ -1,6 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 17: Mathematical Induction"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. The Domino Effect (Base and Step)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mathematical Induction is a proof technique used to prove that a statement P(n) is true for all natural numbers n. It works exactly like a line of falling dominoes. There are two required steps:\n\n1. Base Case: Prove that the statement is true for the first number, usually n = 1. (Pushing the first domino).\n2. Inductive Step: Assume the statement is true for some arbitrary integer k (this is called the Inductive Hypothesis). Then, strictly using this assumption, PROVE it is true for k+1. (Proving that if one domino falls, it will knock over the next one).\nIf both steps are completed, the statement is proven for infinity!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Strong Induction"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sometimes, assuming P(k) is true isn't enough information to prove P(k+1). In these cases, we use 'Strong Induction'.\nIn the Inductive Step for Strong Induction, we assume that the statement is true for ALL values from the base case up to k (i.e., true for 1, 2, 3, ..., k). \nA classic example is proving that every integer greater than 1 can be factored into primes. To prove it for k+1, you might need to split it into two smaller factors 'a' and 'b', and you need the assumption to hold for 'a' and 'b', which are smaller than k+1 but not necessarily equal to k."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Proving Divisibility"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Induction is heavily used to prove divisibility rules. \nFor example, prove that 3^(2n) - 1 is divisible by 8.\nBase case (n=1): 3^2 - 1 = 8. True.\nAssume true for k: 3^(2k) - 1 = 8M (where M is an integer).\nProve for k+1: 3^(2(k+1)) - 1 = 3^(2k+2) - 1 = 9 * 3^(2k) - 1. \nWe can rewrite this using our assumption: 9 * (8M + 1) - 1 = 72M + 9 - 1 = 72M + 8 = 8(9M + 1). Since it's a multiple of 8, the proof is complete!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Proving Inequalities"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Induction is also perfect for inequalities. For example, prove that 2^n > n^2 for n ≥ 5.\nBase case (n=5): 2^5 = 32, 5^2 = 25. 32 > 25. True.\nAssume true for k: 2^k > k^2.\nProve for k+1: We need to show 2^(k+1) > (k+1)^2. \n2^(k+1) = 2 * 2^k. By assumption, this is > 2 * k^2.\nWe just need to show that 2k^2 > (k+1)^2 for k ≥ 5, which simplifies to k^2 - 2k - 1 > 0, which is undeniably true for k ≥ 5. Done!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Gauss's Formula"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that the sum of the first 'n' odd natural numbers is exactly n^2. (1 + 3 + 5 + ... + (2n - 1) = n^2)."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: \nBase case (n=1): The first odd number is 1. And 1^2 = 1. True.\nInductive Hypothesis: Assume true for n=k. So, 1 + 3 + ... + (2k - 1) = k^2.\nInductive Step: We must prove it for n=k+1. The sum will be:\n[1 + 3 + ... + (2k - 1)] + (2(k+1) - 1).\nSubstitute the assumed part: k^2 + (2k + 2 - 1) = k^2 + 2k + 1.\nNotice that k^2 + 2k + 1 is exactly the perfect square formula for (k + 1)^2.\nThe statement is proven."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Divisibility"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that for any natural number n, n^3 + 2n is divisible by 3."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution:\nBase case (n=1): 1^3 + 2(1) = 3, which is divisible by 3. True.\nAssume for k: k^3 + 2k = 3M.\nProve for k+1: (k+1)^3 + 2(k+1). Expand this:\n(k^3 + 3k^2 + 3k + 1) + 2k + 2.\nRearrange terms to expose our assumption: (k^3 + 2k) + 3k^2 + 3k + 3.\nSubstitute the assumption (3M): 3M + 3(k^2 + k + 1) = 3(M + k^2 + k + 1).\nSince 3 is factored out, the expression is absolutely divisible by 3!"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 17"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

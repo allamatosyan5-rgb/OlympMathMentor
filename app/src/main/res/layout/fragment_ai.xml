@@ -7,7 +7,7 @@
     android:id="@+id/chat_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/soft_beige"
+    android:background="#E0D5C1"
     android:padding="16dp"
     android:orientation="horizontal"
     android:gravity="center_vertical">
@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/chat_header"
+        android:background="@color/soft_beige"
         android:layout_above="@id/layout_typing_area"
         android:padding="16dp">
 
@@ -63,7 +64,8 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:hint="Ask your math question..." android:background="@android:color/transparent"
+            android:hint="Ask your math question..."
+            android:background="@android:color/transparent"
             android:textColor="#212121"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"/>

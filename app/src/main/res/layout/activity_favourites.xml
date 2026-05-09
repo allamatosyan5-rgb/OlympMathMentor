@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/home"
+    android:background="@color/pastel_pink"
     android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Favourites ❤️"
+        android:text="️ My Favourites ❤️"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#3E2723"
+        android:textColor="@color/deep_brown"
         android:gravity="center"
         android:layout_marginBottom="20dp"/>
 
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Custom Test"
-        android:backgroundTint="#FF9800"
+        android:backgroundTint="@color/deep_brown"
         android:textColor="@color/white"
         android:layout_marginTop="10dp"/>
 

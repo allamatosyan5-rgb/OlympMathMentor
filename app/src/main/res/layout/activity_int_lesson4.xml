@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 4: Advanced Congruences, Euler &amp; CRT"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Euler's Totient Function (Phi)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fermat's Little Theorem works wonderfully for prime moduli, but what if the modulo 'n' is composite? Enter Leonhard Euler. Before his theorem, we must understand Euler's Totient Function, denoted as φ(n) (phi).\n\nφ(n) counts the number of positive integers up to 'n' that are relatively prime (coprime) to 'n' (i.e., GCD(k, n) = 1).\n• If p is prime, φ(p) = p - 1.\n• If p is prime and k > 0, φ(p^k) = p^k - p^(k-1).\n• Multiplicativity: If GCD(m, n) = 1, then φ(m * n) = φ(m) * φ(n).\n\nFor example, φ(10) = φ(2)*φ(5) = 1 * 4 = 4. The four numbers are 1, 3, 7, and 9."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Euler's Theorem"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Euler's Theorem is the ultimate generalization of Fermat's Little Theorem for composite moduli. It states that if 'a' and 'n' are coprime (GCD(a, n) = 1), then:\n\na^(φ(n)) ≡ 1 (mod n)\n\nThis is arguably one of the most frequently used theorems in Number Theory Olympiads, specifically for finding the last digits of massive powers. For example, to find the last two digits of a number, you evaluate it modulo 100. Since φ(100) = 40, any number 'a' coprime to 100 will satisfy a^40 ≡ 1 (mod 100)."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Modular Inverses"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In normal arithmetic, division by 'a' is the same as multiplying by 1/a. In modular arithmetic, we use the Modular Multiplicative Inverse. The inverse of 'a' modulo 'm' is an integer 'x' such that:\n\na * x ≡ 1 (mod m)\n\nCRITICAL RULE: The inverse of 'a' modulo 'm' exists IF AND ONLY IF GCD(a, m) = 1. If they share a factor, the inverse does not exist. We can find the inverse using the Extended Euclidean Algorithm, or by using Euler's Theorem: x = a^(φ(m)-1) mod m."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. The Chinese Remainder Theorem (CRT)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Chinese Remainder Theorem solves systems of simultaneous congruences. If you know the remainders of a number 'x' when divided by several pairwise coprime moduli (m1, m2, ..., mk), the CRT guarantees a unique solution for 'x' modulo (m1*m2*...*mk).\n\nSystem:\nx ≡ a1 (mod m1)\nx ≡ a2 (mod m2)\n... \nIf GCD(mi, mj) = 1 for all i ≠ j, there is exactly one solution modulo M, where M is the product of all moduli."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Euler's Theorem"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find the last two digits of 7^2025."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Finding the last two digits means evaluating 7^2025 (mod 100). First, verify that GCD(7, 100) = 1. Yes, they are coprime. \nWe calculate φ(100). Since 100 = 2^2 * 5^2, φ(100) = 100 * (1 - 1/2) * (1 - 1/5) = 100 * (1/2) * (4/5) = 40.\nBy Euler's Theorem, 7^40 ≡ 1 (mod 100).\nWe divide the exponent: 2025 = 40 * 50 + 25.\nSo, 7^2025 = (7^40)^50 * 7^25 ≡ 1^50 * 7^25 ≡ 7^25 (mod 100).\nLet's break down 7^25. We know 7^4 = 2401 ≡ 1 (mod 100).\nSo, 7^25 = (7^4)^6 * 7^1 ≡ 1^6 * 7 ≡ 07 (mod 100).\nThe last two digits are 07."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Chinese Remainder Theorem"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A general has between 100 and 200 soldiers. When they line up in rows of 3, 1 is left over. In rows of 5, 2 are left over. In rows of 7, 3 are left over. How many soldiers are there?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We set up the system:\nx ≡ 1 (mod 3)\nx ≡ 2 (mod 5)\nx ≡ 3 (mod 7)\nFirst, look at x ≡ 3 (mod 7). x can be 3, 10, 17, 24, 31, 38, 45, 52...\nLet's test these modulo 5. We need x ≡ 2 (mod 5).\n3 (mod 5)=3. 10 (mod 5)=0. 17 (mod 5)=2. Great! So x = 17 satisfies the mod 5 and mod 7 conditions. The combined modulo is 5*7 = 35. So x ≡ 17 (mod 35).\nNow we need x ≡ 17 (mod 35) AND x ≡ 1 (mod 3).\nTest values of 17 + 35k modulo 3:\nk=0: 17 ≡ 2 (mod 3) [No]\nk=1: 52 ≡ 1 (mod 3) [YES!]\nSo the unique solution modulo (3*5*7 = 105) is x ≡ 52 (mod 105).\nThe general solution is x = 52 + 105k. Since the army is between 100 and 200, we set k=1. x = 52 + 105 = 157 soldiers."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 4"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

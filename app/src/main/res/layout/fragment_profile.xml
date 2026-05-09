@@ -11,7 +11,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- HEADER / USER INFO -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +60,6 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- STATS GRID -->
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +68,6 @@
             android:alignmentMode="alignMargins"
             android:rowCount="3">
 
-            <!-- 1. TOTAL STARS -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -84,13 +81,18 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_star" app:tint="#FFC107"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Stars" android:textSize="12sp" android:textColor="#795548"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_star"
+                        app:tint="#FFC107" />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Stars" android:textSize="12sp" android:textColor="#795548" android:layout_marginTop="4dp"/>
                     <TextView android:id="@+id/tvTotalStars" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 2. STREAK DAYS -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -104,13 +106,18 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥" android:textSize="20sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Day Streak" android:textSize="12sp" android:textColor="#795548"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_flame"
+                        app:tint="#FF5722" />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Day Streak" android:textSize="12sp" android:textColor="#795548" android:layout_marginTop="4dp"/>
                     <TextView android:id="@+id/tvStreakDays" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 Days" android:textSize="18sp" android:textStyle="bold" android:textColor="#E64A19"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 3. SOLVED PROBLEMS -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -124,13 +131,18 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📝" android:textSize="20sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Solved" android:textSize="12sp" android:textColor="#795548"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_solved"
+                        app:tint="#4CAF50" />
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Solved" android:textSize="12sp" android:textColor="#795548" android:layout_marginTop="4dp"/>
                     <TextView android:id="@+id/tvSolvedProblems" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 4. PROGRESS (ACCURACY) -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -144,16 +156,19 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🎯"
-                        android:textSize="20sp"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_progress"
+                        app:tint="#2196F3" />
 
                     <TextView android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Progress"
                         android:textSize="12sp"
-                        android:textColor="#795548"/>
+                        android:textColor="#795548"
+                        android:layout_marginTop="4dp"/>
 
                     <TextView android:id="@+id/tvAccuracy"
                         android:layout_width="wrap_content"
@@ -166,7 +181,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 5. MY MISTAKES (ՆՈՐ ID-Ն ԱՎԵԼԱՑՎԱԾ Է) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvMyMistakes"
                 android:layout_width="0dp"
@@ -184,12 +198,13 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="❌"
-                        android:textSize="20sp"/>
 
-                    <!-- ԱՅՍՏԵՂ Է ID-Ն -->
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_mistake"
+                        app:tint="#D32F2F" />
+
                     <TextView
                         android:id="@+id/tvMistakesCount"
                         android:layout_width="wrap_content"
@@ -198,11 +213,10 @@
                         android:textSize="13sp"
                         android:textColor="#D32F2F"
                         android:textStyle="bold"
-                        android:layout_marginTop="4dp"/>
+                        android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 6. FAVOURITE PROBLEMS (ՆՈՐ ID-Ն ԱՎԵԼԱՑՎԱԾ Է) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvFavourites"
                 android:layout_width="0dp"
@@ -220,12 +234,13 @@
                     android:orientation="vertical"
                     android:padding="12dp"
                     android:gravity="center">
-                    <TextView android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="❤️"
-                        android:textSize="20sp"/>
 
-                    <!-- ԱՅՍՏԵՂ Է ID-Ն -->
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_heart"
+                        app:tint="#E91E63" />
+
                     <TextView
                         android:id="@+id/tvFavsCount"
                         android:layout_width="wrap_content"
@@ -234,13 +249,12 @@
                         android:textSize="13sp"
                         android:textColor="#E91E63"
                         android:textStyle="bold"
-                        android:layout_marginTop="4dp"/>
+                        android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </GridLayout>
 
-        <!-- BADGES -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -264,7 +278,6 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <!-- ACHIEVEMENTS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -293,7 +306,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-        <!-- GOALS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 16: Equations in Integers (Diophantine)"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Linear Diophantine Equations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A Diophantine equation is a polynomial equation where we are ONLY interested in integer solutions. The simplest form is the Linear Diophantine Equation: ax + by = c.\n\nBezout's Identity tells us the ultimate rule for this: The equation ax + by = c has integer solutions (x, y) IF AND ONLY IF the greatest common divisor of a and b divides c. Mathematically: gcd(a, b) | c.\nFor example, 12x + 15y = 16 has NO solutions because gcd(12,15) = 3, and 3 does not divide 16."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Simon's Favorite Factoring Trick (SFFT)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SFFT is a famous Olympiad trick for factoring equations of the form: xy + ax + by = c. \nYou can factor this by adding (a * b) to both sides!\nxy + ax + by + ab = c + ab\nx(y + a) + b(y + a) = c + ab\n(x + b)(y + a) = c + ab\nOnce it is factored, you simply find the integer divisors of the number (c + ab) on the right side. Since x and y are integers, the factors must perfectly match!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Modular Arithmetic in Equations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To prove that an equation has NO solutions, we often look at it modulo a small number (usually 3, 4, 8, or 9). \nFor perfect squares (x^2):\n• Modulo 3: x^2 can only leave remainders 0 or 1.\n• Modulo 4: x^2 can only leave remainders 0 or 1.\n• Modulo 8: x^2 can only leave remainders 0, 1, or 4.\nIf you have an equation like x^2 + y^2 = 4z + 3, you can prove it's impossible. Mod 4, the right side is 3. But x^2 + y^2 mod 4 can only be 0+0=0, 1+0=1, or 1+1=2. It can NEVER be 3!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Bounding and Inequalities"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If an equation involves positive integers, you can often BOUND the variables. \nFor example, solve 1/x + 1/y = 1/2 for positive integers. Assume, without loss of generality, that x &lt;= y. \nThen 1/x + 1/y &lt;= 1/x + 1/x = 2/x. So, 1/2 &lt;= 2/x, which means x &lt;= 4. \nSince x must be positive, x can only be 1, 2, 3, or 4. You just plug them in and find the corresponding y values! This reduces infinite possibilities to just a few cases."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: SFFT"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find the number of positive integer solutions (x, y) to the equation: xy - 2x - 3y = 5."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We use SFFT. We need to add (-2) * (-3) = 6 to both sides.\nxy - 2x - 3y + 6 = 5 + 6\nx(y - 2) - 3(y - 2) = 11\n(x - 3)(y - 2) = 11\nSince 11 is a prime number, its only positive divisors are 1 and 11. Because x and y are positive integers, the factors must be (1, 11) or (11, 1).\nCase 1: x - 3 = 1 and y - 2 = 11. This gives x = 4, y = 13.\nCase 2: x - 3 = 11 and y - 2 = 1. This gives x = 14, y = 3.\nThere are exactly 2 positive integer solutions."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Modulo Proofs"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that the equation x^2 - 3y^2 = 17 has no integer solutions."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Look at the equation modulo 3. \n3y^2 is obviously a multiple of 3, so it becomes 0 mod 3.\nThe right side is 17. 17 mod 3 is 2 (since 15 is a multiple of 3).\nSo, the equation reduces to: x^2 ≡ 2 (mod 3).\nHowever, as we learned, any perfect square modulo 3 can ONLY leave a remainder of 0 or 1. It is absolutely impossible for a square to leave a remainder of 2. Therefore, no integer solutions can possibly exist!"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 16"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

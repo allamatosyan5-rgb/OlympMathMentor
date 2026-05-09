@@ -1,6 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 2: Advanced Divisibility &amp; Number Theory"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Fundamental Theorem &amp; Divisor Functions"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Fundamental Theorem of Arithmetic states that every integer greater than 1 can be uniquely expressed as a product of prime powers: N = (p1^a1) * (p2^a2) * ... * (pk^ak).\n\nFrom this, we define the Divisor Function tau(N), which calculates the total number of positive divisors of N:\ntau(N) = (a1 + 1) * (a2 + 1) * ... * (ak + 1).\n\nSimilarly, the sum of all divisors, denoted as sigma(N), is calculated as:\nsigma(N) = [(p1^(a1+1) - 1)/(p1 - 1)] * ... * [(pk^(ak+1) - 1)/(pk - 1)]."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Extended Euclidean Algorithm &amp; Bezout's Lemma"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Euclidean Algorithm computes the Greatest Common Divisor (GCD) using the fact that GCD(a, b) = GCD(b, a mod b). However, Olympiad mathematics frequently requires the Extended Euclidean Algorithm, which builds upon Bezout's Identity.\n\nBezout's Identity states that for any non-zero integers a and b, let d = GCD(a, b). There exist integers x and y (called Bezout coefficients) such that:\nax + by = d.\n\nFurthermore, 'd' is the smallest positive integer that can be written in the form ax + by. If GCD(a, b) = 1, the numbers are coprime, and ax + by = 1 has integer solutions."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Linear Diophantine Equations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A Linear Diophantine Equation takes the form ax + by = c, where we exclusively seek integer solutions for x and y. \n\nExistence Theorem: This equation has a solution if and only if GCD(a, b) divides c.\n\nIf (x0, y0) is a particular solution, the general solution is given by an infinite family of coordinates:\nx = x0 + k(b / d)\ny = y0 - k(a / d)\nwhere d = GCD(a, b) and k is any integer."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Legendre's Formula (p-adic Valuation)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Legendre's Formula calculates the highest power of a prime number 'p' that completely divides n! (n factorial). This is denoted as the p-adic valuation v_p(n!).\n\nThe formula is an infinite sum of floor functions:\nv_p(n!) = floor(n/p) + floor(n/p^2) + floor(n/p^3) + ...\nThe series naturally stops when p^k exceeds n, making the floor function evaluate to 0."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Classic IMO Problem (1959, Q1):"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that the fraction (21n + 4) / (14n + 3) is irreducible for every natural number n."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We must show that GCD(21n+4, 14n+3) = 1. Let d divide both the numerator and denominator. By the linearity property of divisibility, d must also divide any linear combination of them. \nWe multiply the denominator by 3 and the numerator by 2 to eliminate 'n':\n3(14n + 3) - 2(21n + 4) = (42n + 9) - (42n + 8) = 1.\nSince d divides 1, d can only be 1. Thus, the fraction is always irreducible."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application of Legendre's Formula:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find the number of trailing zeros in the decimal representation of 1000!."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Trailing zeros are produced by factors of 10, which require pairs of prime factors 2 and 5. Since factorials contain an abundance of 2s, the number of zeros is strictly determined by the number of 5s. We use Legendre's Formula to find v_5(1000!):\nv_5(1000!) = floor(1000/5) + floor(1000/25) + floor(1000/125) + floor(1000/625)\n= 200 + 40 + 8 + 1 = 249.\nTherefore, 1000! ends with exactly 249 trailing zeros."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 3 -->
+        <TextView
+            android:id="@+id/tvProblem3Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Divisibility Proof:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem3Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that the expression n^5 - n is divisible by 30 for all integers n."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Factorize the expression:\nn^5 - n = n(n^4 - 1) = n(n^2 - 1)(n^2 + 1) = (n-1)n(n+1)(n^2 + 1).\nTo prove divisibility by 30, we must prove divisibility by its coprime factors: 2, 3, and 5.\n1. Divisibility by 2 and 3: The expression contains (n-1)n(n+1), which is the product of 3 consecutive integers. One must be a multiple of 3, and at least one must be even. Thus, it is divisible by 2 * 3 = 6.\n2. Divisibility by 5: By Fermat's Little Theorem, n^5 ≡ n (mod 5), meaning n^5 - n is a multiple of 5.\nSince it is divisible by both 6 and 5, it is divisible by 6 * 5 = 30."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

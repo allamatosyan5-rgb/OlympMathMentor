@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 13: Advanced Geometry - Ceva, Menelaus &amp; Euler"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Ceva's Theorem (Concurrent Lines)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A 'Cevian' is any line segment in a triangle connecting a vertex to a point on the opposite side (e.g., medians, altitudes, angle bisectors). \nCeva's Theorem states that three Cevians AD, BE, and CF of triangle ABC intersect at a single point (they are concurrent) IF AND ONLY IF:\n(AF / FB) * (BD / DC) * (CE / EA) = 1. \nThis is a magical tool for proving that lines meet at one point without messy coordinate geometry."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Menelaus's Theorem (Collinear Points)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="While Ceva deals with lines meeting at a point, Menelaus deals with points lying on a single line (collinear points). \nIf a line intersects the sides BC, CA, and AB of triangle ABC at points D, E, and F respectively (where at least one point is on an extension of a side), then:\n(AF / FB) * (BD / DC) * (CE / EA) = -1 (or magnitude 1). \nNotice the formula is identical to Ceva's, but it's used for entirely different proofs!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. The Euler Line"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In any triangle, the Orthocenter (H), Centroid (G), and Circumcenter (O) always lie on a single straight line, famously called the Euler Line. \nNot only are they collinear, but the Centroid always divides the segment HO in a strict ratio of 2:1. Meaning, the distance HG is twice the distance GO. \nThe Incenter (I) is NOT on this line unless the triangle is isosceles."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. The Nine-Point Circle"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="One of the most beautiful discoveries in geometry: For ANY triangle, the following 9 points lie on the exact same circle:\n1-3. The midpoints of the three sides.\n4-6. The feet of the three altitudes.\n7-9. The midpoints of the segments from the Orthocenter to the three vertices.\nThe radius of the Nine-Point Circle is exactly HALF the radius of the circumcircle. Its center lies exactly at the midpoint of the Euler line!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Using Ceva"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In triangle ABC, points D, E, F lie on BC, CA, AB. AD, BE, CF are concurrent. If AF=2, FB=3, BD=6, DC=4, and CE=3, what is EA?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Since the Cevians are concurrent, we apply Ceva's Theorem:\n(AF/FB) * (BD/DC) * (CE/EA) = 1\n(2/3) * (6/4) * (3/EA) = 1\nNotice that (2/3) * (6/4) = 12/12 = 1.\nSo, 1 * (3/EA) = 1.\nTherefore, EA must be exactly 3."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Euler Line"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In a triangle, the distance from the Centroid (G) to the Circumcenter (O) is 5. What is the distance from the Orthocenter (H) to the Circumcenter (O)?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: The points H, G, O lie on the Euler Line. The Centroid G divides the segment HO such that HG = 2 * GO.\nWe are given GO = 5.\nThis means HG = 2 * 5 = 10.\nThe total distance HO is HG + GO.\nHO = 10 + 5 = 15. The answer is 15."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 13"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

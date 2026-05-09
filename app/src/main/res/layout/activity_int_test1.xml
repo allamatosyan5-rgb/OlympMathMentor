@@ -3,109 +3,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5DC"
-    android:fillViewport="true">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Advanced Test 1"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:gravity="center"
-            android:padding="12dp"
-            android:background="@drawable/rounded_header_bg"
-            android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Answer the following 15 advanced questions based on the structural properties of integers. Good luck!"
-            android:textColor="#5D4037"
-            android:textSize="15sp"
-            android:textStyle="italic"
-            android:layout_marginBottom="20dp"/>
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/questionsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp"/>
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="Test 1"
+            android:textColor="#3E2723"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnFinish"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Finish Test"
-            android:textSize="18sp"
-            android:backgroundTint="#8B4513"
-            android:textColor="@color/white"
-            android:padding="12dp"/>
+            android:layout_height="60dp"
+            android:text="FINISH TEST"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="20dp"/>
 
         <LinearLayout
             android:id="@+id/resultLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
             android:visibility="gone"
+            android:gravity="center"
             android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/tvScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="#3E2723" />
+                android:textSize="24sp"
+                android:textColor="#3E2723"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/medalsLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp">
-                <ImageView android:id="@+id/medal1" android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/star_on" android:layout_margin="4dp"/>
-                <ImageView android:id="@+id/medal2" android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/star_on" android:layout_margin="4dp"/>
-                <ImageView android:id="@+id/medal3" android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/star_on" android:layout_margin="4dp"/>
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <ImageView android:id="@+id/medal1" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+                <ImageView android:id="@+id/medal2" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+                <ImageView android:id="@+id/medal3" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvFeedback"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginTop="10dp"/>
-
-            <Button
-                android:id="@+id/btnRetry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Retry Test"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="#4E342E"
-                android:textColor="@color/white"/>
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="#D32F2F"
+                android:layout_marginBottom="20dp"/>
 
             <Button
                 android:id="@+id/btnNextLesson"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Go to Lesson 2 →"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#FF9800"
-                android:textColor="@color/white"
-                android:visibility="gone"/>
-        </LinearLayout>
+                android:layout_height="60dp"
+                android:text="Next Lesson"
+                android:visibility="gone"
+                android:backgroundTint="#2E7D32"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="10dp"/>
 
+            <Button
+                android:id="@+id/btnRetry"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Retry Test"
+                android:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

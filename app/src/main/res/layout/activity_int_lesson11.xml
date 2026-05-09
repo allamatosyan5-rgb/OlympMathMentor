@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 11: Fundamentals of Olympiad Geometry"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Angle Chasing &amp; Basic Theorems"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Angle chasing is the most fundamental skill in Olympiad geometry. It involves using basic facts to find unknown angles until the problem reveals its structure.\nKey principles:\n• The sum of interior angles in a triangle is exactly 180°.\n• Exterior Angle Theorem: The exterior angle of a triangle is equal to the sum of the two opposite interior angles.\n• Isosceles Triangles: If two sides are equal, the angles opposite those sides are also equal. This is frequently used by drawing auxiliary lines to create isosceles triangles."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Congruence &amp; Similarity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Two triangles are Congruent (identical) if they satisfy SSS, SAS, ASA, or AAS conditions.\nThey are Similar (same shape, different size) if they satisfy AAA, SAS similarity, or SSS similarity.\nCrucial Property of Similarity: If two triangles are similar with a side ratio of k, the ratio of their perimeters is also k, but the ratio of their AREAS is k^2. (e.g., If a triangle's sides are 3 times larger, its area is 9 times larger)."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. The Triangle Inequality"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A triangle can only exist if the sum of the lengths of any two sides is strictly greater than the length of the third side (a + b > c). \nIn Olympiads, this is often used to find the maximum or minimum possible integer lengths of a side. \nGeneralized form: The shortest distance between two points is a straight line. If you need to minimize the distance AP + PB where P is on a line, reflect point B across the line to B', and draw a straight line from A to B'!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. The Pythagorean Theorem &amp; Altitudes"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In a right triangle, a^2 + b^2 = c^2. Memorizing Pythagorean Triples (3-4-5, 5-12-13, 8-15-17, 7-24-25) saves immense time.\nGeometric Mean Theorem: If you drop an altitude (h) from the right angle to the hypotenuse, dividing it into segments p and q, then the altitude squared equals the product of the segments: h^2 = p * q. Furthermore, the triangle is divided into three similar right triangles!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Angles"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In triangle ABC, the measure of angle A is 40°. The angle bisectors of B and C intersect at point I (the incenter). What is the measure of angle BIC?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: In triangle ABC, Angle B + Angle C = 180° - 40° = 140°.\nSince BI and CI are bisectors, angle IBC = B/2 and angle ICB = C/2.\nIn triangle BIC, the sum of angles is 180°. So, angle BIC + IBC + ICB = 180°.\nangle BIC + (B/2 + C/2) = 180°.\nangle BIC + (B+C)/2 = 180°.\nangle BIC + 140°/2 = 180°  =>  angle BIC + 70° = 180°.\nTherefore, angle BIC = 110°. \n(Shortcut formula: Angle at incenter = 90° + A/2 = 90° + 20° = 110°)."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Similarity"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A trapezoid has parallel bases of lengths 10 and 15. The diagonals intersect at point P. If the area of the smaller triangle formed by the bases is 40, what is the area of the larger triangle formed by the bases?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: The two triangles formed by the parallel bases and the diagonals are similar by AAA (Alternate Interior Angles). \nThe ratio of their corresponding sides is the ratio of the bases: 10/15 = 2/3.\nSince the ratio of the areas of similar triangles is the square of the ratio of their sides, the ratio of their areas is (2/3)^2 = 4/9.\nLet the area of the larger triangle be X. We set up the proportion: 40 / X = 4 / 9.\n4X = 360  =>  X = 90. The area of the larger triangle is 90."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 11"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

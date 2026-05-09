@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 7: Complex Word Problems II"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Advanced Joint Work (Shift Changes)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In Lesson 6, we learned to add rates (1/A + 1/B). But what if people start at different times or take breaks? The key is to calculate the 'Fraction of Work Done'.\nIf Person A works for 't1' hours at rate 1/A, they complete t1/A of the job.\nIf Person B works for 't2' hours at rate 1/B, they complete t2/B of the job.\nThe total equation is always: (t1/A) + (t2/B) = 1 (where 1 represents the completed job)."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Cross Method for Mixtures (Alligation)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="When mixing two solutions of different concentrations to get a target concentration, the 'Cross Method' (or Rule of Alligation) is a powerful shortcut. \nLet C1 be the higher concentration, C2 the lower, and C_target the desired middle concentration.\nThe ratio of the volumes to mix is V1 / V2 = (C_target - C2) / (C1 - C_target).\nThis avoids setting up complex linear equations."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Advanced Motion: Moving Reference Frames"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Consider an escalator or a river. If you walk UP a DOWNWARD moving escalator, your effective speed is (Your Speed - Escalator Speed). \nA classic Olympiad trick: If a boat drops a hat in a river and continues for 't' minutes, then turns around to catch it, it will take EXACTLY 't' minutes to reach the hat, regardless of the river's speed. Why? Because relative to the water, the hat is stationary, and the boat's speed is constant!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Optimization in Word Problems"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sometimes problems ask for the 'maximum' or 'minimum' value under certain constraints. \nFor example, 'Maximizing area with a fixed perimeter'. By the AM-GM inequality, the maximum area of a rectangle with a given perimeter occurs when it is a square. \nIn cost optimization, carefully define the cost function C(x) and look for the vertex of the parabola or use integer bounds."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Work Problem:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A can do a job in 20 days. B can do it in 30 days. They start working together, but A leaves 5 days before the job is finished. How many days did it take to complete the total job?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let the total days be 'T'. \nA worked for (T - 5) days. B worked for the full 'T' days.\nA's rate = 1/20. B's rate = 1/30.\nThe equation is: (T - 5)/20 + T/30 = 1.\nMultiply by 60 (LCM): 3(T - 5) + 2T = 60.\n3T - 15 + 2T = 60  =>  5T = 75  =>  T = 15.\nIt took 15 days to complete the job."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Mixture Problem:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You have a 60% acid solution and a 20% acid solution. How many liters of the 60% solution must you mix with the 20% solution to get exactly 40 liters of a 50% acid solution?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Using the Cross Method:\nC1 = 60, C2 = 20, Target = 50.\nRatio V1/V2 = (50 - 20) / (60 - 50) = 30 / 10 = 3/1.\nThis means we need 3 parts of the 60% solution for every 1 part of the 20% solution. Total parts = 3 + 1 = 4.\nThe total volume is 40L, so 1 part = 10L.\nWe need 3 parts of the 60% solution: 3 * 10 = 30 liters."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 7"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

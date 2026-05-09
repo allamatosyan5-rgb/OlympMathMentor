@@ -6,7 +6,7 @@
     android:background="@drawable/bg_library_pattern"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp"> <!-- Ֆոնը փոխված է այստեղ -->
+    android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"

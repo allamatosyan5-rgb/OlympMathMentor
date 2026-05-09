@@ -4,20 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="#FAF3E0"> <!-- Փափուկ Բեժ ֆոն, ինչպես քո պրոֆիլում -->
-
-    <!-- Վերնագիր -->
+    android:background="#FAF3E0">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Custom Test 📝"
+        android:text="My Custom Test "
         android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="#3E2723"
         android:gravity="center"
         android:layout_marginBottom="20dp"/>
 
-    <!-- Հարցերի ցանկ (Կլցվի Java-ից) -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,7 +28,7 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <!-- Արդյունքների վահանակ (Սկզբում թաքնված է) -->
+
     <LinearLayout
         android:id="@+id/resultLayout"
         android:layout_width="match_parent"
@@ -61,14 +59,13 @@
             android:layout_marginTop="8dp"/>
     </LinearLayout>
 
-    <!-- Կոճակներ -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFinish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Finish Test ✅"
+        android:text="Finish Test"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#4CAF50"
+        android:backgroundTint="@color/deep_brown"
         android:layout_marginBottom="10dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -77,6 +74,6 @@
         android:layout_height="wrap_content"
         android:text="Back to Menu"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#FF9800"/>
+        android:backgroundTint="@color/accent_tan"/>
 
 </LinearLayout>

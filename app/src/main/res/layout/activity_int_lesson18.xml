@@ -1,6 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 18: Propositions &amp; Mathematical Logic"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Propositions &amp; Truth Values"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A 'Proposition' (or Statement) is a declarative sentence that is either strictly True (T) or strictly False (F), but never both or neither. \nFor example, '2 + 2 = 4' is a True proposition. 'Paris is in Germany' is a False proposition. 'What time is it?' is NOT a proposition because it's a question, not a declarative statement.\nA statement that is ALWAYS true regardless of its variables is called a Tautology. A statement that is ALWAYS false is called a Contradiction."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Logical Connectives"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We combine simple propositions into complex ones using Connectives:\n1. Conjunction (AND): P ∧ Q is True ONLY if BOTH P and Q are True.\n2. Disjunction (OR): P ∨ Q is True if AT LEAST ONE of P or Q is True.\n3. Negation (NOT): ¬P reverses the truth value. If P is True, ¬P is False.\nDe Morgan's Laws are crucial for negating complex statements:\n• ¬(P ∧ Q) is equivalent to (¬P) ∨ (¬Q)\n• ¬(P ∨ Q) is equivalent to (¬P) ∧ (¬Q)"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Implications &amp; The Contrapositive"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="An Implication (If-Then) is written as P → Q. It is False ONLY when the hypothesis P is True, but the conclusion Q is False.\nThree related statements exist for P → Q:\n• Converse: Q → P (Not necessarily true even if P → Q is true)\n• Inverse: ¬P → ¬Q\n• Contrapositive: ¬Q → ¬P\nThe most important rule in logical proofs: An implication is ALWAYS logically equivalent to its Contrapositive! If you want to prove 'If x^2 is even, then x is even', it's much easier to prove the contrapositive: 'If x is odd, then x^2 is odd'."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Quantifiers (For All / There Exists)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quantifiers specify the quantity of specimens in the domain of discourse.\n• Universal Quantifier (∀): Means 'For All' or 'For Every'.\n• Existential Quantifier (∃): Means 'There Exists at least one'.\nNegating quantifiers flips them:\n• The negation of 'All cats are black' (∀x, P(x)) is NOT 'No cats are black'. It is 'There EXISTS at least one cat that is NOT black' (∃x, ¬P(x))."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Contrapositive Proof"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that if the product of two integers (a * b) is even, then at least one of the integers 'a' or 'b' must be even."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We want to prove P → Q, where P is 'ab is even' and Q is 'a is even OR b is even'. \nDirect proof is messy. Let's prove the Contrapositive: ¬Q → ¬P.\nWhat is ¬Q? By De Morgan's laws, the negation of 'a is even OR b is even' is 'a is odd AND b is odd'.\nWhat is ¬P? 'ab is odd'.\nSo we must prove: 'If a is odd AND b is odd, then ab is odd'. \nLet a = 2k+1 and b = 2m+1. \nThen a*b = (2k+1)(2m+1) = 4km + 2k + 2m + 1 = 2(2km + k + m) + 1. \nThis is clearly an odd number! Since the contrapositive is true, the original statement is perfectly proven."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Negating Quantifiers"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is the exact logical negation of the statement: 'For every integer x, there exists an integer y such that x + y = 0' ?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let's write the original statement in symbols: ∀x, ∃y, (x + y = 0).\nWhen negating, every ∀ flips to ∃, every ∃ flips to ∀, and the inner statement is negated.\nSo, ¬(∀x, ∃y, x + y = 0) becomes:\n∃x, ∀y, (x + y ≠ 0).\nTranslated to English: 'There EXISTS an integer x, such that for ALL integers y, x + y is NOT equal to 0'."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 18"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,6 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Lesson 8: Advanced Logic Puzzles &amp; Proofs"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <!-- SECTION 1 -->
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Parity and Invariants"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="An 'Invariant' is a property of a mathematical object that remains unchanged when certain operations are applied to the object. If the initial state has an invariant property that the target state lacks, it's impossible to reach the target state.\n\nParity (Even/Odd) is the most common invariant. For example, if an operation always changes the number of items by an even amount, the parity of the items will never change. If you start with an odd number of items, you can never reach exactly zero."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 2 -->
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Knights and Knaves (Boolean Logic)"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="These classic logic puzzles involve an island where 'Knights' always tell the truth and 'Knaves' always lie. To solve them, we use Proof by Contradiction.\n\nExample: Person A says, 'I am a Knave.' Is this possible? \nIf A is a Knight, they must tell the truth, but a Knight cannot say they are a Knave (Contradiction). If A is a Knave, they must lie, but saying 'I am a Knave' would be the truth (Contradiction). Therefore, NO resident of this island can ever say 'I am a Knave'."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 3 -->
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Game Theory &amp; Backward Induction"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In combinatorial games, two players take turns with perfect information and no chance involved. The key strategy is 'Backward Induction': start from the winning/losing end states and work backwards.\n\nA state is a 'Losing State' if every available move leads to a 'Winning State' for the opponent. A state is a 'Winning State' if there is AT LEAST ONE move that forces the opponent into a 'Losing State'. Maintaining symmetry or copying the opponent's moves is often a winning strategy."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- SECTION 4 -->
+        <TextView
+            android:id="@+id/tvSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. The Josephus Problem"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Josephus problem is a classic theoretical puzzle. 'n' people stand in a circle. Counting begins at person 1, and every second person is eliminated until only one remains. Who survives?\n\nThe formula uses binary powers. Find the largest power of 2 that is less than or equal to 'n'. Let's call it 2^m. \nWrite n as: n = 2^m + L (where L is the leftover amount).\nThe winning position W(n) is always given by: W(n) = 2*L + 1.\nExample: For 100 people, the largest power of 2 is 64. So, 100 = 64 + 36. L = 36. The survivor is 2*36 + 1 = 73."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- PROBLEM 1 -->
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 1: Parity Coloring"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Can an 8x8 chessboard with two diagonally opposite corners removed be covered perfectly with 31 dominoes (each covering exactly two squares)?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: No. A standard chessboard has 32 white and 32 black squares. Every domino must cover exactly one white and one black square. Two diagonally opposite corners are ALWAYS the same color (e.g., both white). If we remove them, the board is left with 30 white squares and 32 black squares. Since 31 dominoes would require exactly 31 white and 31 black squares, the covering is absolutely impossible."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- PROBLEM 2 -->
+        <TextView
+            android:id="@+id/tvProblem2Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem 2: Game Theory"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem2Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="There are 100 coins on a table. Two players take turns removing 1, 2, 3, or 4 coins. The player who takes the last coin wins. If you go first, how many coins should you take to guarantee a win?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We use backward induction. To win, you want to leave exactly 0 coins for your opponent. Before that, you must leave 5 coins (since they can take max 4, they will leave 1, 2, 3, or 4 for you, allowing you to take the rest). The 'Losing States' are multiples of 5 (5, 10, 15... 100). \nSince 100 is already a multiple of 5, the FIRST player is actually in a losing position if the second player plays perfectly! But wait, if you go first, and 100 is a multiple of 5, you cannot win against perfect play. To fix this in a standard game, usually, the initial number is not a multiple. If the game started with 102 coins, you would take 2 to leave 100."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 8"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

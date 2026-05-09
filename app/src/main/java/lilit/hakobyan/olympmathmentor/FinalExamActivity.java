@@ -213,39 +213,35 @@ public class FinalExamActivity extends AppCompatActivity {
 
         TextView tvScore = findViewById(R.id.tvScore);
         TextView tvFeedbackResult = findViewById(R.id.tvFeedback);
-        Button btnFinishApp = findViewById(R.id.btnFinishApp);
         Button btnRetry = findViewById(R.id.btnRetry);
-
         Button btnStartIntermediate = findViewById(R.id.btnStartIntermediate);
 
         tvScore.setText("Final Score: " + score + " / " + questions.length);
 
         if (score < 35) {
-            tvFeedbackResult.setText("You fought hard! But you need at least 35 correct answers to unlock the Intermediate Level. Try again!");
+            tvFeedbackResult.setText("You need at least 35 correct answers to unlock Intermediate Level. Try again!");
             btnRetry.setVisibility(View.VISIBLE);
-            btnFinishApp.setVisibility(View.GONE);
             btnStartIntermediate.setVisibility(View.GONE);
         } else {
-            tvFeedbackResult.setText("🏆 OLYMPIAD CHAMPION! 🏆\nYou have successfully unlocked the Intermediate Level!");
+            tvFeedbackResult.setText("🏆 OLYMPIAD CHAMPION! 🏆\nIntermediate Level is now UNLOCKED!");
             btnRetry.setVisibility(View.GONE);
-            btnFinishApp.setVisibility(View.GONE);
             btnStartIntermediate.setVisibility(View.VISIBLE);
 
-            android.content.SharedPreferences prefs = getSharedPreferences("MyPrefs", android.content.Context.MODE_PRIVATE);
-            prefs.edit().putBoolean("intermediate_unlocked", true).apply();
+            // --- ԱՅՍ ՄԱՍԸ ԿԱՐԵՎՈՐ Է ---
+            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            myPrefs.edit().putBoolean("intermediate_unlocked", true).apply();
+
+            SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+            progressPrefs.edit().putInt("stars_lesson_21", 6).apply(); // Պահում ենք որպես ավարտված
         }
 
         btnStartIntermediate.setOnClickListener(v -> {
-            Toast.makeText(this, "Welcome to the Intermediate Level!", Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(FinalExamActivity.this, MainActivity.class);
             intent.putExtra("open_intermediate", true);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         });
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
