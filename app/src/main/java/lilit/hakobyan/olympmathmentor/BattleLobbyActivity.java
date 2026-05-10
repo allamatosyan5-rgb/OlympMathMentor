@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class BattleLobbyActivity extends AppCompatActivity {
@@ -32,16 +33,16 @@ public class BattleLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_lobby);
 
-        // Միանում ենք Firebase-ի նոր "battles" բաժնին
-        dbRef = FirebaseDatabase.getInstance().getReference("battles");
+        // ՄԻԱՑՈՒՄ ՔՈ ՆՈՐ ԲԱԶԱՅԻ ՀՍՏԱԿ ՀԱՍՑԵԻՆ
+        dbRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles");
 
-        // Ապահով կերպով վերցնում ենք օգտատիրոջ անունը կամ Email-ը
+        // Ապահով կերպով վերցնում ենք օգտատիրոջ անունը
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             userName = currentUser.getDisplayName();
             if (userName == null || userName.isEmpty()) {
                 if (currentUser.getEmail() != null) {
-                    userName = currentUser.getEmail().split("@")[0]; // Վերցնում ենք email-ի առաջին մասը
+                    userName = currentUser.getEmail().split("@")[0];
                 } else {
                     userName = "MathPlayer";
                 }
@@ -57,61 +58,82 @@ public class BattleLobbyActivity extends AppCompatActivity {
 
         // --- ՍԵՆՅԱԿԻ ՍՏԵՂԾՈՒՄ ---
         btnCreate.setOnClickListener(v -> {
-            // Ստեղծում ենք պատահական 6-անիշ թիվ
             roomCode = String.valueOf(100000 + new Random().nextInt(900000));
             tvCode.setText("Your Code: " + roomCode);
             tvCode.setVisibility(View.VISIBLE);
-            btnCreate.setEnabled(false); // Անջատում ենք կոճակը, որ 2-րդ անգամ չսեղմի
-            btnCreate.setText("WAITING FOR FRIEND...");
+            btnCreate.setEnabled(false);
+            btnCreate.setText("SENDING TO DATABASE..."); // Նոր տեքստ
 
-            // Գրանցում ենք տվյալները Firebase-ում
-            dbRef.child(roomCode).child("player1").setValue(userName);
-            dbRef.child(roomCode).child("score1").setValue(0);
-            dbRef.child(roomCode).child("status").setValue("waiting");
+            HashMap<String, Object> roomData = new HashMap<>();
+            roomData.put("player1", userName);
+            roomData.put("score1", 0);
+            roomData.put("status", "waiting");
 
-            Toast.makeText(this, "Room Created! Share the code.", Toast.LENGTH_LONG).show();
-
-            // Սպասում ենք, որ Ընկերը միանա
-            listenForPlayer2();
+            // Սպասում ենք ԻՐԱԿԱՆ հաստատմանը բազայից
+            dbRef.child(roomCode).setValue(roomData)
+                    .addOnSuccessListener(aVoid -> {
+                        // Եթե այս տեքստը բերի, ուրեմն 100% բազայում գրվել է
+                        btnCreate.setText("WAITING FOR FRIEND...");
+                        Toast.makeText(this, "✅ Հաջողությամբ գրանցվեց բազայում!", Toast.LENGTH_LONG).show();
+                        listenForPlayer2();
+                    })
+                    .addOnFailureListener(e -> {
+                        // Եթե սխալ կա կամ բազան փակ է
+                        btnCreate.setText("CREATE A ROOM");
+                        btnCreate.setEnabled(true);
+                        Toast.makeText(this, "❌ Սխալ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
         });
 
         // --- ԸՆԿԵՐՈՋ ՍԵՆՅԱԿԻՆ ՄԻԱՆԱԼԸ ---
         btnJoin.setOnClickListener(v -> {
             String code = etCode.getText().toString().trim();
+            Toast.makeText(this, "Checking code...", Toast.LENGTH_SHORT).show();
 
             if (code.length() == 6) {
-                // Ստուգում ենք, արդյոք կա՞ նման սենյակ Firebase-ում
                 dbRef.child(code).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists() && "waiting".equals(snapshot.child("status").getValue(String.class))) {
-                            // Սենյակը գտնվեց, միանում ենք որպես Player 2
-                            dbRef.child(code).child("player2").setValue(userName);
-                            dbRef.child(code).child("score2").setValue(0);
-                            dbRef.child(code).child("status").setValue("started");
+                        if (snapshot.exists()) {
+                            String status = snapshot.child("status").getValue(String.class);
 
-                            // Անցնում ենք Խաղի էկրանին
-                            startBattle(code, 2);
+                            if ("waiting".equals(status)) {
+                                HashMap<String, Object> updates = new HashMap<>();
+                                updates.put("player2", userName);
+                                updates.put("score2", 0);
+                                updates.put("status", "started");
+
+                                dbRef.child(code).updateChildren(updates).addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(BattleLobbyActivity.this, "Joining...", Toast.LENGTH_SHORT).show();
+                                    startBattle(code, 2);
+                                }).addOnFailureListener(e -> {
+                                    Toast.makeText(BattleLobbyActivity.this, "Write Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
+                            } else {
+                                Toast.makeText(BattleLobbyActivity.this, "Room is full or already started!", Toast.LENGTH_LONG).show();
+                            }
                         } else {
-                            Toast.makeText(BattleLobbyActivity.this, "Room not found or already full!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BattleLobbyActivity.this, "Room not found! Did you type correctly?", Toast.LENGTH_LONG).show();
                         }
                     }
-                    @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(BattleLobbyActivity.this, "Firebase Access Denied: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 });
             } else {
-                Toast.makeText(this, "Enter a valid 6-digit code", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Code must be exactly 6 digits!", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    // Այս ֆունկցիան սպասում է (Player 1-ի համար), որպեսզի status-ը դառնա "started"
     private void listenForPlayer2() {
         waitingListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists() && "started".equals(snapshot.child("status").getValue(String.class))) {
-                    // Երբ ընկերը միանում է, անցնում ենք Խաղի էկրանին
-                    dbRef.child(roomCode).removeEventListener(waitingListener); // Անջատում ենք լսողը
+                    dbRef.child(roomCode).removeEventListener(waitingListener);
                     startBattle(roomCode, 1);
                 }
             }
@@ -123,8 +145,8 @@ public class BattleLobbyActivity extends AppCompatActivity {
     private void startBattle(String code, int playerNumber) {
         Intent intent = new Intent(this, MultiplayerBattleActivity.class);
         intent.putExtra("ROOM_CODE", code);
-        intent.putExtra("PLAYER_NUM", playerNumber); // Ասում ենք Player 1 է, թե Player 2
+        intent.putExtra("PLAYER_NUM", playerNumber);
         startActivity(intent);
-        finish(); // Փակում ենք Lobby-ն, որ "Back" տալիս այստեղ չգա
+        finish();
     }
 }

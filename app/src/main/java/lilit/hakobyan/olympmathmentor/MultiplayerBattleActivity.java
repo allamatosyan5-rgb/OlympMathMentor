@@ -7,7 +7,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.*;
 
 public class MultiplayerBattleActivity extends AppCompatActivity {
@@ -20,7 +19,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
     private EditText etAnswer;
     private int currentQIndex = 0;
 
-    // Նախնական հարցեր
+    // Նախնական հարցեր Օլիմպիական ոճով
     private String[] questions = {
             "Find x: 2x + 5 = 13",
             "Smallest prime number greater than 10?",
@@ -37,7 +36,9 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
         roomCode = getIntent().getStringExtra("ROOM_CODE");
         playerNum = getIntent().getIntExtra("PLAYER_NUM", 1);
-        roomRef = FirebaseDatabase.getInstance().getReference("battles").child(roomCode);
+
+        // ՄԻԱՑՈՒՄ ՔՈ ՆՈՐ ԲԱԶԱՅԻ ՀՍՏԱԿ ՀԱՍՑԵԻՆ
+        roomRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles").child(roomCode);
 
         initViews();
         listenToBattle();
@@ -62,7 +63,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             tvQNumber.setText("Question " + (currentQIndex + 1) + "/" + questions.length);
             etAnswer.setText("");
         } else {
-            showEndGameDialog();
+            showEndGameDialog("No more questions!");
         }
     }
 
@@ -71,15 +72,23 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    tvP1Name.setText(snapshot.child("player1").getValue(String.class));
-                    tvP2Name.setText(snapshot.child("player2").getValue(String.class));
-                    tvScore1.setText(String.valueOf(snapshot.child("score1").getValue(Integer.class)));
-                    tvScore2.setText(String.valueOf(snapshot.child("score2").getValue(Integer.class)));
+                    String p1Name = snapshot.child("player1").getValue(String.class);
+                    String p2Name = snapshot.child("player2").getValue(String.class);
+                    Integer s1 = snapshot.child("score1").getValue(Integer.class);
+                    Integer s2 = snapshot.child("score2").getValue(Integer.class);
 
-                    // Եթե մրցակիցը հասել է 5 միավորի, խաղը վերջացնում ենք
-                    if (snapshot.child("score1").getValue(Integer.class) >= 5 ||
-                            snapshot.child("score2").getValue(Integer.class) >= 5) {
-                        // Կարելի է ավելացնել հաղթանակի տրամաբանություն
+                    // Ապահով ստուգումներ
+                    if (p1Name != null) tvP1Name.setText(p1Name);
+                    if (p2Name != null) tvP2Name.setText(p2Name);
+                    if (s1 != null) tvScore1.setText(String.valueOf(s1));
+                    if (s2 != null) tvScore2.setText(String.valueOf(s2));
+
+                    if (s1 != null && s2 != null) {
+                        // Եթե խաղացողներից մեկը հասել է 5 միավորի
+                        if (s1 >= 5 || s2 >= 5) {
+                            String winner = (s1 >= 5) ? p1Name : p2Name;
+                            showEndGameDialog(winner + " Wins!");
+                        }
                     }
                 }
             }
@@ -89,8 +98,10 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
     private void checkAnswer() {
         String userAns = etAnswer.getText().toString().trim();
+        if (userAns.isEmpty()) return;
+
         if (userAns.equals(answers[currentQIndex])) {
-            // ՃԻՇՏ Է: Թարմացնում ենք միավորը Firebase-ում
+            // ՃԻՇՏ Է: Ապահով ավելացնում ենք միավորը
             String scoreKey = "score" + playerNum;
             roomRef.child(scoreKey).runTransaction(new Transaction.Handler() {
                 @NonNull @Override
@@ -108,13 +119,14 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Wrong! Try again.", Toast.LENGTH_SHORT).show();
+            etAnswer.setText("");
         }
     }
 
-    private void showEndGameDialog() {
+    private void showEndGameDialog(String title) {
         new AlertDialog.Builder(this)
-                .setTitle("Battle Finished!")
-                .setMessage("Check the final scores on the screen.")
+                .setTitle(title)
+                .setMessage("Battle Finished! Check the final scores.")
                 .setPositiveButton("Exit", (d, w) -> finish())
                 .setCancelable(false)
                 .show();
