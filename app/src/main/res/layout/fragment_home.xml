@@ -86,7 +86,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#8B4513"
                 android:text="Go to Intermediate Level →"
                 android:textColor="@color/white"
                 android:textStyle="bold"

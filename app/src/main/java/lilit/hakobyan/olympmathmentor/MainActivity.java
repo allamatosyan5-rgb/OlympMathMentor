@@ -1,5 +1,6 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(navListener);
 
         if (savedInstanceState == null) {
-            // ՆՈՐՈՒԹՅՈՒՆ. Ստուգում ենք՝ արդյոք եկել ենք FinalExamActivity-ից
+            // Ստուգում ենք՝ արդյոք եկել ենք FinalExamActivity-ից
             boolean openIntermediate = getIntent().getBooleanExtra("open_intermediate", false);
 
             if (openIntermediate) {
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new AIFragment();
                 } else if (itemId == R.id.nav_profile) {
                     selectedFragment = new ProfileFragment();
+                } else if (itemId == R.id.nav_challenge) {
+                    // ԱՎԵԼԱՑՎԱԾ Է. Բացում ենք Մրցույթի (Lobby) էջը
+                    Intent intent = new Intent(MainActivity.this, BattleLobbyActivity.class);
+                    startActivity(intent);
+
+                    // Վերադարձնում ենք false, որպեսզի ներքևի մենյուն չփորձի գունավորել մեդալը,
+                    // քանի որ մենք լրիվ ուրիշ Activity ենք բացում:
+                    return false;
                 }
 
                 if (selectedFragment != null) {

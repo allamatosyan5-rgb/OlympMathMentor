@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale; // Ավելացված է Locale-ը սխալներից խուսափելու համար
 
 public class FinalExamActivity extends AppCompatActivity {
 
@@ -110,7 +114,7 @@ public class FinalExamActivity extends AppCompatActivity {
             TextView tvQuestion = new TextView(this);
             tvQuestion.setText(questions[i]);
             tvQuestion.setTextSize(16f);
-            tvQuestion.setTextColor(Color.parseColor("#3E2723"));
+            tvQuestion.setTextColor(Color.parseColor("#3E2723")); // Մուգ շագանակագույն տեքստ
             tvQuestion.setPadding(0, 30, 0, 10);
             tvQuestion.setTypeface(null, android.graphics.Typeface.BOLD);
 
@@ -140,15 +144,10 @@ public class FinalExamActivity extends AppCompatActivity {
 
         findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
 
-        findViewById(R.id.btnFinishApp).setOnClickListener(v -> {
-            Toast.makeText(this, "🎉 APP COMPLETED! You are a Math Genius!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(FinalExamActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
-    }
+        findViewById(R.id.btnFinish).setOnClickListener(v -> checkResults());
 
+        findViewById(R.id.btnRetry).setOnClickListener(v -> recreate());
+    } // Սա onCreate մեթոդի փակվող փակագիծն է
     private void startTimer() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -171,11 +170,11 @@ public class FinalExamActivity extends AppCompatActivity {
         int minutes = (int) ((timeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
 
-        String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
         tvTimer.setText(timeFormatted);
 
-        if (timeLeftInMillis < 10 * 60 * 1000) {
-            tvTimer.setTextColor(Color.RED);
+        if (timeLeftInMillis < 15 * 60 * 1000) { // Վերջին 15 րոպեն
+            tvTimer.setTextColor(Color.parseColor("#FFD700")); // Ոսկեգույն (որ երևա մանուշակագույն ֆոնին)
         }
     }
 
@@ -196,6 +195,7 @@ public class FinalExamActivity extends AppCompatActivity {
             if (userAnswer.isEmpty()) {
                 feedbackViews[i].setText("❌ No answer. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.parseColor("#D32F2F"));
+                saveWrongQuestion(questions[i], correctAnswers[i]);
             } else if (userAnswer.equals(correctAnswer)) {
                 score++;
                 feedbackViews[i].setText("✅ Correct!");
@@ -203,10 +203,12 @@ public class FinalExamActivity extends AppCompatActivity {
             } else {
                 feedbackViews[i].setText("❌ Incorrect. Correct: " + correctAnswers[i]);
                 feedbackViews[i].setTextColor(Color.parseColor("#D32F2F"));
+                saveWrongQuestion(questions[i], correctAnswers[i]);
             }
         }
         showFinalResult(score);
     }
+
     private void showFinalResult(int score) {
         findViewById(R.id.btnFinish).setVisibility(View.GONE);
         findViewById(R.id.resultLayout).setVisibility(View.VISIBLE);
@@ -215,45 +217,70 @@ public class FinalExamActivity extends AppCompatActivity {
         TextView tvFeedbackResult = findViewById(R.id.tvFeedback);
         Button btnRetry = findViewById(R.id.btnRetry);
         Button btnStartIntermediate = findViewById(R.id.btnStartIntermediate);
+        LinearLayout medalsLayout = findViewById(R.id.medalsLayout);
 
         tvScore.setText("Final Score: " + score + " / " + questions.length);
+        medalsLayout.removeAllViews(); // Մաքրում ենք նախորդից մնացածը
 
-        if (score < 35) {
-            tvFeedbackResult.setText("You need at least 35 correct answers to unlock Intermediate Level. Try again!");
+        // ԱՆՑՈՂԻԿ ՇԵՄԸ ԴԱՐՁԱՎ 40+
+        if (score < 40) {
+            tvFeedbackResult.setText("You need at least 40 correct answers to unlock Intermediate Level. Try again!");
             btnRetry.setVisibility(View.VISIBLE);
             btnStartIntermediate.setVisibility(View.GONE);
+            medalsLayout.setVisibility(View.GONE);
+            try { MediaPlayer.create(this, R.raw.sad).start(); } catch(Exception e){}
         } else {
-            tvFeedbackResult.setText("🏆 OLYMPIAD CHAMPION! 🏆\nIntermediate Level is now UNLOCKED!");
+            tvFeedbackResult.setText("🏆 GRAND CHAMPION! 🏆\nIntermediate Level is now UNLOCKED!");
             btnRetry.setVisibility(View.GONE);
             btnStartIntermediate.setVisibility(View.VISIBLE);
+            medalsLayout.setVisibility(View.VISIBLE);
 
-            // --- ԱՅՍ ՄԱՍԸ ԿԱՐԵՎՈՐ Է ---
+            // --- ԴԻՆԱՄԻԿ ԱՍՏՂԵՐԻ ՀԱՇՎԱՐԿ ---
+            // Բաժանում ենք 5-ի և կլորացնում. 40 -> 8 աստղ, 45 -> 9 աստղ, 50 -> 10 աստղ
+            int starCount = Math.round(score / 5.0f);
+            int sizeInPx = (int) (35 * getResources().getDisplayMetrics().density); // մոտ 35dp
+
+            for (int i = 0; i < starCount; i++) {
+                ImageView star = new ImageView(this);
+                star.setImageResource(R.drawable.ic_medal); // Քո ic_medal.xml պատկերը
+                star.setColorFilter(Color.parseColor("#FFD700")); // Ներկում ենք ոսկեգույն
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(sizeInPx, sizeInPx);
+                params.setMargins(5, 0, 5, 0); // Փոքրիկ հեռավորություն
+                star.setLayoutParams(params);
+
+                medalsLayout.addView(star);
+            }
+            try { MediaPlayer.create(this, R.raw.star3).start(); } catch(Exception e){}
+
+            // Պահպանում ենք տվյալները, որ հաջորդ մակարդակը բացվի
             SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             myPrefs.edit().putBoolean("intermediate_unlocked", true).apply();
 
             SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-            progressPrefs.edit().putInt("stars_lesson_21", 6).apply(); // Պահում ենք որպես ավարտված
+            progressPrefs.edit().putInt("stars_lesson_21", 6).apply(); // Դաս 21-ը գրանցում ենք հանձնված
         }
 
         btnStartIntermediate.setOnClickListener(v -> {
             Intent intent = new Intent(FinalExamActivity.this, MainActivity.class);
             intent.putExtra("open_intermediate", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
     }
+
     private void saveWrongQuestion(String question, String correctAns) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         String existingErrors = prefs.getString("wrong_questions_list", "");
-
 
         if (!existingErrors.contains(question)) {
             String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";

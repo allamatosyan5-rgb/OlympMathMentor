@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,6 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+// Ավելացնում ենք MaterialButton գրադարանը
+import com.google.android.material.button.MaterialButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -99,12 +101,13 @@ public class BookListActivity extends AppCompatActivity {
             TextView tvAuthor = bookCard.findViewById(R.id.tvBookAuthor);
             TextView tvRatingValue = bookCard.findViewById(R.id.tvRatingValue);
             RatingBar rbBookRating = bookCard.findViewById(R.id.rbBookRating);
-            Button btnRead = bookCard.findViewById(R.id.btnReadBook);
+
+            // Կարևոր է՝ օգտագործում ենք MaterialButton որպեսզի իկոնկաները ճիշտ աշխատեն
+            MaterialButton btnRead = bookCard.findViewById(R.id.btnReadBook);
 
             tvTitle.setText(book[0]);
             tvAuthor.setText(book[1]);
             String url = book[2];
-
 
             String bookId = book[0].replaceAll("[^a-zA-Z0-9]", "_");
 
@@ -125,16 +128,19 @@ public class BookListActivity extends AppCompatActivity {
             if (url.isEmpty()) {
                 btnRead.setEnabled(false);
                 btnRead.setText("COMING SOON");
+                btnRead.setIconResource(0); // Հանում ենք իկոնկան, եթե հղում չկա
                 btnRead.setBackgroundTintList(ColorStateList.valueOf(Color.DKGRAY));
             } else {
 
                 boolean isOpenedBefore = localPrefs.getBoolean(bookId + "_opened", false);
 
                 if (isOpenedBefore) {
-                    btnRead.setText("✅ OPENED BEFORE");
+                    btnRead.setText("OPENED BEFORE");
+                    btnRead.setIconResource(R.drawable.check); // Դնում է check.xml իկոնկան
                     btnRead.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8D6E63")));
                 } else {
-                    btnRead.setText("📖 READ BOOK");
+                    btnRead.setText("READ BOOK");
+                    btnRead.setIconResource(R.drawable.book); // Դնում է book.xml իկոնկան
                     btnRead.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#5D4037")));
                 }
 
@@ -144,9 +150,10 @@ public class BookListActivity extends AppCompatActivity {
                         return;
                     }
 
-
+                    // Երբ օգտատերը սեղմում է, անմիջապես փոխում ենք իկոնկան check-ի
                     localPrefs.edit().putBoolean(bookId + "_opened", true).apply();
-                    btnRead.setText("✅ OPENED BEFORE");
+                    btnRead.setText("OPENED BEFORE");
+                    btnRead.setIconResource(R.drawable.check); // Դնում է check.xml իկոնկան
                     btnRead.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8D6E63")));
 
                     openLink(url);
@@ -172,7 +179,7 @@ public class BookListActivity extends AppCompatActivity {
                         updateGlobalRating(bookId, rating);
                     }
                 })
-                .setNegativeButton("Maybe Later", null) // Թույլ է տալիս հետաձգել գնահատումը
+                .setNegativeButton("Maybe Later", null)
                 .show();
     }
 

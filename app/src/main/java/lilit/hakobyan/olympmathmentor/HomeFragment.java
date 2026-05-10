@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
         int dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
 
         tvDailyInsight.setText(insights[dayOfYear % insights.length]);
-        tvMotivation.setText("✨ " + motivations[dayOfYear % motivations.length]);
+        tvMotivation.setText(motivations[dayOfYear % motivations.length]);
     }
 
     private void createCourseList() {

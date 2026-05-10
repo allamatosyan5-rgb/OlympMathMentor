@@ -2,11 +2,12 @@ package lilit.hakobyan.olympmathmentor;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+// Ավելացնում ենք MaterialButton-ը
+import com.google.android.material.button.MaterialButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,9 +39,7 @@ public class VideoListActivity extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference("video_ratings");
         localPrefs = getSharedPreferences("VideoStatus", MODE_PRIVATE);
 
-
         String[][] videos = {
-
                 {"Video Lesson 1", "https://youtu.be/hEN6_v6gSEo?si=BnFMFdFLATvnldrC"},
                 {"Video Lesson 2", "https://youtu.be/2LTtg3clc9g?si=d0cy8Q99akB2ac9Z"},
                 {"Video Lesson 3", "https://youtu.be/P4LxK9Uek5U?si=oa5MEPXYRhjVhse-"},
@@ -56,7 +58,6 @@ public class VideoListActivity extends AppCompatActivity {
                 {"Video Lesson 16", "https://youtu.be/O3krHAFyxH4?si=m3ydIubuIHXb5CA5"}
         };
 
-
         LayoutInflater inflater = LayoutInflater.from(this);
 
         for (String[] video : videos) {
@@ -64,17 +65,23 @@ public class VideoListActivity extends AppCompatActivity {
             TextView tvTitle = card.findViewById(R.id.tvVideoTitle);
             TextView tvAvg = card.findViewById(R.id.tvAverageRating);
             RatingBar rbAvg = card.findViewById(R.id.rbVideoRating);
-            Button btnWatch = card.findViewById(R.id.btnWatchVideo);
+
+            // Փոխում ենք MaterialButton-ի
+            MaterialButton btnWatch = card.findViewById(R.id.btnWatchVideo);
 
             String videoId = video[0].replace(" ", "_");
             tvTitle.setText(video[0]);
 
-
+            // Ստուգում ենք արդյոք դիտված է, թե ոչ
             if (localPrefs.getBoolean(videoId + "_watched", false)) {
-                btnWatch.setText("✅ WATCHED BEFORE");
-                btnWatch.setBackgroundTintList(getColorStateList(R.color.earth_brown));
+                btnWatch.setText("WATCHED BEFORE");
+                btnWatch.setIconResource(R.drawable.check); // Դնում ենք check իկոնկան
+                btnWatch.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8D6E63")));
+            } else {
+                btnWatch.setText("WATCH VIDEO");
+                btnWatch.setIconResource(R.drawable.clapper); // Դնում ենք clapper իկոնկան
+                btnWatch.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#5D4037")));
             }
-
 
             dbRef.child(videoId).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -90,14 +97,14 @@ public class VideoListActivity extends AppCompatActivity {
                 @Override public void onCancelled(@NonNull DatabaseError error) {}
             });
 
-
             btnWatch.setOnClickListener(v -> {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video[1])));
 
-
+                // Սեղմելուց հետո դառնում է դիտված
                 localPrefs.edit().putBoolean(videoId + "_watched", true).apply();
-                btnWatch.setText("✅ WATCHED BEFORE");
-
+                btnWatch.setText("WATCHED BEFORE");
+                btnWatch.setIconResource(R.drawable.check); // Փոխվում է check-ի
+                btnWatch.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8D6E63")));
 
                 showRatingDialog(video[0], videoId);
             });

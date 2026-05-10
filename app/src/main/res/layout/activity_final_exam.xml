@@ -1,140 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="#F5F5DC">
 
     <LinearLayout
+        android:id="@+id/timerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:background="#3E2723"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_alignParentTop="true"
+        android:elevation="6dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🏆 GRAND FINAL EXAM "
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="#4A148C"
-            android:gravity="center"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="50 Questions. All Topics. Ultimate Challenge."
-            android:textSize="16sp"
-            android:textColor="#D32F2F"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#E0E0E0"
-            android:layout_marginBottom="20dp" />
-
-        <LinearLayout
-            android:id="@+id/questionsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp"/>
-
-        <Button
-            android:id="@+id/btnFinish"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:text="SUBMIT FINAL EXAM"
+            android:text="Time Left: "
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:backgroundTint="#FFD700"
-            android:textColor="#3E2723"
-            android:elevation="6dp"
-            android:layout_marginBottom="20dp"/>
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="03:00:00"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/timerLayout"
+        android:padding="16dp">
 
         <LinearLayout
-            android:id="@+id/resultLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:gravity="center"
-            android:background="#4A148C"
-            android:padding="30dp"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvScore"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Final Score: 0/50"
-                android:textSize="30sp"
+                android:text="Beginner Final Exam"
+                android:textSize="28sp"
                 android:textStyle="bold"
-                android:textColor="#FFD700"
-                android:layout_marginBottom="10dp"/>
+                android:textColor="#3E2723"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"/>
 
-            <TextView
-                android:id="@+id/tvFeedback"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/questionsContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Feedback message..."
+                android:orientation="vertical" />
+
+            <Button
+                android:id="@+id/btnFinish"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="SUBMIT EXAM"
+                android:backgroundTint="#3E2723"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center"
-                android:layout_marginBottom="30dp"/>
-
-            <Button
-                android:id="@+id/btnFinishApp"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="🚀 START INTERMIDATE LEVEL"
-                android:visibility="gone"
-                app:backgroundTint="#FFD700"
-                android:textColor="#3E2723"
                 android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:layout_marginTop="20dp"/>
 
-            <Button
-                android:id="@+id/btnRetry"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="RETRY FINAL EXAM"
-                android:visibility="gone"
-                app:backgroundTint="#9E9E9E"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/tvTimer"
+            <LinearLayout
+                android:id="@+id/resultLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="03:00:00"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#3E2723"
+                android:orientation="vertical"
+                android:visibility="gone"
                 android:gravity="center"
-                android:padding="10dp"
-                android:background="#EFEBE5"
-                android:layout_marginBottom="16dp"/>
-            <Button
-                android:id="@+id/btnStartIntermediate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="🚀 Start Intermediate Level"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#FF9800"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:visibility="gone"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp">
 
+                <TextView
+                    android:id="@+id/tvScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="26sp"
+                    android:textColor="#3E2723"
+                    android:textStyle="bold"/>
 
+                <LinearLayout
+                    android:id="@+id/medalsLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="15dp"
+                    android:gravity="center"
+                    android:visibility="gone">
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textColor="#D32F2F"
+                    android:layout_marginBottom="20dp"/>
+
+                <Button
+                    android:id="@+id/btnStartIntermediate"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="GO TO INTERMEDIATE LEVEL →"
+                    android:visibility="gone"
+                    android:backgroundTint="#3E2723"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <Button
+                    android:id="@+id/btnRetry"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="RETRY EXAM"
+                    android:backgroundTint="#3E2723"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>
