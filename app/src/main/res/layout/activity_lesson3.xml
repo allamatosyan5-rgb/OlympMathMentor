@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:background="#FCE4EC"
+            android:background="#E8E0C5"
             android:lineSpacingExtra="6dp"
             android:padding="20dp"
             android:text="FORMULAS TO MEMORIZE:\n\nTwo-digit: ab = 10a + b\nThree-digit: abc = 100a + 10b + c\nFour-digit: abcd = 1000a + 100b + 10c + d"
@@ -255,7 +255,7 @@
             android:textSize="16sp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="32dp"
-            android:background="#C9ADA3"
+            android:background="#E8E0C5"
             android:textColorHint="#FFFFFF"
             android:padding="16dp"/>
 
@@ -266,7 +266,7 @@
             android:text="TAKE TEST 3"
             android:textStyle="bold"
             android:textSize="20sp"
-            app:backgroundTint="#F8BBD0"
+            app:backgroundTint="#8D6E63"
             android:textColor="#3E2723"
             android:elevation="4dp"
             android:layout_marginBottom="20dp"/>

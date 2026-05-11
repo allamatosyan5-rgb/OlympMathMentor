@@ -1,71 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="#F5F5DC"
-    android:padding="24dp"> <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Multiplayer Challenge"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    android:textColor="#3E2723"
-    android:layout_marginBottom="40dp"/>
+    android:fillViewport="true">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCreateRoom"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:text="CREATE A ROOM"
-        android:textSize="18sp"
-        app:backgroundTint="#5D4037"
-        android:textColor="#FFFFFF"
-        app:cornerRadius="12dp"/>
-
-    <TextView
-        android:id="@+id/tvRoomCode"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Code: ------"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#D32F2F"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"/>
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="— OR —"
-        android:textSize="18sp"
-        android:textColor="#757575"
-        android:textStyle="bold"
-        android:layout_marginVertical="30dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Multiplayer Challenge"
+            android:textColor="#3E2723"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/etJoinCode"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:hint="Enter 6-digit Code"
-        android:inputType="number"
-        android:maxLength="6"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@android:drawable/editbox_background"
-        android:layout_marginBottom="16dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnJoinRoom"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:text="JOIN BATTLE"
-        android:textSize="18sp"
-        app:backgroundTint="#388E3C"
-        android:textColor="#FFFFFF"
-        app:cornerRadius="12dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Arena Rules"
+                    android:textColor="#5D4037"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Create a room code and share it with a friend, or enter their 6-digit code to join the battle.\n You have 15 minutes to solve 10 fast-paced Math questions.\n\ The smartest and fastest player wins! Defeat your opponents to earn exclusive Battle Stars ."
+                    android:textColor="#4E342E"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="5dp"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateRoom"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="CREATE A CODE"
+            android:textSize="18sp"
+            app:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="12dp"/>
+
+        <TextView
+            android:id="@+id/tvRoomCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Code: ------"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="— OR —"
+            android:textSize="18sp"
+            android:textColor="#757575"
+            android:textStyle="bold"
+            android:layout_marginVertical="30dp"/>
+
+        <EditText
+            android:id="@+id/etJoinCode"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center"
+            android:hint="Enter 6-digit Code"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnJoinRoom"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="JOIN BATTLE"
+            android:textSize="18sp"
+            app:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="12dp"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+</ScrollView>

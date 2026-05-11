@@ -45,7 +45,6 @@ public class Test6Activity extends AppCompatActivity {
 
         for (int i = 0; i < questions.length; i++) {
 
-            // Ստեղծում ենք հորիզոնական Layout՝ հարցի և սրտիկի համար
             LinearLayout questionHeader = new LinearLayout(this);
             questionHeader.setOrientation(LinearLayout.HORIZONTAL);
             questionHeader.setGravity(android.view.Gravity.CENTER_VERTICAL);

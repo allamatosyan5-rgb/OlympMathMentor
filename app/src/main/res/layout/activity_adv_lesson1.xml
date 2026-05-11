@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 1: Set Theory and Operations"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Sets, Elements, and Subsets"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A set is a well-defined collection of distinct objects, considered as an object in its own right. The objects that make up a set are known as its elements or members. If every element of set A is also an element of set B, then A is called a subset of B, denoted by A ⊆ B. If A ⊆ B and A ≠ B, A is a proper subset of B. The set with no elements is the empty set (∅), which is a subset of every set."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#E0D5C1"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvExamples1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Power Set: The set of all subsets of a set A is called the power set of A. If a set has 'n' elements, its power set contains exactly 2^n elements.\n• Number of Proper Subsets: 2^n - 1."
+                android:textColor="#3E2723"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Core Operations on Sets"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Union (A ∪ B): The set of elements that are in A, or in B, or in both.\n2. Intersection (A ∩ B): The set of elements that are in both A and B. If A ∩ B = ∅, the sets are disjoint.\n3. Difference (A \\ B): The set of elements in A that are not in B.\n4. Symmetric Difference (A ∆ B): The set of elements in either A or B, but not in both. It is equal to (A \\ B) ∪ (B \\ A)."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Advanced Theorems and Laws"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvProperties1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="• De Morgan's Laws: The complement of the union of two sets is the intersection of their complements: (A ∪ B)' = A' ∩ B'. Similarly, (A ∩ B)' = A' ∪ B'.\n• Principle of Inclusion-Exclusion (PIE): To find the cardinality of the union of sets, |A ∪ B| = |A| + |B| - |A ∩ B|. For three sets: |A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Olympiad Problem:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblem1Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In a class of 30 students, 20 study Math, 15 study Physics, and 5 study neither. How many students study both?"
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Total students = 30. Neither = 5. So, |M ∪ P| = 30 - 5 = 25. Using PIE: |M ∪ P| = |M| + |P| - |M ∩ P|. Thus, 25 = 20 + 15 - |M ∩ P|. |M ∩ P| = 35 - 25 = 10 students."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START ADVANCED TEST 1"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

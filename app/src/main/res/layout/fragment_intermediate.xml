@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5DC">
+    android:background="#F5F5DC"
+    android:fillViewport="true">
 
-    <Button
-        android:id="@+id/btnBackToBeginner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="#8B4513"
-        android:text="← Back to Beginner Courses"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:padding="12dp"
-        android:elevation="4dp"
-        android:textAllCaps="false"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Intermediate Level"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:gravity="center"
-        android:layout_marginBottom="8dp"/>
+        <Button
+            android:id="@+id/btnBackToBeginner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="#8B4513"
+            android:text="← Back to Beginner"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="12dp"
+            android:elevation="4dp"
+            android:textAllCaps="false"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvIntermediateCourses"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="20dp"
-        android:clipToPadding="false"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate Level"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"/>
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvIntermediateCourses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:clipToPadding="false"/>
+
+        <Button
+            android:id="@+id/btnGoToAdvanced"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:backgroundTint="#D32F2F"
+            android:text="Go to Advanced Level →"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:elevation="6dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

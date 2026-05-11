@@ -101,7 +101,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#FFE0B2"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="24dp" />
@@ -213,7 +213,7 @@
             android:textColor="#3E2723"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#FFE0B2"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:layout_marginBottom="24dp" />
 
@@ -244,7 +244,7 @@
             android:text="Example: A takes 10 days, B takes 15 days.\nStep 1: LCM of 10 and 15 is 30. Let Total Work = 30 units.\nStep 2: A's efficiency = 30/10 = 3 units/day.\nStep 3: B's efficiency = 30/15 = 2 units/day.\nStep 4: Combined efficiency = 3 + 2 = 5 units/day.\nStep 5: Time together = 30 / 5 = 6 days."
             android:textColor="#212121"
             android:textSize="16sp"
-            android:background="#C8E6C9"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -282,7 +282,7 @@
             android:text="► Inlet Pipe (Fills): Positive Efficiency (+E)\n► Outlet Pipe (Empties): Negative Efficiency (-E)\n\nNet Efficiency = (+E_fill) - (-E_empty)"
             android:textColor="#212121"
             android:textSize="16sp"
-            android:background="#BBDEFB"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -452,7 +452,7 @@
             android:text="TAKE TEST 7"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#FFB74D"
+            app:backgroundTint="#8D6E63"
             android:textColor="#3E2723"
             android:elevation="6dp"
             android:layout_marginBottom="20dp" />

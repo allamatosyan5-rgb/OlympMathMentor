@@ -101,7 +101,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#E1BEE7"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="24dp" />
@@ -212,7 +212,7 @@
             android:textColor="#3E2723"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#E1BEE7"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:layout_marginBottom="24dp" />
 
@@ -254,7 +254,7 @@
             android:textColor="#3E2723"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#E1BEE7"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:layout_marginBottom="24dp" />
 
@@ -291,7 +291,7 @@
             android:text="► Downstream (With the current):\nThe river pushes the boat. Effective Speed = V_b + V_w\n\n► Upstream (Against the current):\nThe river resists the boat. Effective Speed = V_b - V_w"
             android:textColor="#212121"
             android:textSize="16sp"
-            android:background="#BBDEFB"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -335,7 +335,7 @@
             android:textColor="#3E2723"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#FFCDD2"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -633,7 +633,7 @@
             android:text="TAKE TEST 6"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#CE93D8"
+            app:backgroundTint="#8D6E63"
             android:textColor="#3E2723"
             android:elevation="6dp"
             android:layout_marginBottom="20dp" />
