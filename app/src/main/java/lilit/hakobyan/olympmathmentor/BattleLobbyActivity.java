@@ -33,10 +33,9 @@ public class BattleLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_lobby);
 
-        // ՄԻԱՑՈՒՄ ՔՈ ՆՈՐ ԲԱԶԱՅԻ ՀՍՏԱԿ ՀԱՍՑԵԻՆ
+        // 👇 ՄԱՔՈՒՐ ԵՎ ՃԻՇՏ ՀՂՈՒՄԸ (ԱՌԱՆՑ :null -ի) 👇
         dbRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles");
 
-        // Ապահով կերպով վերցնում ենք օգտատիրոջ անունը
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             userName = currentUser.getDisplayName();
@@ -62,23 +61,20 @@ public class BattleLobbyActivity extends AppCompatActivity {
             tvCode.setText("Your Code: " + roomCode);
             tvCode.setVisibility(View.VISIBLE);
             btnCreate.setEnabled(false);
-            btnCreate.setText("SENDING TO DATABASE..."); // Նոր տեքստ
+            btnCreate.setText("SENDING TO DATABASE...");
 
             HashMap<String, Object> roomData = new HashMap<>();
             roomData.put("player1", userName);
             roomData.put("score1", 0);
             roomData.put("status", "waiting");
 
-            // Սպասում ենք ԻՐԱԿԱՆ հաստատմանը բազայից
             dbRef.child(roomCode).setValue(roomData)
                     .addOnSuccessListener(aVoid -> {
-                        // Եթե այս տեքստը բերի, ուրեմն 100% բազայում գրվել է
                         btnCreate.setText("WAITING FOR FRIEND...");
-                        Toast.makeText(this, "✅ Հաջողությամբ գրանցվեց բազայում!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "✅ Սենյակը ստեղծված է!", Toast.LENGTH_SHORT).show();
                         listenForPlayer2();
                     })
                     .addOnFailureListener(e -> {
-                        // Եթե սխալ կա կամ բազան փակ է
                         btnCreate.setText("CREATE A ROOM");
                         btnCreate.setEnabled(true);
                         Toast.makeText(this, "❌ Սխալ: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -88,9 +84,9 @@ public class BattleLobbyActivity extends AppCompatActivity {
         // --- ԸՆԿԵՐՈՋ ՍԵՆՅԱԿԻՆ ՄԻԱՆԱԼԸ ---
         btnJoin.setOnClickListener(v -> {
             String code = etCode.getText().toString().trim();
-            Toast.makeText(this, "Checking code...", Toast.LENGTH_SHORT).show();
 
             if (code.length() == 6) {
+                Toast.makeText(this, "Checking code...", Toast.LENGTH_SHORT).show();
                 dbRef.child(code).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -52,6 +52,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         roomCode = getIntent().getStringExtra("ROOM_CODE");
         playerNum = getIntent().getIntExtra("PLAYER_NUM", 1);
 
+        // 👇 ՄԱՔՈՒՐ ԵՎ ՃԻՇՏ ՀՂՈՒՄԸ ԱՅՍՏԵՂ ՆՈՒՅՆՊԵՍ 👇
         roomRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
                 .getReference("battles").child(roomCode);
 
@@ -71,8 +72,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         tvP2Name = findViewById(R.id.tvPlayer2Name);
         etAnswer = findViewById(R.id.etBattleAnswer);
 
-        // Եթե XML-ում դեռ չունես tvBattleTimer, ավելացրու այն! (կամ կոդից հանի սա, եթե չես ուզում էկրանին երևա)
-        tvBattleTimer = findViewById(R.id.tvQuestionNumber); // Ժամանակավորապես դնում ենք նույն տեղում
+        tvBattleTimer = findViewById(R.id.tvQuestionNumber);
 
         updateQuestionUI();
     }
@@ -84,7 +84,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 timeLeftInMillis = millisUntilFinished;
                 int minutes = (int) (timeLeftInMillis / 1000) / 60;
                 int seconds = (int) (timeLeftInMillis / 1000) % 60;
-                // UI-ում ցույց ենք տալիս ժամանակը
                 tvP1Name.setText("P1 \n" + String.format("%02d:%02d", minutes, seconds));
             }
 
@@ -103,7 +102,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             tvQNumber.setText("Question " + (currentQIndex + 1) + "/10");
             etAnswer.setText("");
         } else {
-            // Հասել է վերջին
             if (!gameEnded) endGame("You finished all questions!");
         }
     }
@@ -124,7 +122,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                     if (s2 != null) tvScore2.setText(String.valueOf(s2));
 
                     if (s1 != null && s2 != null && !gameEnded) {
-                        // Եթե ինչ-որ մեկը հասավ 10-ի (բոլորը ճիշտ գրեց)
                         if (s1 >= 10 || s2 >= 10) {
                             String winner = (s1 > s2) ? p1Name : p2Name;
                             endGame(winner + " reached 10 points!");
@@ -146,7 +143,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             myCorrectAnswers++;
             String scoreKey = "score" + playerNum;
 
-            // Ուղարկում ենք ճիշտ պատասխանների քանակը Firebase
             roomRef.child(scoreKey).setValue(myCorrectAnswers);
 
             Toast.makeText(this, "Correct! +1", Toast.LENGTH_SHORT).show();
@@ -177,10 +173,8 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 int starsEarned = 0;
 
                 if (myScore > oppScore) {
-                    // Եթե հաղթել ես, տալիս ենք աստղեր՝ կախված մնացած ժամանակից և միավորից
                     long timeSpent = (3 * 60 * 1000) - timeLeftInMillis;
-
-                    if (myScore == 10 && timeSpent < 60000) starsEarned = 3; // 10 ճիշտ և 1 րոպեից քիչ
+                    if (myScore == 10 && timeSpent < 60000) starsEarned = 3;
                     else if (myScore >= 8) starsEarned = 2;
                     else starsEarned = 1;
 
