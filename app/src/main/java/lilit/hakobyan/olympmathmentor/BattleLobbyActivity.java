@@ -33,7 +33,7 @@ public class BattleLobbyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_lobby);
 
-        // 👇 ՄԱՔՈՒՐ ԵՎ ՃԻՇՏ ՀՂՈՒՄԸ (ԱՌԱՆՑ :null -ի) 👇
+        // 👇 ԱՀԱ ՃԻՇՏ ՀՂՈՒՄՈՎ ՏՈՂԸ 👇
         dbRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles");
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

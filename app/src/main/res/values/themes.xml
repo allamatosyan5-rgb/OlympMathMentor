@@ -1,11 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.OlympMathMentor" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/soft_beige</item>
+
+        <item name="android:statusBarColor">@color/soft_beige</item>
+
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.OlympMathMentor" parent="Base.Theme.OlympMathMentor" />
+
     <style name="CircleImage" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>

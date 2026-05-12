@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // Add the Google services Gradle plugin
@@ -6,8 +8,11 @@ plugins {
 
 android {
     namespace = "lilit.hakobyan.olympmathmentor"
-    compileSdk {
-        version = release(36)
+    compileSdk = 36
+
+    // 👇 ԱՀԱ ԱՅՍ ՄԱՍՆ ԷՐ ՊԱԿԱՍՈՒՄ, ՈՐԸ ՄԻԱՑՆՈՒՄ Է BuildConfig-ը 👇
+    buildFeatures {
+        buildConfig = true
     }
 
     defaultConfig {
@@ -18,6 +23,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // 👇 ԱՅՍՏԵՂ ԿԱՐԴՈՒՄ ԵՆՔ ՔՈ ԳԱՂՏՆԱԲԱՌԸ local.properties-ԻՑ 👇
+        val properties = Properties()
+        val propertiesFile = project.rootProject.file("local.properties")
+        if (propertiesFile.exists()) {
+            properties.load(propertiesFile.inputStream())
+        }
+        buildConfigField("String", "GEMINI_API_KEY", "\"${properties.getProperty("GEMINI_API_KEY")}\"")
     }
 
     buildTypes {
