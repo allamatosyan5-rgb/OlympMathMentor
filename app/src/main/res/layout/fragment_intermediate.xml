@@ -1,59 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC"
-    android:fillViewport="true">
+    android:background="#F5F5DC"> <!-- Պահել ենք քո բեժ ֆոնը, որ նկարի տակից սիրուն երևա -->
 
-    <LinearLayout
+    <!-- Ահա քո կիսաթափանցիկ ֆոնային նկարը -->
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:src="@drawable/home"
+        android:scaleType="centerCrop"
+        android:alpha="0.35" /> <!-- 0.2 նշանակում է 20% տեսանելիություն, կարող ես փոխել 0.1-ից 1.0 -->
 
-        <Button
-            android:id="@+id/btnBackToBeginner"
+    <!-- Իսկ սա արդեն քո հիմնական դիզայնն է՝ նկարի վրայից -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:backgroundTint="#8B4513"
-            android:text="← Back to Beginner"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="12dp"
-            android:elevation="4dp"
-            android:textAllCaps="false"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Intermediate Level"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#3E2723"
-            android:gravity="center"
-            android:layout_marginBottom="8dp"/>
+            <Button
+                android:id="@+id/btnBackToBeginner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:backgroundTint="#8B4513"
+                android:text="← Back to Beginner"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:padding="12dp"
+                android:elevation="4dp"
+                android:textAllCaps="false"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvIntermediateCourses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:clipToPadding="false"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Intermediate Level"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
 
-        <Button
-            android:id="@+id/btnGoToAdvanced"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
-            android:backgroundTint="#D32F2F"
-            android:text="Go to Advanced Level →"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:elevation="6dp"
-            android:visibility="gone" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvIntermediateCourses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false"/>
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/btnGoToAdvanced"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:backgroundTint="#D32F2F"
+                android:text="Go to Advanced Level →"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:elevation="6dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

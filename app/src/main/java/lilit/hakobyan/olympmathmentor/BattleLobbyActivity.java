@@ -71,13 +71,13 @@ public class BattleLobbyActivity extends AppCompatActivity {
             dbRef.child(roomCode).setValue(roomData)
                     .addOnSuccessListener(aVoid -> {
                         btnCreate.setText("WAITING FOR FRIEND...");
-                        Toast.makeText(this, "✅ Սենյակը ստեղծված է!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "waiting for friend!", Toast.LENGTH_SHORT).show();
                         listenForPlayer2();
                     })
                     .addOnFailureListener(e -> {
                         btnCreate.setText("CREATE A ROOM");
                         btnCreate.setEnabled(true);
-                        Toast.makeText(this, "❌ Սխալ: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "WRONG: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     });
         });
 

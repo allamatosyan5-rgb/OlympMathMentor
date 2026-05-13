@@ -1,26 +1,49 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -28,18 +51,57 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AIFragment extends Fragment {
 
     private RecyclerView rvChatMessages;
     private EditText etChatMessage;
     private ImageButton btnSendChat;
+    private ImageButton btnAttach;
+    private androidx.drawerlayout.widget.DrawerLayout drawerLayout;
+    private LinearLayout layoutSidebarHistory;
+
+    private RelativeLayout layoutImagePreview;
+    private ImageView ivImagePreview;
+    private ImageButton btnRemoveImage;
+    private Uri pendingImageUri = null;
 
     private ChatAdapter chatAdapter;
-    private List<ChatMessage> messageList;
+    private List<ChatSession> allSessions = new ArrayList<>();
+    private ChatSession currentSession;
+
+    private TextToSpeech textToSpeech;
+
+    private ActivityResultLauncher<String> galleryLauncher;
+    private ActivityResultLauncher<Uri> cameraLauncher;
+    private ActivityResultLauncher<String> requestCameraPermissionLauncher;
+    private Uri photoUri;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null) {
+                pendingImageUri = uri;
+                if (layoutImagePreview != null) layoutImagePreview.setVisibility(View.VISIBLE);
+                if (ivImagePreview != null) ivImagePreview.setImageURI(uri);
+            }
+        });
+
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), success -> {
+            if (success && photoUri != null) {
+                pendingImageUri = photoUri;
+                if (layoutImagePreview != null) layoutImagePreview.setVisibility(View.VISIBLE);
+                if (ivImagePreview != null) ivImagePreview.setImageURI(photoUri);
+            }
+        });
+
+        requestCameraPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            if (isGranted) openCamera();
+            else Toast.makeText(getContext(), "Camera permission is required to take photos of math problems.", Toast.LENGTH_SHORT).show();
+        });
+    }
 
     @Nullable
     @Override
@@ -50,131 +112,388 @@ public class AIFragment extends Fragment {
         etChatMessage = view.findViewById(R.id.etChatMessage);
         btnSendChat = view.findViewById(R.id.btnSendChat);
 
-        messageList = new ArrayList<>();
-        chatAdapter = new ChatAdapter(messageList);
+        // ՆՈՐ ԿՈՃԱԿՆԵՐԸ ՈՒ ԴԱՇՏԵՐԸ (Պետք է ավելացնես քո XML-ում)
+        btnAttach = view.findViewById(R.id.btnAttach);
+        layoutImagePreview = view.findViewById(R.id.layoutImagePreview);
+        ivImagePreview = view.findViewById(R.id.ivImagePreview);
+        btnRemoveImage = view.findViewById(R.id.btnRemoveImage);
+
+        drawerLayout = view.findViewById(R.id.drawerLayout);
+        layoutSidebarHistory = view.findViewById(R.id.layoutSidebarHistory);
 
         rvChatMessages.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvChatMessages.setAdapter(chatAdapter);
 
-        loadChatHistory();
+        textToSpeech = new TextToSpeech(getContext(), status -> {
+            if (status == TextToSpeech.SUCCESS) textToSpeech.setLanguage(Locale.US);
+        });
 
-        if (messageList.isEmpty()) {
-            addMessage("Hello! I am your OlympMath Mentor AI. Ready to solve some challenging math problems today?", false);
+        loadAllSessions();
+
+        if (btnRemoveImage != null) {
+            btnRemoveImage.setOnClickListener(v -> {
+                pendingImageUri = null;
+                layoutImagePreview.setVisibility(View.GONE);
+            });
         }
 
         btnSendChat.setOnClickListener(v -> {
             String userText = etChatMessage.getText().toString().trim();
-            if (!userText.isEmpty()) {
-                addMessage(userText, true);
+            if (!userText.isEmpty() || pendingImageUri != null) {
+                String finalMessageText = userText;
+                if (userText.isEmpty() && pendingImageUri != null) {
+                    finalMessageText = "[Image Uploaded]";
+                }
+                String imageString = (pendingImageUri != null) ? pendingImageUri.toString() : null;
+
+                addMessage(finalMessageText, true, imageString);
                 etChatMessage.setText("");
+                pendingImageUri = null;
+                if (layoutImagePreview != null) layoutImagePreview.setVisibility(View.GONE);
                 generateAiResponse();
             }
         });
 
-        androidx.drawerlayout.widget.DrawerLayout drawerLayout = view.findViewById(R.id.drawerLayout);
-        ImageButton btnOpenMenu = view.findViewById(R.id.btnOpenMenu);
-        LinearLayout btnNewChat = view.findViewById(R.id.btnNewChat);
-
-        if (btnOpenMenu != null && drawerLayout != null) {
-            btnOpenMenu.setOnClickListener(v -> {
-                drawerLayout.openDrawer(androidx.core.view.GravityCompat.START);
+        if (btnAttach != null) {
+            btnAttach.setOnClickListener(v -> {
+                String[] options = {"Take Photo of Problem", "Choose from Gallery"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Upload Math Problem");
+                builder.setItems(options, (dialog, which) -> {
+                    if (which == 0) {
+                        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                            openCamera();
+                        } else {
+                            requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA);
+                        }
+                    } else {
+                        galleryLauncher.launch("image/*");
+                    }
+                });
+                builder.show();
             });
         }
 
-        if (btnNewChat != null && drawerLayout != null) {
+        ImageButton btnOpenMenu = view.findViewById(R.id.btnOpenMenu);
+        if (btnOpenMenu != null && drawerLayout != null) {
+            btnOpenMenu.setOnClickListener(v -> drawerLayout.openDrawer(androidx.core.view.GravityCompat.START));
+        }
+
+        LinearLayout btnNewChat = view.findViewById(R.id.btnNewChat);
+        if (btnNewChat != null) {
             btnNewChat.setOnClickListener(v -> {
-                messageList.clear();
-                chatAdapter.notifyDataSetChanged();
-                addMessage("Hello! I am your OlympMath Mentor AI. Ready to solve some challenging math problems today?", false);
-                drawerLayout.closeDrawer(androidx.core.view.GravityCompat.START);
+                createNewSession();
+                if (drawerLayout != null) drawerLayout.closeDrawer(androidx.core.view.GravityCompat.START);
             });
         }
 
         return view;
     }
 
-    private void addMessage(String text, boolean isUser) {
-        messageList.add(new ChatMessage(text, isUser));
-        chatAdapter.notifyItemInserted(messageList.size() - 1);
-        rvChatMessages.scrollToPosition(messageList.size() - 1);
+    private void openCamera() {
+        if (getContext() == null) return;
+        try {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File imageFile = File.createTempFile("MATH_" + timeStamp + "_", ".jpg", storageDir);
 
-        saveChatHistory();
-
-        if (isUser && messageList.size() == 2) {
-            addSidebarHistoryItem(text);
+            String authority = getContext().getPackageName() + ".fileprovider";
+            photoUri = FileProvider.getUriForFile(getContext(), authority, imageFile);
+            cameraLauncher.launch(photoUri);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Camera Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    private void saveChatHistory() {
-        if (getContext() == null) return;
-        SharedPreferences prefs = getContext().getSharedPreferences("AiChatPrefs", Context.MODE_PRIVATE);
-        JSONArray jsonArray = new JSONArray();
+    @Override
+    public void onDestroyView() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroyView();
+    }
+
+    private void createNewSession() {
+        if (currentSession != null && currentSession.messages.size() <= 1) return;
+
+        currentSession = new ChatSession();
+        currentSession.id = String.valueOf(System.currentTimeMillis());
+        currentSession.title = "New Math Session";
+        currentSession.messages = new ArrayList<>();
+        currentSession.isPinned = false;
+
+        allSessions.add(0, currentSession);
+        switchSession(currentSession);
+
+        addMessage("Hello! I am your OlympMath Mentor AI. Ready to solve some challenging math problems today? You can even send me photos of your equations!", false, null);
+    }
+
+    private void switchSession(ChatSession session) {
+        currentSession = session;
+        chatAdapter = new ChatAdapter(currentSession.messages);
+        rvChatMessages.setAdapter(chatAdapter);
+        if (!currentSession.messages.isEmpty()) {
+            rvChatMessages.scrollToPosition(currentSession.messages.size() - 1);
+        }
+        rebuildSidebarUI();
+    }
+
+    private void addMessage(String text, boolean isUser, String imageUri) {
+        if (currentSession == null) return;
+
+        currentSession.messages.add(new ChatMessage(text, isUser, imageUri));
+        chatAdapter.notifyItemInserted(currentSession.messages.size() - 1);
+        rvChatMessages.scrollToPosition(currentSession.messages.size() - 1);
+
+        if (isUser && currentSession.messages.size() == 2) {
+            String newTitle = text;
+            if (newTitle.equals("[Image Uploaded]")) newTitle = "Math Problem Photo";
+            else if (newTitle.length() > 22) newTitle = newTitle.substring(0, 22) + "...";
+            currentSession.title = newTitle;
+            rebuildSidebarUI();
+        }
+        saveAllSessions();
+    }
+
+    private void saveAllSessions() {
+        if (getContext() == null || currentSession == null) return;
+        SharedPreferences prefs = getContext().getSharedPreferences("OlympMathAiPrefs", Context.MODE_PRIVATE);
         try {
-            for (ChatMessage msg : messageList) {
-                JSONObject obj = new JSONObject();
-                obj.put("text", msg.text);
-                obj.put("isUser", msg.isUser);
-                jsonArray.put(obj);
+            JSONArray sessionsArray = new JSONArray();
+            for (ChatSession session : allSessions) {
+                if (session.messages.size() > 1 || session.id.equals(currentSession.id)) {
+                    JSONObject sessionObj = new JSONObject();
+                    sessionObj.put("id", session.id);
+                    sessionObj.put("title", session.title);
+                    sessionObj.put("isPinned", session.isPinned);
+
+                    JSONArray msgsArray = new JSONArray();
+                    for (ChatMessage msg : session.messages) {
+                        JSONObject msgObj = new JSONObject();
+                        msgObj.put("text", msg.text);
+                        msgObj.put("isUser", msg.isUser);
+                        if (msg.imageUri != null) msgObj.put("imageUri", msg.imageUri);
+                        msgsArray.put(msgObj);
+                    }
+                    sessionObj.put("messages", msgsArray);
+                    sessionsArray.put(sessionObj);
+                }
             }
-            prefs.edit().putString("chat_history", jsonArray.toString()).apply();
+            prefs.edit().putString("all_sessions_db", sessionsArray.toString()).apply();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void loadChatHistory() {
+    private void loadAllSessions() {
         if (getContext() == null) return;
-        SharedPreferences prefs = getContext().getSharedPreferences("AiChatPrefs", Context.MODE_PRIVATE);
-        String historyData = prefs.getString("chat_history", null);
+        SharedPreferences prefs = getContext().getSharedPreferences("OlympMathAiPrefs", Context.MODE_PRIVATE);
+        String data = prefs.getString("all_sessions_db", null);
+        allSessions.clear();
 
-        if (historyData != null) {
+        if (data != null) {
             try {
-                JSONArray jsonArray = new JSONArray(historyData);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject obj = jsonArray.getJSONObject(i);
-                    messageList.add(new ChatMessage(obj.getString("text"), obj.getBoolean("isUser")));
-                }
-                chatAdapter.notifyDataSetChanged();
-                rvChatMessages.scrollToPosition(messageList.size() - 1);
+                JSONArray sessionsArray = new JSONArray(data);
+                for (int i = 0; i < sessionsArray.length(); i++) {
+                    JSONObject sessionObj = sessionsArray.getJSONObject(i);
+                    ChatSession session = new ChatSession();
+                    session.id = sessionObj.getString("id");
+                    session.title = sessionObj.getString("title");
+                    session.isPinned = sessionObj.optBoolean("isPinned", false);
+                    session.messages = new ArrayList<>();
 
-                if (messageList.size() > 1 && messageList.get(1).isUser) {
-                    addSidebarHistoryItem(messageList.get(1).text);
+                    JSONArray msgsArray = sessionObj.getJSONArray("messages");
+                    for (int j = 0; j < msgsArray.length(); j++) {
+                        JSONObject msgObj = msgsArray.getJSONObject(j);
+                        String uri = msgObj.has("imageUri") ? msgObj.getString("imageUri") : null;
+                        session.messages.add(new ChatMessage(msgObj.getString("text"), msgObj.getBoolean("isUser"), uri));
+                    }
+                    if (session.messages.size() > 1) allSessions.add(session);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        createNewSession();
+    }
+
+    private void rebuildSidebarUI() {
+        if (layoutSidebarHistory == null || getContext() == null || currentSession == null) return;
+        layoutSidebarHistory.removeAllViews();
+
+        List<ChatSession> sortedSessions = new ArrayList<>();
+        for (ChatSession s : allSessions) if (s.isPinned) sortedSessions.add(s);
+        for (ChatSession s : allSessions) if (!s.isPinned) sortedSessions.add(s);
+
+        for (ChatSession session : sortedSessions) {
+            if (session.messages.size() <= 1 && !session.id.equals(currentSession.id)) continue;
+
+            LinearLayout rowLayout = new LinearLayout(getContext());
+            rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+            rowLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            rowLayout.setGravity(Gravity.CENTER_VERTICAL);
+            rowLayout.setPadding(16, 24, 16, 24);
+
+            // Ակտիվ չաթի գույնը
+            if (session.id.equals(currentSession.id)) {
+                rowLayout.setBackgroundColor(Color.parseColor("#4E342E"));
+            } else {
+                rowLayout.setBackgroundColor(Color.TRANSPARENT);
+            }
+
+            TextView tvTitle = new TextView(getContext());
+            tvTitle.setText(session.title);
+            tvTitle.setTextColor(session.id.equals(currentSession.id) ? Color.parseColor("#FFCC80") : Color.parseColor("#E0E0E0"));
+            tvTitle.setTextSize(14f);
+            tvTitle.setSingleLine(true);
+            LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+            tvTitle.setLayoutParams(textParams);
+
+            rowLayout.setOnClickListener(v -> {
+                switchSession(session);
+                if (drawerLayout != null) drawerLayout.closeDrawer(androidx.core.view.GravityCompat.START);
+            });
+
+            ImageView btnPin = new ImageView(getContext());
+            btnPin.setImageResource(session.isPinned ? android.R.drawable.star_on : android.R.drawable.star_off);
+            btnPin.setColorFilter(Color.parseColor("#E0E0E0"));
+            btnPin.setPadding(8, 8, 8, 8);
+            btnPin.setOnClickListener(v -> {
+                session.isPinned = !session.isPinned;
+                saveAllSessions();
+                rebuildSidebarUI();
+            });
+
+            ImageView btnRename = new ImageView(getContext());
+            btnRename.setImageResource(android.R.drawable.ic_menu_edit);
+            btnRename.setColorFilter(Color.parseColor("#E0E0E0"));
+            btnRename.setPadding(8, 8, 8, 8);
+            btnRename.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Rename Math Session");
+                final EditText input = new EditText(getContext());
+                input.setText(session.title);
+                input.setPadding(40,40,40,40);
+                builder.setView(input);
+                builder.setPositiveButton("Save", (dialog, which) -> {
+                    session.title = input.getText().toString();
+                    saveAllSessions();
+                    rebuildSidebarUI();
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
+            });
+
+            ImageView btnDelete = new ImageView(getContext());
+            btnDelete.setImageResource(android.R.drawable.ic_menu_delete);
+            btnDelete.setColorFilter(Color.parseColor("#E0E0E0"));
+            btnDelete.setPadding(8, 8, 16, 8);
+            btnDelete.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Delete Session?");
+                builder.setMessage("Are you sure you want to delete this math conversation?");
+                builder.setPositiveButton("Delete", (dialog, which) -> {
+                    allSessions.remove(session);
+                    if (session.id.equals(currentSession.id)) {
+                        createNewSession();
+                    } else {
+                        saveAllSessions();
+                        rebuildSidebarUI();
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+                builder.show();
+            });
+
+            rowLayout.addView(tvTitle);
+            rowLayout.addView(btnPin);
+            rowLayout.addView(btnRename);
+            rowLayout.addView(btnDelete);
+
+            layoutSidebarHistory.addView(rowLayout);
+        }
+    }
+
+    private String getBase64FromUri(String uriString) {
+        try {
+            Uri uri = Uri.parse(uriString);
+            java.io.InputStream imageStream = getContext().getContentResolver().openInputStream(uri);
+            android.graphics.Bitmap selectedImage = android.graphics.BitmapFactory.decodeStream(imageStream);
+
+            int maxDim = 800;
+            int width = selectedImage.getWidth();
+            int height = selectedImage.getHeight();
+            if (width > maxDim || height > maxDim) {
+                float ratio = Math.min((float) maxDim / width, (float) maxDim / height);
+                width = Math.round((float) ratio * width);
+                height = Math.round((float) ratio * height);
+                selectedImage = android.graphics.Bitmap.createScaledBitmap(selectedImage, width, height, false);
+            }
+
+            java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+            selectedImage.compress(android.graphics.Bitmap.CompressFormat.JPEG, 80, baos);
+            byte[] b = baos.toByteArray();
+            return android.util.Base64.encodeToString(b, android.util.Base64.NO_WRAP);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void generateAiResponse() {
         String apiKey = BuildConfig.GEMINI_API_KEY;
-
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
 
         JSONObject jsonBody = new JSONObject();
         try {
             JSONArray contents = new JSONArray();
             JSONObject part = new JSONObject();
-            JSONObject textObj = new JSONObject();
+            JSONArray partsArray = new JSONArray();
 
             StringBuilder conversationMemory = new StringBuilder();
 
-            // 👇 ԱՅՍՏԵՂ Է ՔՈ ՈՒԶԱԾ ՆՈՐ, ԽԵԼԱՑԻ ՈՒՍՈՒՑՉԻ ՀՐԱՀԱՆԳԸ 👇
-            conversationMemory.append("You are an expert Olympiad Mathematics Teacher and Mentor for the app 'OlympMath Mentor'. Your goal is to guide students through complex math problems. Use simple, encouraging language. You know many advanced theorems. When a student asks a question or shares a solution, assess their understanding. Do NOT give the direct solution immediately. Instead, provide helpful hints and guide them to find the answer themselves. Once they solve it or if they are completely stuck, provide a short, meaningful, and step-by-step explanation of the solution. Always respond in English.\n\n");
+            // 👇 ՔՈ ԽԵԼԱՑԻ ՄԱԹԵՄԱՏԻԿԱՅԻ ՈՒՍՈՒՑՉԻ ՀՐԱՀԱՆԳԸ 👇
+            conversationMemory.append("SYSTEM: You are an expert Olympiad Mathematics Teacher and Mentor for the app 'OlympMath Mentor'. ");
+            conversationMemory.append("Your goal is to guide students through complex math problems. Use simple, encouraging language. ");
+            conversationMemory.append("When a student uploads an image of a math problem, geometry diagram, or handwritten solution, carefully analyze the image. ");
+            conversationMemory.append("Do NOT give the direct solution immediately. Provide helpful hints and guide them to find the answer themselves. ");
+            conversationMemory.append("Once they solve it or if they are completely stuck, provide a short, meaningful, and step-by-step explanation. Always respond in English.\n\n");
 
-            int startIndex = Math.max(0, messageList.size() - 10);
-            for (int i = startIndex; i < messageList.size(); i++) {
-                ChatMessage msg = messageList.get(i);
+            int startIndex = Math.max(0, currentSession.messages.size() - 8);
+            for (int i = startIndex; i < currentSession.messages.size(); i++) {
+                ChatMessage msg = currentSession.messages.get(i);
                 String sender = msg.isUser ? "Student: " : "Mentor: ";
                 conversationMemory.append(sender).append(msg.text).append("\n");
             }
             conversationMemory.append("Mentor: ");
 
+            JSONObject textObj = new JSONObject();
             textObj.put("text", conversationMemory.toString());
-            JSONArray partsArray = new JSONArray();
             partsArray.put(textObj);
+
+            // ԱՎԵԼԱՑՆՈՒՄ ԵՆՔ ՆԿԱՐՆԵՐԸ AI-Ի ՀԱՄԱՐ
+            for (int i = startIndex; i < currentSession.messages.size(); i++) {
+                ChatMessage msg = currentSession.messages.get(i);
+                if (msg.imageUri != null) {
+                    String base64Image = getBase64FromUri(msg.imageUri);
+                    if (base64Image != null) {
+                        JSONObject inlineDataObj = new JSONObject();
+                        JSONObject inlineData = new JSONObject();
+                        inlineData.put("mimeType", "image/jpeg");
+                        inlineData.put("data", base64Image);
+                        inlineDataObj.put("inlineData", inlineData);
+                        partsArray.put(inlineDataObj);
+                    }
+                }
+            }
+
             part.put("parts", partsArray);
             contents.put(part);
+
+            JSONObject config = new JSONObject();
+            config.put("temperature", 0.7);
+            jsonBody.put("generationConfig", config);
 
             jsonBody.put("contents", contents);
         } catch (Exception e) {
@@ -188,9 +507,7 @@ public class AIFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> addMessage("Network Error: Could not connect to AI.", false));
-                }
+                if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage("Network Error: Could not connect to Math AI.", false, null));
             }
 
             @Override
@@ -199,91 +516,62 @@ public class AIFragment extends Fragment {
                     try {
                         String responseData = response.body().string();
                         JSONObject jsonResponse = new JSONObject(responseData);
-                        JSONArray candidates = jsonResponse.getJSONArray("candidates");
-                        JSONObject firstCandidate = candidates.getJSONObject(0);
-                        JSONObject content = firstCandidate.getJSONObject("content");
-                        JSONArray parts = content.getJSONArray("parts");
-                        String aiText = parts.getJSONObject(0).getString("text");
 
-                        final String cleanText = aiText.replace("**", "").trim();
+                        if (jsonResponse.has("candidates")) {
+                            JSONArray candidates = jsonResponse.getJSONArray("candidates");
+                            if (candidates.length() > 0) {
+                                JSONObject firstCandidate = candidates.getJSONObject(0);
 
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(() -> addMessage(cleanText, false));
+                                if (firstCandidate.has("content")) {
+                                    String aiText = firstCandidate.getJSONObject("content")
+                                            .getJSONArray("parts").getJSONObject(0).getString("text");
+
+                                    final String cleanText = aiText.replace("**", "").trim();
+
+                                    if (!cleanText.isEmpty()) {
+                                        if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage(cleanText, false, null));
+                                        return;
+                                    }
+                                }
+                            }
                         }
+                        if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage("Sorry, I received a blank response.", false, null));
+
                     } catch (Exception e) {
                         e.printStackTrace();
-                        if (getActivity() != null) {
-                            getActivity().runOnUiThread(() -> addMessage("Error reading AI response.", false));
-                        }
+                        if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage("Error reading Mentor response.", false, null));
                     }
                 } else {
                     int statusCode = response.code();
-                    String customErrorMessage;
+                    String customErrorMessage = (statusCode == 503) ? "The Math Servers are currently busy. Please wait a moment."
+                            : (statusCode == 429) ? "I have reached my limit for right now."
+                            : "System Error (" + statusCode + "). Please try again.";
 
-                    if (statusCode == 503) {
-                        customErrorMessage = "The Math Servers are currently busy. Please wait a moment.";
-                    } else if (statusCode == 429) {
-                        customErrorMessage = "I have reached my problem-solving limit for now. Try again later!";
-                    } else {
-                        customErrorMessage = "System Error (" + statusCode + ").";
-                    }
-
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(() -> addMessage(customErrorMessage, false));
-                    }
+                    if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage(customErrorMessage, false, null));
                 }
             }
         });
     }
 
-    private void addSidebarHistoryItem(String chatTitle) {
-        if (getView() == null || getContext() == null) return;
-
-        LinearLayout layoutSidebarHistory = getView().findViewById(R.id.layoutSidebarHistory);
-        if (layoutSidebarHistory == null) return;
-
-        layoutSidebarHistory.removeAllViews();
-
-        TextView historyItem = new TextView(getContext());
-
-        if (chatTitle.length() > 25) {
-            chatTitle = chatTitle.substring(0, 25) + "...";
+    private static class ChatMessage {
+        String text; boolean isUser; String imageUri;
+        ChatMessage(String text, boolean isUser, String imageUri) {
+            this.text = text; this.isUser = isUser; this.imageUri = imageUri;
         }
-
-        historyItem.setText(" 📝 " + chatTitle);
-        historyItem.setTextColor(Color.parseColor("#E0E0E0"));
-        historyItem.setTextSize(14f);
-        historyItem.setPadding(24, 24, 24, 24);
-
-        historyItem.setBackgroundResource(android.R.attr.selectableItemBackground);
-        historyItem.setClickable(true);
-        historyItem.setFocusable(true);
-
-        layoutSidebarHistory.addView(historyItem, 0);
     }
 
-    private static class ChatMessage {
-        String text;
-        boolean isUser;
-
-        ChatMessage(String text, boolean isUser) {
-            this.text = text;
-            this.isUser = isUser;
-        }
+    private static class ChatSession {
+        String id; String title; boolean isPinned; List<ChatMessage> messages;
     }
 
     private class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
         private List<ChatMessage> messages;
+        ChatAdapter(List<ChatMessage> messages) { this.messages = messages; }
 
-        ChatAdapter(List<ChatMessage> messages) {
-            this.messages = messages;
-        }
-
-        @NonNull
-        @Override
+        @NonNull @Override
         public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_bubble, parent, false);
-            return new ChatViewHolder(view);
+            // ՀԱՄՈԶՎԻՐ ՈՐ ՔՈ XML ՖԱՅԼՈՒՄ ԿԱՆ ԱՆՀՐԱԺԵՇՏ ԿՈՃԱԿՆԵՐԸ
+            return new ChatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_bubble, parent, false));
         }
 
         @Override
@@ -291,35 +579,61 @@ public class AIFragment extends Fragment {
             ChatMessage message = messages.get(position);
             holder.tvChatMessage.setText(message.text);
 
+            if (holder.ivAttachedImage != null) {
+                if (message.imageUri != null) {
+                    holder.ivAttachedImage.setVisibility(View.VISIBLE);
+                    holder.ivAttachedImage.setImageURI(Uri.parse(message.imageUri));
+                } else {
+                    holder.ivAttachedImage.setVisibility(View.GONE);
+                }
+            }
+
             GradientDrawable shape = new GradientDrawable();
             shape.setCornerRadius(24f);
 
             if (message.isUser) {
                 holder.layoutMessageContainer.setGravity(Gravity.END);
-                shape.setColor(Color.parseColor("#5D4037"));
+                shape.setColor(Color.parseColor("#5D4037")); // Քո Math Mentor-ի շոկոլադագույնը
                 holder.tvChatMessage.setBackground(shape);
                 holder.tvChatMessage.setTextColor(Color.WHITE);
+
+                if (holder.layoutAiControls != null) holder.layoutAiControls.setVisibility(View.GONE);
             } else {
                 holder.layoutMessageContainer.setGravity(Gravity.START);
-                shape.setColor(Color.parseColor("#E0D5C1"));
+                shape.setColor(Color.parseColor("#E0D5C1")); // Քո բաց բեժ գույնը
                 holder.tvChatMessage.setBackground(shape);
                 holder.tvChatMessage.setTextColor(Color.parseColor("#212121"));
+
+                if (holder.layoutAiControls != null) holder.layoutAiControls.setVisibility(View.VISIBLE);
+
+                if (holder.btnListen != null) {
+                    holder.btnListen.setOnClickListener(v -> {
+                        if (textToSpeech != null) {
+                            Toast.makeText(getContext(), "Reading aloud...", Toast.LENGTH_SHORT).show();
+                            textToSpeech.speak(message.text, TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                    });
+                }
             }
         }
-
-        @Override
-        public int getItemCount() {
-            return messages.size();
-        }
+        @Override public int getItemCount() { return messages.size(); }
 
         class ChatViewHolder extends RecyclerView.ViewHolder {
             LinearLayout layoutMessageContainer;
             TextView tvChatMessage;
+            ImageView ivAttachedImage;       // Նոր
+            LinearLayout layoutAiControls;   // Նոր
+            ImageButton btnListen;           // Նոր
 
             ChatViewHolder(@NonNull View itemView) {
                 super(itemView);
                 layoutMessageContainer = itemView.findViewById(R.id.layoutMessageContainer);
                 tvChatMessage = itemView.findViewById(R.id.tvChatMessage);
+
+                // Այս ID-ները պետք է ավելացնես քո item_chat_bubble.xml-ի մեջ
+                ivAttachedImage = itemView.findViewById(R.id.ivAttachedImage);
+                layoutAiControls = itemView.findViewById(R.id.layoutAiControls);
+                btnListen = itemView.findViewById(R.id.btnListen);
             }
         }
     }

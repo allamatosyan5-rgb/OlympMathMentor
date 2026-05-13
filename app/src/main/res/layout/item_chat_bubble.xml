@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layoutMessageContainer"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/ivAttachedImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvChatMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="280dp"
-            android:padding="12dp"
-            android:text="Message text"
-            android:textColor="#212121"
+            android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutAiControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:gravity="end">
 
+            <ImageButton
+                android:id="@+id/btnListen"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_play"
+                app:tint="#5D4037" />
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
