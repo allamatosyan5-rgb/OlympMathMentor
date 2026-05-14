@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_library"
         android:title="Library" />
     <item
+        android:id="@+id/nav_progress"
+        android:icon="@drawable/ic_progress"
+        android:title="Olympiads" />
+    <item
         android:id="@+id/nav_ai"
         android:icon="@drawable/ic_ai"
         android:title="AI Assistant" />

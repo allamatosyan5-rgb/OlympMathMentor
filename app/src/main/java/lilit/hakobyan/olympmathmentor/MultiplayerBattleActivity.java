@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.*;
@@ -28,14 +27,13 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
     private TextView tvScore1, tvScore2, tvQuestion, tvQNumber, tvP1Name, tvP2Name, tvBattleTimer;
     private EditText etAnswer;
+
     private int currentQIndex = 0;
     private int myCorrectAnswers = 0;
 
     private CountDownTimer battleTimer;
-    // Set timer to 7 minutes (7 * 60 * 1000 milliseconds)
     private long timeLeftInMillis = 7 * 60 * 1000;
 
-    // List to hold the randomized order of questions
     private List<Integer> questionOrder = new ArrayList<>();
 
     // 200 Questions
@@ -140,9 +138,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
         roomRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles").child(roomCode);
 
-        // Initialize randomized questions list based on the room code
         initRandomizer();
-
         initViews();
         startTimer();
         listenToBattle();
@@ -150,12 +146,10 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         findViewById(R.id.btnSubmitBattle).setOnClickListener(v -> checkAnswer());
     }
 
-    // Function to shuffle the questions synchronously for both players
     private void initRandomizer() {
         for (int i = 0; i < questions.length; i++) {
             questionOrder.add(i);
         }
-        // Using roomCode as the seed ensures both players get the exact same random order
         long seed = Long.parseLong(roomCode);
         Collections.shuffle(questionOrder, new Random(seed));
     }
@@ -168,7 +162,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         tvP1Name = findViewById(R.id.tvPlayer1Name);
         tvP2Name = findViewById(R.id.tvPlayer2Name);
         etAnswer = findViewById(R.id.etBattleAnswer);
-
         tvBattleTimer = findViewById(R.id.tvQuestionNumber);
 
         updateQuestionUI();
@@ -181,7 +174,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 timeLeftInMillis = millisUntilFinished;
                 int minutes = (int) (timeLeftInMillis / 1000) / 60;
                 int seconds = (int) (timeLeftInMillis / 1000) % 60;
-                // Update player 1 name area with timer
                 tvP1Name.setText("P1 \n" + String.format("%02d:%02d", minutes, seconds));
             }
 
@@ -195,9 +187,8 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
     }
 
     private void updateQuestionUI() {
-        // Limit the game to exactly 10 questions
         if (currentQIndex < 10) {
-            int realIndex = questionOrder.get(currentQIndex); // Get the shuffled index
+            int realIndex = questionOrder.get(currentQIndex);
             tvQuestion.setText(questions[realIndex]);
             tvQNumber.setText("Question " + (currentQIndex + 1) + "/10");
             etAnswer.setText("");
@@ -221,11 +212,9 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                     if (s1 != null) tvScore1.setText(String.valueOf(s1));
                     if (s2 != null) tvScore2.setText(String.valueOf(s2));
 
-                    // End game if someone reaches 10 points
                     if (s1 != null && s2 != null && !gameEnded) {
                         if (s1 >= 10 || s2 >= 10) {
-                            String winner = (s1 > s2) ? p1Name : p2Name;
-                            endGame(winner + " reached 10 points!");
+                            endGame("Someone reached 10 points!");
                         }
                     }
                 }
@@ -240,14 +229,12 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         String userAns = etAnswer.getText().toString().trim();
         if (userAns.isEmpty()) return;
 
-        int realIndex = questionOrder.get(currentQIndex); // Get the correct answer from the shuffled order
+        int realIndex = questionOrder.get(currentQIndex);
 
         if (userAns.equals(answers[realIndex])) {
             myCorrectAnswers++;
             String scoreKey = "score" + playerNum;
-
             roomRef.child(scoreKey).setValue(myCorrectAnswers);
-
             Toast.makeText(this, "Correct! +1", Toast.LENGTH_SHORT).show();
             currentQIndex++;
             updateQuestionUI();
@@ -257,6 +244,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         }
     }
 
+    // 💡 ԱՀԱ ԹԱՐՄԱՑՎԱԾ ԵՎ ՄԱՔՐՎԱԾ ENDGAME ՄԵԹՈԴԸ 💡
     private void endGame(String reason) {
         gameEnded = true;
         if (battleTimer != null) battleTimer.cancel();
@@ -266,55 +254,52 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Integer s1 = snapshot.child("score1").getValue(Integer.class);
                 Integer s2 = snapshot.child("score2").getValue(Integer.class);
+                String p1Name = snapshot.child("player1").getValue(String.class);
+                String p2Name = snapshot.child("player2").getValue(String.class);
+
                 if (s1 == null) s1 = 0;
                 if (s2 == null) s2 = 0;
+                if (p1Name == null) p1Name = "Player 1";
+                if (p2Name == null) p2Name = "Player 2";
 
                 int myScore = (playerNum == 1) ? s1 : s2;
                 int oppScore = (playerNum == 1) ? s2 : s1;
 
-                String resultMsg;
-                int starsEarned = 0;
+                String myName = (playerNum == 1) ? p1Name : p2Name;
+                String oppName = (playerNum == 1) ? p2Name : p1Name;
 
-                // Time spent out of 7 minutes
-                long timeSpent = (7 * 60 * 1000) - timeLeftInMillis;
+                int starsEarned = myScore;
 
-                if (myScore > oppScore) {
-                    if (myScore == 10 && timeSpent < 60000) starsEarned = 3;
-                    else if (myScore >= 8) starsEarned = 2;
-                    else starsEarned = 1;
-
-                    resultMsg = "YOU WON! \uD83C\uDFC6\nScore: " + myScore + " to " + oppScore + "\nStars Earned: " + starsEarned;
+                if (starsEarned > 0) {
                     saveBattleStars(starsEarned);
-                } else if (myScore == oppScore) {
-                    resultMsg = "It's a TIE! \uD83E\uDD1D\nScore: " + myScore + " to " + oppScore;
-                } else {
-                    resultMsg = "YOU LOST! \uD83D\uDE22\nScore: " + myScore + " to " + oppScore;
                 }
 
-                showResultDialog(reason, resultMsg);
+                // Անցում Արդյունքների Նոր Էջ
+                Intent intent = new Intent(MultiplayerBattleActivity.this, BattleResultActivity.class);
+                intent.putExtra("MY_SCORE", myScore);
+                intent.putExtra("OPP_SCORE", oppScore);
+                intent.putExtra("MY_NAME", myName);
+                intent.putExtra("OPP_NAME", oppName);
+                intent.putExtra("STARS", starsEarned);
+
+                // Խաղացող 1-ը մաքրում է սենյակը բազայից
+                if (playerNum == 1) roomRef.removeValue();
+
+                startActivity(intent);
+                finish();
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void saveBattleStars(int newStars) {
-        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-        int currentBattleStars = prefs.getInt("battle_stars", 0);
-        prefs.edit().putInt("battle_stars", currentBattleStars + newStars).apply();
-    }
+        SharedPreferences battlePrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        int currentBattleStars = battlePrefs.getInt("battle_stars", 0);
+        battlePrefs.edit().putInt("battle_stars", currentBattleStars + newStars).apply();
 
-    private void showResultDialog(String title, String message) {
-        new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("Back to Menu", (d, w) -> {
-                    // Only player 1 removes the room to clean up the database
-                    if (playerNum == 1) roomRef.removeValue();
-                    startActivity(new Intent(MultiplayerBattleActivity.this, MainActivity.class));
-                    finish();
-                })
-                .setCancelable(false)
-                .show();
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int currentTotalStars = myPrefs.getInt("total_stars", 0);
+        myPrefs.edit().putInt("total_stars", currentTotalStars + newStars).apply();
     }
 
     @Override

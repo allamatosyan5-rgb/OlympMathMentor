@@ -11,6 +11,53 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- 🏆 ՆՈՐՈՒԹՅՈՒՆՆԵՐԻ ՓՈՔՐԻԿ ԿՈՃԱԿԸ (Աջ անկյունում) -->
+        <LinearLayout
+            android:id="@+id/btnShowNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- ԱՍՏՂԻԿԻ ՓՈԽԱՐԵՆ ԴՐՎԱԾ Է IC_PROGRESS -->
+                <ImageView
+                    android:id="@+id/ivNewsIcon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_progress"
+                    app:tint="#5D4037" />
+
+                <!-- 🔴 Կարմիր կետիկը, որը կհայտնվի միայն նորության դեպքում -->
+                <View
+                    android:id="@+id/viewNewsDot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_alignEnd="@id/ivNewsIcon"
+                    android:layout_alignTop="@id/ivNewsIcon"
+                    android:background="@drawable/rounded_card_bg"
+                    android:backgroundTint="#FF0000"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="News"
+                android:textColor="#5D4037"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- ՊՐՈՖԻԼԻ ԳԼԽԱՎՈՐ ՄԱՍԸ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,7 +186,7 @@
                         app:tint="#4CAF50" />
 
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Solved" android:textSize="12sp" android:textColor="#795548" android:layout_marginTop="4dp"/>
-                    <TextView android:id="@+id/tvSolvedProblems" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
+                    <TextView android:id="@+id/tvSolvedProblems" android:layout_width="wrap_content" android:layout_height="wrap_content" text="0" android:textSize="18sp" android:textStyle="bold" android:textColor="#3E2723"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

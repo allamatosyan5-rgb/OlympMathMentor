@@ -9,14 +9,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -57,9 +74,8 @@ public class HomeFragment extends Fragment {
             boolean isUnlocked = myPrefs.getBoolean("intermediate_unlocked", false);
             String currentLevel = profilePrefs.getString("level", "Beginner");
 
-            // Եթե մուտքային թեստով արդեն Intermediate է կամ քննությունը հանձնել է
             if (currentLevel.equals("Intermediate") || currentLevel.equals("Advanced") || isUnlocked) {
-                btnGoToIntermediate.setVisibility(View.VISIBLE); // Ցույց տալ
+                btnGoToIntermediate.setVisibility(View.VISIBLE);
                 btnGoToIntermediate.setAlpha(1.0f);
                 btnGoToIntermediate.setOnClickListener(v -> {
                     getParentFragmentManager().beginTransaction()
@@ -68,7 +84,6 @@ public class HomeFragment extends Fragment {
                             .commit();
                 });
             } else {
-                // Կարող ես կամ թաքցնել (GONE), կամ թողնել կիսաթափանցիկ
                 btnGoToIntermediate.setVisibility(View.VISIBLE);
                 btnGoToIntermediate.setAlpha(0.4f);
                 btnGoToIntermediate.setOnClickListener(v -> {
@@ -78,31 +93,119 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // 💡 ԱՐՀԵՍՏԱԿԱՆ ԲԱՆԱԿԱՆՈՒԹՅԱՆ ԻՆՏԵԳՐՈՒՄԸ ГЛАВНЫЙ ԷՋՈՒՄ
     private void setDailyInsight() {
-        String[] insights = {
-                "Prime numbers are the atoms of mathematics. Everything is built from them.",
-                "Zero was invented in India and changed the world of math forever.",
-                "The Golden Ratio (1.618) is found everywhere in nature, from shells to galaxies.",
-                "A 'Googol' is 1 followed by 100 zeros. It's more than the atoms in the universe!",
-                "Perfect numbers (like 6 and 28) are equal to the sum of their divisors.",
-                "The Fibonacci sequence describes the arrangement of petals on most flowers.",
-                "Mathematics is the language in which God has written the universe."
-        };
+        if (getContext() == null) return;
 
-        String[] motivations = {
-                "Success is a function of persistence. Keep solving!",
-                "Every complex problem is just a series of simple steps.",
-                "A math genius is just a student who didn't give up on a hard problem.",
-                "Believe in your logic. Your brain is a supercomputer!",
-                "Don't fear mistakes; they are the path to discovery.",
-                "The only way to learn math is to do math. Start now!",
-                "Excellence is not a skill, it's an attitude. Be a champion!"
-        };
+        SharedPreferences prefs = requireContext().getSharedPreferences("DailyAIPrefs", Context.MODE_PRIVATE);
+        String todayStr = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        String savedDate = prefs.getString("saved_date", "");
 
-        int dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        // Ստուգում ենք՝ արդյոք այսօր արդեն բեռնել ենք AI-ից տեքստ
+        if (todayStr.equals(savedDate)) {
+            // Եթե այո, ապա ցույց ենք տալիս հիշողության միջից (առանց ինտերնետ վատնելու)
+            tvDailyInsight.setText(prefs.getString("daily_fact", "Mathematics is beautiful."));
+            tvMotivation.setText(prefs.getString("daily_motivation", "Keep solving!"));
+        } else {
+            // Եթե նոր օր է, դնում ենք սպասման տեքստ և դիմում ենք AI-ին
+            tvDailyInsight.setText("AI is thinking of a new math fact...");
+            tvMotivation.setText("Finding motivation for you...");
+            fetchDailyInsightFromAI(todayStr, prefs);
+        }
+    }
 
-        tvDailyInsight.setText(insights[dayOfYear % insights.length]);
-        tvMotivation.setText(motivations[dayOfYear % motivations.length]);
+    private void fetchDailyInsightFromAI(String todayStr, SharedPreferences prefs) {
+        String apiKey = BuildConfig.GEMINI_API_KEY;
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
+
+        try {
+            JSONObject jsonBody = new JSONObject();
+            JSONArray contents = new JSONArray();
+            JSONObject part = new JSONObject();
+            JSONArray partsArray = new JSONArray();
+
+            JSONObject textObj = new JSONObject();
+            // 💡 Հրահանգում ենք AI-ին, թե ինչ ֆորմատով տա պատասխանը
+            textObj.put("text", "Generate one fascinating, advanced Olympiad math fact, and one short motivational quote for a math student. Format exactly like this: 'Fact: [your fact] | Motivation: [your motivation]' without any bolding or extra text.");
+            partsArray.put(textObj);
+            part.put("parts", partsArray);
+            contents.put(part);
+            jsonBody.put("contents", contents);
+
+            RequestBody body = RequestBody.create(jsonBody.toString(), MediaType.get("application/json; charset=utf-8"));
+            Request request = new Request.Builder().url(url).post(body).build();
+
+            OkHttpClient client = new OkHttpClient();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    showFallbackInsights(); // Ինտերնետ չկա
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.isSuccessful() && response.body() != null) {
+                        try {
+                            String responseData = response.body().string();
+                            JSONObject jsonResponse = new JSONObject(responseData);
+                            String aiText = jsonResponse.getJSONArray("candidates")
+                                    .getJSONObject(0).getJSONObject("content")
+                                    .getJSONArray("parts").getJSONObject(0).getString("text");
+
+                            String cleanText = aiText.replace("**", "").trim();
+
+                            // Բաժանում ենք փաստն ու մոտիվացիան իրարից
+                            if (cleanText.contains("|")) {
+                                String[] parts = cleanText.split("\\|");
+                                String fact = parts[0].replace("Fact:", "").trim();
+                                String motivation = parts[1].replace("Motivation:", "").trim();
+
+                                if (getActivity() != null) {
+                                    getActivity().runOnUiThread(() -> {
+                                        tvDailyInsight.setText(fact);
+                                        tvMotivation.setText(motivation);
+                                        // Պահպանում ենք, որ այսօր էլ չզանգի API-ին
+                                        prefs.edit()
+                                                .putString("saved_date", todayStr)
+                                                .putString("daily_fact", fact)
+                                                .putString("daily_motivation", motivation)
+                                                .apply();
+                                    });
+                                }
+                            } else {
+                                showFallbackInsights();
+                            }
+                        } catch (Exception e) {
+                            showFallbackInsights(); // Սխալ ֆորմատ եկավ
+                        }
+                    } else {
+                        showFallbackInsights(); // Սերվերի սխալ
+                    }
+                }
+            });
+        } catch (Exception e) {
+            showFallbackInsights();
+        }
+    }
+
+    // 💡 Ապահովության համար. Եթե ինտերնետ չկա կամ AI-ը խափանվել է
+    private void showFallbackInsights() {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(() -> {
+            String[] insights = {
+                    "Prime numbers are the atoms of mathematics. Everything is built from them.",
+                    "Zero was invented in India and changed the world of math forever.",
+                    "The Golden Ratio (1.618) is found everywhere in nature, from shells to galaxies."
+            };
+            String[] motivations = {
+                    "Success is a function of persistence. Keep solving!",
+                    "Every complex problem is just a series of simple steps.",
+                    "Don't fear mistakes; they are the path to discovery."
+            };
+            int dayOfYear = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+            tvDailyInsight.setText(insights[dayOfYear % insights.length]);
+            tvMotivation.setText(motivations[dayOfYear % motivations.length]);
+        });
     }
 
     private void createCourseList() {
@@ -136,7 +239,6 @@ public class HomeFragment extends Fragment {
         if (rvCourses != null && getView() != null) {
             setupIntermediateButton(getView());
 
-            // 👇 ԱՄԵՆԱԿԱՐԵՎՈՐ ՄԱՍԸ. ՄԱՔՐՈՒՄ ԵՆՔ ՀԻՆ ԳԾԵՐԸ ՆԱԽՔԱՆ ՆՈՐԵՐԸ ՆԿԱՐԵԼԸ 👇
             while (rvCourses.getItemDecorationCount() > 0) {
                 rvCourses.removeItemDecorationAt(0);
             }

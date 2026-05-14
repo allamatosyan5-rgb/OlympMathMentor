@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,13 +28,13 @@ public class BattleLobbyActivity extends AppCompatActivity {
     private String userName;
     private String roomCode;
     private ValueEventListener waitingListener;
+    private LottieAnimationView lottieWaiting; // Ավելացրել ենք Lottie-ն
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_lobby);
 
-        // 👇 ԱՀԱ ՃԻՇՏ ՀՂՈՒՄՈՎ ՏՈՂԸ 👇
         dbRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles");
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -54,12 +55,19 @@ public class BattleLobbyActivity extends AppCompatActivity {
         MaterialButton btnJoin = findViewById(R.id.btnJoinRoom);
         TextView tvCode = findViewById(R.id.tvRoomCode);
         EditText etCode = findViewById(R.id.etJoinCode);
+        lottieWaiting = findViewById(R.id.lottieWaiting); // Գտնում ենք անիմացիան
 
         // --- ՍԵՆՅԱԿԻ ՍՏԵՂԾՈՒՄ ---
         btnCreate.setOnClickListener(v -> {
             roomCode = String.valueOf(100000 + new Random().nextInt(900000));
             tvCode.setText("Your Code: " + roomCode);
             tvCode.setVisibility(View.VISIBLE);
+
+            // Միացնում ենք ավազի ժամացույցը
+            if (lottieWaiting != null) {
+                lottieWaiting.setVisibility(View.VISIBLE);
+            }
+
             btnCreate.setEnabled(false);
             btnCreate.setText("SENDING TO DATABASE...");
 
@@ -77,6 +85,7 @@ public class BattleLobbyActivity extends AppCompatActivity {
                     .addOnFailureListener(e -> {
                         btnCreate.setText("CREATE A ROOM");
                         btnCreate.setEnabled(true);
+                        if (lottieWaiting != null) lottieWaiting.setVisibility(View.GONE);
                         Toast.makeText(this, "WRONG: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     });
         });

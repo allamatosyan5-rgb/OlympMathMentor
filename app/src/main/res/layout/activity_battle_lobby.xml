@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC"
+    android:background="@color/soft_beige"
     android:fillViewport="true">
 
     <LinearLayout
@@ -50,7 +50,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Create a room code and share it with a friend, or enter their 6-digit code to join the battle.\n You have 15 minutes to solve 10 fast-paced Math questions.\n\ The smartest and fastest player wins! Defeat your opponents to earn exclusive Battle Stars ."
+                    android:text="Create a room code and share it with a friend, or enter their 6-digit code to join the battle.\n You have 15 minutes to solve 10 fast-paced Math questions.\n The smartest and fastest player wins! Defeat your opponents to earn exclusive Battle Stars."
                     android:textColor="#4E342E"
                     android:textSize="16sp"
                     android:lineSpacingExtra="5dp"
@@ -112,5 +112,15 @@
             app:cornerRadius="12dp"
             android:layout_marginBottom="20dp"/>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieWaiting"
+            android:layout_width="500dp"
+            android:layout_height="500dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/hourglass"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
     </LinearLayout>
 </ScrollView>

@@ -1,12 +1,13 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="400dp"
     android:height="800dp"
+    android:background="@color/soft_beige"
     android:viewportWidth="400"
     android:viewportHeight="800">
 
     <!-- Հիմնական բեժ ֆոնը -->
     <path
-        android:fillColor="#F6F3E6"
+        android:fillColor="@color/soft_beige"
         android:pathData="M0,0 h400 v800 h-400 z" />
 
     <!-- ԽՈՒՄԲ 1: Գրքեր, Լամպ և Ընթերցող (Մուգ դարչնագույն երանգ) -->
@@ -29,7 +30,6 @@
             M 40,450 h 50 v 12 h -50 z M 45,438 h 45 v 12 h -45 z
             M 200,300 l 15,-5 v 40 l -15,5 z m 15,-5 l 10,-2 v 40 l -10,2 z" />
 
-    <!-- ԽՈՒՄԲ 2: ՆՈՐ Գրքեր, Թռչող էջեր, Էջանիշեր (Նարնջագույն երանգ) -->
     <path
         android:strokeColor="#D98A2C"
         android:strokeWidth="2.5"

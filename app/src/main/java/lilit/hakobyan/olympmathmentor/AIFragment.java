@@ -112,7 +112,6 @@ public class AIFragment extends Fragment {
         etChatMessage = view.findViewById(R.id.etChatMessage);
         btnSendChat = view.findViewById(R.id.btnSendChat);
 
-        // ՆՈՐ ԿՈՃԱԿՆԵՐԸ ՈՒ ԴԱՇՏԵՐԸ (Պետք է ավելացնես քո XML-ում)
         btnAttach = view.findViewById(R.id.btnAttach);
         layoutImagePreview = view.findViewById(R.id.layoutImagePreview);
         ivImagePreview = view.findViewById(R.id.ivImagePreview);
@@ -453,7 +452,6 @@ public class AIFragment extends Fragment {
 
             StringBuilder conversationMemory = new StringBuilder();
 
-            // 👇 ՔՈ ԽԵԼԱՑԻ ՄԱԹԵՄԱՏԻԿԱՅԻ ՈՒՍՈՒՑՉԻ ՀՐԱՀԱՆԳԸ 👇
             conversationMemory.append("SYSTEM: You are an expert Olympiad Mathematics Teacher and Mentor for the app 'OlympMath Mentor'. ");
             conversationMemory.append("Your goal is to guide students through complex math problems. Use simple, encouraging language. ");
             conversationMemory.append("When a student uploads an image of a math problem, geometry diagram, or handwritten solution, carefully analyze the image. ");
@@ -472,7 +470,6 @@ public class AIFragment extends Fragment {
             textObj.put("text", conversationMemory.toString());
             partsArray.put(textObj);
 
-            // ԱՎԵԼԱՑՆՈՒՄ ԵՆՔ ՆԿԱՐՆԵՐԸ AI-Ի ՀԱՄԱՐ
             for (int i = startIndex; i < currentSession.messages.size(); i++) {
                 ChatMessage msg = currentSession.messages.get(i);
                 if (msg.imageUri != null) {
@@ -570,7 +567,6 @@ public class AIFragment extends Fragment {
 
         @NonNull @Override
         public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            // ՀԱՄՈԶՎԻՐ ՈՐ ՔՈ XML ՖԱՅԼՈՒՄ ԿԱՆ ԱՆՀՐԱԺԵՇՏ ԿՈՃԱԿՆԵՐԸ
             return new ChatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_bubble, parent, false));
         }
 
@@ -593,14 +589,14 @@ public class AIFragment extends Fragment {
 
             if (message.isUser) {
                 holder.layoutMessageContainer.setGravity(Gravity.END);
-                shape.setColor(Color.parseColor("#5D4037")); // Քո Math Mentor-ի շոկոլադագույնը
+                shape.setColor(Color.parseColor("#5D4037"));
                 holder.tvChatMessage.setBackground(shape);
                 holder.tvChatMessage.setTextColor(Color.WHITE);
 
                 if (holder.layoutAiControls != null) holder.layoutAiControls.setVisibility(View.GONE);
             } else {
                 holder.layoutMessageContainer.setGravity(Gravity.START);
-                shape.setColor(Color.parseColor("#E0D5C1")); // Քո բաց բեժ գույնը
+                shape.setColor(Color.parseColor("#E0D5C1"));
                 holder.tvChatMessage.setBackground(shape);
                 holder.tvChatMessage.setTextColor(Color.parseColor("#212121"));
 
@@ -621,16 +617,15 @@ public class AIFragment extends Fragment {
         class ChatViewHolder extends RecyclerView.ViewHolder {
             LinearLayout layoutMessageContainer;
             TextView tvChatMessage;
-            ImageView ivAttachedImage;       // Նոր
-            LinearLayout layoutAiControls;   // Նոր
-            ImageButton btnListen;           // Նոր
+            ImageView ivAttachedImage;
+            LinearLayout layoutAiControls;
+            ImageButton btnListen;
 
             ChatViewHolder(@NonNull View itemView) {
                 super(itemView);
                 layoutMessageContainer = itemView.findViewById(R.id.layoutMessageContainer);
                 tvChatMessage = itemView.findViewById(R.id.tvChatMessage);
 
-                // Այս ID-ները պետք է ավելացնես քո item_chat_bubble.xml-ի մեջ
                 ivAttachedImage = itemView.findViewById(R.id.ivAttachedImage);
                 layoutAiControls = itemView.findViewById(R.id.layoutAiControls);
                 btnListen = itemView.findViewById(R.id.btnListen);

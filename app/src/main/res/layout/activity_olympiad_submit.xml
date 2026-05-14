@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soft_beige"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_revert"
+                app:tint="#3E2723" />
+
+            <TextView
+                android:id="@+id/tvSubmitTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IMO 2024"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#3E2723"
+                android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
+        <!-- ԲԱԺԻՆ 1: SEE PROBLEMS -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSeeProblems"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="SEE PROBLEMS AND SOLUTIONS"
+            android:backgroundTint="@color/accent_tan"
+            android:layout_marginBottom="30dp"
+            app:icon="@android:drawable/ic_menu_search"
+            app:cornerRadius="12dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D7CCC8"
+            android:layout_marginBottom="30dp"/>
+
+        <!-- ԲԱԺԻՆ 2: SEND MY SOLUTION -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send My Solution"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etProblemNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Problem Number (e.g. 1, 2, 3...)"
+            android:inputType="number"
+            android:background="@drawable/rounded_card_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etSolutionText"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="Type your proof/solution here..."
+            android:gravity="top|start"
+            android:background="@drawable/rounded_card_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAttachImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Attach Image"
+                app:backgroundTint="#757575"
+                app:icon="@android:drawable/ic_menu_camera"/>
+
+            <ImageView
+                android:id="@+id/ivSolutionImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitToAI"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="SUBMIT FOR AI GRADING"
+            android:textSize="18sp"
+            android:backgroundTint="@color/deep_brown"
+            app:cornerRadius="12dp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- ԱՐԴՅՈՒՆՔԻ ԲԼՈԿԸ -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieGrading"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/loading"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:id="@+id/tvAiFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_card_bg"
+            android:backgroundTint="#FFF3E0"
+            android:padding="16dp"
+            android:textColor="#3E2723"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

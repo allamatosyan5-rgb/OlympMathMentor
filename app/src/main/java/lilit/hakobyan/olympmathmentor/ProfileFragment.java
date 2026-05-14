@@ -30,7 +30,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,6 +57,11 @@ public class ProfileFragment extends Fragment {
     private ImageView profileImage;
     private Button btnLogout, btnAddAchievement, btnAddGoal;
     private CardView cvMyMistakes, cvFavourites;
+
+    // ՆՈՐՈՒԹՅՈՒՆՆԵՐԻ ՆՈՐ ՓՈՓՈԽԱԿԱՆՆԵՐԸ 💡
+    private LinearLayout btnShowNews;
+    private View viewNewsDot;
+    private String currentAdminNews = "";
 
     private List<String> achievementsList = new ArrayList<>();
     private List<String> currentGoalsList = new ArrayList<>();
@@ -114,6 +123,20 @@ public class ProfileFragment extends Fragment {
         cvMyMistakes = view.findViewById(R.id.cvMyMistakes);
         cvFavourites = view.findViewById(R.id.cvFavourites);
 
+        // ԳՏՆՈՒՄ ԵՆՔ ՆՈՐՈՒԹՅՈՒՆՆԵՐԻ ԿՈՃԱԿԸ 💡
+        btnShowNews = view.findViewById(R.id.btnShowNews);
+        viewNewsDot = view.findViewById(R.id.viewNewsDot);
+
+        // ՍԵՂՄԵԼԻՍ ԲԱՑՈՒՄ ԵՆՔ ՆՈՐՈՒԹՅՈՒՆԸ 💡
+        btnShowNews.setOnClickListener(v -> {
+            if (!currentAdminNews.isEmpty()) {
+                showNewsDialog(currentAdminNews);
+                viewNewsDot.setVisibility(View.GONE); // Նայելուց հետո կետիկը անհետանում է
+            } else {
+                Toast.makeText(getContext(), "No news for now!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         if (cvMyMistakes != null) cvMyMistakes.setOnClickListener(v -> startActivity(new Intent(getActivity(), MyMistakesActivity.class)));
         if (cvFavourites != null) cvFavourites.setOnClickListener(v -> startActivity(new Intent(getActivity(), FavouritesActivity.class)));
         if (tvStreakDays != null) tvStreakDays.setOnClickListener(v -> showStreakCalendarDialog());
@@ -140,7 +163,6 @@ public class ProfileFragment extends Fragment {
 
                                 HashMap<String, Object> backupData = new HashMap<>();
 
-                                // Ամբողջ Պրոֆիլի և ՆԿԱՐԻ պահպանումը
                                 HashMap<String, String> profileData = new HashMap<>();
                                 profileData.put("name", profilePrefs.getString("name", ""));
                                 profileData.put("surname", profilePrefs.getString("surname", ""));
@@ -150,7 +172,6 @@ public class ProfileFragment extends Fragment {
                                 profileData.put("completedGoals", profilePrefs.getString("completedGoals", ""));
                                 backupData.put("profile", profileData);
 
-                                // Ամբողջ Պրոգրեսի, Աստղերի, Սխալների և Ֆավորիտների պահպանումը
                                 HashMap<String, Object> progressData = new HashMap<>();
                                 for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
                                     progressData.put("stars_lesson_" + i, progressPrefs.getInt("stars_lesson_" + i, 0));
@@ -162,13 +183,11 @@ public class ProfileFragment extends Fragment {
                                 progressData.put("favourite_problems", progressPrefs.getString("favourite_problems", ""));
                                 backupData.put("progress", progressData);
 
-                                // Օրացույցի պահպանում
                                 Set<String> history = progressPrefs.getStringSet("login_history", new HashSet<>());
                                 backupData.put("login_history", new ArrayList<>(history));
 
                                 Toast.makeText(getContext(), "Syncing data to Cloud...", Toast.LENGTH_SHORT).show();
 
-                                // Ուղարկում ենք Firebase և հետո մաքրում հեռախոսը
                                 FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid()).child("backup")
                                         .setValue(backupData).addOnCompleteListener(task -> {
                                             profilePrefs.edit().clear().apply();
@@ -191,7 +210,50 @@ public class ProfileFragment extends Fragment {
         calculateStatsAndBadges();
         updateMistakesAndFavsCount();
 
+        // Կանչում ենք նորությունները լսող ֆունկցիան
+        listenForAdminNews();
+
         return view;
+    }
+
+    // ՆՈՐՈՒԹՅՈՒՆՆԵՐԸ ՑՈՒՅՑ ՏՎՈՂ ՊԱՏՈՒՀԱՆԸ 💡
+    private void showNewsDialog(String message) {
+        if (getContext() != null) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("📢 Latest News")
+                    .setMessage(message)
+                    .setPositiveButton("Got it!", null)
+                    .show();
+        }
+    }
+
+    // ՆՈՐՈՒԹՅՈՒՆՆԵՐԸ ԼՍՈՂ ՖՈՒՆԿՑԻԱՆ 💡
+    private void listenForAdminNews() {
+        DatabaseReference newsRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
+                .getReference("app_news").child("latest_message");
+
+        newsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String news = snapshot.getValue(String.class);
+                    if (news != null && !news.trim().isEmpty()) {
+                        currentAdminNews = news;
+                        if (viewNewsDot != null) viewNewsDot.setVisibility(View.VISIBLE);
+                    } else {
+                        currentAdminNews = "";
+                        if (viewNewsDot != null) viewNewsDot.setVisibility(View.GONE);
+                    }
+                } else {
+                    currentAdminNews = "";
+                    if (viewNewsDot != null) viewNewsDot.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     @Override

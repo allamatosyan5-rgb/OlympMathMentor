@@ -6,14 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- ԳԼԽԱՎՈՐ ԷԿՐԱՆԸ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#F5F5DC">
+        android:background="@color/soft_beige">
 
-        <!-- Գլխամաս (Toolbar) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,28 +39,37 @@
                 android:layout_marginStart="16dp"/>
         </LinearLayout>
 
-        <!-- Չաթի Հաղորդագրությունները -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChatMessages"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="8dp"
-            android:clipToPadding="false"/>
+            android:layout_weight="1">
 
-        <!-- 💡 ԱՀԱ ԱՆԻՄԱՑԻԱՅԻ ԲԼՈԿԸ (Սկզբից թաքնված է) -->
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieLoading"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"
-            app:lottie_rawRes="@raw/loading"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true" />
+            <ImageView
+                android:layout_width="292dp"
+                android:layout_height="353dp"
+                android:layout_gravity="center"
+                android:alpha="0.09"
+                android:src="@drawable/logo" />
 
-        <!-- Ներքևի գրելու և նկարելու դաշտը -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChatMessages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="8dp" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieLoading"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +77,6 @@
             android:background="#FFFFFF"
             android:elevation="8dp">
 
-            <!-- Նկարի նախադիտում (Image Preview) -->
             <RelativeLayout
                 android:id="@+id/layoutImagePreview"
                 android:layout_width="80dp"
@@ -97,7 +103,6 @@
                     app:tint="#FFFFFF" />
             </RelativeLayout>
 
-            <!-- Կոճակների և տեքստի տող -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,7 +140,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- ԿՈՂԱՅԻՆ ՄԵՆՅՈՒ (SIDEBAR) -->
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="match_parent"
@@ -143,7 +147,6 @@
         android:background="#3E2723"
         android:orientation="vertical">
 
-        <!-- Նոր Չաթ Կոճակ -->
         <LinearLayout
             android:id="@+id/btnNewChat"
             android:layout_width="match_parent"
