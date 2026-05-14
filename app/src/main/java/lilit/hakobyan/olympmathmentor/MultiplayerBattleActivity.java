@@ -14,10 +14,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.*;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MultiplayerBattleActivity extends AppCompatActivity {
 
@@ -36,7 +48,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
     private List<Integer> questionOrder = new ArrayList<>();
 
-    // 200 Questions
     private String[] questions = {
             "Last digit of 2^100?", "Trailing zeros in 50!?", "Max pieces of a pizza with 4 straight cuts?",
             "How many diagonals in a decagon (10 sides)?", "Sum of the first 100 positive integers?",
@@ -107,7 +118,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             "What is 7 * 12?", "What is 8 * 15?", "What is 11 * 12?", "Next prime after 19?", "What is 0^0? (conventionally)"
     };
 
-    // 200 Answers
     private String[] answers = {
             "6", "12", "11", "35", "5050", "42", "60", "5", "36", "1", "64", "720", "81", "12", "1/8",
             "10", "8", "55", "7", "60", "25", "7", "15", "20", "64", "24", "30", "37", "2", "28", "42", "125",
@@ -230,21 +240,133 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         if (userAns.isEmpty()) return;
 
         int realIndex = questionOrder.get(currentQIndex);
+        String questionText = questions[realIndex];
+        String correctAnswer = answers[realIndex];
 
-        if (userAns.equals(answers[realIndex])) {
-            myCorrectAnswers++;
-            String scoreKey = "score" + playerNum;
-            roomRef.child(scoreKey).setValue(myCorrectAnswers);
-            Toast.makeText(this, "Correct! +1", Toast.LENGTH_SHORT).show();
-            currentQIndex++;
-            updateQuestionUI();
+        if (userAns.equalsIgnoreCase(correctAnswer)) {
+            processCorrectAnswer();
         } else {
-            Toast.makeText(this, "Wrong! Try again.", Toast.LENGTH_SHORT).show();
-            etAnswer.setText("");
+            verifyWithAIJudge(questionText, correctAnswer, userAns);
         }
     }
 
-    // 💡 ԱՀԱ ԹԱՐՄԱՑՎԱԾ ԵՎ ՄԱՔՐՎԱԾ ENDGAME ՄԵԹՈԴԸ 💡
+    private void processCorrectAnswer() {
+        myCorrectAnswers++;
+        String scoreKey = "score" + playerNum;
+        roomRef.child(scoreKey).setValue(myCorrectAnswers);
+        Toast.makeText(this, "Correct! +1", Toast.LENGTH_SHORT).show();
+        currentQIndex++;
+        updateQuestionUI();
+    }
+
+    // ==========================================
+    // AI ԴԱՏԱՎՈՐԻ ԻՆՏԵԳՐՈՒՄ (Ճշգրտված URL-ով)
+    // ==========================================
+    private void verifyWithAIJudge(String question, String officialAnswer, String userAnswer) {
+        findViewById(R.id.btnSubmitBattle).setEnabled(false);
+        Toast.makeText(this, "AI is verifying your answer...", Toast.LENGTH_SHORT).show();
+
+        String aiPrompt = "You are an automated, strict math judge. " +
+                "Question: '" + question + "'. " +
+                "Official Correct Answer: '" + officialAnswer + "'. " +
+                "User's Submitted Answer: '" + userAnswer + "'. " +
+                "Are the user's answer and the official answer mathematically equivalent? " +
+                "(For example, 1/8 and 0.125 are equivalent). " +
+                "Respond STRICTLY with one word only: YES or NO.";
+
+        String apiKey = "AIzaSyCne1J1x_bXT9kP2bj8h-SVdSMeYBHwMC8";
+
+        // 💡 Ահա միակ ճիշտ և աշխատող մոդելը Google-ի սերվերների համար
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+
+        try {
+            JSONObject jsonBody = new JSONObject();
+            JSONArray contents = new JSONArray();
+            JSONObject part = new JSONObject();
+            JSONArray partsArray = new JSONArray();
+
+            JSONObject textObj = new JSONObject();
+            textObj.put("text", aiPrompt);
+            partsArray.put(textObj);
+
+            part.put("parts", partsArray);
+            contents.put(part);
+
+            JSONObject config = new JSONObject();
+            config.put("temperature", 0.1);
+            jsonBody.put("generationConfig", config);
+
+            jsonBody.put("contents", contents);
+
+            RequestBody body = RequestBody.create(jsonBody.toString(), MediaType.get("application/json; charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    runOnUiThread(() -> {
+                        findViewById(R.id.btnSubmitBattle).setEnabled(true);
+                        Toast.makeText(MultiplayerBattleActivity.this, "Network Error! Try again.", Toast.LENGTH_SHORT).show();
+                    });
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    runOnUiThread(() -> findViewById(R.id.btnSubmitBattle).setEnabled(true));
+
+                    if (response.isSuccessful() && response.body() != null) {
+                        try {
+                            String responseData = response.body().string();
+                            JSONObject jsonResponse = new JSONObject(responseData);
+
+                            if (jsonResponse.has("candidates")) {
+                                JSONArray candidates = jsonResponse.getJSONArray("candidates");
+                                if (candidates.length() > 0) {
+                                    JSONObject firstCandidate = candidates.getJSONObject(0);
+
+                                    if (firstCandidate.has("content")) {
+                                        String aiText = firstCandidate.getJSONObject("content")
+                                                .getJSONArray("parts").getJSONObject(0).getString("text");
+
+                                        final String cleanText = aiText.replace("**", "").trim().toUpperCase();
+
+                                        if (!cleanText.isEmpty()) {
+                                            runOnUiThread(() -> {
+                                                if (cleanText.contains("YES")) {
+                                                    processCorrectAnswer();
+                                                } else {
+                                                    Toast.makeText(MultiplayerBattleActivity.this, "Wrong! Try again.", Toast.LENGTH_SHORT).show();
+                                                    etAnswer.setText("");
+                                                }
+                                            });
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                            runOnUiThread(() -> Toast.makeText(MultiplayerBattleActivity.this, "Sorry, received a blank response.", Toast.LENGTH_SHORT).show());
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            runOnUiThread(() -> Toast.makeText(MultiplayerBattleActivity.this, "Error parsing AI response.", Toast.LENGTH_SHORT).show());
+                        }
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(MultiplayerBattleActivity.this, "Server error (" + response.code() + "). Please try again.", Toast.LENGTH_SHORT).show());
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            findViewById(R.id.btnSubmitBattle).setEnabled(true);
+        }
+    }
+
     private void endGame(String reason) {
         gameEnded = true;
         if (battleTimer != null) battleTimer.cancel();
@@ -274,7 +396,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                     saveBattleStars(starsEarned);
                 }
 
-                // Անցում Արդյունքների Նոր Էջ
                 Intent intent = new Intent(MultiplayerBattleActivity.this, BattleResultActivity.class);
                 intent.putExtra("MY_SCORE", myScore);
                 intent.putExtra("OPP_SCORE", oppScore);
@@ -282,7 +403,6 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 intent.putExtra("OPP_NAME", oppName);
                 intent.putExtra("STARS", starsEarned);
 
-                // Խաղացող 1-ը մաքրում է սենյակը բազայից
                 if (playerNum == 1) roomRef.removeValue();
 
                 startActivity(intent);

@@ -29,7 +29,6 @@
             android:textColor="#5D4037"
             android:layout_marginBottom="24dp"/>
 
-        <!-- IMO ՔԱՐՏԸ -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvIMO"
             android:layout_width="match_parent"
@@ -41,34 +40,50 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/rounded_card_bg"
-                    android:text="IMO"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#D32F2F"
-                    android:textSize="18sp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="-20dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/imo" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="International Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="The ultimate challenge." android:textSize="13sp" android:textColor="#757575"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rounded_card_bg"
+                        android:backgroundTint="#3E2723"
+                        android:gravity="center"
+                        android:text="IMO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="International Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="The ultimate challenge." android:textSize="13sp" android:textColor="#757575"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- EGMO ՔԱՐՏԸ -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvEGMO"
             android:layout_width="match_parent"
@@ -80,34 +95,50 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/rounded_card_bg"
-                    android:text="EGMO"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#C2185B"
-                    android:textSize="16sp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="-20dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/egmo" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="European Girls' Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Elite competition for girls." android:textSize="13sp" android:textColor="#757575"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rounded_card_bg"
+                        android:backgroundTint="#3E2723"
+                        android:gravity="center"
+                        android:text="EGMO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="European Girls' Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Elite competition for girls." android:textSize="13sp" android:textColor="#757575"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- BMO ՔԱՐՏԸ -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvBMO"
             android:layout_width="match_parent"
@@ -119,34 +150,50 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/rounded_card_bg"
-                    android:text="BMO"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#1976D2"
-                    android:textSize="18sp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="-20dp"
+                    android:alpha="0.5"
+                    android:src="@drawable/bmo" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Balkan Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tough regional battles." android:textSize="13sp" android:textColor="#757575"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rounded_card_bg"
+                        android:backgroundTint="#3E2723"
+                        android:gravity="center"
+                        android:text="BMO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Balkan Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tough regional battles." android:textSize="13sp" android:textColor="#757575"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- IZHO ՔԱՐՏԸ -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvIZHO"
             android:layout_width="match_parent"
@@ -158,34 +205,50 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/rounded_card_bg"
-                    android:text="IZHO"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#388E3C"
-                    android:textSize="18sp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="-20dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/izho" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Zhautykov Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Science &amp; Math combined." android:textSize="13sp" android:textColor="#757575"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rounded_card_bg"
+                        android:backgroundTint="#3E2723"
+                        android:gravity="center"
+                        android:text="IZHO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Zhautykov Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Science &amp; Math combined." android:textSize="13sp" android:textColor="#757575"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- CMO ՔԱՐՏԸ -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvCMO"
             android:layout_width="match_parent"
@@ -197,31 +260,48 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/rounded_card_bg"
-                    android:text="CMO"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#F57C00"
-                    android:textSize="18sp"/>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="-20dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/cmo" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Caucasus Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Intense regional problems." android:textSize="13sp" android:textColor="#757575"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/rounded_card_bg"
+                        android:backgroundTint="#3E2723"
+                        android:gravity="center"
+                        android:text="CMO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Caucasus Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Intense regional problems." android:textSize="13sp" android:textColor="#757575"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>

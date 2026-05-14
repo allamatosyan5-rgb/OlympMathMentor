@@ -84,15 +84,24 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
         btnSeeProblems.setText("SEE PROBLEMS & SOLUTIONS");
         btnSeeProblems.setOnClickListener(v -> {
             String url = "";
+
             if (olympiadName != null && olympiadName.equals("EGMO")) {
                 try {
                     int year = Integer.parseInt(olympiadYear);
                     int egmoNumber = year - 2011;
-                    url = (egmoNumber > 0) ? "https://www.egmo.org/egmos/egmo" + egmoNumber + "/" : "https://www.egmo.org/";
-                } catch (Exception e) { url = "https://www.egmo.org/"; }
-            } else if (olympiadName != null && olympiadName.equals("IZHO")) {
+                    if (egmoNumber > 0) {
+                        url = "https://www.egmo.org/egmos/egmo" + egmoNumber + "/";
+                    } else {
+                        url = "https://www.egmo.org/";
+                    }
+                } catch (NumberFormatException e) {
+                    url = "https://www.egmo.org/";
+                }
+            }
+            else if (olympiadName != null && olympiadName.equals("IZHO")) {
                 url = "https://izho.kz/contest/problems/";
-            } else if (olympiadName != null && olympiadName.equals("CMO")) {
+            }
+            else if (olympiadName != null && olympiadName.equals("CMO")) {
                 switch (olympiadYear) {
                     case "2025": url = "https://cmo.adygmath.ru/ru/node/253"; break;
                     case "2024": url = "https://cmo.adygmath.ru/ru/node/242"; break;
@@ -106,26 +115,46 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
                     case "2015": url = "https://cmo.adygmath.ru/node/34"; break;
                     default: url = "https://cmo.adygmath.ru/"; break;
                 }
-            } else if (olympiadName != null && olympiadName.equals("BMO")) {
+            }
+            else if (olympiadName != null && olympiadName.equals("BMO")) {
                 try {
                     int year = Integer.parseInt(olympiadYear);
-                    if (year >= 1984 && year <= 2009) url = "https://imomath.com/othercomp/B/Bmo" + year + ".pdf";
-                    else {
+                    if (year >= 1984 && year <= 2009) {
+                        url = "https://imomath.com/othercomp/B/Bmo" + year + ".pdf";
+                    } else {
                         switch (year) {
                             case 2010: url = "https://www.imo-register.org.uk/2010-balkan-report.pdf"; break;
                             case 2011: url = "https://imomath.com/srb/zadaci/2011_bmo_e.pdf"; break;
+                            case 2012: url = "https://bmo2012.tubitak.gov.tr/sites/default/files/bmo2012solutions.pdf"; break;
+                            case 2013: url = "https://www.scribd.com/document/486849698/2013-pdf"; break;
+                            case 2014: url = "https://rg.edu.rs/wp-content/uploads/2021/04/zadaci_bmo_2014.pdf"; break;
+                            case 2015: url = "https://www.hms.gr/32bmo2015/sols.pdf"; break;
+                            case 2016: url = "https://www.scribd.com/document/416182434/BMO-2016-Problems-and-Solutions"; break;
+                            case 2017: url = "https://artofproblemsolving.com/downloads/printable_post_collections/914510.pdf?srsltid=AfmBOorNZ2kWhBhLKqRE936bkUtDPUdY0ilYg2QJJMEq1YFahejxsJ-X"; break;
+                            case 2018: url = "https://bmo2018.dms.rs/wp-content/uploads/2018/05/Solutions.pdf"; break;
+                            case 2019: url = "https://www.scribd.com/document/411417727/Problems"; break;
+                            case 2020: url = "https://bmo2020.ssmr.ro/problems"; break;
+                            case 2021: url = "https://www.scribd.com/document/596816041/2021-BMO-Shortlist"; break;
+                            case 2022: url = "https://www.scribd.com/document/670082886/3039147"; break;
+                            case 2023: url = "https://www.scribd.com/document/670082884/3345386"; break;
                             case 2024: url = "https://bmo2024.org/problems/"; break;
                             case 2025: url = "https://bmo2025.pmf.unsa.ba/wp-content/uploads/2025/05/Problems%20-%20Solutions.pdf"; break;
                             default: url = "https://artofproblemsolving.com/wiki/index.php/" + olympiadYear + "_BMO_Problems"; break;
                         }
                     }
-                } catch (Exception e) { url = "https://artofproblemsolving.com/wiki/index.php/Balkan_Mathematical_Olympiad"; }
-            } else if (olympiadName != null && olympiadName.equals("IMO")) {
+                } catch (NumberFormatException e) {
+                    url = "https://artofproblemsolving.com/wiki/index.php/Balkan_Mathematical_Olympiad";
+                }
+            }
+            else if (olympiadName != null && olympiadName.equals("IMO")) {
                 url = "https://artofproblemsolving.com/wiki/index.php/" + olympiadYear + "_IMO";
-            } else {
+            }
+            else {
                 url = "https://artofproblemsolving.com/search/community?q=" + olympiadName + "+" + olympiadYear;
             }
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
         });
 
         etProblemNumber = findViewById(R.id.etProblemNumber);
@@ -134,7 +163,12 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
         tvAiFeedback = findViewById(R.id.tvAiFeedback);
         lottieGrading = findViewById(R.id.lottieGrading);
         btnSubmitToAI = findViewById(R.id.btnSubmitToAI);
-        findViewById(R.id.btnAttachImage).setOnClickListener(v -> imagePickerLauncher.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
+        MaterialButton btnAttachImage = findViewById(R.id.btnAttachImage);
+
+        btnAttachImage.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            imagePickerLauncher.launch(intent);
+        });
 
         btnSubmitToAI.setOnClickListener(v -> gradeSolution());
     }
@@ -143,15 +177,31 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
         String problemNum = etProblemNumber.getText().toString().trim();
         String solutionText = etSolutionText.getText().toString().trim();
 
-        if (problemNum.isEmpty()) { Toast.makeText(this, "Enter problem number!", Toast.LENGTH_SHORT).show(); return; }
+        if (problemNum.isEmpty()) {
+            Toast.makeText(this, "Please enter the problem number!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (solutionText.isEmpty() && selectedImageBitmap == null) {
+            Toast.makeText(this, "Please provide a text solution or attach an image!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         btnSubmitToAI.setEnabled(false);
         lottieGrading.setVisibility(View.VISIBLE);
         tvAiFeedback.setVisibility(View.GONE);
 
-        String aiPrompt = "Judge this " + olympiadName + " " + olympiadYear + " problem " + problemNum + ". Solution: " + solutionText + ". Grade 0-3. Start with 'SCORE: X'.";
-        String apiKey = "AIzaSyCne1J1x_bXT9kP2bj8h-SVdSMeYBHwMC8";
-        // 💡 ՈՒՂՂՎԱԾ ՄՈԴԵԼԻ ԱՆՈՒՆԸ (1.5-flash)
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+        // Հրահանգ, որտեղ AI-ն գիտի որ օլիմպիադան է
+        String aiPrompt = "You are a strict, expert Mathematics Olympiad Judge. " +
+                "Evaluate this student's solution for the " + olympiadName + " " + olympiadYear + ", Problem Number " + problemNum + ". " +
+                "Student's explanation: '" + solutionText + "'. " +
+                "Analyze the logic rigorously. Tell them what is correct and what is flawed. " +
+                "Finally, you MUST grade this strictly from 0 to 3 stars (0=completely wrong, 1=some valid ideas, 2=minor flaws, 3=perfect proof). " +
+                "Your response MUST start exactly with 'SCORE: X' (where X is the number), followed by your detailed feedback.";
+
+        // 💡 ՕԳՏԱԳՈՐԾՎՈՒՄ Է ՔՈ ԹԱՔՑՐԱԾ ԲԱՆԱԼԻՆ
+        String apiKey = BuildConfig.GEMINI_API_KEY;
+        // 💡 ՎԵՐԱԴԱՐՁՎԱԾ Է ՔՈ ՆՇԱԾ ՄՈԴԵԼԻ ԱՆՎԱՆՈՒՄԸ: gemini-2.5-flash
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
 
         try {
             JSONObject jsonBody = new JSONObject();
@@ -165,7 +215,7 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
 
             if (selectedImageBitmap != null) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+                selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                 String base64Image = Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);
 
                 JSONObject inlineDataObj = new JSONObject();
@@ -178,45 +228,106 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
 
             part.put("parts", partsArray);
             contents.put(part);
+
+            JSONObject config = new JSONObject();
+            config.put("temperature", 0.7);
+            jsonBody.put("generationConfig", config);
+
             jsonBody.put("contents", contents);
 
-            OkHttpClient client = new OkHttpClient();
             RequestBody body = RequestBody.create(jsonBody.toString(), MediaType.get("application/json; charset=utf-8"));
-            Request request = new Request.Builder().url(url).post(body).build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .addHeader("Content-Type", "application/json") // Ապահովության համար
+                    .build();
 
+            OkHttpClient client = new OkHttpClient();
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) { runOnUiThread(() -> showError("Network Error")); }
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    if (isDestroyed()) return;
+                    runOnUiThread(() -> showError("Network Error: Could not connect to Math AI."));
+                }
+
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.isSuccessful() && response.body() != null) {
+                    if (isDestroyed()) return;
+
+                    final String responseData = response.body() != null ? response.body().string() : "";
+
+                    if (response.isSuccessful()) {
                         try {
-                            String aiText = new JSONObject(response.body().string()).getJSONArray("candidates").getJSONObject(0).getJSONObject("content").getJSONArray("parts").getJSONObject(0).getString("text");
-                            runOnUiThread(() -> processAiFeedback(aiText));
-                        } catch (Exception e) { runOnUiThread(() -> showError("Parse Error")); }
-                    } else { runOnUiThread(() -> showError("API Error: " + response.code())); }
+                            JSONObject jsonResponse = new JSONObject(responseData);
+
+                            if (jsonResponse.has("candidates")) {
+                                JSONArray candidates = jsonResponse.getJSONArray("candidates");
+                                if (candidates.length() > 0) {
+                                    JSONObject firstCandidate = candidates.getJSONObject(0);
+
+                                    if (firstCandidate.has("content")) {
+                                        String aiText = firstCandidate.getJSONObject("content")
+                                                .getJSONArray("parts").getJSONObject(0).getString("text");
+
+                                        final String cleanText = aiText.replace("**", "").trim();
+
+                                        if (!cleanText.isEmpty()) {
+                                            runOnUiThread(() -> processAiFeedback(cleanText));
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                            runOnUiThread(() -> showError("Sorry, I received a blank response."));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            runOnUiThread(() -> showError("Error reading Mentor response."));
+                        }
+                    } else {
+                        // 💡 ԴԻԱԳՆՈՍՏԻԿԱ. Սխալի դեպքում կտպի հստակ պատճառը
+                        final int statusCode = response.code();
+                        runOnUiThread(() -> showError("Google API Error (" + statusCode + "):\nDetails: " + responseData));
+                    }
                 }
             });
-        } catch (Exception e) { showError("Error"); }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Unexpected error preparing request.");
+        }
     }
 
     private void processAiFeedback(String aiResponse) {
         lottieGrading.setVisibility(View.GONE);
         tvAiFeedback.setVisibility(View.VISIBLE);
         btnSubmitToAI.setEnabled(true);
-        int points = 0;
-        if (aiResponse.toUpperCase().contains("SCORE:")) {
+
+        int pointsEarned = 0;
+        String cleanResponse = aiResponse;
+
+        if (cleanResponse.toUpperCase().startsWith("SCORE:")) {
             try {
-                String scorePart = aiResponse.substring(aiResponse.toUpperCase().indexOf("SCORE:") + 6).trim();
-                points = Integer.parseInt(scorePart.substring(0, 1));
-            } catch (Exception e) {}
+                String firstLine = cleanResponse.split("\n")[0];
+                String scoreStr = firstLine.replaceAll("[^0-9]", "");
+                if (!scoreStr.isEmpty()) {
+                    pointsEarned = Integer.parseInt(scoreStr);
+                    if (pointsEarned > 3) pointsEarned = 3;
+                }
+            } catch (Exception ignored) {}
         }
-        if (points > 0) {
-            SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-            prefs.edit().putInt("total_stars", prefs.getInt("total_stars", 0) + points).apply();
-            Toast.makeText(this, "Earned " + points + " stars!", Toast.LENGTH_SHORT).show();
+
+        if (pointsEarned > 0) {
+            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            int currentStars = myPrefs.getInt("total_stars", 0);
+            myPrefs.edit().putInt("total_stars", currentStars + pointsEarned).apply();
+
+            Toast.makeText(this, "Excellent! You earned +" + pointsEarned + " Stars!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "No stars this time. Read feedback and try again!", Toast.LENGTH_LONG).show();
         }
-        tvAiFeedback.setText(aiResponse);
+
+        tvAiFeedback.setText(cleanResponse);
     }
 
     private void showError(String msg) {

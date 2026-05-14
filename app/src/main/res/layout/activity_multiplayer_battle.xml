@@ -29,7 +29,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView android:id="@+id/tvPlayer1Name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Player 1" android:textStyle="bold" android:textColor="#3E2723"/>
-                <TextView android:id="@+id/tvScore1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="30sp" android:textColor="#D32F2F" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvScore1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="30sp" android:textColor="#3E2723" android:textStyle="bold"/>
             </LinearLayout>
 
             <View android:layout_width="2dp" android:layout_height="match_parent" android:background="#E0E0E0"/>
@@ -41,7 +41,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView android:id="@+id/tvPlayer2Name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Player 2" android:textStyle="bold" android:textColor="#3E2723"/>
-                <TextView android:id="@+id/tvScore2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="30sp" android:textColor="#D32F2F" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvScore2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="30sp" android:textColor="#3E2723" android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -79,11 +79,10 @@
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:text="SUBMIT ANSWER"
-            app:backgroundTint="#388E3C"
+            app:backgroundTint="#3E2723"
             app:cornerRadius="10dp"/>
     </LinearLayout>
 
-    <!-- ԱՐԴՅՈՒՆՔԻ ԱՆԻՄԱՑԻԱՆ (Սկզբից թաքնված է) -->
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieResult"
         android:layout_width="match_parent"

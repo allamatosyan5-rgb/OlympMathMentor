@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="#F5F5DC">
 
-    <!-- ԲՈՒՆ ԱՐԴՅՈՒՆՔՆԵՐԻ ԷՋԸ (Սկզբից թաքնված է լինելու կոդով) -->
     <LinearLayout
         android:id="@+id/layoutMainContent"
         android:layout_width="match_parent"
@@ -33,7 +32,6 @@
             android:weightSum="2"
             android:gravity="center">
 
-            <!-- ՔՈ (ԽԱՂԱՑՈՂԻ) ԲԼՈԿԸ -->
             <LinearLayout
                 android:id="@+id/layoutMyAvatar"
                 android:layout_width="0dp"
@@ -83,7 +81,6 @@
                 android:textStyle="bold"
                 android:textColor="#757575"/>
 
-            <!-- ՀԱԿԱՌԱԿՈՐԴԻ ԲԼՈԿԸ -->
             <LinearLayout
                 android:id="@+id/layoutOppAvatar"
                 android:layout_width="0dp"
@@ -147,14 +144,14 @@
             app:cornerRadius="12dp"/>
     </LinearLayout>
 
-    <!-- ԱՆԻՄԱՑԻԱՆ, ՈՐԸ ԵՐԵՎՈՒՄ Է ՍԿԶԲԻՑ -->
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieResult"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         android:layout_centerInParent="true"
-        android:elevation="50dp"
+        android:elevation="10dp"
         android:scaleType="fitCenter"
+        app:lottie_autoPlay="true"
         app:lottie_loop="true" />
 
 </RelativeLayout>

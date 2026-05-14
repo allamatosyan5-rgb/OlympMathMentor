@@ -2,6 +2,8 @@ package lilit.hakobyan.olympmathmentor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,61 +18,77 @@ public class BattleResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_result);
 
-        TextView tvTitle = findViewById(R.id.tvResultTitle);
-        TextView tvMyName = findViewById(R.id.tvMyName);
-        TextView tvOppName = findViewById(R.id.tvOppName);
-        TextView tvMyScore = findViewById(R.id.tvMyScore);
-        TextView tvOppScore = findViewById(R.id.tvOppScore);
-        TextView tvStars = findViewById(R.id.tvEarnedStars);
+        // Գտնում ենք View-երը
+        final TextView tvTitle = findViewById(R.id.tvResultTitle);
+        final TextView tvMyName = findViewById(R.id.tvMyName);
+        final TextView tvOppName = findViewById(R.id.tvOppName);
+        final TextView tvMyScore = findViewById(R.id.tvMyScore);
+        final TextView tvOppScore = findViewById(R.id.tvOppScore);
+        final TextView tvStars = findViewById(R.id.tvEarnedStars);
 
-        LinearLayout layoutMyAvatar = findViewById(R.id.layoutMyAvatar);
-        LinearLayout layoutOppAvatar = findViewById(R.id.layoutOppAvatar);
+        final LinearLayout layoutMyAvatar = findViewById(R.id.layoutMyAvatar);
+        final LinearLayout layoutOppAvatar = findViewById(R.id.layoutOppAvatar);
+        final LinearLayout layoutMainContent = findViewById(R.id.layoutMainContent);
 
-        LottieAnimationView lottieResult = findViewById(R.id.lottieResult);
+        final LottieAnimationView lottieResult = findViewById(R.id.lottieResult);
         MaterialButton btnBack = findViewById(R.id.btnBackToMenu);
 
-        // Ստանում ենք ինֆորմացիան հին էջից
+        // Ստանում ենք տվյալները Intent-ից
         int myScore = getIntent().getIntExtra("MY_SCORE", 0);
         int oppScore = getIntent().getIntExtra("OPP_SCORE", 0);
         String myName = getIntent().getStringExtra("MY_NAME");
         String oppName = getIntent().getStringExtra("OPP_NAME");
         int stars = getIntent().getIntExtra("STARS", 0);
 
+        // Տեղադրում ենք տեքստերը
         tvMyName.setText(myName != null ? myName : "Me");
         tvOppName.setText(oppName != null ? oppName : "Opponent");
         tvMyScore.setText("Score: " + myScore);
         tvOppScore.setText("Score: " + oppScore);
         tvStars.setText("+" + stars + " Stars");
 
-        // ԱՆԻՄԱՑԻԱՆԵՐ ԵՎ ՄԵԾԱՑՈՒՄ/ՓՈՔՐԱՑՈՒՄ
+        // Սահմանում ենք հաղթանակի/պարտության վիճակը
         if (myScore > oppScore) {
             tvTitle.setText("YOU WON! 🏆");
             tvTitle.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-
-            // Ես մեծանում եմ, նա փոքրանում է
-            layoutMyAvatar.animate().scaleX(1.3f).scaleY(1.3f).setDuration(1000).start();
-            layoutOppAvatar.animate().scaleX(0.7f).scaleY(0.7f).setDuration(1000).start();
-
-            lottieResult.setAnimation(R.raw.trophy);
+            lottieResult.setAnimation(R.raw.trophy); // Սա սկզբնական 7 վրկ-ի համար է
         } else if (myScore < oppScore) {
             tvTitle.setText("YOU LOST! 😢");
             tvTitle.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-
-            // Ես փոքրանում եմ, նա մեծանում է
-            layoutMyAvatar.animate().scaleX(0.7f).scaleY(0.7f).setDuration(1000).start();
-            layoutOppAvatar.animate().scaleX(1.3f).scaleY(1.3f).setDuration(1000).start();
-
             lottieResult.setAnimation(R.raw.invalid);
         } else {
             tvTitle.setText("IT'S A TIE! 🤝");
-            lottieResult.setAnimation(R.raw.trophy); // Կարող ես ոչ-ոքիի համար ուրիշ բան դնել
+            lottieResult.setAnimation(R.raw.trophy);
         }
 
         lottieResult.playAnimation();
 
-        // Վերադարձ գլխավոր մենյու
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 1. Թաքցնում ենք մեծ անիմացիան
+                lottieResult.setVisibility(View.GONE);
+                lottieResult.cancelAnimation();
+
+                // 2. Երևացնում ենք հիմնական բովանդակությունը
+                layoutMainContent.setVisibility(View.VISIBLE);
+
+                // 3. Միացնում ենք ավատարների մեծացման/փոքրացման էֆեկտը
+                if (myScore > oppScore) {
+                    layoutMyAvatar.animate().scaleX(1.2f).scaleY(1.2f).setDuration(800).start();
+                    layoutOppAvatar.animate().scaleX(0.8f).scaleY(0.8f).setDuration(800).start();
+                } else if (myScore < oppScore) {
+                    layoutMyAvatar.animate().scaleX(0.8f).scaleY(0.8f).setDuration(800).start();
+                    layoutOppAvatar.animate().scaleX(1.2f).scaleY(1.2f).setDuration(800).start();
+                }
+            }
+        }, 7000); // 7000 միլիվայրկյան = 7 վայրկյան
+
+        // Վերադարձ մենյու
         btnBack.setOnClickListener(v -> {
-            startActivity(new Intent(BattleResultActivity.this, MainActivity.class));
+            Intent intent = new Intent(BattleResultActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             finish();
         });
     }
