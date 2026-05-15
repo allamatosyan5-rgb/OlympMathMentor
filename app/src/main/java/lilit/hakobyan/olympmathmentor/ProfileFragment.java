@@ -187,8 +187,12 @@ public class ProfileFragment extends Fragment {
 
                                 FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid()).child("backup")
                                         .setValue(backupData).addOnCompleteListener(task -> {
+
+                                            // 💡 ԱՅՍՏԵՂ ՄԱՔՐՈՒՄ ԵՆՔ ԲՈԼՈՐ ՀԻՇՈՂՈՒԹՅՈՒՆՆԵՐԸ 💡
                                             profilePrefs.edit().clear().apply();
                                             progressPrefs.edit().clear().apply();
+                                            getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE).edit().clear().apply();
+                                            getContext().getSharedPreferences("OlympiadProgress", Context.MODE_PRIVATE).edit().clear().apply();
 
                                             FirebaseAuth.getInstance().signOut();
                                             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -359,7 +363,7 @@ public class ProfileFragment extends Fragment {
         }
         totalEarnedStars += progressPrefs.getInt("extra_stars", 0);
 
-        // 💡 2. Ավելացնում ենք AI-ի ստուգած Օլիմպիադաներից վաստակած աստղերը
+        // 2. Ավելացնում ենք AI-ի ստուգած Օլիմպիադաներից վաստակած աստղերը
         SharedPreferences myPrefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int aiOlympiadStars = myPrefs.getInt("total_stars", 0);
 

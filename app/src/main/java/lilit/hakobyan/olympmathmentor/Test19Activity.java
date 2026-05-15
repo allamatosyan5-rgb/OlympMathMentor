@@ -45,7 +45,6 @@ public class Test19Activity extends AppCompatActivity {
         feedbackViews = new TextView[questions.length];
 
         for (int i = 0; i < questions.length; i++) {
-            // 1. Ստեղծում ենք հորիզոնական կոնտեյներ հարցի և սրտիկի համար
             LinearLayout questionHeader = new LinearLayout(this);
             questionHeader.setOrientation(LinearLayout.HORIZONTAL);
             questionHeader.setGravity(android.view.Gravity.CENTER_VERTICAL);

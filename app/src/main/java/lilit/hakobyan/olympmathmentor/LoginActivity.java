@@ -12,8 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
-import java.util.HashSet;
-import java.util.Set;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && currentUser.isEmailVerified()) {
-            // Ավտոմատ մուտք գործելիս
+            // Ավտոմատ մուտք գործելիս ստուգում ենք թեստը հանձնե՞լ է, թե՞ չէ
             SharedPreferences progressPrefs = getSharedPreferences("UserProgress", MODE_PRIVATE);
             boolean isTestDone = progressPrefs.getBoolean("entry_test_done", false);
 
@@ -122,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                         profEdit.apply();
                         progEdit.apply();
 
-                        // Որոշում ենք ուր տանել
                         if (testDone != null && testDone) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
@@ -131,7 +128,13 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
 
                     } else {
-                        // Նոր մարդ է, բազա չկա
+                        // 💡 ԼՐԻՎ ՆՈՐ ՕԳՏԱՏԵՐ Է: Մաքրում ենք հեռախոսում մնացած հին "զոմբի" հիշողությունը
+                        getSharedPreferences("UserProfile", MODE_PRIVATE).edit().clear().apply();
+                        getSharedPreferences("UserProgress", MODE_PRIVATE).edit().clear().apply();
+                        getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
+                        getSharedPreferences("OlympiadProgress", MODE_PRIVATE).edit().clear().apply();
+
+                        // Եվ անպայման ուղարկում ենք Entry Test հանձնելու
                         startActivity(new Intent(LoginActivity.this, EntryTestActivity.class));
                         finish();
                     }

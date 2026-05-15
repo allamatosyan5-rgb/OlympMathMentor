@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,7 +20,8 @@ public class EntryTestActivity extends AppCompatActivity {
 
     private TextView tvTimer, tvQuestion;
     private EditText etAnswer;
-    private Button btnNext, btnBack, btnFinish;
+    private Button btnNext, btnBack, btnFinish, btnStartActualTest;
+    private LinearLayout layoutTestContent, layoutIntro;
     private CountDownTimer timer;
 
     private int currentIdx = 0;
@@ -55,8 +58,29 @@ public class EntryTestActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnFinish = findViewById(R.id.btnFinish);
 
-        startTimer();
-        displayQuestion();
+        // ՆՈՐ ԿՈՃԱԿ ԵՎ ԲԱԺԻՆՆԵՐ (Ավելացրու սրանք քո XML-ում եթե չկան)
+        btnStartActualTest = findViewById(R.id.btnStartActualTest);
+        layoutTestContent = findViewById(R.id.layoutTestContent);
+        layoutIntro = findViewById(R.id.layoutIntro);
+
+        // Սկզբնական վիճակը. Ցույց ենք տալիս միայն Ինտրոն
+        if (layoutIntro != null && layoutTestContent != null) {
+            layoutIntro.setVisibility(View.VISIBLE);
+            layoutTestContent.setVisibility(View.GONE);
+        }
+
+        if (btnStartActualTest != null) {
+            btnStartActualTest.setOnClickListener(v -> {
+                layoutIntro.setVisibility(View.GONE);
+                layoutTestContent.setVisibility(View.VISIBLE);
+                startTimer();
+                displayQuestion();
+            });
+        } else {
+            // Եթե XML-ում դեռ չես դրել, միանգամից սկսում ենք, որ ծրագիրը չքրաշվի
+            startTimer();
+            displayQuestion();
+        }
 
         btnNext.setOnClickListener(v -> {
             saveCurrentAnswer();
@@ -113,15 +137,12 @@ public class EntryTestActivity extends AppCompatActivity {
             level = "Intermediate";
         }
 
-        // 1. Պահում ենք պրոֆիլում (Մակարդակը)
         SharedPreferences profilePrefs = getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
         profilePrefs.edit().putString("level", level).apply();
 
-        // 2. Պահում ենք UserProgress-ում, որ հաջորդ անգամ հաստատ իմանա, որ թեստը հանձնված է
         SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         progressPrefs.edit().putBoolean("entry_test_done", true).apply();
 
-        // 3. Ուղարկում ենք Firebase ԱՆՄԻՋԱՊԵՍ
         String userId = FirebaseAuth.getInstance().getUid();
         if (userId != null) {
             FirebaseDatabase.getInstance().getReference("users").child(userId).child("backup").child("profile").child("level").setValue(level);
