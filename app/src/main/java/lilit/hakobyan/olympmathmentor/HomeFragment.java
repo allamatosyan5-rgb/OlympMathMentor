@@ -125,8 +125,14 @@ public class HomeFragment extends Fragment {
             JSONArray partsArray = new JSONArray();
 
             JSONObject textObj = new JSONObject();
-            // 💡 Հրահանգում ենք AI-ին, թե ինչ ֆորմատով տա պատասխանը
-            textObj.put("text", "Generate one fascinating, advanced Olympiad math fact, and one short motivational quote for a math student. Format exactly like this: 'Fact: [your fact] | Motivation: [your motivation]' without any bolding or extra text.");
+
+            // 💡 ՓՈԽՎԱԾ ՀՐԱՀԱՆԳ. Խստորեն պահանջում ենք օգտագործել ՄԻԱՅՆ տառեր և թվեր
+            String prompt = "Generate one fascinating, advanced Olympiad math fact, and one short motivational quote for a math student. " +
+                    "CRITICAL INSTRUCTION: You must use ONLY plain letters and numbers. Do NOT use ANY mathematical symbols, equations, special characters, or formulas. " +
+                    "Write everything out in plain words. " +
+                    "Format exactly like this: 'Fact: [your fact] | Motivation: [your motivation]' without any bolding or extra text.";
+
+            textObj.put("text", prompt);
             partsArray.put(textObj);
             part.put("parts", partsArray);
             contents.put(part);
@@ -195,7 +201,7 @@ public class HomeFragment extends Fragment {
             String[] insights = {
                     "Prime numbers are the atoms of mathematics. Everything is built from them.",
                     "Zero was invented in India and changed the world of math forever.",
-                    "The Golden Ratio (1.618) is found everywhere in nature, from shells to galaxies."
+                    "The Golden Ratio is found everywhere in nature, from shells to galaxies."
             };
             String[] motivations = {
                     "Success is a function of persistence. Keep solving!",

@@ -58,7 +58,6 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout, btnAddAchievement, btnAddGoal;
     private CardView cvMyMistakes, cvFavourites;
 
-    // ՆՈՐՈՒԹՅՈՒՆՆԵՐԻ ՆՈՐ ՓՈՓՈԽԱԿԱՆՆԵՐԸ 💡
     private LinearLayout btnShowNews;
     private View viewNewsDot;
     private String currentAdminNews = "";
@@ -123,15 +122,13 @@ public class ProfileFragment extends Fragment {
         cvMyMistakes = view.findViewById(R.id.cvMyMistakes);
         cvFavourites = view.findViewById(R.id.cvFavourites);
 
-        // ԳՏՆՈՒՄ ԵՆՔ ՆՈՐՈՒԹՅՈՒՆՆԵՐԻ ԿՈՃԱԿԸ 💡
         btnShowNews = view.findViewById(R.id.btnShowNews);
         viewNewsDot = view.findViewById(R.id.viewNewsDot);
 
-        // ՍԵՂՄԵԼԻՍ ԲԱՑՈՒՄ ԵՆՔ ՆՈՐՈՒԹՅՈՒՆԸ 💡
         btnShowNews.setOnClickListener(v -> {
             if (!currentAdminNews.isEmpty()) {
                 showNewsDialog(currentAdminNews);
-                viewNewsDot.setVisibility(View.GONE); // Նայելուց հետո կետիկը անհետանում է
+                viewNewsDot.setVisibility(View.GONE);
             } else {
                 Toast.makeText(getContext(), "No news for now!", Toast.LENGTH_SHORT).show();
             }
@@ -210,13 +207,11 @@ public class ProfileFragment extends Fragment {
         calculateStatsAndBadges();
         updateMistakesAndFavsCount();
 
-        // Կանչում ենք նորությունները լսող ֆունկցիան
         listenForAdminNews();
 
         return view;
     }
 
-    // ՆՈՐՈՒԹՅՈՒՆՆԵՐԸ ՑՈՒՅՑ ՏՎՈՂ ՊԱՏՈՒՀԱՆԸ 💡
     private void showNewsDialog(String message) {
         if (getContext() != null) {
             new AlertDialog.Builder(getContext())
@@ -227,7 +222,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    // ՆՈՐՈՒԹՅՈՒՆՆԵՐԸ ԼՍՈՂ ՖՈՒՆԿՑԻԱՆ 💡
     private void listenForAdminNews() {
         DatabaseReference newsRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
                 .getReference("app_news").child("latest_message");
@@ -350,20 +344,29 @@ public class ProfileFragment extends Fragment {
 
     private void calculateStatsAndBadges() {
         if (getContext() == null) return;
-        SharedPreferences prefs = requireContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
 
+        // 1. Դասերի և թեստերի աստղերը
+        SharedPreferences progressPrefs = requireContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         totalEarnedStars = 0;
         int solvedCount = 0;
 
         for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
-            int lessonStars = prefs.getInt("stars_lesson_" + i, 0);
+            int lessonStars = progressPrefs.getInt("stars_lesson_" + i, 0);
             if (lessonStars > 0) {
                 totalEarnedStars += lessonStars;
                 solvedCount++;
             }
         }
+        totalEarnedStars += progressPrefs.getInt("extra_stars", 0);
 
-        totalEarnedStars += prefs.getInt("extra_stars", 0);
+        // 💡 2. Ավելացնում ենք AI-ի ստուգած Օլիմպիադաներից վաստակած աստղերը
+        SharedPreferences myPrefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        int aiOlympiadStars = myPrefs.getInt("total_stars", 0);
+
+        // Ստանում ենք ընդհանուր գումարը
+        totalEarnedStars += aiOlympiadStars;
+
+        // Տպում ենք էկրանին
         tvTotalStars.setText(String.valueOf(totalEarnedStars));
         tvSolvedProblems.setText(String.valueOf(solvedCount));
 
@@ -372,8 +375,8 @@ public class ProfileFragment extends Fragment {
 
         long currentTimeMillis = System.currentTimeMillis();
         long currentDay = currentTimeMillis / (1000 * 60 * 60 * 24);
-        long lastLoginDay = prefs.getLong("last_login_day", 0);
-        currentStreakCount = prefs.getInt("current_streak", 0);
+        long lastLoginDay = progressPrefs.getLong("last_login_day", 0);
+        currentStreakCount = progressPrefs.getInt("current_streak", 0);
 
         if (lastLoginDay == 0) {
             currentStreakCount = 1;
@@ -386,11 +389,11 @@ public class ProfileFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String todayStr = sdf.format(new Date());
 
-        Set<String> history = prefs.getStringSet("login_history", new HashSet<>());
+        Set<String> history = progressPrefs.getStringSet("login_history", new HashSet<>());
         Set<String> updatedHistory = new HashSet<>(history);
         updatedHistory.add(todayStr);
 
-        prefs.edit()
+        progressPrefs.edit()
                 .putLong("last_login_day", currentDay)
                 .putInt("current_streak", currentStreakCount)
                 .putStringSet("login_history", updatedHistory)

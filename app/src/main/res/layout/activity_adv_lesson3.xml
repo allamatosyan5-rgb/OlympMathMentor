@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 3: Advanced Inequality Proving Techniques"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Jensen's Inequality and Convexity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jensen's Inequality is a remarkably powerful tool in mathematical olympiads that bridges the gap between algebra and calculus. It relies on the concept of convexity. A real-valued function f(x) is considered 'convex' on an interval if, for any two points in that interval, the line segment connecting their graphs lies strictly above the graph of the function. Mathematically, if the second derivative f''(x) > 0, the function is convex. Jensen's theorem states that for any convex function f, and any positive weights w1, w2, ..., wn that sum to 1, the value of the function at the weighted average of points is always less than or equal to the weighted average of the function's values at those points: f(w1*x1 + w2*x2 + ... + wn*xn) &lt;= w1*f(x1) + w2*f(x2) + ... + wn*f(xn). If the function is 'concave' (f''(x) &lt; 0), the inequality sign is reversed. By choosing f(x) = -ln(x) (which is convex), we can instantly prove the generalized AM-GM inequality in just one line!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Schur's Inequality"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="When symmetric inequalities involving three variables cannot be solved by AM-GM or Cauchy-Schwarz, Olympiad veterans turn to Schur's Inequality. For any non-negative real numbers x, y, z, and a positive number t, Schur's theorem states: x^t(x-y)(x-z) + y^t(y-z)(y-x) + z^t(z-x)(z-y) &gt;= 0. Equality holds if and only if x=y=z, or two of them are equal and the third is zero. The proof relies on symmetry. Since the inequality is completely symmetric, we can assume without loss of generality that x &gt;= y &gt;= z. Then the term z^t(z-x)(z-y) is trivially non-negative. We then group the first two terms: (x-y)[x^t(x-z) - y^t(y-z)]. Since x &gt;= y and x &gt;= z, it is clear that x^t &gt;= y^t and (x-z) &gt;= (y-z). Therefore, the product is always non-negative. This handles extremely resistant polynomial inequalities seamlessly."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Majorization and Muirhead's Theorem"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Muirhead's Inequality is an advanced theorem used to compare symmetric sums. Before understanding Muirhead, you must understand 'Majorization'. A sequence of exponents A = (a1, a2, a3) 'majorizes' another sequence B = (b1, b2, b3) if they have the same sum, and the partial sums of the sorted elements of A are always greater than or equal to the partial sums of B. Muirhead's theorem states that if A majorizes B, then the symmetric sum generated by exponents A, denoted as T[A], is always greater than or equal to the symmetric sum T[B] for any positive real variables. For instance, the sequence (3,0,0) majorizes (1,1,1). Therefore, a^3 + b^3 + c^3 is always greater than or equal to 3abc. Muirhead basically automates the application of AM-GM for complex homogeneous polynomials, saving massive amounts of algebraic manipulation."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that for any non-negative real numbers a, b, c, the following holds: a^3 + b^3 + c^3 + 3abc &gt;= ab(a+b) + bc(b+c) + ca(c+a)."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: This looks daunting for AM-GM. Let's apply Schur's Inequality directly. By setting the parameter t = 1, Schur gives: a(a-b)(a-c) + b(b-c)(b-a) + c(c-a)(c-b) &gt;= 0. Let us violently expand this expression. The first term becomes a(a^2 - ac - ab + bc) = a^3 - a^2c - a^2b + abc. Doing this for all three terms and summing them up, we get: (a^3 + b^3 + c^3) - (a^2b + ab^2 + b^2c + bc^2 + c^2a + ca^2) + 3abc &gt;= 0. Notice that the negative terms can be factored perfectly: a^2b + ab^2 = ab(a+b). Thus, the negative terms are exactly ab(a+b) + bc(b+c) + ca(c+a). Moving them to the right side of the inequality yields exactly our target: a^3 + b^3 + c^3 + 3abc &gt;= ab(a+b) + bc(b+c) + ca(c+a). The proof is complete with stunning elegance."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 3"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 5: Complex Polynomials and Irreducibility"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Complex Roots of Unity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In advanced Olympiads, real numbers are often not enough. We must use complex numbers. The equation x to the power of n minus 1 equals 0 has exactly n distinct roots in the complex plane. These are called the n-th roots of unity. They are distributed perfectly evenly around a circle of radius 1. A magical property of these roots is that their sum is always exactly zero for any n greater than 1. If we call the first non-real root omega, the roots are simply 1, omega, omega squared, up to omega to the power of n minus 1. This property allows us to filter terms in huge polynomial sums by replacing the variable with roots of unity and adding the results."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Lagrange Interpolation Formula"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Imagine you are given n specific points on a graph, and you need to find a polynomial that passes perfectly through all of them. Lagrange Interpolation is the ultimate tool for this. It guarantees that a polynomial of degree n minus 1 is completely and uniquely determined by its values at n distinct points. The formula builds the polynomial by creating special basis functions that evaluate to 1 at their designated point and evaluate to 0 at all other given points. By multiplying each basis function by the desired height and summing them up, you construct the exact polynomial required without solving massive systems of linear equations."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Eisenstein Criterion for Irreducibility"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Often, you are asked to prove that a polynomial cannot be factored into two smaller polynomials with integer coefficients. This is called irreducibility. Eisenstein formulated a brilliant test for this. If you can find a single prime number p such that p divides every coefficient of the polynomial EXCEPT the leading coefficient, AND the prime squared does not divide the constant term, then the polynomial is absolutely irreducible over the rational numbers. By Gauss Lemma, this also means it cannot be factored over the integers. It is a one hit knockout for many impossible looking factoring problems."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let p be a prime number. Prove that the cyclotomic polynomial f of x, which equals x to the power of p minus 1, plus x to the power of p minus 2, all the way down to plus 1, cannot be factored into smaller polynomials with integer coefficients."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We cannot apply Eisenstein directly because all coefficients are 1. However, irreducibility is preserved if we shift the variable. Let us substitute x with y plus 1. The original polynomial is equivalent to the fraction of x to the power of p minus 1, divided by x minus 1. If we substitute y plus 1, the numerator becomes y plus 1 to the power of p, minus 1. The denominator is just y. Using the binomial expansion on the numerator, the constant 1 cancels out with the minus 1. Then dividing everything by y leaves us with a polynomial where the leading term is y to the power of p minus 1, and the constant term is exactly p. Because p is prime, all intermediate binomial coefficients are perfectly divisible by p. The leading coefficient is 1, which is not divisible by p. The constant term is p, which is divisible by p, but NOT divisible by p squared. Eisenstein Criterion is perfectly satisfied! Therefore, the shifted polynomial is irreducible, which proves the original polynomial is also irreducible. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 5"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

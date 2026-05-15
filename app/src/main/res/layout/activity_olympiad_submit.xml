@@ -108,21 +108,21 @@
                 android:visibility="gone"/>
         </LinearLayout>
 
+        <!-- ԱՐԴՅՈՒՆՔԻ ԲԼՈԿԸ -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitToAI"
             android:layout_width="match_parent"
             android:layout_height="65dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/deep_brown"
             android:text="SUBMIT FOR AI GRADING"
             android:textSize="18sp"
-            android:backgroundTint="@color/deep_brown"
-            app:cornerRadius="12dp"
-            android:layout_marginBottom="20dp"/>
+            app:cornerRadius="12dp" />
 
-        <!-- ԱՐԴՅՈՒՆՔԻ ԲԼՈԿԸ -->
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieGrading"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="500dp"
+            android:layout_height="500dp"
             android:layout_gravity="center"
             android:visibility="gone"
             app:lottie_rawRes="@raw/loading"

@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -190,17 +191,15 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
         lottieGrading.setVisibility(View.VISIBLE);
         tvAiFeedback.setVisibility(View.GONE);
 
-        // Հրահանգ, որտեղ AI-ն գիտի որ օլիմպիադան է
+        // Խստացված հրահանգ, որ միանշանակ ճիշտ ֆորմատով պատասխանի և վերևում գրի SCORE
         String aiPrompt = "You are a strict, expert Mathematics Olympiad Judge. " +
                 "Evaluate this student's solution for the " + olympiadName + " " + olympiadYear + ", Problem Number " + problemNum + ". " +
                 "Student's explanation: '" + solutionText + "'. " +
                 "Analyze the logic rigorously. Tell them what is correct and what is flawed. " +
                 "Finally, you MUST grade this strictly from 0 to 3 stars (0=completely wrong, 1=some valid ideas, 2=minor flaws, 3=perfect proof). " +
-                "Your response MUST start exactly with 'SCORE: X' (where X is the number), followed by your detailed feedback.";
+                "CRITICAL: The VERY FIRST LINE of your response MUST be exactly 'SCORE: X' (where X is a single digit 0, 1, 2, or 3). Do not add any extra words on this first line. Write your detailed feedback starting from the second line.";
 
-        // 💡 ՕԳՏԱԳՈՐԾՎՈՒՄ Է ՔՈ ԹԱՔՑՐԱԾ ԲԱՆԱԼԻՆ
         String apiKey = BuildConfig.GEMINI_API_KEY;
-        // 💡 ՎԵՐԱԴԱՐՁՎԱԾ Է ՔՈ ՆՇԱԾ ՄՈԴԵԼԻ ԱՆՎԱՆՈՒՄԸ: gemini-2.5-flash
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey;
 
         try {
@@ -214,6 +213,17 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
             partsArray.put(textObj);
 
             if (selectedImageBitmap != null) {
+                // ՆԿԱՐԻ ՓՈՔՐԱՑՈՒՄ ՈՐՊԵՍԶԻ TIMEOUT ՉՏԱ
+                int maxDim = 800;
+                int width = selectedImageBitmap.getWidth();
+                int height = selectedImageBitmap.getHeight();
+                if (width > maxDim || height > maxDim) {
+                    float ratio = Math.min((float) maxDim / width, (float) maxDim / height);
+                    width = Math.round((float) ratio * width);
+                    height = Math.round((float) ratio * height);
+                    selectedImageBitmap = Bitmap.createScaledBitmap(selectedImageBitmap, width, height, false);
+                }
+
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
                 String base64Image = Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);
@@ -239,15 +249,21 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(url)
                     .post(body)
-                    .addHeader("Content-Type", "application/json") // Ապահովության համար
+                    .addHeader("Content-Type", "application/json")
                     .build();
 
-            OkHttpClient client = new OkHttpClient();
+            // TIMEOUT ԿԱՐԳԱՎՈՐՈՒՄՆԵՐԸ (60 վայրկյան)
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .build();
+
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     if (isDestroyed()) return;
-                    runOnUiThread(() -> showError("Network Error: Could not connect to Math AI."));
+                    runOnUiThread(() -> showError("Network Error:\n" + e.getMessage() + "\nCheck internet connection."));
                 }
 
                 @Override
@@ -285,7 +301,6 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
                             runOnUiThread(() -> showError("Error reading Mentor response."));
                         }
                     } else {
-                        // 💡 ԴԻԱԳՆՈՍՏԻԿԱ. Սխալի դեպքում կտպի հստակ պատճառը
                         final int statusCode = response.code();
                         runOnUiThread(() -> showError("Google API Error (" + statusCode + "):\nDetails: " + responseData));
                     }
@@ -305,18 +320,27 @@ public class OlympiadSubmitActivity extends AppCompatActivity {
 
         int pointsEarned = 0;
         String cleanResponse = aiResponse;
+        String upperResponse = cleanResponse.toUpperCase();
 
-        if (cleanResponse.toUpperCase().startsWith("SCORE:")) {
+        // Խելացիացված կարդալու մեխանիզմ։ Գտնում է SCORE բառը ցանկացած տեղում:
+        if (upperResponse.contains("SCORE:")) {
             try {
-                String firstLine = cleanResponse.split("\n")[0];
-                String scoreStr = firstLine.replaceAll("[^0-9]", "");
+                int scoreIndex = upperResponse.indexOf("SCORE:");
+                int endOfLine = upperResponse.indexOf('\n', scoreIndex);
+                if (endOfLine == -1) endOfLine = upperResponse.length();
+
+                String scoreLine = upperResponse.substring(scoreIndex, endOfLine);
+                String scoreStr = scoreLine.replaceAll("[^0-9]", ""); // Մաքրում ենք բոլոր տառերը
+
                 if (!scoreStr.isEmpty()) {
-                    pointsEarned = Integer.parseInt(scoreStr);
+                    // Վերցնում ենք միայն ամենաառաջին թիվը
+                    pointsEarned = Integer.parseInt(String.valueOf(scoreStr.charAt(0)));
                     if (pointsEarned > 3) pointsEarned = 3;
                 }
             } catch (Exception ignored) {}
         }
 
+        // Գումարում ենք պրոֆիլի աստղերին (MyPrefs)
         if (pointsEarned > 0) {
             SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             int currentStars = myPrefs.getInt("total_stars", 0);

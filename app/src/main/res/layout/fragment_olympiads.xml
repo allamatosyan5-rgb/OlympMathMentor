@@ -46,6 +46,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_alignParentEnd="true"
@@ -57,15 +58,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_alignEnd="@+id/imageView"
+                    android:layout_marginEnd="20dp"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp">
 
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/rounded_card_bg"
-                        android:backgroundTint="#3E2723"
+                        android:backgroundTint="#8D6E63"
                         android:gravity="center"
                         android:text="IMO"
                         android:textColor="#FFFFFF"
@@ -75,10 +78,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="International Math Olympiad" android:textStyle="bold" android:textSize="16sp" android:textColor="#212121"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="The ultimate challenge." android:textSize="13sp" android:textColor="#757575"/>
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="International Math Olympiad"
+                            android:textColor="#212121"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="The ultimate challenge."
+                            android:textColor="#757575"
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
@@ -120,7 +136,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/rounded_card_bg"
-                        android:backgroundTint="#3E2723"
+                        android:backgroundTint="#8D6E63"
                         android:gravity="center"
                         android:text="EGMO"
                         android:textColor="#FFFFFF"
@@ -175,7 +191,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/rounded_card_bg"
-                        android:backgroundTint="#3E2723"
+                        android:backgroundTint="#8D6E63"
                         android:gravity="center"
                         android:text="BMO"
                         android:textColor="#FFFFFF"
@@ -230,7 +246,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/rounded_card_bg"
-                        android:backgroundTint="#3E2723"
+                        android:backgroundTint="#8D6E63"
                         android:gravity="center"
                         android:text="IZHO"
                         android:textColor="#FFFFFF"
@@ -285,7 +301,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/rounded_card_bg"
-                        android:backgroundTint="#3E2723"
+                        android:backgroundTint="#8D6E63"
                         android:gravity="center"
                         android:text="CMO"
                         android:textColor="#FFFFFF"

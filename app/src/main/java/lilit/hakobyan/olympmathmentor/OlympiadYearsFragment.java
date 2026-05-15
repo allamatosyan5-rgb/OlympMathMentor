@@ -1,6 +1,8 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class OlympiadYearsFragment extends Fragment {
@@ -45,11 +48,18 @@ public class OlympiadYearsFragment extends Fragment {
 
         gridYearsContainer = view.findViewById(R.id.gridYearsContainer);
 
-        List<Integer> years = getYearsForOlympiad(selectedOlympiad);
-
-        populateYears(years);
-
         return view;
+    }
+
+    // 💡 Ավելացված է onResume, որպեսզի էջ վերադառնալիս լուծածների քանակը թարմանա
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (gridYearsContainer != null) {
+            gridYearsContainer.removeAllViews();
+            List<Integer> years = getYearsForOlympiad(selectedOlympiad);
+            populateYears(years);
+        }
     }
 
     private List<Integer> getYearsForOlympiad(String olympiadName) {
@@ -97,6 +107,8 @@ public class OlympiadYearsFragment extends Fragment {
     private void populateYears(List<Integer> years) {
         if (getContext() == null) return;
 
+        SharedPreferences olympPrefs = getContext().getSharedPreferences("OlympiadProgress", Context.MODE_PRIVATE);
+
         for (int year : years) {
             CardView cardView = new CardView(getContext());
 
@@ -141,8 +153,28 @@ public class OlympiadYearsFragment extends Fragment {
             textParams.setMargins(0, 16, 0, 0);
             tvYear.setLayoutParams(textParams);
 
+            // 💡 Կարդում ենք և տպում լուծված խնդիրների քանակը այս տարվա համար
+            int solvedCount = olympPrefs.getStringSet(selectedOlympiad + "_" + year, new HashSet<>()).size();
+            TextView tvSolved = new TextView(getContext());
+            tvSolved.setText("Solved: " + solvedCount);
+            tvSolved.setTextSize(12f);
+            LinearLayout.LayoutParams solvedParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            solvedParams.setMargins(0, 8, 0, 0);
+            tvSolved.setLayoutParams(solvedParams);
+
+            if (solvedCount > 0) {
+                tvSolved.setTextColor(android.graphics.Color.parseColor("#2E7D32")); // Կանաչ
+                tvSolved.setTypeface(null, android.graphics.Typeface.BOLD);
+            } else {
+                tvSolved.setTextColor(android.graphics.Color.GRAY);
+            }
+
             innerLayout.addView(icon);
             innerLayout.addView(tvYear);
+            innerLayout.addView(tvSolved);
             cardView.addView(innerLayout);
 
             cardView.setOnClickListener(v -> {
