@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 9: Geometric Inversion and Ptolemy's Theorem"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. What is Geometric Inversion?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inversion is a magical transformation in geometry that turns circles inside out. Imagine a circle with center O and radius R. For any point P, its inverse is a point P prime on the ray OP such that the product OP times OP prime equals R squared. The point O is called the center of inversion. The boundary of the circle remains completely fixed. Points inside the circle are blasted to the outside, and points outside are pulled inside. The center O maps to infinity!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Astonishing Properties"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The true power of inversion lies in how it transforms shapes. Lines passing through the center map to themselves. But here is the magic: a line NOT passing through the center transforms into a circle that passes through the center! Conversely, a circle passing through the center becomes a straight line. Circles that do not pass through the center map to other circles. Also, inversion is conformal, meaning it preserves the angles at which curves intersect. Tangent circles remain tangent after inversion!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Ptolemy's Theorem"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ptolemy's Theorem is a beautiful relation for cyclic quadrilaterals (quadrilaterals inscribed in a circle). It states that the product of the diagonals is equal to the sum of the products of the opposite sides. In symbols: AC times BD equals AB times CD plus BC times AD. While standard proofs use similar triangles, inversion provides a one-line proof that feels like absolute magic."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove Ptolemy's Theorem for a cyclic quadrilateral ABCD using Geometric Inversion."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let us invert the entire plane centered at point A, with any radius R. Since the points A, B, C, and D lie on a circle passing through the center of inversion A, this entire circle maps to a straight line! Thus, the inverse points B prime, C prime, and D prime will lie on a straight line in that exact order. For points on a line, the distances add up simply: B'C' + C'D' = B'D'. Now, the distance formula for inversion tells us that B'C' = BC * (R^2 / (AB * AC)). Substituting this into our line equation gives: (BC / (AB * AC)) + (CD / (AC * AD)) = (BD / (AB * AD)). Finally, if we multiply this entire equation by (AB * AC * AD), we get BC*AD + AB*CD = AC*BD. This is exactly Ptolemy's Theorem. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 9"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

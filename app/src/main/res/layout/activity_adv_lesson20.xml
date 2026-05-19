@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 20: Combinatorics and Binomial Coefficients"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Binomial coefficients, denoted as 'n choose k', tell us the number of ways to select k items from a set of n. They are the building blocks of combinatorics and probability."/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pascal's triangle is a beautiful arrangement where each number is the sum of the two above it. It elegantly displays all binomial coefficients."/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The binomial theorem describes the algebraic expansion of powers of a binomial (x+y)^n, where the coefficients are exactly the binomial coefficients."/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Problem"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calculate 6 choose 3."/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: 6! / (3! * 3!) = (6*5*4) / (3*2*1) = 20."/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="START FINAL ADVANCED TEST" />
+    </LinearLayout>
+</ScrollView>

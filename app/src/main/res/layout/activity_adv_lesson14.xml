@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 14: Barycentric Coordinates"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. What are Barycentric Coordinates?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Barycentric coordinates are a way of specifying points within a triangle. Any point P in the plane can be uniquely represented as a weighted sum of the triangle's vertices A, B, and C. We write P = uA + vB + wC, where the sum u + v + w = 1. The numbers u, v, w are the barycentric coordinates. These coordinates tell us exactly how much 'mass' we should place at each vertex so that the center of mass of the entire system falls exactly at point P. This is why they are called barycentric (from Greek 'barys' meaning heavy)."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Magic of Weights"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Why bother with these coordinates? Because they make triangle geometry look like pure algebra. If a point is inside the triangle, all its barycentric coordinates are positive. If it is on one of the edges, one coordinate is zero. If it is outside, some are negative! The centroid of the triangle, the point where all three medians meet, has the simplest barycentric coordinates possible: (1/3, 1/3, 1/3). This system turns difficult concurrency problems (like proving lines meet at a point) into simple algebraic checks."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Proving Concurrency"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Barycentric coordinates are essentially the modern, high-tech version of Ceva's Theorem. If you have three lines connecting the vertices of a triangle to points on the opposite edges, barycentric coordinates allow you to write down the exact location of the intersection point. If all three lines yield the same (u, v, w) coordinates, you have proven concurrency! It is much faster and less error-prone than standard Euclidean proofs."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Using barycentric coordinates, find the intersection point of the three medians of triangle ABC and prove they are concurrent."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let the vertices be A(1,0,0), B(0,1,0), and C(0,0,1). The midpoint of edge BC is M_a = (0, 0.5, 0.5). A median connects A to M_a. Any point on this median can be written as (1-t)A + t*M_a = (1-t, 0.5t, 0.5t). For the median from B to M_b, a point is (0.5s, 1-s, 0.5s). For the median from C to M_c, a point is (0.5r, 0.5r, 1-r). Setting these equal to each other, we find that at t = 2/3, s = 2/3, and r = 2/3, all three lines yield the exact same point P = (1/3, 1/3, 1/3). This point P is the centroid. Since all three lines pass through P, they are concurrent at P. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 14"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 17: Chinese Remainder Theorem"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. What is the CRT?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Chinese Remainder Theorem (CRT) is a profound result in number theory. It states that if we have a system of linear congruences with pairwise coprime moduli, there exists a unique solution modulo the product of these moduli. Essentially, it allows us to break down a difficult problem modulo a large number 'n' into several easier problems modulo its prime factors. It is named after the Chinese mathematician Sun Zi, who described it in the 3rd century."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Working with Pairwise Coprime Moduli"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The condition that the moduli are pairwise coprime is crucial. It means that the greatest common divisor of any two different moduli in our system must be 1. If this holds, the CRT guarantees not only that a solution exists but that it is exactly one solution in every block of 'n' consecutive integers. This makes working with huge numbers in modular arithmetic remarkably efficient. If the moduli are NOT coprime, we must check for consistency (a mod m = b mod n) before looking for a solution."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Practical Importance"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beyond Olympiad problems, the CRT is a foundational pillar of computer science. It enables parallel computing for high-precision arithmetic, where operations are performed on smaller numbers and then unified via CRT. It is also used in secret sharing schemes and certain cryptographic systems. Mastering the CRT is not just an academic exercise; it is gaining a deep understanding of how numbers interlock in our universe."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find the smallest positive integer x such that x = 2 mod 3 and x = 3 mod 5."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We have x = 2 mod 3 and x = 3 mod 5. Moduli 3 and 5 are coprime. By CRT, a unique solution exists modulo 3*5 = 15. From the first equation, x = 3k + 2. Substituting this into the second: 3k + 2 = 3 mod 5, which simplifies to 3k = 1 mod 5. To solve 3k = 1 mod 5, we test values: 3*1=3, 3*2=6 (rem 1). Thus, k = 2. Replacing back: x = 3*(2) + 2 = 6 + 2 = 8. Checking: 8 mod 3 is 2, and 8 mod 5 is 3. The smallest positive integer is 8. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 17"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

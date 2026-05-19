@@ -37,6 +37,10 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
     private int playerNum;
     private String roomCode;
 
+    // 💡 Ստանում ենք Lobby-ից եկած տվյալները
+    private String myUserId;
+    private String myUserNameStr;
+
     private TextView tvScore1, tvScore2, tvQuestion, tvQNumber, tvP1Name, tvP2Name, tvBattleTimer;
     private EditText etAnswer;
 
@@ -47,6 +51,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
     private long timeLeftInMillis = 7 * 60 * 1000;
 
     private List<Integer> questionOrder = new ArrayList<>();
+    private boolean gameEnded = false;
 
     private String[] questions = {
             "Last digit of 2^100?", "Trailing zeros in 50!?", "Max pieces of a pizza with 4 straight cuts?",
@@ -62,81 +67,13 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
             "Evaluate log2(128).", "What is the square root of 225?", "How many vertices does a dodecahedron have?",
             "Volume of a cube with side length 4?", "How many ways to arrange 4 distinct books on a shelf?",
             "Calculate 15% of 200.", "What is the next prime after 31?", "Remainder when 100 is divided by 7?",
-            "Sum of the first 5 prime numbers?", "Evaluate: 7! / 5!", "Evaluate 5^3.",
-            "What is 144 divided by 12?", "Surface area of a cube with side length 3?",
-            "Calculate 25 * 25.", "What is the square root of 10000?", "Evaluate log10(1000).",
-            "What is 12^2?", "Perimeter of a square with area 49?", "Number of days in a leap year?",
-            "What is 13^2?", "Median of 1, 3, 5, 7, 9?", "Evaluate 10^4.", "What is 2^8?",
-            "Evaluate 4! + 5!.", "What is 1/2 + 1/4 as a decimal?", "Calculate 7 * 8.",
-            "What is 0!?", "If a polygon has 14 diagonals, how many sides does it have?",
-            "Number of sides in a heptagon?",
-            "How many edges does a tetrahedron have?", "Next number: 1, 4, 9, 16, 25, ?",
-            "What is 20% of 350?", "How many degrees are in a right angle?", "What is 2^10?",
-            "Greatest Common Divisor (GCD) of 100 and 75?", "Least Common Multiple (LCM) of 4, 5, and 6?",
-            "Evaluate: 7! / 6!", "How many prime numbers are less than 10?", "Area of a circle with radius 10? (Use 3.14)",
-            "Perimeter of a rectangle with sides 5 and 12?", "Hypotenuse of a right triangle with legs 6 and 8?",
-            "Sum of internal angles in a regular pentagon?", "What is 11^2?", "What is 15^2?",
-            "Cube root of 64?", "Volume of a box with dimensions 2x3x4?", "What is 50 divided by 0.5?",
-            "What is 30% of 80?", "Sum of the first 5 positive integers?", "Calculate: 1000 - 345",
-            "Product of the first 3 prime numbers?", "How many digits are in the number 10^5?",
-            "Missing number: 3, 6, 12, 24, ?", "Evaluate 5! (5 factorial).", "How many weeks are in a standard year?",
-            "How many sides does a nonagon have?", "Calculate 8 * 9.", "What is the 5th prime number?",
-            "Calculate 99 + 99.", "What is 2 to the power of 6?", "Square root of 144?",
-            "Evaluate log10(100).", "How many letters are in the word MATHEMATICS?", "LCM of 3 and 7?",
-            "How many faces does a cube have?", "Is a triangle with sides 5, 5, 8 isosceles? (Type 1 for Yes, 0 for No)",
-            "What is 3/4 as a percentage?", "Calculate 12 * 12.", "What is 100 / 4?",
-            "What is 1/3 of 90?", "Sum of internal angles in a quadrilateral?", "Distance traveled in 3 hours at 60 km/h?",
-            "What is 7 cubed (7^3)?", "GCD of 14 and 21?", "How many minutes are in a full day?",
-            "Next in sequence: 2, 4, 8, 16, ?", "Calculate 0.1 * 1000.", "Area of a square with a perimeter of 20?",
-            "Sum of integers from 1 to 10?",
-            "What is 14^2?", "What is the square root of 169?", "What is 3^5?", "What is 10% of 500?",
-            "What is 25% of 200?", "What is 3/5 as a percentage?", "Next prime after 13?", "Smallest prime number?",
-            "Sum of angles in a triangle?", "Degrees in a full circle?", "Sides in a decagon?", "Faces on an octahedron?",
-            "Edges on a cube?", "Vertices on a cube?", "Evaluate log2(8).", "Evaluate log3(81).",
-            "Square root of 400?", "What is 16^2?", "What is 20^2?", "What is 5^4?",
-            "What is 1/8 as a decimal?", "Solve for x: 2x = 18", "What is 4!?", "What is 6!?",
-            "What is 0.5 * 0.5?", "What is 1 - 0.99?", "LCM of 2, 3, and 4?", "GCD of 100 and 10?",
-            "Number of items in a dozen?", "Number of items in a baker's dozen?", "What is 1000 / 8?",
-            "What is 7 * 13?", "What is 8 * 12?", "What is 9 * 15?", "Next: 1, 1, 2, 3, 5, 8, 13, ?",
-            "Next: 2, 3, 5, 7, 11, ?", "Solve x/3 = 12", "Solve 5x - 5 = 20", "Solve x^2 = 81 (positive value)",
-            "Solve sqrt(x) = 5", "Area of circle radius 1 (use 3.14)", "Perimeter of square side 10?",
-            "Area of square side 11?", "Area of rectangle 8x9?", "Sum of angles in hexagon?",
-            "Sum of angles in octagon?", "How many degrees is Pi radians?", "How many degrees is Pi/2 radians?",
-            "sin(30 degrees) (decimal)?", "cos(60 degrees) (decimal)?",
-            "tan(45 degrees)?", "Evaluate log10(10000).", "What is 2^7?", "What is 3^3?",
-            "What is 4^3?", "What is 6^3?", "What is 8^3?", "What is 9^3?", "What is 10^3?",
-            "Square root of 81?", "Square root of 121?", "Square root of 196?", "Square root of 225?",
-            "Square root of 256?", "Square root of 289?", "Square root of 324?", "Square root of 361?",
-            "What is 21^2?", "What is 25^2?", "What is 30^2?", "What is 1% of 1000?", "What is 5% of 200?",
-            "What is 50% of 50?", "What is 200% of 15?", "0.2 as a fraction (1/x, find x)?",
-            "0.125 as a fraction (1/x, find x)?", "Sum of 10+11+12?", "Average of 10, 20, 30?",
-            "Average of 5, 10, 15, 20?", "Missing: 100, 90, 80, 70, ?", "Missing: 1, 8, 27, 64, ?",
-            "Evaluate 10! / 9!", "Evaluate 8! / 6!", "What is 2+2*2?", "What is (2+2)*2?",
-            "What is 10-3*3?", "What is 100/10/2?", "What is 100/(10/2)?", "What is 2^2^2?",
-            "LCM of 10 and 15?", "GCD of 24 and 36?", "Number of primes less than 20?",
-            "Smallest composite number?", "Is 51 prime? (1 for Yes, 0 for No)", "Is 91 prime? (1 for Yes, 0 for No)",
-            "What is 7 * 12?", "What is 8 * 15?", "What is 11 * 12?", "Next prime after 19?", "What is 0^0? (conventionally)"
+            "Sum of the first 5 prime numbers?"
     };
 
     private String[] answers = {
             "6", "12", "11", "35", "5050", "42", "60", "5", "36", "1", "64", "720", "81", "12", "1/8",
-            "10", "8", "55", "7", "60", "25", "7", "15", "20", "64", "24", "30", "37", "2", "28", "42", "125",
-            "12", "54", "625", "100", "3", "144", "28", "366", "169", "5", "10000", "256", "144", "0.75", "56",
-            "1", "7", "7",
-            "6", "36", "70", "90", "1024", "25", "60", "7", "4", "314", "34", "10", "540", "121", "225",
-            "4", "24", "100", "24", "15", "655", "30", "6", "48", "120", "52", "9", "72", "11", "198", "64",
-            "12", "2", "11", "21", "6", "1", "75", "144", "25", "30", "360", "180", "343", "7", "1440", "32",
-            "100", "25", "55",
-            "196", "13", "243", "50", "50", "60", "17", "2", "180", "360", "10", "8", "12", "8", "3", "4",
-            "20", "256", "400", "625", "0.125", "9", "24", "720", "0.25", "0.01", "12", "10", "12", "13", "125",
-            "91", "96", "135", "21", "13", "36", "5", "9", "25", "3.14", "40", "121", "72", "720", "1080", "180", "90",
-            "0.5", "0.5",
-            "1", "4", "128", "27", "64", "216", "512", "729", "1000", "9", "11", "14", "15", "16", "17", "18", "19",
-            "441", "625", "900", "10", "10", "25", "30", "5", "8", "33", "20", "12.5", "60", "125", "10", "56",
-            "6", "8", "1", "5", "20", "16", "30", "12", "8", "4", "0", "0", "84", "120", "132", "23", "1"
+            "10", "8", "55", "7", "60", "25", "7", "15", "20", "64", "24", "30", "37", "2", "28"
     };
-
-    private boolean gameEnded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +82,8 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
         roomCode = getIntent().getStringExtra("ROOM_CODE");
         playerNum = getIntent().getIntExtra("PLAYER_NUM", 1);
+        myUserId = getIntent().getStringExtra("USER_ID");
+        myUserNameStr = getIntent().getStringExtra("USER_NAME");
 
         roomRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("battles").child(roomCode);
 
@@ -189,15 +128,13 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                if (!gameEnded) {
-                    endGame("Time's Up!");
-                }
+                if (!gameEnded) endGame("Time's Up!");
             }
         }.start();
     }
 
     private void updateQuestionUI() {
-        if (currentQIndex < 10) {
+        if (currentQIndex < 10 && currentQIndex < questions.length) {
             int realIndex = questionOrder.get(currentQIndex);
             tvQuestion.setText(questions[realIndex]);
             tvQNumber.setText("Question " + (currentQIndex + 1) + "/10");
@@ -223,9 +160,7 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                     if (s2 != null) tvScore2.setText(String.valueOf(s2));
 
                     if (s1 != null && s2 != null && !gameEnded) {
-                        if (s1 >= 10 || s2 >= 10) {
-                            endGame("Someone reached 10 points!");
-                        }
+                        if (s1 >= 10 || s2 >= 10) endGame("Someone reached 10 points!");
                     }
                 }
             }
@@ -259,112 +194,68 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
         updateQuestionUI();
     }
 
-    // ==========================================
-    // AI ԴԱՏԱՎՈՐԻ ԻՆՏԵԳՐՈՒՄ (Ճշգրտված URL-ով)
-    // ==========================================
     private void verifyWithAIJudge(String question, String officialAnswer, String userAnswer) {
         findViewById(R.id.btnSubmitBattle).setEnabled(false);
-        Toast.makeText(this, "AI is verifying your answer...", Toast.LENGTH_SHORT).show();
 
-        String aiPrompt = "You are an automated, strict math judge. " +
-                "Question: '" + question + "'. " +
-                "Official Correct Answer: '" + officialAnswer + "'. " +
-                "User's Submitted Answer: '" + userAnswer + "'. " +
-                "Are the user's answer and the official answer mathematically equivalent? " +
-                "(For example, 1/8 and 0.125 are equivalent). " +
-                "Respond STRICTLY with one word only: YES or NO.";
+        String aiPrompt = "Determine if these two math answers are equivalent. " +
+                "Official: '" + officialAnswer + "'. User: '" + userAnswer + "'. " +
+                "Respond ONLY with 'YES' or 'NO'.";
 
-        String apiKey = "AIzaSyCne1J1x_bXT9kP2bj8h-SVdSMeYBHwMC8";
-
-        // 💡 Ահա միակ ճիշտ և աշխատող մոդելը Google-ի սերվերների համար
+        String apiKey = BuildConfig.GEMINI_API_KEY;
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
 
+        JSONObject jsonBody = new JSONObject();
         try {
-            JSONObject jsonBody = new JSONObject();
             JSONArray contents = new JSONArray();
             JSONObject part = new JSONObject();
             JSONArray partsArray = new JSONArray();
-
             JSONObject textObj = new JSONObject();
             textObj.put("text", aiPrompt);
             partsArray.put(textObj);
-
             part.put("parts", partsArray);
             contents.put(part);
+            jsonBody.put("contents", contents);
 
             JSONObject config = new JSONObject();
             config.put("temperature", 0.1);
             jsonBody.put("generationConfig", config);
+        } catch (Exception e) { e.printStackTrace(); }
 
-            jsonBody.put("contents", contents);
+        RequestBody body = RequestBody.create(jsonBody.toString(), MediaType.get("application/json; charset=utf-8"));
+        Request request = new Request.Builder().url(url).post(body).addHeader("Content-Type", "application/json").build();
 
-            RequestBody body = RequestBody.create(jsonBody.toString(), MediaType.get("application/json; charset=utf-8"));
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .addHeader("Content-Type", "application/json")
-                    .build();
+        new OkHttpClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(() -> {
+                    findViewById(R.id.btnSubmitBattle).setEnabled(true);
+                    Toast.makeText(MultiplayerBattleActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                });
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject jsonResponse = new JSONObject(responseData);
+                        String aiResponse = jsonResponse.getJSONArray("candidates")
+                                .getJSONObject(0).getJSONObject("content")
+                                .getJSONArray("parts").getJSONObject(0).getString("text").trim().toUpperCase();
 
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    runOnUiThread(() -> {
-                        findViewById(R.id.btnSubmitBattle).setEnabled(true);
-                        Toast.makeText(MultiplayerBattleActivity.this, "Network Error! Try again.", Toast.LENGTH_SHORT).show();
-                    });
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    runOnUiThread(() -> findViewById(R.id.btnSubmitBattle).setEnabled(true));
-
-                    if (response.isSuccessful() && response.body() != null) {
-                        try {
-                            String responseData = response.body().string();
-                            JSONObject jsonResponse = new JSONObject(responseData);
-
-                            if (jsonResponse.has("candidates")) {
-                                JSONArray candidates = jsonResponse.getJSONArray("candidates");
-                                if (candidates.length() > 0) {
-                                    JSONObject firstCandidate = candidates.getJSONObject(0);
-
-                                    if (firstCandidate.has("content")) {
-                                        String aiText = firstCandidate.getJSONObject("content")
-                                                .getJSONArray("parts").getJSONObject(0).getString("text");
-
-                                        final String cleanText = aiText.replace("**", "").trim().toUpperCase();
-
-                                        if (!cleanText.isEmpty()) {
-                                            runOnUiThread(() -> {
-                                                if (cleanText.contains("YES")) {
-                                                    processCorrectAnswer();
-                                                } else {
-                                                    Toast.makeText(MultiplayerBattleActivity.this, "Wrong! Try again.", Toast.LENGTH_SHORT).show();
-                                                    etAnswer.setText("");
-                                                }
-                                            });
-                                            return;
-                                        }
-                                    }
-                                }
+                        runOnUiThread(() -> {
+                            findViewById(R.id.btnSubmitBattle).setEnabled(true);
+                            if (aiResponse.contains("YES")) processCorrectAnswer();
+                            else {
+                                Toast.makeText(MultiplayerBattleActivity.this, "Wrong! Try again.", Toast.LENGTH_SHORT).show();
+                                etAnswer.setText("");
                             }
-                            runOnUiThread(() -> Toast.makeText(MultiplayerBattleActivity.this, "Sorry, received a blank response.", Toast.LENGTH_SHORT).show());
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            runOnUiThread(() -> Toast.makeText(MultiplayerBattleActivity.this, "Error parsing AI response.", Toast.LENGTH_SHORT).show());
-                        }
-                    } else {
-                        runOnUiThread(() -> Toast.makeText(MultiplayerBattleActivity.this, "Server error (" + response.code() + "). Please try again.", Toast.LENGTH_SHORT).show());
-                    }
+                        });
+                    } catch (Exception e) { e.printStackTrace(); }
+                } else {
+                    runOnUiThread(() -> findViewById(R.id.btnSubmitBattle).setEnabled(true));
                 }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            findViewById(R.id.btnSubmitBattle).setEnabled(true);
-        }
+            }
+        });
     }
 
     private void endGame(String reason) {
@@ -379,10 +270,8 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 String p1Name = snapshot.child("player1").getValue(String.class);
                 String p2Name = snapshot.child("player2").getValue(String.class);
 
-                if (s1 == null) s1 = 0;
-                if (s2 == null) s2 = 0;
-                if (p1Name == null) p1Name = "Player 1";
-                if (p2Name == null) p2Name = "Player 2";
+                if (s1 == null) s1 = 0; if (s2 == null) s2 = 0;
+                if (p1Name == null) p1Name = "Player 1"; if (p2Name == null) p2Name = "Player 2";
 
                 int myScore = (playerNum == 1) ? s1 : s2;
                 int oppScore = (playerNum == 1) ? s2 : s1;
@@ -390,10 +279,24 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 String myName = (playerNum == 1) ? p1Name : p2Name;
                 String oppName = (playerNum == 1) ? p2Name : p1Name;
 
-                int starsEarned = myScore;
+                // 💡 ՊԱՀՊԱՆՈՒՄ ԵՆՔ ԱՐԴՅՈՒՆՔՆԵՐԸ FIREBASE-ՈՒՄ 💡
+                if (myUserId != null) {
+                    DatabaseReference userRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("Users").child(myUserId);
 
-                if (starsEarned > 0) {
-                    saveBattleStars(starsEarned);
+                    SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    int currentTotalStars = myPrefs.getInt("total_stars", 0);
+                    int newTotalStars = currentTotalStars + myScore; // Ավելանում են խաղում վաստակածը
+
+                    myPrefs.edit().putInt("total_stars", newTotalStars).apply();
+
+                    userRef.child("name").setValue(myName);
+                    userRef.child("stars").setValue(newTotalStars);
+
+                    java.util.HashMap<String, Object> historyMap = new java.util.HashMap<>();
+                    historyMap.put("oppName", oppName);
+                    historyMap.put("myScore", myScore);
+                    historyMap.put("oppScore", oppScore);
+                    userRef.child("history").push().setValue(historyMap);
                 }
 
                 Intent intent = new Intent(MultiplayerBattleActivity.this, BattleResultActivity.class);
@@ -401,25 +304,14 @@ public class MultiplayerBattleActivity extends AppCompatActivity {
                 intent.putExtra("OPP_SCORE", oppScore);
                 intent.putExtra("MY_NAME", myName);
                 intent.putExtra("OPP_NAME", oppName);
-                intent.putExtra("STARS", starsEarned);
+                intent.putExtra("STARS", myScore);
 
                 if (playerNum == 1) roomRef.removeValue();
-
                 startActivity(intent);
                 finish();
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
-    }
-
-    private void saveBattleStars(int newStars) {
-        SharedPreferences battlePrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-        int currentBattleStars = battlePrefs.getInt("battle_stars", 0);
-        battlePrefs.edit().putInt("battle_stars", currentBattleStars + newStars).apply();
-
-        SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int currentTotalStars = myPrefs.getInt("total_stars", 0);
-        myPrefs.edit().putInt("total_stars", currentTotalStars + newStars).apply();
     }
 
     @Override

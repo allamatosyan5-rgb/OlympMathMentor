@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 13: Projective Geometry and Cross Ratios"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. The Projective Plane"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In normal Euclidean geometry, parallel lines never meet. Projective geometry fixes this 'flaw' by adding points at infinity. Now, EVERY pair of lines intersects at exactly one point! All these new points at infinity form a single 'line at infinity'. This symmetry between points and lines leads to the Principle of Duality: any valid theorem in projective geometry remains true if you simply swap the words 'point' and 'line'."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Cross Ratio and Harmonic Bundles"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="When we project shapes, distances and angles get completely distorted. However, one magical quantity survives perfectly: The Cross Ratio. For four collinear points A, B, C, D, the cross ratio is (AC/CB) / (AD/DB). No matter how you project these points onto another line, this ratio remains mathematically identical! A very special case is when the cross ratio equals -1. This is called a Harmonic Bundle. If points form a harmonic bundle, they possess incredible symmetric properties that can instantly solve complex collinearity problems."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Poles and Polars"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="For any circle, every point (the Pole) corresponds to a unique line (the Polar), and every line corresponds to a point. If you draw two tangents to a circle from an external point P, the line connecting the two contact points is the Polar of P. The magic is La Hire's Theorem: If a point A lies on the polar of B, then B MUST lie on the polar of A. This instantly turns impossible intersection proofs into a one-line logical statement."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let A, B, C, D be four points on a line. Prove that the cross ratio is invariant under central projection to another line."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let the center of projection be O. The points A, B, C, D are projected to A', B', C', D'. We use the area of a triangle formula: Area(OAC) = 0.5 * OA * OC * sin(AOC). Also, Area(OAC) = 0.5 * AC * h, where h is the altitude from O to the line. By equating these, the segment AC is proportional to sin(AOC). When we calculate the cross ratio (AC*BD) / (AD*BC), all the lengths OA, OB, OC, OD, and the altitude h perfectly cancel out in the fraction! We are left strictly with sines of angles at O: (sin(AOC)*sin(BOD)) / (sin(AOD)*sin(BOC)). Since projecting to a new line does not change the angles at O, the new cross ratio using A', B', C', D' will yield the exact same sine fraction. Thus, the cross ratio is absolutely invariant. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 13"
+            android:textSize="18sp"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

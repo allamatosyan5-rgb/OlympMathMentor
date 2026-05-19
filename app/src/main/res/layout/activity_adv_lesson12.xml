@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 12: Quadratic Residues and Reciprocity"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. What is a Quadratic Residue?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In modular arithmetic, we say that a number 'a' is a quadratic residue modulo 'p' if there exists some integer x such that x squared is congruent to 'a' modulo 'p'. If no such x exists, 'a' is a quadratic non-residue. To represent this elegantly, mathematicians use the Legendre Symbol (a/p). It equals 1 if 'a' is a residue, -1 if it is a non-residue, and 0 if 'p' divides 'a'. Euler's Criterion gives us a fast way to compute this: (a/p) is congruent to 'a' to the power of (p-1)/2 modulo 'p'."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Law of Quadratic Reciprocity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Carl Friedrich Gauss called this his Golden Theorem. It reveals a breathtaking symmetry between prime numbers. If you take two distinct odd primes, p and q, the Law states that the solvability of x squared equals p modulo q is directly connected to x squared equals q modulo p. Specifically, (p/q) multiplied by (q/p) equals 1, UNLESS both p and q are congruent to 3 modulo 4. In that single special case, the product is -1. This allows us to flip the Legendre symbol and easily compute residues for massive numbers."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Destroying Diophantine Equations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Why do Olympiad students love quadratic residues? Because they are the ultimate weapon for proving that certain Diophantine equations have NO integer solutions. If an equation has a solution in integers, it must also have a solution modulo any prime p. By cleverly choosing a prime modulus, we can show that one side of the equation is a quadratic residue, while the other side evaluates to a non-residue. This creates an impossible scenario, proving no integers can ever solve the original equation."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that the equation x^2 - 5y^2 = 2 has no integer solutions."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: We will use modular arithmetic and quadratic residues. Let us examine the entire equation modulo 5. The term -5y^2 becomes a multiple of 5, so it completely vanishes modulo 5. The equation simplifies beautifully to: x^2 is congruent to 2 modulo 5. Now we must ask: Is 2 a quadratic residue modulo 5? We can use Euler's Criterion to check. The Legendre symbol (2/5) is congruent to 2 to the power of (5-1)/2, which is 2^2 = 4. Modulo 5, 4 is congruent to -1. Since the result is -1, 2 is a quadratic NON-residue modulo 5. This means there is no integer x that, when squared, leaves a remainder of 2 upon division by 5. Since it has no solutions modulo 5, the original equation can never have integer solutions. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 12"
+            android:textSize="18sp"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

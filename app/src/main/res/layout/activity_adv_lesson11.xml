@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 11: Vieta Jumping and Root Flipping"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Vieta's Formulas Recapped"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Before we jump, we must understand the foundation. For any quadratic equation x squared minus p times x plus q equals zero, Vieta's formulas state that the sum of the two roots, x1 plus x2, is exactly p. The product of the roots, x1 times x2, is exactly q. If we know one root, x1, we can easily find the second root by calculating x2 equals p minus x1, or x2 equals q divided by x1."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. The Method of Vieta Jumping"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vieta Jumping is an elegant proof by contradiction used in Number Theory. Suppose we want to prove a property about a relation involving two integers, a and b. We assume there exists a pair that fails the property. Among all such pairs, we pick the one where the sum a plus b is the absolute smallest. We then treat the relation as a quadratic equation with respect to a. Since a is a root, Vieta's formulas guarantee there is a second root, let us call it a2. By analyzing the sum and product, we prove that a2 is also an integer, it is positive, and amazingly, a2 is strictly smaller than our original a!"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Infinite Descent and Contradiction"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Why is it called jumping? Because we took a solution (a, b) and jumped to a smaller valid solution (a2, b). But wait! We started by assuming that our original pair was the SMALLEST possible solution. Finding a smaller one creates a mathematical contradiction. The method of infinite descent tells us you cannot keep finding smaller and smaller positive integers forever. Therefore, our initial assumption must be totally false, proving the original theorem true."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Legendary IMO 1988 Problem 6"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let a and b be positive integers such that ab+1 divides a^2+b^2. Prove that the fraction (a^2+b^2)/(ab+1) is a perfect square."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let the fraction equal k. We assume by contradiction that k is NOT a perfect square. Let (A, B) be a solution minimizing A+B. Rewrite the equation as a quadratic in A: A^2 - (kB)A + (B^2 - k) = 0. A is one root. By Vieta's formulas, the second root A2 satisfies A + A2 = kB, and A * A2 = B^2 - k. Since A, k, and B are integers, A2 is an integer. If A2 were negative, A^2 - kBA + B^2 - k = 0 could not hold. Since k is not a perfect square, A2 cannot be 0. Thus A2 is positive. Now, A2 = (B^2 - k) / A. Because A is the larger of the pair, A >= B, which means A2 is strictly less than A. We found a new positive integer pair (A2, B) that is smaller than our minimal pair (A, B)! This is a fatal contradiction. Therefore, k MUST be a perfect square. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 11"
+            android:textSize="18sp"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

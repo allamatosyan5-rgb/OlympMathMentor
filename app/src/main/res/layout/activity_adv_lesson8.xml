@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 8: Generating Functions and Catalan Numbers"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Introduction to Generating Functions"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A generating function is a formal power series where the coefficients represent terms of a sequence. Instead of dealing with the sequence directly, we encode it into an algebraic function A(x). This brilliant concept acts as a bridge between discrete combinatorics and continuous algebra. It allows us to use derivatives, integrals, and algebraic operations to manipulate sequences effortlessly. In combinatorics, we generally do not care about the convergence of these series; we treat them purely as algebraic objects."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Solving Recurrence Relations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generating functions are the ultimate tool for solving complex recurrence relations. To solve a recurrence, we follow a simple algorithm: multiply the recurrence relation by x to the power of n, and sum over all valid values of n. This transforms the discrete sequence problem into a single algebraic equation involving A(x). Solving for A(x) and then expanding it back into a power series using techniques like partial fractions or the generalized binomial theorem gives us the exact closed-form formula for the n-th term of the sequence."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. The Catalan Numbers"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Catalan numbers are one of the most famous sequences in mathematics, starting with 1, 1, 2, 5, 14, 42. They count an astonishing variety of structures: valid parenthesis expressions, triangulations of convex polygons, binary trees, and paths on a grid that do not cross the main diagonal. The sequence is defined by a non-linear recurrence. Using generating functions, the closed-form formula for the n-th Catalan number, C_n, is beautifully derived as 1 over (n+1) multiplied by the binomial coefficient (2n choose n)."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How many valid sequences of 3 pairs of parentheses can be formed? Derive the answer using the concept of Catalan numbers."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: This is the classic definition of Catalan numbers. Let C_n be the number of valid sequences. Every valid sequence of length 2n can be uniquely decomposed as `(` A `)` B, where A and B are also valid sequences of smaller lengths. This gives the recurrence relation C_n = Sum of (C_k * C_{n-1-k}). Translating this into generating functions gives a quadratic equation: C(x) = 1 + x * [C(x)]^2. Solving this quadratic equation and expanding the square root yields the formula C_n = (1 / (n+1)) * (2n choose n). For n = 3 pairs of parentheses, we calculate C_3 = (1 / (3+1)) * (6 choose 3). This is (1/4) * 20, which equals 5. The 5 valid sequences are ((())), (()()), (())(), ()(()), and ()()(). Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 8"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

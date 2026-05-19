@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 10: Extremal Graph Theory and Ramsey Numbers"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Extremal Graph Theory"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Graph theory studies networks of points (vertices) and lines (edges). Extremal graph theory asks: 'How many edges can a graph have before it is forced to contain a certain pattern?' For example, Paul Turán proved that if a graph with n vertices contains no triangles, the maximum number of edges it can have is obtained by dividing the vertices into two equal groups and connecting everything between the groups, but nothing within them. This forms a bipartite graph."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Ramsey Theory: Order from Chaos"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ramsey Theory states that absolute chaos is impossible. If a system is large enough, it must contain a highly organized subsystem. The most famous example is the Party Problem. Imagine a party. Any two people are either mutual friends or mutual strangers. Ramsey's theorem proves that if you have at least 6 people, it is mathematically guaranteed that there will be a group of 3 mutual friends, or a group of 3 mutual strangers. This is written as R(3,3) = 6."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. The Probabilistic Method"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To calculate larger Ramsey numbers, mathematicians use a magical technique invented by Paul Erdős: The Probabilistic Method. Instead of constructing a specific graph, you imagine randomly coloring the edges of a graph. If you can prove that the probability of a specific pattern existing is greater than zero, then you have proven that such a graph MUST exist in reality! It is a brilliant way of proving existence without ever finding the actual object."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Prove that R(3,3) = 6. In other words, prove that in any group of 6 people, there is always a group of 3 mutual friends or 3 mutual strangers."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: Let the 6 people be vertices of a complete graph. We color an edge Red for friends, and Blue for strangers. We must prove there is a Red triangle or a Blue triangle. Pick any one person, say Node A. There are 5 edges going out of A to the other 5 people. By the Pigeonhole Principle, since there are only 2 colors, at least 3 of these 5 edges must be the same color. Let us assume at least 3 edges from A are Red. Let the people at the other ends of these Red edges be X, Y, and Z. Now look at the edges between X, Y, and Z. If even ONE of the edges between them is Red (say X-Y is Red), then we have a Red triangle (A-X-Y). But what if NONE of the edges between them are Red? Then X, Y, and Z must all be connected by Blue edges. This forms a completely Blue triangle (X-Y-Z)! In either case, a monochromatic triangle is absolutely inevitable. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 10"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>

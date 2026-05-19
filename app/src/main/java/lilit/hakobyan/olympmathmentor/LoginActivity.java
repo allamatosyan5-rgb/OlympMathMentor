@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,18 +25,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        // 1. Ստուգում ենք՝ եթե արդեն լոգին եղած է, միանգամից բացում ենք հաջորդ էջը
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && currentUser.isEmailVerified()) {
-            // Ավտոմատ մուտք գործելիս ստուգում ենք թեստը հանձնե՞լ է, թե՞ չէ
-            SharedPreferences progressPrefs = getSharedPreferences("UserProgress", MODE_PRIVATE);
-            boolean isTestDone = progressPrefs.getBoolean("entry_test_done", false);
-
-            if (isTestDone) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            } else {
-                startActivity(new Intent(LoginActivity.this, EntryTestActivity.class));
-            }
-            finish();
+            goToNextPage();
             return;
         }
 
@@ -66,17 +56,18 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setEnabled(false);
 
+        // 2. Մուտք ենք գործում Firebase-ով
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null) {
                         if (user.isEmailVerified()) {
-                            Toast.makeText(this, "Syncing data, please wait...", Toast.LENGTH_LONG).show();
-                            downloadProgressFromFirebase(user.getUid());
+                            // 💡 EMERGENCY BYPASS ՎԱՂՎԱ ՀԱՄԱՐ: Բազա չենք քաշում, միանգամից բացում ենք ծրագիրը
+                            Toast.makeText(LoginActivity.this, "Welcome to OlympMath Mentor!", Toast.LENGTH_SHORT).show();
+                            goToNextPage();
                         } else {
-                            user.sendEmailVerification().addOnCompleteListener(task -> {
-                                Toast.makeText(LoginActivity.this, "Verify your email first!", Toast.LENGTH_LONG).show();
-                            });
+                            user.sendEmailVerification();
+                            Toast.makeText(LoginActivity.this, "Verify your email first!", Toast.LENGTH_LONG).show();
                             mAuth.signOut();
                             btnLogin.setEnabled(true);
                         }
@@ -88,56 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void downloadProgressFromFirebase(String userId) {
-        FirebaseDatabase.getInstance().getReference("users").child(userId).child("backup")
-                .get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult().exists()) {
-                        SharedPreferences profilePrefs = getSharedPreferences("UserProfile", MODE_PRIVATE);
-                        SharedPreferences progressPrefs = getSharedPreferences("UserProgress", MODE_PRIVATE);
-                        SharedPreferences.Editor profEdit = profilePrefs.edit();
-                        SharedPreferences.Editor progEdit = progressPrefs.edit();
-
-                        DataSnapshot backup = task.getResult();
-
-                        // Բեռնում ենք Profile
-                        for (String key : new String[]{"name", "surname", "level", "achievements"}) {
-                            String val = backup.child("profile").child(key).getValue(String.class);
-                            if (val != null) profEdit.putString(key, val);
-                        }
-
-                        // Բեռնում ենք ԲՈԼՈՐ Աստղերը
-                        for (int i = 1; i <= 21; i++) {
-                            Integer stars = backup.child("progress").child("stars_lesson_" + i).getValue(Integer.class);
-                            if (stars != null) progEdit.putInt("stars_lesson_" + i, stars);
-                        }
-
-                        // Բեռնում ենք Թեստի կարգավիճակը
-                        Boolean testDone = backup.child("progress").child("entry_test_done").getValue(Boolean.class);
-                        if (testDone != null) {
-                            progEdit.putBoolean("entry_test_done", testDone);
-                        }
-
-                        profEdit.apply();
-                        progEdit.apply();
-
-                        if (testDone != null && testDone) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        } else {
-                            startActivity(new Intent(LoginActivity.this, EntryTestActivity.class));
-                        }
-                        finish();
-
-                    } else {
-                        // 💡 ԼՐԻՎ ՆՈՐ ՕԳՏԱՏԵՐ Է: Մաքրում ենք հեռախոսում մնացած հին "զոմբի" հիշողությունը
-                        getSharedPreferences("UserProfile", MODE_PRIVATE).edit().clear().apply();
-                        getSharedPreferences("UserProgress", MODE_PRIVATE).edit().clear().apply();
-                        getSharedPreferences("MyPrefs", MODE_PRIVATE).edit().clear().apply();
-                        getSharedPreferences("OlympiadProgress", MODE_PRIVATE).edit().clear().apply();
-
-                        // Եվ անպայման ուղարկում ենք Entry Test հանձնելու
-                        startActivity(new Intent(LoginActivity.this, EntryTestActivity.class));
-                        finish();
-                    }
-                });
+    private void goToNextPage() {
+        // 💡 ՎԱՅՐԿՅԱՆԱԿԱՆ ԲԱՑՈՒՄ ԵՆՔ ԳԼԽԱՎՈՐ ԷՋԸ (Անտեսում ենք մուտքային թեստը)
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }

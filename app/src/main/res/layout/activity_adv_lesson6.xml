@@ -1,6 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5DC"
+    android:padding="16dp"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Lesson 6: Functional Equations and Cauchy's Method"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#3E2723"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnReadLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Read Lesson Aloud"
+            android:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Introduction to Functional Equations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unlike normal equations where we solve for a variable x, in functional equations, we solve for an entire unknown function f(x). These problems require extreme creativity. Instead of standard algebraic manipulation, we use substitutions like setting x and y to 0, 1, or making them equal to each other. The goal is to discover the properties of the function, such as whether it is even, odd, strictly increasing, or bounded, and eventually guess its exact mathematical form before proving it."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Cauchy's Functional Equation"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The most famous functional equation is Cauchy's: f(x+y) = f(x) + f(y). It seems simple, and clearly f(x) = cx is a solution. However, proving that f(x) = cx is the ONLY solution requires deep logic. We can easily prove it for all rational numbers using mathematical induction. But for real numbers, it can have infinitely many wild, non-linear solutions unless we have one extra condition! If the function is continuous, strictly increasing, or bounded on any interval, then f(x) = cx becomes the unique, strict solution."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:background="#EFEBE5"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Involutions and Fixed Points"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvContent3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A powerful trick in functional equations is creating an involution, a function that is its own inverse, meaning f(f(x)) = x. When analyzing these, we look for fixed points, where f(c) = c. If we can prove that a function is an involution and is strictly monotonic, then the only possible solution is f(x) = x or f(x) = -x. These techniques allow Olympiad contestants to break down monstrously complex equations into elegant, logical deductions."
+            android:textSize="16sp"
+            android:textColor="#212121"
+            android:layout_marginBottom="20dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#D2B48C"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/tvProblemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Advanced Olympiad Application"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#5D4037"/>
+
+        <TextView
+            android:id="@+id/tvProblemText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find all continuous functions f from Reals to Reals such that f(x+y) = f(x) + f(y) + 2xy."
+            android:textSize="16sp"
+            android:textColor="#212121"/>
+
+        <TextView
+            android:id="@+id/tvSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solution: This looks like Cauchy's equation but with an extra term. We can eliminate the extra term by defining a new function g(x) = f(x) - x^2. Let us substitute f(x) with g(x) + x^2 in the original equation. We get g(x+y) + (x+y)^2 = g(x) + x^2 + g(y) + y^2 + 2xy. Expanding (x+y)^2 gives x^2 + 2xy + y^2. Amazingly, all the squared terms and the 2xy perfectly cancel out! We are left with g(x+y) = g(x) + g(y). Since f(x) is continuous, g(x) must also be continuous. This is exactly Cauchy's functional equation! The only continuous solution is g(x) = cx for some constant c. Replacing g(x) back, we get the final answer: f(x) = x^2 + cx. Proof complete."
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/btnStartTest"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="START ADVANCED TEST 6"
+            android:textSize="18sp"
+            android:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+</ScrollView>
