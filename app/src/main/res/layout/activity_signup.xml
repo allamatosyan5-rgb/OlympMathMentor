@@ -22,7 +22,7 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="Sign Up"
-            android:textColor="@color/deep_brown"
+            android:textColor="#3E2723"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/earth_brown"
+            android:backgroundTint="#8D6E63"
             android:hint="First Name"
             android:textColor="#000000"
             android:textColorHint="#6D4C41" />
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/earth_brown"
+            android:backgroundTint="#8D6E63"
             android:hint="Last Name"
             android:textColor="#000000"
             android:textColorHint="#6D4C41" />
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/earth_brown"
+            android:backgroundTint="#8D6E63"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:textColor="#000000"
@@ -60,28 +60,63 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="12dp"
             app:hintEnabled="false"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/deep_brown">
+            app:endIconTint="#3E2723">
 
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
-                android:layout_height="71dp"
-                android:backgroundTint="@color/earth_brown"
-                android:hint="Password (8+ chars, 1 Uppercase, 1 Number)"
+                android:layout_height="60dp"
+                android:backgroundTint="#8D6E63"
+                android:hint="Password (8+ chars, 1 Upper, 1 Num)"
                 android:inputType="textPassword"
+                android:textSize="14sp"
                 android:textColor="#000000"
                 android:textColorHint="#6D4C41" />
-
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I am a:"
+            android:textColor="#3E2723"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/rgRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/rbStudent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Student"
+                android:checked="true"
+                android:textColor="#000000"
+                android:buttonTint="#3E2723"/>
+
+            <RadioButton
+                android:id="@+id/rbTeacher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Teacher"
+                android:textColor="#000000"
+                android:buttonTint="#3E2723"/>
+        </RadioGroup>
 
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="@color/deep_brown"
+            android:backgroundTint="#3E2723"
             android:text="REGISTER"
             android:textColor="#FFFFFF" />
 
@@ -92,7 +127,7 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Already have an account? Login"
-            android:textColor="@color/deep_brown"
+            android:textColor="#3E2723"
             android:textSize="16sp"
             android:textStyle="bold" />
 

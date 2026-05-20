@@ -43,6 +43,15 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 
+        <activity
+            android:name=".TeacherMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ClassChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".SignUpActivity" android:exported="false" />
         <activity android:name=".EntryTestActivity" android:exported="false" />
         <activity android:name=".ResultActivity" android:exported="false" />

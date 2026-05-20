@@ -1,0 +1,161 @@
+package lilit.hakobyan.olympmathmentor;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class TeacherClassesFragment extends Fragment {
+
+    private RecyclerView rvClasses;
+    private ClassroomAdapter adapter;
+    private List<Classroom> classroomList;
+    private FloatingActionButton fabAddClass;
+    private TextView tvGreeting;
+
+    private DatabaseReference classesRef;
+    private String currentUserId;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // 1. Ստեղծում ենք view-ն (էկրանի կառույցը)
+        View view = inflater.inflate(R.layout.fragment_teacher_classes, container, false);
+
+        // Ստուգում ենք User-ին և միանում բազային
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            currentUserId = currentUser.getUid();
+        } else {
+            currentUserId = "unknown_teacher"; // Ապահովության համար, եթե հանկարծ user չգտնի
+        }
+
+        classesRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("classes");
+
+        // 2. Գտնում ենք էլեմենտները էկրանի վրա
+        tvGreeting = view.findViewById(R.id.tvTeacherGreeting);
+        rvClasses = view.findViewById(R.id.rvClasses);
+        fabAddClass = view.findViewById(R.id.fabAddClass);
+
+        rvClasses.setHasFixedSize(true);
+        rvClasses.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        classroomList = new ArrayList<>();
+
+        // 3. Դասարանի վրա սեղմելիս բացվում է Չաթը (կստեղծենք հաջորդիվ)
+        adapter = new ClassroomAdapter(classroomList, classroom -> {
+            Intent intent = new Intent(getActivity(), ClassChatActivity.class);
+            intent.putExtra("CLASS_ID", classroom.getClassId());
+            intent.putExtra("CLASS_NAME", classroom.getClassName());
+            intent.putExtra("CLASS_CODE", classroom.getClassCode());
+            startActivity(intent);
+        });
+
+        rvClasses.setAdapter(adapter);
+
+        // 4. Նոր դասարան ստեղծելու կոճակը (+)
+        fabAddClass.setOnClickListener(v -> showCreateClassDialog());
+
+        // 5. Բեռնում ենք արդեն ստեղծված դասարանները
+        loadTeacherClasses();
+
+        return view;
+    }
+
+    private void showCreateClassDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Create New Class");
+
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("e.g. Photon 11th Grade");
+        input.setPadding(40, 40, 40, 40); // Գեղեցկության համար
+        builder.setView(input);
+
+        builder.setPositiveButton("Create", (dialog, which) -> {
+            String className = input.getText().toString().trim();
+            if (!className.isEmpty()) {
+                createNewClass(className);
+            } else {
+                Toast.makeText(getContext(), "Class name cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    private void createNewClass(String className) {
+        String classId = classesRef.push().getKey();
+        String classCode = generateRandomCode();
+
+        Classroom newClass = new Classroom(classId, className, classCode, currentUserId);
+
+        if (classId != null) {
+            classesRef.child(classId).setValue(newClass)
+                    .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Class Created! Code: " + classCode, Toast.LENGTH_LONG).show())
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
+    }
+
+    // Այս ֆունկցիան ստեղծում է դասարանի գաղտնի կոդը (օրինակ՝ A7B9Q1)
+    private String generateRandomCode() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder code = new StringBuilder();
+        Random rnd = new Random();
+        for (int i = 0; i < 6; i++) {
+            code.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return code.toString();
+    }
+
+    private void loadTeacherClasses() {
+        // Բազայից կարդում ենք միայն այն դասարանները, որոնց ուսուցիչը հենց այս User-ն է
+        classesRef.orderByChild("teacherId").equalTo(currentUserId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classroomList.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Classroom classroom = dataSnapshot.getValue(Classroom.class);
+                            if (classroom != null) {
+                                classroomList.add(classroom);
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Failed to load classes: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+}
