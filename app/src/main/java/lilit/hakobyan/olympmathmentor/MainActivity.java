@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new OlympiadsFragment();
                 } else if (itemId == R.id.nav_ai) {
                     selectedFragment = new AIFragment();
-                } else if (itemId == R.id.nav_profile) {
-                    selectedFragment = new ProfileFragment();
-                } else if (itemId == R.id.nav_challenge) {
+                } else if (itemId == R.id.nav_student_classes) {
+                    selectedFragment = new StudentClassesFragment();
+                }
+                else if (itemId == R.id.nav_challenge) {
                     Intent intent = new Intent(MainActivity.this, BattleLobbyActivity.class);
                     startActivity(intent);
-
                     return false;
                 }
 

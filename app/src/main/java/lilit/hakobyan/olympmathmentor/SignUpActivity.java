@@ -7,11 +7,14 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -72,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (user != null) {
                         String userId = user.getUid();
 
-                        // 💡 ԱՅՍՏԵՂ ՓՈԽՎԱԾ Է Firebase URL-ը և "Users" (մեծատառով)
+                        // Ճիշտ ուղին դեպի բազա
                         DatabaseReference ref = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
                                 .getReference("Users").child(userId);
 

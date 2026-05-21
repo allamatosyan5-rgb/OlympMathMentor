@@ -42,7 +42,9 @@ public class IntermediateFragment extends Fragment {
             });
         }
 
+
         return view;
+
     }
 
     @Override

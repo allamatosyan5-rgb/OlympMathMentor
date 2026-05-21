@@ -1,15 +1,21 @@
 package lilit.hakobyan.olympmathmentor;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +24,7 @@ public class AdvancedFragment extends Fragment {
     private RecyclerView rvCourses;
     private AdvancedAdapter adapter;
     private List<CourseModel> courseList;
+    private ImageView imgProfileTop;
 
     @Nullable
     @Override
@@ -25,6 +32,18 @@ public class AdvancedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_advanced, container, false);
 
         rvCourses = view.findViewById(R.id.rvAdvancedCourses);
+        CardView cvProfileTop = view.findViewById(R.id.cvProfileTop);
+        imgProfileTop = view.findViewById(R.id.imgProfileTop);
+
+        // Պրոֆիլի սեղմում
+        if (cvProfileTop != null) {
+            cvProfileTop.setOnClickListener(v -> {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new ProfileFragment())
+                        .addToBackStack(null)
+                        .commit();
+            });
+        }
 
         if (rvCourses != null) {
             rvCourses.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -45,6 +64,8 @@ public class AdvancedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        loadProfileImage(); // Թարմացնում ենք նկարը էջ վերադառնալիս
+
         if (rvCourses != null && getView() != null) {
             while (rvCourses.getItemDecorationCount() > 0) {
                 rvCourses.removeItemDecorationAt(0);
@@ -53,6 +74,22 @@ public class AdvancedFragment extends Fragment {
             adapter = new AdvancedAdapter(getContext(), courseList);
             rvCourses.setAdapter(adapter);
             rvCourses.addItemDecoration(new PathDecoration());
+        }
+    }
+
+    private void loadProfileImage() {
+        if (getContext() != null && imgProfileTop != null) {
+            SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+            String imageUrl = prefs.getString("profile_image_uri", "");
+            if (!imageUrl.isEmpty()) {
+                try {
+                    imgProfileTop.setImageURI(Uri.parse(imageUrl));
+                } catch (Exception e) {
+                    imgProfileTop.setImageResource(R.drawable.ic_profile);
+                }
+            } else {
+                imgProfileTop.setImageResource(R.drawable.ic_profile);
+            }
         }
     }
 

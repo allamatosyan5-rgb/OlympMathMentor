@@ -35,7 +35,6 @@
                     android:src="@drawable/ic_progress"
                     app:tint="#5D4037" />
 
-                <!-- 🔴 Կարմիր կետիկը, որը կհայտնվի միայն նորության դեպքում -->
                 <View
                     android:id="@+id/viewNewsDot"
                     android:layout_width="10dp"

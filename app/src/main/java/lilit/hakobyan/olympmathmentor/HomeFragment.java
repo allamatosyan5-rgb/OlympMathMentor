@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,24 @@ public class HomeFragment extends Fragment {
         tvMotivation = view.findViewById(R.id.tvMotivation);
         rvCourses.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Պրոֆիլի անցման ֆունկցիոնալի ավելացում
+        androidx.cardview.widget.CardView cvProfileTop = view.findViewById(R.id.cvProfileTop);
+        ImageView imgProfileTop = view.findViewById(R.id.imgProfileTop);
+
+        View.OnClickListener profileClickListener = v -> {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new ProfileFragment())
+                    .addToBackStack(null)
+                    .commit();
+        };
+
+        if (cvProfileTop != null) {
+            cvProfileTop.setOnClickListener(profileClickListener);
+        }
+        if (imgProfileTop != null) {
+            imgProfileTop.setOnClickListener(profileClickListener);
+        }
+
         setDailyInsight();
         setupIntermediateButton(view);
 
@@ -60,6 +79,7 @@ public class HomeFragment extends Fragment {
         adapter = new CourseAdapter(getContext(), courseList);
         rvCourses.setAdapter(adapter);
         rvCourses.addItemDecoration(new PathDecoration());
+
 
         return view;
     }
@@ -93,7 +113,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // 💡 ԱՐՀԵՍՏԱԿԱՆ ԲԱՆԱԿԱՆՈՒԹՅԱՆ ԻՆՏԵԳՐՈՒՄԸ ГЛАВНЫЙ ԷՋՈՒՄ
     private void setDailyInsight() {
         if (getContext() == null) return;
 

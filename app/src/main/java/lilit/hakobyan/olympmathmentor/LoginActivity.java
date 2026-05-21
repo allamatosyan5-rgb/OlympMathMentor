@@ -6,8 +6,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // 1. ՍԿԶԲՈՒՄ կապում ենք բոլոր էկրանի էլեմենտները
         etEmail = findViewById(R.id.etLoginEmail);
         etPassword = findViewById(R.id.etLoginPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -36,15 +37,13 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // 2. ՆՈՐ ԴՐԱՆԻՑ ՀԵՏՈ ստուգում ենք օգտատիրոջը
+        // Ավտոմատ մուտք, եթե արդեն մուտք գործած է
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && currentUser.isEmailVerified()) {
-            // Այստեղ արդեն վտանգ չկա, որովհետև btnLogin-ը գոյություն ունի
             checkUserRoleAndRedirect(currentUser.getUid());
             return;
         }
 
-        // 3. Կոճակների գործողությունները
         btnLogin.setOnClickListener(v -> loginUser());
 
         tvGoToSignUp.setOnClickListener(v -> {
@@ -72,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                             checkUserRoleAndRedirect(user.getUid());
                         } else {
                             user.sendEmailVerification();
-                            Toast.makeText(LoginActivity.this, "Verify your email first!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Please verify your email first!", Toast.LENGTH_LONG).show();
                             mAuth.signOut();
                             btnLogin.setEnabled(true);
                         }
@@ -80,15 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     btnLogin.setEnabled(true);
-                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
-    // Այս ֆունկցիան որոշում է, թե ում ուր ուղարկել
     private void checkUserRoleAndRedirect(String userId) {
-        android.util.Log.d("DEBUG_DB", "Looking for user ID: " + userId);
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("Users").child(userId);
+        DatabaseReference userRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
+                .getReference("Users").child(userId);
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,18 +103,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "User profile not found in database!", Toast.LENGTH_SHORT).show();
                     FirebaseAuth.getInstance().signOut();
-                    // Այժմ սա ապահով է, քանի որ btnLogin-ը initialize է արված
-                    if(btnLogin != null) {
-                        btnLogin.setEnabled(true);
-                    }
+                    btnLogin.setEnabled(true);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                if(btnLogin != null) {
-                    btnLogin.setEnabled(true);
-                }
+                btnLogin.setEnabled(true);
                 Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

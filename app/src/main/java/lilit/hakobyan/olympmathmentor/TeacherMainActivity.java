@@ -26,13 +26,16 @@ public class TeacherMainActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             if (id == R.id.nav_teacher_classes) {
-                selectedFragment = new TeacherClassesFragment(); // Դասարաններ
+                selectedFragment = new TeacherClassesFragment();
             }
             else if (id == R.id.nav_teacher_matyan) {
                 // selectedFragment = new TeacherJournalFragment(); // Կստեղծենք շուտով
             }
             else if (id == R.id.nav_library) {
-                // selectedFragment = new LibraryFragment();
+                selectedFragment = new LibraryFragment(); }
+
+            else if (id == R.id.nav_progress) {
+                    selectedFragment = new OlympiadsFragment();
             }
             else if (id == R.id.nav_ai) {
                 selectedFragment = new AIFragment();

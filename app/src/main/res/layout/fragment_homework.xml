@@ -4,37 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/soft_beige"
-    android:padding="20dp">
-
-    <TextView
-        android:id="@+id/tvTeacherGreeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Classes"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#3E2723"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp" />
+    android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvClasses"
+        android:id="@+id/rvHomeworks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvTeacherGreeting"
         android:clipToPadding="false"
-        android:paddingBottom="80dp" />
+        android:paddingBottom="80dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddClass"
+        android:id="@+id/fabAddHomework"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="#5D4037"
+        app:backgroundTint="#3E2723"
         app:tint="#FFFFFF"
-        app:elevation="6dp" />
+        android:visibility="gone"/>
 
 </RelativeLayout>
