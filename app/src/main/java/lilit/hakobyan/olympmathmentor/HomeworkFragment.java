@@ -1,13 +1,11 @@
 package lilit.hakobyan.olympmathmentor;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 public class HomeworkFragment extends Fragment {
@@ -39,6 +35,7 @@ public class HomeworkFragment extends Fragment {
     private DatabaseReference hwRef;
     private HwAdapter adapter;
     private List<HomeworkItem> hwList;
+    private String currentUserId;
 
     public static HomeworkFragment newInstance(String classId) {
         HomeworkFragment f = new HomeworkFragment();
@@ -56,6 +53,8 @@ public class HomeworkFragment extends Fragment {
             classId = getArguments().getString("CLASS_ID");
         }
 
+        currentUserId = FirebaseAuth.getInstance().getUid();
+
         rvHomeworks = view.findViewById(R.id.rvHomeworks);
         fabAddHw = view.findViewById(R.id.fabAddHomework);
 
@@ -64,21 +63,26 @@ public class HomeworkFragment extends Fragment {
         adapter = new HwAdapter(hwList);
         rvHomeworks.setAdapter(adapter);
 
-        hwRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("classes").child(classId).child("homeworks");
+        hwRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
+                .getReference("classes").child(classId).child("homeworks");
 
         checkUserRole();
         loadHomeworks();
 
-        fabAddHw.setOnClickListener(v -> showAddHomeworkDialog());
+        fabAddHw.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CreateHomeworkActivity.class);
+            intent.putExtra("CLASS_ID", classId);
+            startActivity(intent);
+        });
 
         return view;
     }
 
     private void checkUserRole() {
-        String uid = FirebaseAuth.getInstance().getUid();
-        if (uid == null) return;
+        if (currentUserId == null) return;
 
-        FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("Users").child(uid).child("role")
+        FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
+                .getReference("Users").child(currentUserId).child("role")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot s) {
@@ -89,63 +93,6 @@ public class HomeworkFragment extends Fragment {
                     }
                     @Override public void onCancelled(@NonNull DatabaseError e) {}
                 });
-    }
-
-    private void showAddHomeworkDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Assign Homework");
-
-        // Ստեղծում ենք Input դաշտեր Ուսուցչի համար
-        android.widget.LinearLayout layout = new android.widget.LinearLayout(getContext());
-        layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-        layout.setPadding(40, 20, 40, 20);
-
-        final EditText etTitle = new EditText(getContext());
-        etTitle.setHint("Title (e.g. IMO 2020 Problems)");
-        layout.addView(etTitle);
-
-        final EditText etDesc = new EditText(getContext());
-        etDesc.setHint("Instructions...");
-        layout.addView(etDesc);
-
-        final TextView tvDeadline = new TextView(getContext());
-        tvDeadline.setText("Select Deadline ->");
-        tvDeadline.setPadding(0, 20, 0, 20);
-        tvDeadline.setTextColor(android.graphics.Color.RED);
-        tvDeadline.setTextSize(16f);
-        layout.addView(tvDeadline);
-
-        final String[] selectedDate = {"No Deadline"};
-
-        tvDeadline.setOnClickListener(v -> {
-            Calendar c = Calendar.getInstance();
-            new DatePickerDialog(getContext(), (view, year, month, dayOfMonth) -> {
-                selectedDate[0] = dayOfMonth + "/" + (month + 1) + "/" + year;
-                tvDeadline.setText("Deadline: " + selectedDate[0]);
-            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-        });
-
-        builder.setView(layout);
-
-        builder.setPositiveButton("Assign", (dialog, which) -> {
-            String title = etTitle.getText().toString().trim();
-            String desc = etDesc.getText().toString().trim();
-
-            if (!title.isEmpty()) {
-                String hwId = hwRef.push().getKey();
-                HashMap<String, Object> hwData = new HashMap<>();
-                hwData.put("hwId", hwId);
-                hwData.put("title", title);
-                hwData.put("description", desc);
-                hwData.put("deadline", selectedDate[0]);
-
-                if (hwId != null) hwRef.child(hwId).setValue(hwData);
-                Toast.makeText(getContext(), "Homework Assigned!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        builder.setNegativeButton("Cancel", null);
-        builder.show();
     }
 
     private void loadHomeworks() {
@@ -166,6 +113,9 @@ public class HomeworkFragment extends Fragment {
     // ================= MODEL =================
     public static class HomeworkItem {
         public String hwId, title, description, deadline;
+        public List<String> images;
+        public List<String> files;
+
         public HomeworkItem() {}
     }
 
@@ -184,28 +134,57 @@ public class HomeworkFragment extends Fragment {
         public void onBindViewHolder(@NonNull HwViewHolder holder, int position) {
             HomeworkItem hw = list.get(position);
             holder.tvTitle.setText(hw.title);
-            holder.tvDeadline.setText("Due: " + hw.deadline);
 
-            // Աշակերտի մոտ դնում ենք ԿԱՐՄԻՐ ԿԵՏԻԿ (Քանի դեռ չի հանձնել)
             if (!isTeacher) {
-                holder.dotUnfinished.setVisibility(View.VISIBLE);
+                // 💡 Ստուգում ենք գնահատականը և կարգավիճակը աշակերտի համար
+                DatabaseReference classRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
+                        .getReference("classes").child(classId);
 
-                // Սեղմելիս տանում ենք «Տնայինը հանձնելու» էջ
+                classRef.child("grades").child(hw.hwId).child(currentUserId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            // Ուսուցիչը գնահատել է
+                            holder.dotUnfinished.setVisibility(View.GONE);
+                            holder.tvDeadline.setText("Grade: " + snapshot.getValue(String.class));
+                            holder.tvDeadline.setTextColor(Color.parseColor("#4CAF50")); // Կանաչ գույն
+                            holder.tvDeadline.setTypeface(null, android.graphics.Typeface.BOLD);
+                        } else {
+                            // Եթե գնահատական չկա, ստուգում ենք՝ հանձնել է արդյոք
+                            classRef.child("submissions").child(hw.hwId).child(currentUserId).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot subSnap) {
+                                    if (subSnap.exists()) {
+                                        holder.dotUnfinished.setVisibility(View.GONE);
+                                        holder.tvDeadline.setText("Turned In (Pending...)");
+                                        holder.tvDeadline.setTextColor(Color.parseColor("#FF9800")); // Նարնջագույն
+                                        holder.tvDeadline.setTypeface(null, android.graphics.Typeface.NORMAL);
+                                    } else {
+                                        holder.dotUnfinished.setVisibility(View.VISIBLE);
+                                        holder.tvDeadline.setText("Due: " + hw.deadline);
+                                        holder.tvDeadline.setTextColor(Color.parseColor("#D32F2F")); // Կարմիր
+                                        holder.tvDeadline.setTypeface(null, android.graphics.Typeface.NORMAL);
+                                    }
+                                }
+                                @Override public void onCancelled(@NonNull DatabaseError error) {}
+                            });
+                        }
+                    }
+                    @Override public void onCancelled(@NonNull DatabaseError error) {}
+                });
+
                 holder.itemView.setOnClickListener(v -> {
-                    // Intent intent = new Intent(getContext(), SubmitHomeworkActivity.class);
-                    // intent.putExtra("HW_ID", hw.hwId);
-                    // startActivity(intent);
-                    Toast.makeText(getContext(), "Opening Homework...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), SubmitHomeworkActivity.class);
+                    intent.putExtra("HW_ID", hw.hwId);
+                    intent.putExtra("CLASS_ID", classId);
+                    startActivity(intent);
                 });
             } else {
                 holder.dotUnfinished.setVisibility(View.GONE);
+                holder.tvDeadline.setText("Due: " + hw.deadline);
 
-                // Ուսուցչի մոտ սեղմելիս տանում ենք ՄԱՏՅԱՆ
                 holder.itemView.setOnClickListener(v -> {
-                    // Intent intent = new Intent(getContext(), MatyanActivity.class);
-                    // intent.putExtra("HW_ID", hw.hwId);
-                    // startActivity(intent);
-                    Toast.makeText(getContext(), "Opening Matyan for this homework...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Check the Journal to see submissions.", Toast.LENGTH_SHORT).show();
                 });
             }
         }

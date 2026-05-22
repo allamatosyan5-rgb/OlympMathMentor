@@ -16,9 +16,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") } // Այստեղ ճիշտ Kotlin սինտաքսն է
     }
 }
 
 rootProject.name = "OlympMath Mentor"
 include(":app")
- 

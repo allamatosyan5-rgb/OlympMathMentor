@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <queries>
         <intent>
@@ -202,11 +203,32 @@
         <activity android:name=".MultiplayerBattleActivity" android:exported="false" />
         <activity android:name=".BattleResultActivity" android:exported="false" android:screenOrientation="portrait"/>
 
+        <activity android:name=".CreateHomeworkActivity"
+            android:exported="false"
+            android:label="Assign Homework"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".FullImageActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".OlympiadSubmitActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:label="Olympiad Grading" />
+        <activity
+            android:name=".JournalTableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".JournalClassListFragment"
+            android:exported="false" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <provider
             android:name="androidx.core.content.FileProvider"

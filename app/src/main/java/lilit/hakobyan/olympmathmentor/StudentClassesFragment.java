@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
+import com.google.firebase.messaging.FirebaseMessaging; // 💡 Ավելացված է
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +107,11 @@ public class StudentClassesFragment extends Fragment {
         if (user == null) return;
 
         db.child("Users").child(user.getUid()).child("joinedClasses").child(classId).setValue(true)
-                .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Joined successfully!", Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Joined successfully!", Toast.LENGTH_SHORT).show();
+                    // 💡 Բաժանորդագրվում ենք այս դասարանի ծանուցումներին
+                    FirebaseMessaging.getInstance().subscribeToTopic("class_" + classId);
+                })
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 

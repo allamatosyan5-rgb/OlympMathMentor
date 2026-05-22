@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/cell_border"> <ImageView
+    android:id="@+id/ivPersonAvatar"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:src="@android:drawable/ic_menu_myplaces"
+    app:tint="#3E2723"
+    android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/tvPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/ivPersonAvatar"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:text="Loading..."
+        android:textSize="18sp"
+        android:textColor="#212121"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/btnRemoveStudent"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/ic_menu_delete"
+        app:tint="#3E2723"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        android:clickable="true"/>
+</RelativeLayout>

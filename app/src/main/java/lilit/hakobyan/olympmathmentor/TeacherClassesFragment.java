@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging; // 💡 Ավելացված է
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +119,11 @@ public class TeacherClassesFragment extends Fragment {
 
         if (classId != null) {
             classesRef.child(classId).setValue(newClass)
-                    .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Class Created! Code: " + classCode, Toast.LENGTH_LONG).show())
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getContext(), "Class Created! Code: " + classCode, Toast.LENGTH_LONG).show();
+                        // 💡 Ուսուցիչը ևս բաժանորդագրվում է իր ստեղծած դասարանի ծանուցումներին
+                        FirebaseMessaging.getInstance().subscribeToTopic("class_" + classId);
+                    })
                     .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }

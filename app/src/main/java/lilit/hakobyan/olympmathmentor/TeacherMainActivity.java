@@ -29,7 +29,7 @@ public class TeacherMainActivity extends AppCompatActivity {
                 selectedFragment = new TeacherClassesFragment();
             }
             else if (id == R.id.nav_teacher_matyan) {
-                // selectedFragment = new TeacherJournalFragment(); // Կստեղծենք շուտով
+                selectedFragment = new JournalClassListFragment();
             }
             else if (id == R.id.nav_library) {
                 selectedFragment = new LibraryFragment(); }
