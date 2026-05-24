@@ -5,6 +5,13 @@
     android:background="@color/soft_beige"
     android:padding="16dp">
 
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="600dp"
+        android:layout_gravity="center"
+        android:alpha="0.09"
+        android:src="@drawable/logo" />
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -17,10 +24,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStudentClasses"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="384dp"
+        android:layout_height="679dp"
+        android:layout_above="@+id/fabJoinClass"
         android:layout_below="@id/tvTitle"
-        android:layout_above="@+id/fabJoinClass" />
+        android:layout_marginTop="37dp"
+        android:layout_marginBottom="-39dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabJoinClass"

@@ -6,6 +6,13 @@
     android:background="@color/soft_beige"
     android:padding="20dp">
 
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="600dp"
+        android:layout_gravity="center"
+        android:alpha="0.09"
+        android:src="@drawable/logo"/>
+
     <TextView
         android:id="@+id/tvTeacherGreeting"
         android:layout_width="wrap_content"

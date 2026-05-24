@@ -6,6 +6,13 @@
     android:background="@color/soft_beige"
     android:padding="16dp">
 
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="600dp"
+        android:layout_gravity="center"
+        android:alpha="0.09"
+        android:src="@drawable/logo" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHomeworks"
         android:layout_width="match_parent"
