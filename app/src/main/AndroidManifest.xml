@@ -218,9 +218,7 @@
         <activity
             android:name=".JournalTableActivity"
             android:exported="false" />
-        <activity
-            android:name=".JournalClassListFragment"
-            android:exported="false" />
+
 
         <service
             android:name=".MyFirebaseMessagingService"

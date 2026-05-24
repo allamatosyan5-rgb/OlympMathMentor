@@ -25,6 +25,7 @@
         android:textColor="#212121"
         android:textStyle="bold"/>
 
+
     <ImageView
         android:id="@+id/btnRemoveStudent"
         android:layout_width="32dp"

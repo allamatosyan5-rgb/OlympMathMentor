@@ -41,7 +41,7 @@ public class TeacherMainActivity extends AppCompatActivity {
                 selectedFragment = new AIFragment();
             }
             else if (id == R.id.nav_teacher_profile) {
-                // selectedFragment = new TeacherProfileFragment();
+                 selectedFragment = new TeacherProfileFragment();
             }
 
             if (selectedFragment != null) {
