@@ -18,14 +18,17 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +50,19 @@ public class JournalTableActivity extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.tvJournalClassName);
         if (className != null) tvTitle.setText(className + " - Journal");
 
-        findViewById(R.id.btnBackFromJournal).setOnClickListener(v -> finish());
+        // Ենթադրում եմ ունես btnBackFromJournal քո activity_journal_table.xml-ում
+        View btnBack = findViewById(R.id.btnBackFromJournal);
+        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
 
         tableJournal = findViewById(R.id.tableJournal);
+
+        // Ապահովագրում ենք NullPointerException-ից, եթե classId-ն null է եկել
+        if (classId == null || classId.isEmpty()) {
+            Toast.makeText(this, "Class ID error!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         classRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("classes").child(classId);
         usersRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("Users");
 
@@ -62,24 +75,38 @@ public class JournalTableActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tableJournal.removeAllViews();
 
+                // 1. Հավաքում ենք աշակերտների ID-ները
                 List<String> studentIds = new ArrayList<>();
                 if (snapshot.child("students").exists()) {
                     for (DataSnapshot s : snapshot.child("students").getChildren()) {
                         studentIds.add(s.getKey());
                     }
-                } else {
+                } else if (snapshot.child("submissions").exists()) {
+                    // Եթե students ցուցակ չկա, հավաքում ենք նրանց ովքեր տնային են հանձնել
                     for (DataSnapshot hwSnap : snapshot.child("submissions").getChildren()) {
                         for (DataSnapshot studentSnap : hwSnap.getChildren()) {
-                            if (!studentIds.contains(studentSnap.getKey())) studentIds.add(studentSnap.getKey());
+                            if (!studentIds.contains(studentSnap.getKey())) {
+                                studentIds.add(studentSnap.getKey());
+                            }
                         }
                     }
                 }
 
+                // 2. Հավաքում ենք տնայինները
                 List<DataSnapshot> homeworks = new ArrayList<>();
-                for (DataSnapshot hw : snapshot.child("homeworks").getChildren()) {
-                    homeworks.add(hw);
+                if (snapshot.child("homeworks").exists()) {
+                    for (DataSnapshot hw : snapshot.child("homeworks").getChildren()) {
+                        homeworks.add(hw);
+                    }
                 }
 
+                // 3. ՍՏՈՒԳՈՒՄ՝ արդյոք ունենք տվյալներ աղյուսակ կառուցելու համար
+                if (studentIds.isEmpty() || homeworks.isEmpty()) {
+                    Toast.makeText(JournalTableActivity.this, "Դեռևս բավարար տվյալներ չկան աղյուսակ կառուցելու համար (կամ տնային չկա, կամ աշակերտ):", Toast.LENGTH_LONG).show();
+                    return; // Դադարեցնում ենք աշխատանքը
+                }
+
+                // 4. ԿԱՌՈՒՑՈՒՄ ԵՆՔ ՎԵՐՆԱԳՐԵՐԸ
                 TableRow headerRow = new TableRow(JournalTableActivity.this);
                 headerRow.addView(createCell("Student", true, false));
 
@@ -89,6 +116,7 @@ public class JournalTableActivity extends AppCompatActivity {
                 }
                 tableJournal.addView(headerRow);
 
+                // 5. ԿԱՌՈՒՑՈՒՄ ԵՆՔ ԱՇԱԿԵՐՏՆԵՐԻ ՏՈՂԵՐԸ
                 for (String sId : studentIds) {
                     TableRow row = new TableRow(JournalTableActivity.this);
 
@@ -107,7 +135,6 @@ public class JournalTableActivity extends AppCompatActivity {
                             cell = createCell(grade, false, false);
                             cell.setTypeface(null, Typeface.BOLD);
                             cell.setTextColor(Color.parseColor("#D32F2F"));
-                            // 💡 Ավելացված է սեղմելու հնարավորություն գնահատված աշխատանքի վրա
                             cell.setOnClickListener(v -> showGradeDialog(sId, hwId, submissionSnap));
                         } else if (isSubmitted) {
                             cell = createCell("●", false, true);
@@ -122,7 +149,9 @@ public class JournalTableActivity extends AppCompatActivity {
                     tableJournal.addView(row);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(JournalTableActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -133,7 +162,7 @@ public class JournalTableActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String name = snapshot.child("name").getValue(String.class);
                     String surname = snapshot.child("surname").getValue(String.class);
-                    cell.setText(name + " " + (surname != null ? surname.charAt(0) + "." : ""));
+                    cell.setText((name != null ? name : "") + " " + (surname != null ? surname.charAt(0) + "." : ""));
                 } else {
                     cell.setText("Student");
                 }
@@ -147,7 +176,7 @@ public class JournalTableActivity extends AppCompatActivity {
         tv.setText(text);
         tv.setPadding(30, 25, 30, 25);
         tv.setGravity(Gravity.CENTER);
-        tv.setBackgroundResource(R.drawable.cell_border);
+        tv.setBackgroundResource(R.drawable.cell_border); // Համոզվիր որ ունես res/drawable/cell_border.xml
 
         if (isHeader) {
             tv.setTypeface(null, Typeface.BOLD);
@@ -165,6 +194,7 @@ public class JournalTableActivity extends AppCompatActivity {
 
     private void showGradeDialog(String studentId, String hwId, DataSnapshot submissionSnap) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Համոզվիր որ ունես res/layout/dialog_grade_submission.xml
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_grade_submission, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
@@ -210,7 +240,6 @@ public class JournalTableActivity extends AppCompatActivity {
             }
         }
 
-        // Եթե արդեն գնահատված է, ցույց ենք տալիս հին գնահատականը տեքստային դաշտում
         classRef.child("grades").child(hwId).child(studentId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

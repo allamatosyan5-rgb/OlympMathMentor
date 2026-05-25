@@ -34,7 +34,8 @@ public class IntTest12Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "90", "180", "90", "6", "6", "ptolemy", "50", "100", "equal", "100", "5", "segment", "4", "2", "power of a point"
+            "90", "180", "90", "6", "6", "ptolemy", "50", "100", "equal", "100", "5", "segment", "4", "2",
+            "power of a point"
     };
 
     private EditText[] answerInputs;

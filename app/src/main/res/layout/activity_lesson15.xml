@@ -148,7 +148,7 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:background="#D32F2F"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -211,7 +211,7 @@
             android:text="Just like your DNA is unique to you, the prime factorization of a number is completely unique to that number. No matter how you draw the factor tree, the bottom branches will always be the same primes."
             android:textColor="#212121"
             android:textSize="16sp"
-            android:background="#BBDEFB"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="16dp" />
@@ -319,7 +319,7 @@
             android:text="Euclid's Proof:\n1. Imagine there is a finite list of all the primes in the world: p₁, p₂, ... pₙ.\n2. Let's multiply them ALL together and add exactly 1. We create a massive new number: N = (p₁ × p₂ × ... × pₙ) + 1.\n3. If you try to divide N by ANY of the primes on our 'complete' list, it will perfectly divide the first part, but it will always leave a remainder of 1.\n4. Thus, N is either a brand new prime itself, or it is divisible by some new prime that wasn't on our list. Either way, our list was incomplete. The primes go on forever!"
             android:textColor="#212121"
             android:textSize="15sp"
-            android:background="#FCE4EC"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="5dp"
             android:layout_marginBottom="32dp" />
@@ -339,7 +339,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#F5F5F5"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:layout_marginBottom="20dp"
             android:elevation="2dp">
@@ -600,8 +600,8 @@
             android:text="TAKE TEST 15"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#FFCCBC"
-            android:textColor="#3E2723"
+            app:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
             android:elevation="6dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp" />

@@ -117,8 +117,8 @@
             android:text="PA × PB = PC × PD"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:background="#00695C"
+            android:textColor="#5D4037"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:gravity="center"
             android:layout_marginBottom="24dp" />
@@ -157,7 +157,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:background="#C62828"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:gravity="center"
             android:layout_marginBottom="24dp" />
@@ -235,7 +235,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#E1BEE7"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="24dp" />
@@ -289,8 +289,8 @@
             android:text="THE EULER RATIO:\nNot only are they on a straight line, but the Centroid (G) always divides the distance between H and O in a precise 2:1 ratio!\n\nDistance(H, G) = 2 × Distance(G, O)"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:background="#E65100"
+            android:textColor="#3E2723"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -356,7 +356,7 @@
             android:text="Olympiad Secret: The radius of this Nine-Point Circle is EXACTLY HALF of the Circumradius (R/2) of the original triangle!"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#2E7D32"
+            android:textColor="#3E2723"
             android:layout_marginBottom="32dp" />
 
         <TextView
@@ -454,7 +454,7 @@
                 android:text="Problem 2: The Tangent's Power"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#C62828"
+                android:textColor="#3E2723"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -599,8 +599,8 @@
             android:text="TAKE FINAL TEST (TEST 20)"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#C5E1A5"
-            android:textColor="#3E2723"
+            app:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
             android:elevation="6dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp" />

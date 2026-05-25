@@ -31,7 +31,8 @@ public class IntTest19Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "32", "{2,3}", "power", "12", "empty", "de morgan", "countable", "yes", "equal", "1", "empty", "universal", "14", "greater", "null"
+            "32", "{2,3}", "power", "12", "empty", "de morgan", "countable", "yes", "equal", "1", "empty",
+            "universal", "14", "greater", "null"
     };
 
     private EditText[] answerInputs;

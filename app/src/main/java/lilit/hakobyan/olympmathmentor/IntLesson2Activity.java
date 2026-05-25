@@ -22,6 +22,9 @@ public class IntLesson2Activity extends AppCompatActivity {
     private int currentChunkIndex = 0;
     private boolean isPlaying = false;
 
+    private int currentCharOffset = 0;
+    private int baseOffset = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,29 +32,19 @@ public class IntLesson2Activity extends AppCompatActivity {
 
         textChunks = new ArrayList<>();
 
-        // 1. ԱՊԱՀՈՎԱԳՐՎԱԾ ԹԵՍՏԻ ԿՈՃԱԿ
-        // Փնտրում ենք և՛ հին, և՛ նոր ID-ներով, որ հաստատ գտնի
         Button btnStartTest = findViewById(R.id.btnStartTest);
-        if (btnStartTest == null) {
-            btnStartTest = findViewById(R.id.btnGoToTest2); // Սա մեր վերջին XML-ի կոճակն է
-        }
-
+        if (btnStartTest == null) btnStartTest = findViewById(R.id.btnGoToTest2);
         if (btnStartTest != null) {
             btnStartTest.setOnClickListener(v -> {
                 if (textToSpeech != null) textToSpeech.stop();
-                Intent intent = new Intent(IntLesson2Activity.this, IntTest2Activity.class);
-                startActivity(intent);
+                startActivity(new Intent(IntLesson2Activity.this, IntTest2Activity.class));
             });
         }
 
-        // 2. ԱՊԱՀՈՎԱԳՐՎԱԾ ԿԱՐԴԱԼՈՒ ԿՈՃԱԿ (TTS)
         btnReadLesson = findViewById(R.id.btnReadLesson);
         if (btnReadLesson != null) {
             btnReadLesson.setOnClickListener(v -> {
-                if (!isInitialized || textChunks.isEmpty()) {
-                    Toast.makeText(this, "No text to read or TTS not ready", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                if (!isInitialized || textChunks.isEmpty()) return;
 
                 if (isPlaying) {
                     textToSpeech.stop();
@@ -65,14 +58,9 @@ public class IntLesson2Activity extends AppCompatActivity {
             });
         }
 
-        // 3. TTS-Ի ՍԿԶԲՆԱՎՈՐՈՒՄ
         textToSpeech = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
-                int result = textToSpeech.setLanguage(Locale.US);
-
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    // Եթե լեզուն չկա, ոչինչ չենք անում, որ չխանգարի
-                } else {
+                if (textToSpeech.setLanguage(Locale.US) >= 0) {
                     isInitialized = true;
                     textToSpeech.setSpeechRate(0.85f);
                     prepareTextChunks();
@@ -82,18 +70,15 @@ public class IntLesson2Activity extends AppCompatActivity {
         });
     }
 
-    // ԱՊԱՀՈՎ ՖՈՒՆԿՑԻԱ ՏԵՔՍՏԵՐԸ ԳՏՆԵԼՈՒ ՀԱՄԱՐ
     private void addTextSafe(int viewId) {
         TextView tv = findViewById(viewId);
         if (tv != null && tv.getText() != null) {
-            textChunks.add(tv.getText().toString() + ". ");
+            textChunks.add(tv.getText().toString());
         }
     }
 
     private void prepareTextChunks() {
         textChunks.clear();
-
-        // Հիմա ծրագիրը ՉԻ ՔՐԱՇՎԻ, եթե անգամ այս ID-ներից որևէ մեկը պակասի XML-ում
         addTextSafe(R.id.tvTitle);
         addTextSafe(R.id.tvSubtitle1);
         addTextSafe(R.id.tvContent1);
@@ -105,13 +90,22 @@ public class IntLesson2Activity extends AppCompatActivity {
         addTextSafe(R.id.tvProblem1Title);
         addTextSafe(R.id.tvProblem1Text);
         addTextSafe(R.id.tvSolution1);
-
-        textChunks.add("End of Intermediate Lesson 2.");
     }
 
     private void speakFromCurrentIndex() {
-        if (currentChunkIndex >= textChunks.size()) currentChunkIndex = 0;
-        for (int i = currentChunkIndex; i < textChunks.size(); i++) {
+        if (currentChunkIndex >= textChunks.size()) {
+            currentChunkIndex = 0;
+            currentCharOffset = 0;
+            baseOffset = 0;
+        }
+
+        String currentText = textChunks.get(currentChunkIndex);
+        baseOffset = Math.min(currentCharOffset, currentText.length());
+        String textToSpeak = currentText.substring(baseOffset);
+
+        textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, String.valueOf(currentChunkIndex));
+
+        for (int i = currentChunkIndex + 1; i < textChunks.size(); i++) {
             textToSpeech.speak(textChunks.get(i), TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
         }
     }
@@ -120,32 +114,44 @@ public class IntLesson2Activity extends AppCompatActivity {
         textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String utteranceId) {
-                try { currentChunkIndex = Integer.parseInt(utteranceId); }
-                catch (NumberFormatException ignored) {}
+                int id = Integer.parseInt(utteranceId);
+                if (id != currentChunkIndex) {
+                    currentChunkIndex = id;
+                    currentCharOffset = 0;
+                    baseOffset = 0;
+                }
             }
+
             @Override
             public void onDone(String utteranceId) {
-                try {
-                    int id = Integer.parseInt(utteranceId);
-                    if (id == textChunks.size() - 1) {
-                        currentChunkIndex = 0;
-                        isPlaying = false;
-                        if (btnReadLesson != null) {
-                            runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
-                        }
-                    }
-                } catch (NumberFormatException ignored) {}
+                int id = Integer.parseInt(utteranceId);
+                if (id == textChunks.size() - 1) {
+                    currentChunkIndex = 0;
+                    currentCharOffset = 0;
+                    baseOffset = 0;
+                    isPlaying = false;
+                    runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
+                }
             }
+
+            @Override
+            public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                currentCharOffset = baseOffset + start;
+            }
+
             @Override
             public void onError(String utteranceId) {}
         });
     }
 
     @Override
-    public void onBackPressed() {
-        if (textToSpeech != null && textToSpeech.isSpeaking()) textToSpeech.stop();
-        super.onBackPressed();
-        finish();
+    protected void onPause() {
+        if (textToSpeech != null) textToSpeech.stop();
+        if (isPlaying) {
+            isPlaying = false;
+            runOnUiThread(() -> btnReadLesson.setText("Resume Reading"));
+        }
+        super.onPause();
     }
 
     @Override

@@ -7,9 +7,7 @@ import android.speech.tts.UtteranceProgressListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +22,9 @@ public class Lesson1Activity extends AppCompatActivity {
     private int currentChunkIndex = 0;
     private boolean isPlaying = false;
 
+    // Այս փոփոխականը պահում է ընթացիկ չանկի մեջ որերորդ սիմվոլից պետք է սկսել կարդալ
+    private int currentCharOffset = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,18 +37,12 @@ public class Lesson1Activity extends AppCompatActivity {
         textToSpeech = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 int result = textToSpeech.setLanguage(Locale.US);
-
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Toast.makeText(this, "Language not supported", Toast.LENGTH_SHORT).show();
-                } else {
+                if (result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED) {
                     isInitialized = true;
                     textToSpeech.setSpeechRate(0.9f);
-
                     prepareTextChunks();
                     setupTTSListener();
                 }
-            } else {
-                Toast.makeText(this, "TTS Initialization failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -55,7 +50,7 @@ public class Lesson1Activity extends AppCompatActivity {
             if (!isInitialized || textChunks.isEmpty()) return;
 
             if (isPlaying) {
-                textToSpeech.stop();
+                textToSpeech.stop(); // Սա կանգնեցնում է ընթացիկ հնչողությունը
                 isPlaying = false;
                 btnReadLesson.setText("Resume Reading");
             } else {
@@ -66,40 +61,40 @@ public class Lesson1Activity extends AppCompatActivity {
         });
 
         btnStartTest.setOnClickListener(v -> {
-            if (textToSpeech != null) {
-                textToSpeech.stop();
-            }
-            Intent intent = new Intent(Lesson1Activity.this, Test1Activity.class);
-            startActivity(intent);
+            if (textToSpeech != null) textToSpeech.stop();
+            startActivity(new Intent(Lesson1Activity.this, Test1Activity.class));
+            finish();
         });
     }
 
-
     private void prepareTextChunks() {
         textChunks.clear();
+        int[] ids = {R.id.tvTitle, R.id.tvSubtitle1, R.id.tvContent1, R.id.tvExamples1,
+                R.id.tvProperties1, R.id.tvProblem1Title, R.id.tvProblem1Text,
+                R.id.tvSolution1, R.id.tvSubtitle2, R.id.tvContent2, R.id.tvProperties2};
 
-        textChunks.add(findViewById(R.id.tvTitle).getContext().getString(R.string.app_name) + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvTitle)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvSubtitle1)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvContent1)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvExamples1)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvProperties1)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvProblem1Title)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvProblem1Text)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvSolution1)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvSubtitle2)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvContent2)).getText().toString() + ". ");
-        textChunks.add(((TextView) findViewById(R.id.tvProperties2)).getText().toString() + ". ");
-
-        textChunks.add("End of lesson 1.");
+        for (int id : ids) {
+            TextView tv = findViewById(id);
+            if (tv != null) textChunks.add(tv.getText().toString());
+        }
     }
 
     private void speakFromCurrentIndex() {
+        // Եթե սահմաններից դուրս է, զրոյացնում ենք
         if (currentChunkIndex >= textChunks.size()) {
             currentChunkIndex = 0;
+            currentCharOffset = 0;
         }
 
-        for (int i = currentChunkIndex; i < textChunks.size(); i++) {
+        // Կարդում ենք ընթացիկ չանկը՝ հաշվի առնելով offset-ը
+        String currentText = textChunks.get(currentChunkIndex);
+        String textToSpeak = currentText.substring(Math.min(currentCharOffset, currentText.length()));
+
+        // Կարդում ենք հիմիկվա չանկը
+        textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, String.valueOf(currentChunkIndex));
+
+        // Ավելացնում ենք հաջորդ չանկերը հերթում
+        for (int i = currentChunkIndex + 1; i < textChunks.size(); i++) {
             textToSpeech.speak(textChunks.get(i), TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
         }
     }
@@ -108,40 +103,36 @@ public class Lesson1Activity extends AppCompatActivity {
         textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String utteranceId) {
-                try {
-                    currentChunkIndex = Integer.parseInt(utteranceId);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                currentChunkIndex = Integer.parseInt(utteranceId);
             }
 
             @Override
             public void onDone(String utteranceId) {
-                try {
-                    int id = Integer.parseInt(utteranceId);
-                    if (id == textChunks.size() - 1) {
-                        currentChunkIndex = 0;
-                        isPlaying = false;
-                        runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
-                    }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
+                int id = Integer.parseInt(utteranceId);
+                if (id == textChunks.size() - 1) {
+                    currentChunkIndex = 0;
+                    currentCharOffset = 0;
+                    isPlaying = false;
+                    runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
                 }
             }
 
             @Override
-            public void onError(String utteranceId) {
+            public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                // `start`-ը ցույց է տալիս, թե որտեղից է սկսել հնչել հենց այս պահին
+                // Քանի որ մենք կտրել ենք տեքստը substring-ով, պետք է գումարենք նախկին offset-ը
+                currentCharOffset = Math.min(currentCharOffset, textChunks.get(Integer.parseInt(utteranceId)).length()) + start;
             }
+
+            @Override
+            public void onError(String utteranceId) {}
         });
     }
 
     @Override
-    public void onBackPressed() {
-        if (textToSpeech != null && textToSpeech.isSpeaking()) {
-            textToSpeech.stop();
-        }
-        super.onBackPressed();
-        finish();
+    protected void onPause() {
+        if (textToSpeech != null) textToSpeech.stop();
+        super.onPause();
     }
 
     @Override

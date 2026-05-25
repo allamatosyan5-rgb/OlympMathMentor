@@ -34,7 +34,8 @@ public class IntTest15Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "power", "center", "circumcenter", "lemoine", "cyclic", "incenter", "intersection", "on", "yes", "symmedian", "true", "5", "cyclic", "concurrent", "tangent"
+            "power", "center", "circumcenter", "lemoine", "cyclic", "incenter", "intersection", "on",
+            "yes", "symmedian", "true", "5", "cyclic", "concurrent", "tangent"
     };
 
     private EditText[] answerInputs;

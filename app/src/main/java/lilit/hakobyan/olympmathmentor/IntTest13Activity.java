@@ -34,7 +34,8 @@ public class IntTest13Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "1", "menelaus", "cevian", "2", "incenter", "9", "half", "no", "yes", "1", "collinear", "orthocenter", "4", "5", "homothety"
+            "1", "menelaus", "cevian", "2", "incenter", "9", "half", "no", "yes", "1", "collinear", "orthocenter", "4", "5",
+            "homothety"
     };
 
     private EditText[] answerInputs;

@@ -34,7 +34,8 @@ public class IntTest14Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "parallelogram", "half", "simson", "pedal", "lemoine", "point", "symmedian", "newton", "orthocenter", "rectangle", "rhombus", "ptolemy", "euler", "rhombus", "incircle"
+            "parallelogram", "half", "simson", "pedal", "lemoine", "point", "symmedian", "newton",
+            "orthocenter", "rectangle", "rhombus", "ptolemy", "euler", "rhombus", "incircle"
     };
 
     private EditText[] answerInputs;

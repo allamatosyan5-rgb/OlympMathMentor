@@ -46,7 +46,7 @@
             android:text="FINISH TEST"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:backgroundTint="#5D4037"
+            app:backgroundTint="#5D4037"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="20dp"/>
 
@@ -85,30 +85,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:layout_margin="10dp">
 
-                <ImageView
-                    android:id="@+id/medal1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@android:drawable/btn_star_big_on"
-                    app:tint="#BDBDBD"
-                    android:layout_marginEnd="10dp"/>
+                <ImageView android:id="@+id/medal1" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+                <ImageView android:id="@+id/medal2" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+                <ImageView android:id="@+id/medal3" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
 
-                <ImageView
-                    android:id="@+id/medal2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@android:drawable/btn_star_big_on"
-                    app:tint="#BDBDBD"
-                    android:layout_marginEnd="10dp"/>
-
-                <ImageView
-                    android:id="@+id/medal3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@android:drawable/btn_star_big_on"
-                    app:tint="#BDBDBD"/>
             </LinearLayout>
 
             <LinearLayout

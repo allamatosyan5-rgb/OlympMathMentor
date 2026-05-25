@@ -30,7 +30,8 @@ public class IntTest20Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "domain", "surjective", "bijective", "cauchy", "no", "x/2", "range", "no", "7", "inverse", "bijection", "0", "b", "false", "yes"
+            "domain", "surjective", "bijective", "cauchy", "no", "x/2",
+            "range", "no", "7", "inverse", "bijection", "0", "b", "false", "yes"
     };
 
     private EditText[] answerInputs;

@@ -24,6 +24,10 @@ public class Lesson5Activity extends AppCompatActivity {
     private int currentChunkIndex = 0;
     private boolean isPlaying = false;
 
+    // Դիրքը հիշելու փոփոխականներ
+    private int currentCharOffset = 0;
+    private int baseOffsetForCurrentChunk = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,6 @@ public class Lesson5Activity extends AppCompatActivity {
                 } else {
                     isInitialized = true;
                     textToSpeech.setSpeechRate(0.9f);
-
 
                     prepareTextChunks();
                     setupTTSListener();
@@ -77,7 +80,6 @@ public class Lesson5Activity extends AppCompatActivity {
 
     private void prepareTextChunks() {
         textChunks.clear();
-
         textChunks.add(((TextView) findViewById(R.id.tvTitle)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSubtitle)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec1Title)).getText().toString() + ". ");
@@ -93,17 +95,23 @@ public class Lesson5Activity extends AppCompatActivity {
         textChunks.add(((TextView) findViewById(R.id.tvSec4Text1)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProbTitle)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProbText)).getText().toString() + ". ");
-
         textChunks.add("End of lesson 5.");
     }
 
     private void speakFromCurrentIndex() {
         if (currentChunkIndex >= textChunks.size()) {
             currentChunkIndex = 0;
+            currentCharOffset = 0;
         }
 
+        baseOffsetForCurrentChunk = currentCharOffset;
+
         for (int i = currentChunkIndex; i < textChunks.size(); i++) {
-            textToSpeech.speak(textChunks.get(i), TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
+            String textToSpeak = textChunks.get(i);
+            if (i == currentChunkIndex && currentCharOffset > 0 && currentCharOffset < textToSpeak.length()) {
+                textToSpeak = textToSpeak.substring(currentCharOffset);
+            }
+            textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
         }
     }
 
@@ -112,10 +120,13 @@ public class Lesson5Activity extends AppCompatActivity {
             @Override
             public void onStart(String utteranceId) {
                 try {
-                    currentChunkIndex = Integer.parseInt(utteranceId);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                    int id = Integer.parseInt(utteranceId);
+                    if (currentChunkIndex != id) {
+                        currentChunkIndex = id;
+                        currentCharOffset = 0;
+                        baseOffsetForCurrentChunk = 0;
+                    }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
 
             @Override
@@ -124,17 +135,28 @@ public class Lesson5Activity extends AppCompatActivity {
                     int id = Integer.parseInt(utteranceId);
                     if (id == textChunks.size() - 1) {
                         currentChunkIndex = 0;
+                        currentCharOffset = 0;
+                        baseOffsetForCurrentChunk = 0;
                         isPlaying = false;
                         runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
 
             @Override
-            public void onError(String utteranceId) {
+            public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                try {
+                    int id = Integer.parseInt(utteranceId);
+                    if (id == currentChunkIndex) {
+                        currentCharOffset = baseOffsetForCurrentChunk + start;
+                    } else {
+                        currentCharOffset = start;
+                    }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
+
+            @Override
+            public void onError(String utteranceId) {}
         });
     }
 

@@ -20,10 +20,13 @@ public class Lesson7Activity extends AppCompatActivity {
     private Button btnReadLesson;
     private boolean isInitialized = false;
 
-    // ՆՈՐ ՓՈՓՈԽԱԿԱՆՆԵՐ
-    private List<String> textChunks; // Տեքստի կտորների ցուցակ
-    private int currentChunkIndex = 0; // Թե որերորդ կտորն է հիմա կարդում
-    private boolean isPlaying = false; // Արդյոք հիմա կարդու՞մ է, թե դադարի մեջ է
+    private List<String> textChunks;
+    private int currentChunkIndex = 0;
+    private boolean isPlaying = false;
+
+    // Դիրքը հիշելու փոփոխականներ
+    private int currentCharOffset = 0;
+    private int baseOffsetForCurrentChunk = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +35,8 @@ public class Lesson7Activity extends AppCompatActivity {
 
         Button btnGoToTest7 = findViewById(R.id.btnGoToTest7);
         btnReadLesson = findViewById(R.id.btnReadLesson);
-        textChunks = new ArrayList<>(); // Սկզբնավորում ենք ցուցակը
+        textChunks = new ArrayList<>();
 
-        // 1. TextToSpeech-ի սկզբնավորում
         textToSpeech = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 int result = textToSpeech.setLanguage(Locale.US);
@@ -45,9 +47,7 @@ public class Lesson7Activity extends AppCompatActivity {
                     isInitialized = true;
                     textToSpeech.setSpeechRate(0.85f);
 
-                    // Պատրաստում ենք տեքստերը
                     prepareTextChunks();
-                    // Հետևում ենք կարդալու ընթացքին
                     setupTTSListener();
                 }
             } else {
@@ -55,24 +55,20 @@ public class Lesson7Activity extends AppCompatActivity {
             }
         });
 
-        // 2. Կարդալու / Դադարի կոճակի սեղմումը
         btnReadLesson.setOnClickListener(v -> {
             if (!isInitialized || textChunks.isEmpty()) return;
 
             if (isPlaying) {
-                // Եթե կարդում է -> ԴԱԴԱՐ (Pause)
-                textToSpeech.stop(); // Կանգնեցնում ենք շարժիչը
+                textToSpeech.stop();
                 isPlaying = false;
-                btnReadLesson.setText("Resume Reading"); // Փոխում ենք տեքստը «Շարունակել»
+                btnReadLesson.setText("Resume Reading");
             } else {
-                // Եթե կանգնած է -> ՍԿՍԵԼ կամ ՇԱՐՈՒՆԱԿԵԼ (Play / Resume)
                 isPlaying = true;
-                btnReadLesson.setText("Pause Reading"); // Փոխում ենք տեքստը «Դադար»
+                btnReadLesson.setText("Pause Reading");
                 speakFromCurrentIndex();
             }
         });
 
-        // Թեստի էջին անցում
         btnGoToTest7.setOnClickListener(v -> {
             if (textToSpeech != null) {
                 textToSpeech.stop();
@@ -82,7 +78,6 @@ public class Lesson7Activity extends AppCompatActivity {
         });
     }
 
-    // ՆՈՐ ՖՈՒՆԿՑԻԱ. Լցնում ենք ցուցակը տեքստի առանձին կտորներով
     private void prepareTextChunks() {
         textChunks.clear();
         textChunks.add(((TextView) findViewById(R.id.tvTitle)).getText().toString() + ". ");
@@ -95,57 +90,68 @@ public class Lesson7Activity extends AppCompatActivity {
         textChunks.add(((TextView) findViewById(R.id.tvSec2Text1)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec2Text2)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec2Text3)).getText().toString() + ". ");
-        // Այստեղ կարող ես ավելացնել էջի մնացած բոլոր տեքստերը՝ նույն տրամաբանությամբ...
-        textChunks.add("End of lesson."); // Վերջաբան
+        textChunks.add("End of lesson.");
     }
 
-    // ՆՈՐ ՖՈՒՆԿՑԻԱ. Շարունակում է կարդալ այնտեղից, որտեղ կանգնել էր
     private void speakFromCurrentIndex() {
-        // Եթե հասել ենք վերջ, զրոյացնում ենք, որ սկսի սկզբից
         if (currentChunkIndex >= textChunks.size()) {
             currentChunkIndex = 0;
+            currentCharOffset = 0;
         }
 
-        // Հերթով ավելացնում ենք մնացած կտորները կարդալու հերթի մեջ (QUEUE_ADD)
+        baseOffsetForCurrentChunk = currentCharOffset;
+
         for (int i = currentChunkIndex; i < textChunks.size(); i++) {
-            // Վերջին պարամետրը (String.valueOf(i)) հանդիսանում է կտորի ID-ն
-            textToSpeech.speak(textChunks.get(i), TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
+            String textToSpeak = textChunks.get(i);
+            if (i == currentChunkIndex && currentCharOffset > 0 && currentCharOffset < textToSpeak.length()) {
+                textToSpeak = textToSpeak.substring(currentCharOffset);
+            }
+            textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
         }
     }
 
-    // ՆՈՐ ՖՈՒՆԿՑԻԱ. Հետևում է, թե որ կտորն է կարդացվում հենց հիմա
     private void setupTTSListener() {
         textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String utteranceId) {
-                // Երբ սկսում է կարդալ նոր կտոր, պահպանում ենք դրա ID-ն (ինդեքսը)
                 try {
-                    currentChunkIndex = Integer.parseInt(utteranceId);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                    int id = Integer.parseInt(utteranceId);
+                    if (currentChunkIndex != id) {
+                        currentChunkIndex = id;
+                        currentCharOffset = 0;
+                        baseOffsetForCurrentChunk = 0;
+                    }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
 
             @Override
             public void onDone(String utteranceId) {
-
                 try {
                     int id = Integer.parseInt(utteranceId);
                     if (id == textChunks.size() - 1) {
                         currentChunkIndex = 0;
+                        currentCharOffset = 0;
+                        baseOffsetForCurrentChunk = 0;
                         isPlaying = false;
-
-
                         runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
 
             @Override
-            public void onError(String utteranceId) {
+            public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                try {
+                    int id = Integer.parseInt(utteranceId);
+                    if (id == currentChunkIndex) {
+                        currentCharOffset = baseOffsetForCurrentChunk + start;
+                    } else {
+                        currentCharOffset = start;
+                    }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
+
+            @Override
+            public void onError(String utteranceId) {}
         });
     }
 

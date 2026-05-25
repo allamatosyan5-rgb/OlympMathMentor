@@ -14,7 +14,6 @@ public class TeacherMainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_teacher);
 
-        // Սկզբնական էջը դնում ենք "My Classes"
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_teacher, new TeacherClassesFragment())

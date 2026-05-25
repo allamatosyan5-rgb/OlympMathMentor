@@ -34,7 +34,8 @@ public class IntTest18Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "false", "conjunction", "disjunction", "contrapositive", "false", "all", "exists", "or", "true", "false", "conclusion", "false", "only", "tautology", "not"
+            "false", "conjunction", "disjunction", "contrapositive", "false", "all", "exists",
+            "or", "true", "false", "conclusion", "false", "only", "tautology", "not"
     };
 
     private EditText[] answerInputs;

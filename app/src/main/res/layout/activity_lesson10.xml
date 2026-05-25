@@ -102,7 +102,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#CFD8DC"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="24dp" />
@@ -193,7 +193,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#5D4037"
-            android:background="#B3E5FC"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -384,8 +384,8 @@
             android:text="TAKE TEST 10"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#B0BEC5"
-            android:textColor="#3E2723"
+            app:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
             android:elevation="6dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp" />

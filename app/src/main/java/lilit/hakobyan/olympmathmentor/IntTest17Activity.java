@@ -34,7 +34,8 @@ public class IntTest17Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "base", "hypothesis", "dominoes", "n^2", "2", "strong", "6", "prove", "no", "natural", "8", "strong", "k+1", "4", "true"
+            "base", "hypothesis", "dominoes", "n^2", "2", "strong", "6",
+            "prove", "no", "natural", "8", "strong", "k+1", "4", "true"
     };
 
     private EditText[] answerInputs;

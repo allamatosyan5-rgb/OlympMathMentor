@@ -101,7 +101,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
-            android:background="#B2DFDB"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="24dp" />
@@ -192,7 +192,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#5D4037"
-            android:background="#E0F2F1"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -210,7 +210,7 @@
             android:text="4. The 'Dry Matter' Trap (Mushrooms)"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="#D32F2F"
+            android:textColor="#5D4037"
             android:layout_marginBottom="16dp" />
 
         <TextView
@@ -231,7 +231,7 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:background="#D32F2F"
+            android:background="#5D4037"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="32dp" />
@@ -269,7 +269,7 @@
                 android:text="Problem 1: Adding Pure Solute"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#00796B"
+                android:textColor="#5D4037"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -324,7 +324,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: You must add 100 grams of pure salt."
-                android:textColor="#2E7D32"
+                android:textColor="#5D4037"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
@@ -346,7 +346,7 @@
                 android:text="Problem 2: The Mushroom Paradox"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#00796B"
+                android:textColor="#5D4037"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -422,7 +422,7 @@
                 android:text="Problem 3: The Rule of Cross"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#00796B"
+                android:textColor="#5D4037"
                 android:layout_marginBottom="8dp" />
 
             <TextView
@@ -485,7 +485,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Answer: You need 100 grams of the 50% solution."
-                android:textColor="#2E7D32"
+                android:textColor="#5D4037"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
@@ -498,8 +498,8 @@
             android:text="TAKE TEST 8"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#B2DFDB"
-            android:textColor="#3E2723"
+            app:backgroundTint="#5D4037"
+            android:textColor="#FFFFFF"
             android:elevation="6dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp" />

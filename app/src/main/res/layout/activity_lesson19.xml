@@ -78,7 +78,7 @@
             android:id="@+id/tvSec1Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="A Cyclic Quadrilateral (Ներգծյալ քառանկյուն) is a four-sided polygon whose vertices all lie on a single circle. Not every quadrilateral can be inscribed in a circle (for example, a non-rectangular rhombus cannot)."
+            android:text="A Cyclic Quadrilateral  is a four-sided polygon whose vertices all lie on a single circle. Not every quadrilateral can be inscribed in a circle (for example, a non-rectangular rhombus cannot)."
             android:textColor="#212121"
             android:textSize="16sp"
             android:lineSpacingExtra="5dp"
@@ -107,8 +107,8 @@
             android:text="THE GOLDEN PROPERTY:\nIn a cyclic quadrilateral, the sum of any pair of OPPOSITE angles is exactly 180°."
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:background="#4A148C"
+            android:textColor="#212121"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="16dp" />
@@ -120,7 +120,7 @@
             android:text="• Angle A + Angle C = 180°\n• Angle B + Angle D = 180°\n\n(This is why all rectangles and squares are cyclic, because 90 + 90 = 180)."
             android:textColor="#212121"
             android:textSize="16sp"
-            android:background="#E1BEE7"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="24dp" />
@@ -128,7 +128,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#D7CCC8"
+            android:background="#E8E0C5"
             android:layout_marginBottom="24dp" />
 
         <LinearLayout
@@ -200,7 +200,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="#212121"
-            android:background="#BBDEFB"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:layout_marginBottom="24dp" />
 
@@ -254,7 +254,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#2E7D32"
-            android:background="#C8E6C9"
+            android:background="#E8E0C5"
             android:padding="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_marginBottom="24dp" />
@@ -309,7 +309,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#D32F2F"
-            android:background="#FFCDD2"
+            android:background="#E8E0C5"
             android:padding="16dp"
             android:lineSpacingExtra="6dp"
             android:layout_marginBottom="32dp" />
@@ -486,8 +486,8 @@
             android:text="TAKE TEST 19"
             android:textStyle="bold"
             android:textSize="22sp"
-            app:backgroundTint="#D1C4E9"
-            android:textColor="#3E2723"
+            app:backgroundTint="#8D6E63"
+            android:textColor="#FFFFFF"
             android:elevation="6dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp" />

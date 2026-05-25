@@ -20,10 +20,12 @@ public class Lesson12Activity extends AppCompatActivity {
     private Button btnReadLesson;
     private boolean isInitialized = false;
 
-    // ՆՈՐ ՓՈՓՈԽԱԿԱՆՆԵՐ (Pause / Resume)
     private List<String> textChunks;
     private int currentChunkIndex = 0;
     private boolean isPlaying = false;
+
+    private int currentCharOffset = 0;
+    private int baseOffsetForCurrentChunk = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,8 @@ public class Lesson12Activity extends AppCompatActivity {
 
         Button btnGoToTest12 = findViewById(R.id.btnGoToTest12);
         btnReadLesson = findViewById(R.id.btnReadLesson);
-        textChunks = new ArrayList<>(); // Սկզբնավորում ենք ցուցակը
+        textChunks = new ArrayList<>();
 
-        // 1. TextToSpeech-ի սկզբնավորում
         textToSpeech = new TextToSpeech(this, status -> {
             if (status == TextToSpeech.SUCCESS) {
                 int result = textToSpeech.setLanguage(Locale.US);
@@ -43,9 +44,7 @@ public class Lesson12Activity extends AppCompatActivity {
                     Toast.makeText(this, "Language not supported", Toast.LENGTH_SHORT).show();
                 } else {
                     isInitialized = true;
-                    textToSpeech.setSpeechRate(0.85f); // Կարդալու արագություն
-
-                    // Պատրաստում ենք տեքստերը և դնում լսող (listener)
+                    textToSpeech.setSpeechRate(0.85f);
                     prepareTextChunks();
                     setupTTSListener();
                 }
@@ -54,24 +53,20 @@ public class Lesson12Activity extends AppCompatActivity {
             }
         });
 
-        // 2. Կարդալու կոճակի սեղմումը
         btnReadLesson.setOnClickListener(v -> {
             if (!isInitialized || textChunks.isEmpty()) return;
 
             if (isPlaying) {
-                // ԴԱԴԱՐ (Pause)
                 textToSpeech.stop();
                 isPlaying = false;
                 btnReadLesson.setText("Resume Reading");
             } else {
-                // ՇԱՐՈՒՆԱԿԵԼ (Resume/Play)
                 isPlaying = true;
                 btnReadLesson.setText("Pause Reading");
                 speakFromCurrentIndex();
             }
         });
 
-        // Թեստի էջին անցում
         btnGoToTest12.setOnClickListener(v -> {
             if (textToSpeech != null) {
                 textToSpeech.stop();
@@ -81,40 +76,27 @@ public class Lesson12Activity extends AppCompatActivity {
         });
     }
 
-    // Հավաքում է ամբողջ տեքստը ցուցակի մեջ (մաս-մաս)
     private void prepareTextChunks() {
         textChunks.clear();
-
-        // Վերնագիր և Ենթավերնագիր
         textChunks.add(((TextView) findViewById(R.id.tvTitle)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSubtitle)).getText().toString() + ". ");
-
-        // Բաժին 1
         textChunks.add(((TextView) findViewById(R.id.tvSec1Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec1Text)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec1RuleTitle)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec1RuleText)).getText().toString() + ". ");
-
-        // Բաժին 2
         textChunks.add(((TextView) findViewById(R.id.tvSec2Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec2Text1)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec2Text2)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec2Text3)).getText().toString() + ". ");
-
-        // Բաժին 3
         textChunks.add(((TextView) findViewById(R.id.tvSec3Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec3Text1)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec3Text2)).getText().toString() + ". ");
-
-        // Բաժին 4
         textChunks.add(((TextView) findViewById(R.id.tvSec4Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec4Text1)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvSec4Text2)).getText().toString() + ". ");
-
-        // Մաստերկլաս
         textChunks.add(((TextView) findViewById(R.id.tvMasterTitle)).getText().toString() + ". ");
 
-        // Խնդիր 1
+        // Problem 1
         textChunks.add(((TextView) findViewById(R.id.tvProb1Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb1Q)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb1S1)).getText().toString() + ". ");
@@ -123,7 +105,7 @@ public class Lesson12Activity extends AppCompatActivity {
         textChunks.add(((TextView) findViewById(R.id.tvProb1S4)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb1Ans)).getText().toString() + ". ");
 
-        // Խնդիր 2
+        // Problem 2
         textChunks.add(((TextView) findViewById(R.id.tvProb2Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb2Q)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb2S1)).getText().toString() + ". ");
@@ -132,7 +114,7 @@ public class Lesson12Activity extends AppCompatActivity {
         textChunks.add(((TextView) findViewById(R.id.tvProb2S4)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb2Ans)).getText().toString() + ". ");
 
-        // Խնդիր 3
+        // Problem 3
         textChunks.add(((TextView) findViewById(R.id.tvProb3Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb3Q)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb3S1)).getText().toString() + ". ");
@@ -142,7 +124,7 @@ public class Lesson12Activity extends AppCompatActivity {
         textChunks.add(((TextView) findViewById(R.id.tvProb3S5)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb3Ans)).getText().toString() + ". ");
 
-        // Խնդիր 4
+        // Problem 4
         textChunks.add(((TextView) findViewById(R.id.tvProb4Title)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb4Q)).getText().toString() + ". ");
         textChunks.add(((TextView) findViewById(R.id.tvProb4S1)).getText().toString() + ". ");
@@ -155,27 +137,35 @@ public class Lesson12Activity extends AppCompatActivity {
         textChunks.add("End of lesson 12.");
     }
 
-    // Շարունակում է կարդալ այնտեղից, որտեղ կանգնել էր
     private void speakFromCurrentIndex() {
         if (currentChunkIndex >= textChunks.size()) {
             currentChunkIndex = 0;
+            currentCharOffset = 0;
         }
 
+        baseOffsetForCurrentChunk = currentCharOffset;
+
         for (int i = currentChunkIndex; i < textChunks.size(); i++) {
-            textToSpeech.speak(textChunks.get(i), TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
+            String textToSpeak = textChunks.get(i);
+            if (i == currentChunkIndex && currentCharOffset > 0 && currentCharOffset < textToSpeak.length()) {
+                textToSpeak = textToSpeak.substring(currentCharOffset);
+            }
+            textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_ADD, null, String.valueOf(i));
         }
     }
 
-    // Հետևում է ընթացքին (որպեսզի պահպանի ինդեքսը)
     private void setupTTSListener() {
         textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String utteranceId) {
                 try {
-                    currentChunkIndex = Integer.parseInt(utteranceId);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                    int id = Integer.parseInt(utteranceId);
+                    if (currentChunkIndex != id) {
+                        currentChunkIndex = id;
+                        currentCharOffset = 0;
+                        baseOffsetForCurrentChunk = 0;
+                    }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
 
             @Override
@@ -184,17 +174,28 @@ public class Lesson12Activity extends AppCompatActivity {
                     int id = Integer.parseInt(utteranceId);
                     if (id == textChunks.size() - 1) {
                         currentChunkIndex = 0;
+                        currentCharOffset = 0;
+                        baseOffsetForCurrentChunk = 0;
                         isPlaying = false;
                         runOnUiThread(() -> btnReadLesson.setText("Read Lesson Aloud"));
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
 
             @Override
-            public void onError(String utteranceId) {
+            public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                try {
+                    int id = Integer.parseInt(utteranceId);
+                    if (id == currentChunkIndex) {
+                        currentCharOffset = baseOffsetForCurrentChunk + start;
+                    } else {
+                        currentCharOffset = start;
+                    }
+                } catch (NumberFormatException e) { e.printStackTrace(); }
             }
+
+            @Override
+            public void onError(String utteranceId) {}
         });
     }
 

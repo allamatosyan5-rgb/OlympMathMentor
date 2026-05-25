@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.MediaPlayer; // 👈 ԱՎԵԼԱՑՎԱԾ Է
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -59,6 +59,7 @@ public class Test2Activity extends AppCompatActivity {
             TextView tvHeart = new TextView(this);
             tvHeart.setPadding(20, 20, 20, 20);
             tvHeart.setTextSize(22f);
+
             int finalI = i;
 
             if (isFavourite(questions[i])) {
@@ -67,7 +68,7 @@ public class Test2Activity extends AppCompatActivity {
                 tvHeart.setText("🤍");
             }
 
-            tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], tvHeart));
+            tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], correctAnswers[finalI], tvHeart));
 
             questionHeader.addView(tvQuestion);
             questionHeader.addView(tvHeart);
@@ -140,7 +141,6 @@ public class Test2Activity extends AppCompatActivity {
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
             saveLessonStars(2, 0);
 
-            // 👇 ՁԱՅՆ՝ ՑԱԾՐ ՄԻԱՎՈՐԻ ԴԵՊՔՈՒՄ 👇
             MediaPlayer.create(this, R.raw.sad).start();
 
         } else {
@@ -163,20 +163,17 @@ public class Test2Activity extends AppCompatActivity {
             if (score >= 6 && score < 8) {
                 m1.setColorFilter(gold);
                 earnedStars = 1;
-                // 👇 ՁԱՅՆ՝ 1 ԱՍՏՂԻ ԴԵՊՔՈՒՄ 👇
                 MediaPlayer.create(this, R.raw.star1).start();
             } else if (score >= 8 && score < 10) {
                 m1.setColorFilter(gold);
                 m2.setColorFilter(gold);
                 earnedStars = 2;
-                // 👇 ՁԱՅՆ՝ 2 ԱՍՏՂԻ ԴԵՊՔՈՒՄ 👇
                 MediaPlayer.create(this, R.raw.star2).start();
             } else if (score == 10) {
                 m1.setColorFilter(gold);
                 m2.setColorFilter(gold);
                 m3.setColorFilter(gold);
                 earnedStars = 3;
-                // 👇 ՁԱՅՆ՝ 3 ԱՍՏՂԻ ԴԵՊՔՈՒՄ 👇
                 MediaPlayer.create(this, R.raw.star3).start();
             }
 
@@ -207,14 +204,20 @@ public class Test2Activity extends AppCompatActivity {
         }
     }
 
-    private void toggleFavourite(String question, TextView heartIcon) {
+    private void toggleFavourite(String question, String correctAns, TextView heartIcon) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         String favourites = prefs.getString("favourite_problems", "");
+        String newEntry = question + " \nCorrect Answer: " + correctAns + "###";
+
         if (favourites.contains(question)) {
-            favourites = favourites.replace(question + "###", "");
+            if (favourites.contains(newEntry)) {
+                favourites = favourites.replace(newEntry, "");
+            } else {
+                favourites = favourites.replace(question + "###", "");
+            }
             heartIcon.setText("🤍");
         } else {
-            favourites += question + "###";
+            favourites += newEntry;
             heartIcon.setText("❤️");
         }
         prefs.edit().putString("favourite_problems", favourites).apply();

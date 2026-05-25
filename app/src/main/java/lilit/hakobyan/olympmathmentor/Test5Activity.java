@@ -61,13 +61,11 @@ public class Test5Activity extends AppCompatActivity {
             tvHeart.setTextSize(22f);
             int finalI = i;
 
-            if (isFavourite(questions[i])) {
-                tvHeart.setText("❤️");
-            } else {
-                tvHeart.setText("🤍");
-            }
+            // ՈՒՂՂՈՒՄ. ստուգում ենք ամբողջական գրառումը
+            tvHeart.setText(isFavourite(questions[finalI], correctAnswers[finalI]) ? "❤️" : "🤍");
 
-            tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], tvHeart));
+            // ՈՒՂՂՈՒՄ. 3 արգումենտով կանչ
+            tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], correctAnswers[finalI], tvHeart));
 
             questionHeader.addView(tvQuestion);
             questionHeader.addView(tvHeart);
@@ -139,7 +137,6 @@ public class Test5Activity extends AppCompatActivity {
             findViewById(R.id.medalsLayout).setVisibility(View.GONE);
             findViewById(R.id.btnNextLesson).setVisibility(View.GONE);
             saveLessonStars(5, 0);
-
             MediaPlayer.create(this, R.raw.sad).start();
         } else {
             tvFeedbackResult.setText("Outstanding! You passed the Advanced Divisibility Test.");
@@ -175,7 +172,6 @@ public class Test5Activity extends AppCompatActivity {
             }
 
             saveLessonStars(5, earnedStars);
-
             SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             prefs.edit().putBoolean("lesson6_unlocked", true).putInt("test5_score", score).apply();
         }
@@ -193,27 +189,32 @@ public class Test5Activity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         String existingErrors = prefs.getString("wrong_questions_list", "");
         if (!existingErrors.contains(question)) {
-            String newErrorEntry = question + " \nCorrect Answer: " + correctAns + "###";
-            prefs.edit().putString("wrong_questions_list", existingErrors + newErrorEntry).apply();
+            prefs.edit().putString("wrong_questions_list", existingErrors + question + " \nCorrect Answer: " + correctAns + "###").apply();
         }
     }
 
-    private void toggleFavourite(String question, TextView heartIcon) {
+    private void toggleFavourite(String question, String correctAns, TextView heartIcon) {
         SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         String favourites = prefs.getString("favourite_problems", "");
+        String entry = question + " \nCorrect Answer: " + correctAns + "###";
+
         if (favourites.contains(question)) {
-            favourites = favourites.replace(question + "###", "");
+            if (favourites.contains(entry)) {
+                favourites = favourites.replace(entry, "");
+            } else {
+                favourites = favourites.replace(question + "###", "");
+            }
             heartIcon.setText("🤍");
         } else {
-            favourites += question + "###";
+            favourites += entry;
             heartIcon.setText("❤️");
         }
         prefs.edit().putString("favourite_problems", favourites).apply();
     }
 
-    private boolean isFavourite(String question) {
-        // 👇 Ահա ուղղված տողը 👇
-        SharedPreferences prefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
-        return prefs.getString("favourite_problems", "").contains(question);
+    private boolean isFavourite(String question, String correctAns) {
+        String entry = question + " \nCorrect Answer: " + correctAns + "###";
+        return getSharedPreferences("UserProgress", Context.MODE_PRIVATE)
+                .getString("favourite_problems", "").contains(entry);
     }
 }
