@@ -6,10 +6,11 @@
     android:padding="16dp">
 
     <ImageView
-        android:layout_width="400dp"
-        android:layout_height="600dp"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:alpha="0.09"
+        android:scaleType="fitCenter"
         android:src="@drawable/logo" />
 
     <TextView
@@ -17,19 +18,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Classes"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="#3E2723"
         android:layout_marginBottom="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStudentClasses"
-        android:layout_width="384dp"
-        android:layout_height="679dp"
-        android:layout_above="@+id/fabJoinClass"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/tvTitle"
-        android:layout_marginTop="37dp"
-        android:layout_marginBottom="-39dp" />
+        android:layout_above="@id/fabJoinClass"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabJoinClass"
@@ -39,7 +40,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         app:backgroundTint="#8B4513"
-        app:tint="@android:color/white"
-        xmlns:app="http://schemas.android.com/apk/res-auto" />
+        app:tint="@android:color/white" />
 </RelativeLayout>

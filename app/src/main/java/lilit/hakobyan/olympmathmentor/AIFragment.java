@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,11 +69,19 @@ public class AIFragment extends Fragment {
     private ImageButton btnRemoveImage;
     private Uri pendingImageUri = null;
 
+    private LottieAnimationView lottieLoading;
+
     private ChatAdapter chatAdapter;
     private List<ChatSession> allSessions = new ArrayList<>();
     private ChatSession currentSession;
 
     private TextToSpeech textToSpeech;
+
+    // TTS Pause/Resume համար անհրաժեշտ փոփոխականներ
+    private int currentCharOffset = 0;
+    private int baseOffset = 0;
+    private int currentlyPlayingIndex = -1;
+    private boolean isTtsPlaying = false;
 
     private ActivityResultLauncher<String> galleryLauncher;
     private ActivityResultLauncher<Uri> cameraLauncher;
@@ -117,13 +128,46 @@ public class AIFragment extends Fragment {
         ivImagePreview = view.findViewById(R.id.ivImagePreview);
         btnRemoveImage = view.findViewById(R.id.btnRemoveImage);
 
+        lottieLoading = view.findViewById(R.id.lottieLoading);
+
         drawerLayout = view.findViewById(R.id.drawerLayout);
         layoutSidebarHistory = view.findViewById(R.id.layoutSidebarHistory);
 
         rvChatMessages.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // TextToSpeech-ի սկզբնավորում ընդմիջման աջակցությամբ
         textToSpeech = new TextToSpeech(getContext(), status -> {
-            if (status == TextToSpeech.SUCCESS) textToSpeech.setLanguage(Locale.US);
+            if (status == TextToSpeech.SUCCESS) {
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onStart(String utteranceId) {}
+
+                    @Override
+                    public void onDone(String utteranceId) {
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                isTtsPlaying = false;
+                                int oldIndex = currentlyPlayingIndex;
+                                currentlyPlayingIndex = -1;
+                                currentCharOffset = 0;
+                                baseOffset = 0;
+                                if (oldIndex != -1 && chatAdapter != null) {
+                                    chatAdapter.notifyItemChanged(oldIndex);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onError(String utteranceId) {}
+
+                    @Override
+                    public void onRangeStart(String utteranceId, int start, int end, int frame) {
+                        currentCharOffset = baseOffset + start;
+                    }
+                });
+            }
         });
 
         loadAllSessions();
@@ -148,6 +192,12 @@ public class AIFragment extends Fragment {
                 etChatMessage.setText("");
                 pendingImageUri = null;
                 if (layoutImagePreview != null) layoutImagePreview.setVisibility(View.GONE);
+
+                // Միացնում ենք սամոլյոտիկը և անջատում ուղարկելու կոճակը
+                if (lottieLoading != null) lottieLoading.setVisibility(View.VISIBLE);
+                btnSendChat.setEnabled(false);
+                btnSendChat.setAlpha(0.5f);
+
                 generateAiResponse();
             }
         });
@@ -334,7 +384,6 @@ public class AIFragment extends Fragment {
             rowLayout.setGravity(Gravity.CENTER_VERTICAL);
             rowLayout.setPadding(16, 24, 16, 24);
 
-            // Ակտիվ չաթի գույնը
             if (session.id.equals(currentSession.id)) {
                 rowLayout.setBackgroundColor(Color.parseColor("#4E342E"));
             } else {
@@ -504,7 +553,14 @@ public class AIFragment extends Fragment {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage("Network Error: Could not connect to Math AI.", false, null));
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        if (lottieLoading != null) lottieLoading.setVisibility(View.GONE);
+                        btnSendChat.setEnabled(true);
+                        btnSendChat.setAlpha(1.0f);
+                        addMessage("Network Error: Could not connect to Math AI.", false, null);
+                    });
+                }
             }
 
             @Override
@@ -526,17 +582,38 @@ public class AIFragment extends Fragment {
                                     final String cleanText = aiText.replace("**", "").trim();
 
                                     if (!cleanText.isEmpty()) {
-                                        if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage(cleanText, false, null));
+                                        if (getActivity() != null) {
+                                            getActivity().runOnUiThread(() -> {
+                                                if (lottieLoading != null) lottieLoading.setVisibility(View.GONE);
+                                                btnSendChat.setEnabled(true);
+                                                btnSendChat.setAlpha(1.0f);
+                                                addMessage(cleanText, false, null);
+                                            });
+                                        }
                                         return;
                                     }
                                 }
                             }
                         }
-                        if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage("Sorry, I received a blank response.", false, null));
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                if (lottieLoading != null) lottieLoading.setVisibility(View.GONE);
+                                btnSendChat.setEnabled(true);
+                                btnSendChat.setAlpha(1.0f);
+                                addMessage("Sorry, I received a blank response.", false, null);
+                            });
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage("Error reading Mentor response.", false, null));
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                if (lottieLoading != null) lottieLoading.setVisibility(View.GONE);
+                                btnSendChat.setEnabled(true);
+                                btnSendChat.setAlpha(1.0f);
+                                addMessage("Error reading Mentor response.", false, null);
+                            });
+                        }
                     }
                 } else {
                     int statusCode = response.code();
@@ -544,7 +621,14 @@ public class AIFragment extends Fragment {
                             : (statusCode == 429) ? "I have reached my limit for right now."
                             : "System Error (" + statusCode + "). Please try again.";
 
-                    if (getActivity() != null) getActivity().runOnUiThread(() -> addMessage(customErrorMessage, false, null));
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            if (lottieLoading != null) lottieLoading.setVisibility(View.GONE);
+                            btnSendChat.setEnabled(true);
+                            btnSendChat.setAlpha(1.0f);
+                            addMessage(customErrorMessage, false, null);
+                        });
+                    }
                 }
             }
         });
@@ -603,10 +687,39 @@ public class AIFragment extends Fragment {
                 if (holder.layoutAiControls != null) holder.layoutAiControls.setVisibility(View.VISIBLE);
 
                 if (holder.btnListen != null) {
+
+                    if (isTtsPlaying && currentlyPlayingIndex == position) {
+                        holder.btnListen.setImageResource(android.R.drawable.ic_media_pause);
+                    } else {
+                        holder.btnListen.setImageResource(android.R.drawable.ic_media_play);
+                    }
+
                     holder.btnListen.setOnClickListener(v -> {
-                        if (textToSpeech != null) {
-                            Toast.makeText(getContext(), "Reading aloud...", Toast.LENGTH_SHORT).show();
-                            textToSpeech.speak(message.text, TextToSpeech.QUEUE_FLUSH, null, null);
+                        if (textToSpeech == null) return;
+
+                        if (isTtsPlaying && currentlyPlayingIndex == position) {
+                            textToSpeech.stop();
+                            isTtsPlaying = false;
+                            notifyItemChanged(position);
+                        } else {
+                            if (currentlyPlayingIndex != position) {
+                                int oldIndex = currentlyPlayingIndex;
+                                currentlyPlayingIndex = position;
+                                currentCharOffset = 0;
+                                baseOffset = 0;
+                                if (oldIndex != -1) {
+                                    notifyItemChanged(oldIndex);
+                                }
+                            }
+
+                            isTtsPlaying = true;
+                            notifyItemChanged(position);
+
+                            String textToSpeak = message.text;
+                            baseOffset = Math.min(currentCharOffset, textToSpeak.length());
+                            String substringToSpeak = textToSpeak.substring(baseOffset);
+
+                            textToSpeech.speak(substringToSpeak, TextToSpeech.QUEUE_FLUSH, null, "msg_" + position);
                         }
                     });
                 }

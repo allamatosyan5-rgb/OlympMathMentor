@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest17Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. CRT stands for the Chinese what Theorem? (Type: remainder)",
-            "2. CRT provides a unique solution modulo the what of the moduli? (Type: product)",
-            "3. For CRT, the moduli must be pairwise what? (Type: coprime)",
-            "4. If m and n are coprime, does a solution to x=a mod m and x=b mod n exist? (yes)",
-            "5. If moduli are not coprime, a solution exists only if a is congruent to b mod what? (Type: gcd(m,n))",
-            "6. In x = 1 mod 2 and x = 2 mod 3, what is the solution mod 6? (Type: 5)",
-            "7. CRT helps solve systems of linear what equations? (Type: congruences)",
-            "8. Is the CRT solution unique modulo the product of the moduli? (yes)",
-            "9. Can CRT be applied to more than two congruences simultaneously? (yes)",
-            "10. Is x = 1 mod 2 and x = 0 mod 4 solvable? (no)",
-            "11. What is the product of 3 and 5? (Type: 15)",
-            "12. CRT is often used in large number what? (Type: arithmetic)",
-            "13. If moduli are p1^e1, p2^e2..., are they coprime? (yes)",
-            "14. Is the solution to x=a mod m, x=b mod n unique? (yes)",
-            "15. In x = 2 mod 3 and x = 3 mod 5, what is the solution mod 15? (Type: 8)",
-            "16. Which ancient Chinese mathematician is CRT named after? (Type: sunzi)",
-            "17. Is CRT a cornerstone of number theory? (yes)",
-            "18. Does CRT allow us to perform operations modulo n by doing them modulo factors? (yes)",
-            "19. What is x if x=1 mod 3 and x=1 mod 5? (Type: 1)",
-            "20. Did you find this lesson on CRT clear? (yes)"
+            "1. CRT stands for the Chinese what Theorem? ",
+            "2. CRT provides a unique solution modulo the what of the moduli?",
+            "3. For CRT, the moduli must be pairwise what? ",
+            "4. If m and n are coprime, does a solution to x=a mod m and x=b mod n exist? ",
+            "5. If moduli are not coprime, a solution exists only if a is congruent to b mod what? ",
+            "6. In x = 1 mod 2 and x = 2 mod 3, what is the solution mod 6? ",
+            "7. CRT helps solve systems of linear what equations? ",
+            "8. Is the CRT solution unique modulo the product of the moduli? ",
+            "9. Can CRT be applied to more than two congruences simultaneously? ",
+            "10. Is x = 1 mod 2 and x = 0 mod 4 solvable?",
+            "11. What is the product of 3 and 5? ",
+            "12. CRT is often used in large number what? ",
+            "13. If moduli are p1^e1, p2^e2..., are they coprime? ",
+            "14. Is the solution to x=a mod m, x=b mod n unique? ",
+            "15. In x = 2 mod 3 and x = 3 mod 5, what is the solution mod 15? ",
+            "16. Which ancient Chinese mathematician is CRT named after? ",
+            "17. Is CRT a cornerstone of number theory? ",
+            "18. Does CRT allow us to perform operations modulo n by doing them modulo factors? ",
+            "19. What is x if x=1 mod 3 and x=1 mod 5? ",
+            "20. Did you find this lesson on CRT clear? "
     };
 
     private String[] correctAnswers = {

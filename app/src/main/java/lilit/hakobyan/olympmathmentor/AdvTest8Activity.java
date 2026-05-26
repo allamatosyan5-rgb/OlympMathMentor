@@ -40,7 +40,8 @@ public class AdvTest8Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "generating", "terms", "no", "sum", "catalan", "parentheses", "polygon", "quadratic", "2nchoosen", "5", "14", "x", "n", "diagonal", "yes", "yes", "algebraic", "2", "1", "catalan"
+            "generating", "terms", "no", "sum", "catalan", "parentheses", "polygon", "quadratic", "2nchoosen",
+            "5", "14", "x", "n", "diagonal", "yes", "yes", "algebraic", "2", "1", "catalan"
     };
 
     private EditText[] answerInputs;

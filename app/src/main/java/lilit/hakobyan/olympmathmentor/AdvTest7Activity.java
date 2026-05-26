@@ -40,7 +40,8 @@ public class AdvTest7Activity extends AppCompatActivity {
     };
 
     private String[] correctAnswers = {
-            "exponent", "power", "yes", "no", "yes", "no", "6", "2", "pell", "square", "yes", "fundamental", "true", "yes", "no", "yes", "4", "2", "yes", "2"
+            "exponent", "power", "yes", "no", "yes", "no", "6", "2", "pell", "square", "yes", "fundamental",
+            "true", "yes", "no", "yes", "4", "2", "yes", "2"
     };
 
     private EditText[] answerInputs;

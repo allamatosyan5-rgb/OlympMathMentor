@@ -41,7 +41,6 @@ public class StudentClassesFragment extends Fragment {
 
         db = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference();
 
-        // 1. Ադապտերը և Սեղմումը դեպի չաթ
         adapter = new ClassroomAdapter(classroomList, classroom -> {
             Intent intent = new Intent(getActivity(), ClassChatActivity.class);
             intent.putExtra("CLASS_ID", classroom.getClassId());
@@ -75,7 +74,6 @@ public class StudentClassesFragment extends Fragment {
                 .show();
     }
 
-    // 2. Այս ֆունկցիան ստուգում է կոդը բազայում
     private void joinClassByCode(String code) {
         DatabaseReference classesRef = db.child("classes");
 
@@ -83,11 +81,10 @@ public class StudentClassesFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Եթե այսպիսի կոդով դասարան կա
                     for (DataSnapshot classSnap : snapshot.getChildren()) {
                         String classId = classSnap.getKey();
                         saveClassToStudentProfile(classId);
-                        break; // Միացանք առաջին գտածին
+                        break;
                     }
                 } else {
                     Toast.makeText(getContext(), "Invalid Class Code!", Toast.LENGTH_SHORT).show();

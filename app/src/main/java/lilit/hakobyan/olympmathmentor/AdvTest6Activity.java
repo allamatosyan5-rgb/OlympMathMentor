@@ -25,18 +25,18 @@ public class AdvTest6Activity extends AppCompatActivity {
             "6. Can Cauchy's equation have wild non-linear solutions over reals without extra conditions? (yes/no)",
             "7. What do we call a function where f(f(x)) = x?",
             "8. A point c where f(c) = c is called a what point?",
-            "9. If f(x) = cx, what is f(x+y)? (Type: cx+cy)",
+            "9. If f(x) = cx, what is f(x+y)? (Type: ax+ab)",
             "10. Is the substitution x=0, y=0 a standard move in functional equations? (yes/no)",
             "11. If f is an involution and strictly increasing, does f(x) always equal x? (yes/no)",
-            "12. To solve f(x+y) = f(x) + f(y) + 2xy, what function g(x) did we define? (Type: f(x)-x^2)",
+            "12. To solve f(x+y) = f(x) + f(y) + 2xy, what function g(x) did we define? (Type: f(x)-x)",
             "13. If g(x+y) = g(x) * g(y), what type of function is g?",
-            "14. The substitution f(x) = g(x) + x^2 canceled out which term? (Type: 2xy)",
+            "14. The substitution f(x) = g(x) + x^2 canceled out which term? (Type: xy)",
             "15. If f(x) is an odd function, what is f(-x)? (Type: -f(x))",
             "16. If f(x) is an even function, what is f(-x)? (Type: f(x))",
             "17. Does the continuity of f guarantee the continuity of f(x) - x^2? (yes/no)",
             "18. Are functional equations a standard topic in the IMO? (yes/no)",
             "19. Is f(x) = x^2 a solution to Cauchy's equation? (yes/no)",
-            "20. In f(f(x)) = x, what is the inverse of f? (Type: f)"
+            "20. In f(f(x)) = x, what is the inverse of f? (Type: a)"
     };
 
     private String[] correctAnswers = {

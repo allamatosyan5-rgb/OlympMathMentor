@@ -25,8 +25,8 @@
         android:text="Author Name"
         android:textColor="#757575"
         android:textSize="14sp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="12dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,10 +36,11 @@
         android:layout_marginBottom="12dp">
 
         <TextView
+            android:id="@+id/tvRatingValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rating: "
-            android:textColor="#3E2723"
+            android:text="Avg. Rating: 0.0"
+            android:textColor="#757575"
             android:textSize="14sp"
             android:textStyle="bold"/>
 
@@ -48,23 +49,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
-            android:stepSize="0.5"
-            android:rating="0"
-            android:isIndicator="false"
-            style="?android:attr/ratingBarStyleIndicator"
+            android:stepSize="0.1"
+            android:isIndicator="true"
+            style="?android:attr/ratingBarStyleSmall"
             android:progressTint="#FFC107"
-            android:progressBackgroundTint="#E0E0E0"
-            android:secondaryProgressTint="#FFC107"
-            android:layout_marginStart="8dp"/>
-
-        <TextView
-            android:id="@+id/tvRatingValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(0.0)"
-            android:textColor="#757575"
-            android:textSize="14sp"
-            android:textStyle="bold"
             android:layout_marginStart="8dp"/>
 
     </LinearLayout>

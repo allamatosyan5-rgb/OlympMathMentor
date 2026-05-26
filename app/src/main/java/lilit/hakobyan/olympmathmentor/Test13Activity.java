@@ -61,10 +61,8 @@ public class Test13Activity extends AppCompatActivity {
             tvHeart.setTextSize(22f);
             int finalI = i;
 
-            // ՈՒՂՂՈՒՄ. ստուգում ենք ամբողջական գրառումը
             tvHeart.setText(isFavourite(questions[finalI], correctAnswers[finalI]) ? "❤️" : "🤍");
 
-            // ՈՒՂՂՈՒՄ. 3 արգումենտով կանչ
             tvHeart.setOnClickListener(v -> toggleFavourite(questions[finalI], correctAnswers[finalI], tvHeart));
 
             questionHeader.addView(tvQuestion);

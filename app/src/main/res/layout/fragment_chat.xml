@@ -6,8 +6,8 @@
     android:background="@color/soft_beige">
 
     <ImageView
-        android:layout_width="400dp"
-        android:layout_height="600dp"
+        android:layout_width="1000dp"
+        android:layout_height="1000dp"
         android:layout_gravity="center"
         android:alpha="0.09"
         android:src="@drawable/logo"/>
@@ -17,8 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/layoutChatInput"
-        android:padding="8dp"
-        android:clipToPadding="false"/>
+        android:layout_marginBottom="1dp"
+        android:clipToPadding="false"
+        android:padding="8dp" />
 
     <LinearLayout
         android:id="@+id/layoutChatInput"

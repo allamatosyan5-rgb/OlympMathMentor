@@ -68,7 +68,9 @@ public class ProfileFragment extends Fragment {
 
     private int totalEarnedStars = 0;
     private int currentStreakCount = 0;
-    private final int TOTAL_LESSONS_IN_APP = 20;
+
+    // 60 դաս ընդհանուր (20 Beginner + 20 Intermediate + 20 Advanced)
+    private final int TOTAL_LESSONS_IN_APP = 60;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -170,6 +172,7 @@ public class ProfileFragment extends Fragment {
                                 backupData.put("profile", profileData);
 
                                 HashMap<String, Object> progressData = new HashMap<>();
+                                // ՈՒՂՂՈՒՄ. Պահպանում ենք ամբողջ 60 դասերի աստղերը ամպային սերվերում
                                 for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
                                     progressData.put("stars_lesson_" + i, progressPrefs.getInt("stars_lesson_" + i, 0));
                                 }
@@ -188,7 +191,6 @@ public class ProfileFragment extends Fragment {
                                 FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid()).child("backup")
                                         .setValue(backupData).addOnCompleteListener(task -> {
 
-                                            // 💡 ԱՅՍՏԵՂ ՄԱՔՐՈՒՄ ԵՆՔ ԲՈԼՈՐ ՀԻՇՈՂՈՒԹՅՈՒՆՆԵՐԸ 💡
                                             profilePrefs.edit().clear().apply();
                                             progressPrefs.edit().clear().apply();
                                             getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE).edit().clear().apply();
@@ -349,11 +351,11 @@ public class ProfileFragment extends Fragment {
     private void calculateStatsAndBadges() {
         if (getContext() == null) return;
 
-        // 1. Դասերի և թեստերի աստղերը
         SharedPreferences progressPrefs = requireContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
         totalEarnedStars = 0;
         int solvedCount = 0;
 
+        // ՈՒՂՂՈՒՄ. Ցիկլը պտտվում է 1-ից 60-ը՝ ներառելով բոլոր մակարդակները (Beg, Int, Adv)
         for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
             int lessonStars = progressPrefs.getInt("stars_lesson_" + i, 0);
             if (lessonStars > 0) {
@@ -367,13 +369,13 @@ public class ProfileFragment extends Fragment {
         SharedPreferences myPrefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int aiOlympiadStars = myPrefs.getInt("total_stars", 0);
 
-        // Ստանում ենք ընդհանուր գումարը
         totalEarnedStars += aiOlympiadStars;
 
-        // Տպում ենք էկրանին
+        // Ցուցադրում ենք ընդհանուր վիճակագրությունը
         tvTotalStars.setText(String.valueOf(totalEarnedStars));
         tvSolvedProblems.setText(String.valueOf(solvedCount));
 
+        // Ճշգրտված տոկոսային առաջընթացը բոլոր 60 դասերի հիման վրա
         int completionPercentage = (int) (((float) solvedCount / TOTAL_LESSONS_IN_APP) * 100);
         tvAccuracy.setText(completionPercentage + "%");
 
@@ -405,9 +407,11 @@ public class ProfileFragment extends Fragment {
 
         tvStreakDays.setText(currentStreakCount + " Days");
 
-        if (totalEarnedStars >= 50) tvUserStatus.setText("Math Olympian");
-        else if (totalEarnedStars >= 25) tvUserStatus.setText("Advanced Thinker");
-        else if (totalEarnedStars >= 10) tvUserStatus.setText("Intermediate Problem Solver");
+        // Կոչումների դինամիկ համակարգ
+        if (totalEarnedStars >= 120) tvUserStatus.setText("Grandmaster Olympian");
+        else if (totalEarnedStars >= 75) tvUserStatus.setText("Math Olympian");
+        else if (totalEarnedStars >= 40) tvUserStatus.setText("Advanced Thinker");
+        else if (totalEarnedStars >= 15) tvUserStatus.setText("Intermediate Problem Solver");
         else tvUserStatus.setText("Beginner Explorer");
 
         generateBadges();
@@ -548,14 +552,15 @@ public class ProfileFragment extends Fragment {
         else createBadgeUI("\uD83D\uDD12", "Scientist", false);
 
         if (currentStreakCount >= 30) createBadgeUI("\uD83D\uDC8E", "Unstoppable", true);
-        else createBadgeUI("\uD83D\uDD12", "Unstoppable", false);
+        else createBadgeUI("\uD83D\uDC8E", "Unstoppable", false);
 
-        if (totalEarnedStars >= 45) createBadgeUI("\uD83E\uDDE0", "Brain Power", true);
+        if (totalEarnedStars >= 50) createBadgeUI("\uD83E\uDDE0", "Brain Power", true);
         else createBadgeUI("\uD83D\uDD12", "Brain Power", false);
 
-        if (totalEarnedStars >= 55) createBadgeUI("\uD83D\uDC51", "Math Royalty", true);
+        if (totalEarnedStars >= 100) createBadgeUI("\uD83D\uDC51", "Math Royalty", true);
         else createBadgeUI("\uD83D\uDD12", "Math Royalty", false);
 
+        // ՈՒՂՂՈՒՄ. Հաշվարկը կատարվում է 60 դասերի առավելագույն աստղերով (60 * 3 = 180)
         if (totalEarnedStars == (TOTAL_LESSONS_IN_APP * 3)) createBadgeUI("\uD83C\uDFC6", "Olympian Legend", true);
         else createBadgeUI("\uD83D\uDD12", "Olympian Legend", false);
     }

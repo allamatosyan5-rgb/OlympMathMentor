@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest15Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. Fermat's Little Theorem states a^(p-1) is congruent to what mod p? (Type: 1)",
-            "2. Does this theorem hold if p does not divide a? (yes)",
-            "3. Euler's Totient function phi(n) counts how many numbers <= n are what to n? (Type: coprime)",
-            "4. For a prime p, what is phi(p)? (Type: p-1)",
-            "5. Euler's Theorem generalizes Fermat's theorem: a^phi(n) is congruent to what mod n? (Type: 1)",
-            "6. To use Euler's theorem, must a and n be coprime? (yes)",
-            "7. What is phi(8)? (Type: 4)",
-            "8. Is phi(n) a multiplicative function? (yes)",
-            "9. If p is prime, what is phi(p^k)? (Type: p^k-p^(k-1))",
-            "10. Which famous encryption system is based on Euler's theorem? (Type: rsa)",
-            "11. What is 3^16 mod 17 (by Fermat's)? (Type: 1)",
-            "12. What is phi(p*q) if p and q are distinct primes? (Type: (p-1)(q-1))",
-            "13. Euler's theorem is fundamental in solving equations of type a^x = b mod n. (true)",
-            "14. What is the value of phi(1)? (Type: 1)",
-            "15. If n is prime, Euler's theorem becomes what theorem? (Type: fermat)",
-            "16. Is phi(n) always an even number for n > 2? (yes)",
-            "17. The number of integers coprime to n in the range [1,n] is given by what function? (Type: phi)",
-            "18. What is the highest power of 2 dividing phi(2^k) for k>1? (Type: 2^(k-1))",
-            "19. If a^n = 1 mod m, then the smallest such n is called the order of a modulo what? (Type: m)",
-            "20. Did you find this lesson on Euler's and Fermat's theorems clear? (yes)"
+            "1. Fermat's Little Theorem states a^(p-1) is congruent to what mod p?",
+            "2. Does this theorem hold if p does not divide a?",
+            "3. Euler's Totient function phi(n) counts how many numbers <= n are what to n?",
+            "4. For a prime p, what is phi(p)? ",
+            "5. Euler's Theorem generalizes Fermat's theorem: a^phi(n) is congruent to what mod n?",
+            "6. To use Euler's theorem, must a and n be coprime? ",
+            "7. What is phi(8)?",
+            "8. Is phi(n) a multiplicative function? ",
+            "9. If p is prime, what is phi(p^k)? ",
+            "10. Which famous encryption system is based on Euler's theorem? ",
+            "11. What is 3^16 mod 17 (by Fermat's)? ",
+            "12. What is phi(p*q) if p and q are distinct primes? ",
+            "13. Euler's theorem is fundamental in solving equations of type a^x = b mod n.",
+            "14. What is the value of phi(1)? ",
+            "15. If n is prime, Euler's theorem becomes what theorem? ",
+            "16. Is phi(n) always an even number for n > 2?",
+            "17. The number of integers coprime to n in the range [1,n] is given by what function? ",
+            "18. What is the highest power of 2 dividing phi(2^k) for k>1? ",
+            "19. If a^n = 1 mod m, then the smallest such n is called the order of a modulo what? ",
+            "20. Did you find this lesson on Euler's and Fermat's theorems clear?"
     };
 
     private String[] correctAnswers = {

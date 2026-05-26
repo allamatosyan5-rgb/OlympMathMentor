@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest14Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. Barycentric coordinates represent a point as a weighted sum of the triangle's what? (Type: vertices)",
-            "2. The sum of the barycentric coordinates (u, v, w) must equal what? (Type: 1)",
-            "3. The center of mass of a triangle is also known as the what? (Type: centroid)",
-            "4. What are the barycentric coordinates of the centroid? (Type: 1/3,1/3,1/3)",
-            "5. Barycentric coordinates allow us to translate geometry into what type of problems? (Type: algebra)",
-            "6. If a point lies inside the triangle, are its barycentric coordinates positive or negative? (Type: positive)",
-            "7. Barycentric coordinates make it easy to express the area of what? (Type: triangles)",
-            "8. Does the centroid have the same barycentric coordinates in any triangle? (yes)",
-            "9. The incenter's barycentric coordinates are (a, b, c) divided by what? (Type: perimeter)",
-            "10. Barycentric coordinates are specifically powerful for problems involving what geometry? (Type: triangle)",
-            "11. If a point is on an edge, one of its barycentric coordinates is what? (Type: 0)",
-            "12. Can barycentric coordinates be used to prove that three lines are concurrent? (yes)",
-            "13. Barycentric coordinates utilize which physics concept? (Type: mass)",
-            "14. What are the coordinates of the vertex A itself? (Type: 1,0,0)",
-            "15. Are barycentric coordinates a type of affine coordinate system? (yes)",
-            "16. In barycentric coordinates, are the values unique for each point? (yes)",
-            "17. Can we define barycentric coordinates for points outside the triangle? (yes)",
-            "18. Does every point on the plane have a unique set of barycentric coordinates? (yes)",
-            "19. Which famous geometry law can be proven using barycentric coordinates? (Type: ceva)",
-            "20. Did you find this lesson on barycentric coordinates useful? (yes)"
+            "1. Barycentric coordinates represent a point as a weighted sum of the triangle's what? ",
+            "2. The sum of the barycentric coordinates (u, v, w) must equal what? ",
+            "3. The center of mass of a triangle is also known as the what? ",
+            "4. What are the barycentric coordinates of the centroid? ",
+            "5. Barycentric coordinates allow us to translate geometry into what type of problems? ",
+            "6. If a point lies inside the triangle, are its barycentric coordinates positive or negative? ",
+            "7. Barycentric coordinates make it easy to express the area of what? ",
+            "8. Does the centroid have the same barycentric coordinates in any triangle? ",
+            "9. The incenter's barycentric coordinates are (a, b, c) divided by what? ",
+            "10. Barycentric coordinates are specifically powerful for problems involving what geometry? ",
+            "11. If a point is on an edge, one of its barycentric coordinates is what? ",
+            "12. Can barycentric coordinates be used to prove that three lines are concurrent? ",
+            "13. Barycentric coordinates utilize which physics concept? ",
+            "14. What are the coordinates of the vertex A itself? ",
+            "15. Are barycentric coordinates a type of affine coordinate system?",
+            "16. In barycentric coordinates, are the values unique for each point? ",
+            "17. Can we define barycentric coordinates for points outside the triangle? ",
+            "18. Does every point on the plane have a unique set of barycentric coordinates? ",
+            "19. Which famous geometry law can be proven using barycentric coordinates? ",
+            "20. Did you find this lesson on barycentric coordinates useful?"
     };
 
     private String[] correctAnswers = {

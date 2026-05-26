@@ -2,14 +2,17 @@ package lilit.hakobyan.olympmathmentor;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +24,7 @@ public class IntermediateFragment extends Fragment {
     private RecyclerView rvCourses;
     private IntermediateAdapter adapter;
     private List<CourseModel> courseList;
+    private ImageView imgProfileTop;
 
     @Nullable
     @Override
@@ -28,6 +32,26 @@ public class IntermediateFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_intermediate, container, false);
 
         rvCourses = view.findViewById(R.id.rvIntermediateCourses);
+
+        CardView cvProfileTop = view.findViewById(R.id.cvProfileTop);
+        imgProfileTop = view.findViewById(R.id.imgProfileTop);
+
+        // Պրոֆիլի անցման ֆունկցիոնալի ավելացում
+        View.OnClickListener profileClickListener = v -> {
+            if (getParentFragmentManager() != null) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new ProfileFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        };
+
+        if (cvProfileTop != null) {
+            cvProfileTop.setOnClickListener(profileClickListener);
+        }
+        if (imgProfileTop != null) {
+            imgProfileTop.setOnClickListener(profileClickListener);
+        }
 
         if (rvCourses != null) {
             rvCourses.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -42,14 +66,14 @@ public class IntermediateFragment extends Fragment {
             });
         }
 
-
         return view;
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        loadProfileImage();
+
         if (rvCourses != null && getView() != null) {
             setupAdvancedButton(getView());
 
@@ -61,6 +85,22 @@ public class IntermediateFragment extends Fragment {
             adapter = new IntermediateAdapter(getContext(), courseList);
             rvCourses.setAdapter(adapter);
             rvCourses.addItemDecoration(new PathDecoration());
+        }
+    }
+
+    private void loadProfileImage() {
+        if (getContext() != null && imgProfileTop != null) {
+            SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+            String imageUrl = prefs.getString("profile_image_uri", "");
+            if (!imageUrl.isEmpty()) {
+                try {
+                    imgProfileTop.setImageURI(Uri.parse(imageUrl));
+                } catch (Exception e) {
+                    imgProfileTop.setImageResource(R.drawable.ic_profile);
+                }
+            } else {
+                imgProfileTop.setImageResource(R.drawable.ic_profile);
+            }
         }
     }
 

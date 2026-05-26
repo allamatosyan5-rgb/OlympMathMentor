@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_margin="16dp"
-                android:backgroundTint="#D32F2F"
+                android:backgroundTint="#8B4513"
                 android:text="Go to Advanced Level →"
                 android:textColor="@color/white"
                 android:textSize="18sp"

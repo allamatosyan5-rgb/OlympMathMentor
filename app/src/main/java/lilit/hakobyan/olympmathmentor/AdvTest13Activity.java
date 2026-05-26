@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest13Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. In projective geometry, parallel lines meet at a point at what? (Type: infinity)",
-            "2. A line containing all points at infinity is called the what at infinity? (Type: line)",
-            "3. The fundamental invariant of projective geometry is the what ratio? (Type: cross)",
-            "4. The cross ratio is defined for how many collinear points? (Type: 4)",
-            "5. If the cross ratio of (A,B; C,D) is -1, the points form a what bundle? (Type: harmonic)",
+            "1. In projective geometry, parallel lines meet at a point at what? ",
+            "2. A line containing all points at infinity is called the what at infinity? ",
+            "3. The fundamental invariant of projective geometry is the what ratio? ",
+            "4. The cross ratio is defined for how many collinear points? ",
+            "5. If the cross ratio of (A,B; C,D) is -1, the points form a what bundle?",
             "6. Does a projective transformation (perspective) preserve the cross ratio? (yes/no)",
-            "7. The beautiful principle interchanging points and lines is called what? (Type: duality)",
-            "8. The line formed by the tangent contact points from an external point is its what? (Type: polar)",
-            "9. The external point itself is called the what of that line? (Type: pole)",
+            "7. The beautiful principle interchanging points and lines is called what? ",
+            "8. The line formed by the tangent contact points from an external point is its what? ",
+            "9. The external point itself is called the what of that line? ",
             "10. If point P lies on the polar of Q, does Q lie on the polar of P? (yes/no)",
-            "11. A complete quadrilateral consists of how many lines? (Type: 4)",
-            "12. How many intersections (vertices) does a complete quadrilateral have? (Type: 6)",
+            "11. A complete quadrilateral consists of how many lines? ",
+            "12. How many intersections (vertices) does a complete quadrilateral have?",
             "13. Does the cross ratio depend on the order of the points? (yes/no)",
-            "14. How many distinct values can the cross ratio of 4 points generally take? (Type: 6)",
-            "15. In a harmonic bundle, C and D are harmonic what of A and B? (Type: conjugates)",
-            "16. If a point is inside a circle, its polar line is located where? (Type: outside)",
-            "17. If a point is EXACTLY on the circle, its polar is the what line? (Type: tangent)",
-            "18. Projective transformations map circles to what kind of sections? (Type: conic)",
-            "19. Is physical distance (length) preserved in projective geometry? (no)",
-            "20. Is the angle between lines generally preserved in projective geometry? (no)"
+            "14. How many distinct values can the cross ratio of 4 points generally take? ",
+            "15. In a harmonic bundle, C and D are harmonic what of A and B? ",
+            "16. If a point is inside a circle, its polar line is located where?",
+            "17. If a point is EXACTLY on the circle, its polar is the what line? ",
+            "18. Projective transformations map circles to what kind of sections? ",
+            "19. Is physical distance (length) preserved in projective geometry? ",
+            "20. Is the angle between lines generally preserved in projective geometry?"
     };
 
     private String[] correctAnswers = {

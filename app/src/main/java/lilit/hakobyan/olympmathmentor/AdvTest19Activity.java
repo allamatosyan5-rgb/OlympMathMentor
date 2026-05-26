@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest19Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. What form is most useful for rotations of complex numbers? (Type: polar)",
-            "2. If z = r(cos t + i sin t), what is the formula using e? (Type: r*e^(it))",
-            "3. Rotating a point z about the origin by angle theta is equivalent to z multiplied by what? (Type: e^(it))",
-            "4. Are complex numbers a field? (yes)",
-            "5. What is the conjugate of a+bi? (Type: a-bi)",
-            "6. In the complex plane, what does |z| represent? (Type: modulus)",
-            "7. The product of z and its conjugate is equal to the square of what? (Type: modulus)",
-            "8. Rotation about an arbitrary center c by angle theta is (z-c)*e^(it) + c. (true)",
-            "9. Can we represent geometric transformations as linear maps on complex numbers? (yes)",
-            "10. For points A, B, C, the angle ABC is the argument of (a-b)/(c-b). (true)",
-            "11. If (a-b)/(c-b) is purely imaginary, are the lines AB and CB perpendicular? (yes)",
-            "12. Are complex numbers a standard tool for IMO geometry? (yes)",
-            "13. What is the value of i^2? (Type: -1)",
-            "14. What is the argument of a real positive number? (Type: 0)",
-            "15. What is the modulus of any root of unity? (Type: 1)",
-            "16. Does e^(it) * e^(is) = e^(i(t+s))? (yes)",
-            "17. Is rotation about origin an isometric transformation? (yes)",
-            "18. Does complex multiplication allow for encoding geometric similarity? (yes)",
-            "19. In geometry, is 'i' the imaginary unit? (yes)",
-            "20. Did you find this lesson on complex numbers in geometry useful? (yes)"
+            "1. What form is most useful for rotations of complex numbers? ",
+            "2. If z = r(cos t + i sin t), what is the formula using e?",
+            "3. Rotating a point z about the origin by angle theta is equivalent to z multiplied by what?",
+            "4. Are complex numbers a field?",
+            "5. What is the conjugate of a+bi? ",
+            "6. In the complex plane, what does |z| represent?",
+            "7. The product of z and its conjugate is equal to the square of what? ",
+            "8. Rotation about an arbitrary center c by angle theta is (z-c)*e^(it) + c.",
+            "9. Can we represent geometric transformations as linear maps on complex numbers?",
+            "10. For points A, B, C, the angle ABC is the argument of (a-b)/(c-b). ",
+            "11. If (a-b)/(c-b) is purely imaginary, are the lines AB and CB perpendicular? ",
+            "12. Are complex numbers a standard tool for IMO geometry? ",
+            "13. What is the value of i^2? ",
+            "14. What is the argument of a real positive number? ",
+            "15. What is the modulus of any root of unity? ",
+            "16. Does e^(it) * e^(is) = e^(i(t+s))? ",
+            "17. Is rotation about origin an isometric transformation? ",
+            "18. Does complex multiplication allow for encoding geometric similarity? ",
+            "19. In geometry, is 'i' the imaginary unit? ",
+            "20. Did you find this lesson on complex numbers in geometry useful? "
     };
 
     private String[] correctAnswers = {

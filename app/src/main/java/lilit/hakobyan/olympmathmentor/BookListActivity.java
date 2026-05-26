@@ -57,14 +57,13 @@ public class BookListActivity extends AppCompatActivity {
                     {"Problems in Real Analysis", "Teodora-Liliana Rădulescu", "https://www.ndl.ethernet.edu.et/bitstream/123456789/25248/1/Teodora-Liliana.pdf"},
                     {"Algebraic Inequalities (Problem Books)", "Hayk & Nairi Sedrakyan", "https://www.academia.edu/42049506/Problem_Books_in_Mathematics_Algebraic_Inequalities"},
                     {"Algebraic Inequalities", "Vasile Cîrtoaje", "https://cut-the-knot.org/arithmetic/algebra/VasileCirtoaje.pdf"},
-                    {"Mathematics for High School Teachers", "Zalman Usiskin et al.", "file:///Users/user/Downloads/Mathematics-for-high-school-teachers-textbook-chapters-5-8.pdf"}
+
             };
         } else if ("Geometry".equals(category)) {
             booksData = new String[][]{
                     {"Euclidean Geometry In Mathematical Olympiads", "Evan Chen", "https://library.tsilikin.ru/%D0%95%D1%81%D1%82%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BD%D0%B0%D1%83%D0%BA%D0%B8/%D0%9C%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0/Chen%20Evan%20Euclidean%20Geometry%20In%20Mathematical%20Olympiads%202016.pdf"},
                     {"Geometry Revisited", "H.S.M. Coxeter & S.L. Greitzer", "https://www.aproged.pt/biblioteca/geometryrevisited_coxetergreitzer.pdf"},
                     {"Problems in Plane and Solid Geometry", "Viktor Prasolov", "https://blngcc.wordpress.com/wp-content/uploads/2008/11/viktor-prasolov-problems-in-plane-and-solid-geometry.pdf"},
-                    {"Geometric Problems on Maxima and Minima", "Titu Andreescu et al.", "https://nzdr.ru/data/media/biblio/kolxoz/M/MSch/Andreescu%20T.,%20Mushkarov,%20Stoyanov.%20Geometric%20problems%20on%20maxima%20and%20minima%20(Birkhauser,%202006)(ISBN%200817635173)(272s)_MSch_.pdf"},
                     {"Complex Numbers in Geometry", "I. M. Yaglom", "https://dn790000.ca.archive.org/0/items/complex-numbers-in-geometry/Complex-Numbers-in-Geometry-.pdf"},
                     {"Geometric Transformations I", "I. M. Yaglom", "https://archive.org/details/i.-m.-yaglom-geometric-transformations-1-1962"},
                     {"Introduction to Geometry", "H.S.M. Coxeter", "https://www.cimat.mx/~gil/docencia/2021/geometria2021/[Coxeter]Introduction%20to%20Geometry,2ndEd%281969%29.pdf"},

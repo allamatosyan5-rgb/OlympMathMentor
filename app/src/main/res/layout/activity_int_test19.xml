@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Test 19"
+            android:text="Test 19: Set Theory"
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="#3E2723"
@@ -30,7 +30,7 @@
             android:id="@+id/btnFinish"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="FINISH"
+            android:text="FINISH TEST"
             android:backgroundTint="#5D4037"
             android:textColor="#FFFFFF"
             android:layout_marginTop="20dp"/>
@@ -52,6 +52,20 @@
                 android:textColor="#3E2723"
                 android:textStyle="bold"/>
 
+            <LinearLayout
+                android:id="@+id/medalsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:visibility="gone">
+
+                <ImageView android:id="@+id/medal1" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+                <ImageView android:id="@+id/medal2" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+                <ImageView android:id="@+id/medal3" android:layout_width="60dp" android:layout_height="60dp" android:src="@drawable/ic_medal" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tvFeedback"
                 android:layout_width="match_parent"
@@ -68,7 +82,17 @@
                 android:text="Next Lesson"
                 android:visibility="gone"
                 android:backgroundTint="#2E7D32"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btnRetry"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Retry Test"
+                android:backgroundTint="#D32F2F"
                 android:textColor="#FFFFFF"/>
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

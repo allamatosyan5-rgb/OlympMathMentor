@@ -23,10 +23,10 @@ public class AdvancedAdapter extends RecyclerView.Adapter<AdvancedAdapter.ViewHo
 
     // Ավելի մուգ և «օլիմպիական» գույներ Advanced մակարդակի համար
     private final int[] advancedColors = {
-            Color.parseColor("#C62828"), // Մուգ Կարմիր
-            Color.parseColor("#283593"), // Մուգ Կապույտ
-            Color.parseColor("#00695C"), // Մուգ Կանաչ (Teal)
-            Color.parseColor("#E65100")  // Մուգ Նարնջագույն
+            Color.parseColor("#FFCC80"), // Մուգ Կարմիր / Նարնջագույն երանգ
+            Color.parseColor("#BBDEFB"), // Մուգ Կապույտ
+            Color.parseColor("#C8E6C9"), // Մուգ Կանաչ (Teal)
+            Color.parseColor("#D1C4E9")  // Մուգ Մանուշակագույն
     };
 
     public AdvancedAdapter(Context context, List<CourseModel> courseList) {
@@ -73,15 +73,17 @@ public class AdvancedAdapter extends RecyclerView.Adapter<AdvancedAdapter.ViewHo
         shape.setShape(GradientDrawable.OVAL);
 
         if (course.isLocked()) {
+            // Փակ դասերի տեսքը
             shape.setColor(Color.parseColor("#E0E0E0"));
             shape.setStroke(6, Color.parseColor("#9E9E9E"));
             holder.tvGo.setTextColor(Color.parseColor("#757575"));
             holder.ivLock.setVisibility(View.VISIBLE);
             holder.tvGo.setVisibility(View.GONE);
         } else {
+            // Բաց դասերի տեսքը - Եզրագիծը և տեքստը սև են (ինչպես Int-ում)
             shape.setColor(unlockedColor);
-            shape.setStroke(10, Color.parseColor("#FFD700")); // Ոսկեգույն եզրագիծ բացված դասերի համար
-            holder.tvGo.setTextColor(Color.parseColor("#FFFFFF")); // Սպիտակ տեքստ ներսում
+            shape.setStroke(10, Color.parseColor("#000000")); // Սև եզրագիծ
+            holder.tvGo.setTextColor(Color.parseColor("#000000")); // Սև "GO" տեքստ
             holder.ivLock.setVisibility(View.GONE);
             holder.tvGo.setVisibility(View.VISIBLE);
         }

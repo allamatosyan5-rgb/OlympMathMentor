@@ -35,14 +35,21 @@ public class AdvancedFragment extends Fragment {
         CardView cvProfileTop = view.findViewById(R.id.cvProfileTop);
         imgProfileTop = view.findViewById(R.id.imgProfileTop);
 
-        // Պրոֆիլի սեղմում
-        if (cvProfileTop != null) {
-            cvProfileTop.setOnClickListener(v -> {
+        // Պրոֆիլի անցման ֆունկցիոնալի ավելացում (և՛ նկարի, և՛ շրջանակի համար)
+        View.OnClickListener profileClickListener = v -> {
+            if (getParentFragmentManager() != null) {
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new ProfileFragment())
                         .addToBackStack(null)
                         .commit();
-            });
+            }
+        };
+
+        if (cvProfileTop != null) {
+            cvProfileTop.setOnClickListener(profileClickListener);
+        }
+        if (imgProfileTop != null) {
+            imgProfileTop.setOnClickListener(profileClickListener);
         }
 
         if (rvCourses != null) {
@@ -64,7 +71,7 @@ public class AdvancedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadProfileImage(); // Թարմացնում ենք նկարը էջ վերադառնալիս
+        loadProfileImage();
 
         if (rvCourses != null && getView() != null) {
             while (rvCourses.getItemDecorationCount() > 0) {

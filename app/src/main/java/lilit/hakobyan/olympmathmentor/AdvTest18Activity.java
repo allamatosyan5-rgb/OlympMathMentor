@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest18Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. If you have n+1 pigeons and n holes, at least one hole has how many pigeons? (Type: 2)",
-            "2. The Pigeonhole Principle is also known as Dirichlet's what? (Type: principle)",
-            "3. If you pick n+1 numbers from 1 to 2n, does one necessarily divide another? (yes)",
-            "4. Dirichlet's Principle is a fundamental tool in what? (Type: combinatorics)",
-            "5. To prove a result, we often assume the what? (Type: negation)",
-            "6. In a room of 367 people, are there at least two with the same birthday? (yes)",
-            "7. Does the principle work for infinite sets? (yes)",
-            "8. Are there 2 people in Yerevan with exactly the same number of hair strands? (yes)",
-            "9. Can we apply the principle to areas and volumes? (yes)",
-            "10. Is the principle intuitive? (yes)",
-            "11. If you distribute n items into k boxes, some box has at least ceil(n/k) items? (yes)",
-            "12. Who is the Dirichlet Principle named after? (Type: dirichlet)",
-            "13. Does it help in proving the existence of an object? (yes)",
-            "14. If you have 5 socks of 2 colors, are there at least 2 matching socks? (yes)",
-            "15. Is Pigeonhole Principle used in Ramsey Theory proofs? (yes)",
-            "16. If f: A -> B and |A| > |B|, is f injective? (no)",
-            "17. Is it possible to have n holes and n-1 pigeons and be sure a hole is full? (no)",
-            "18. Does this principle rely on the finiteness of the sets in basic form? (no)",
-            "19. Is it used to find rational approximations to irrationals? (yes)",
-            "20. Did you find this lesson on Dirichlet Principle useful? (yes)"
+            "1. If you have n+1 pigeons and n holes, at least one hole has how many pigeons?",
+            "2. The Pigeonhole Principle is also known as Dirichlet's what? ",
+            "3. If you pick n+1 numbers from 1 to 2n, does one necessarily divide another? ",
+            "4. Dirichlet's Principle is a fundamental tool in what? ",
+            "5. To prove a result, we often assume the what?",
+            "6. In a room of 367 people, are there at least two with the same birthday?",
+            "7. Does the principle work for infinite sets?",
+            "8. Are there 2 people in Yerevan with exactly the same number of hair strands?",
+            "9. Can we apply the principle to areas and volumes?",
+            "10. Is the principle intuitive?",
+            "11. If you distribute n items into k boxes, some box has at least ceil(n/k) items? ",
+            "12. Who is the Dirichlet Principle named after? ",
+            "13. Does it help in proving the existence of an object?",
+            "14. If you have 5 socks of 2 colors, are there at least 2 matching socks? ",
+            "15. Is Pigeonhole Principle used in Ramsey Theory proofs? ",
+            "16. If f: A -> B and |A| > |B|, is f injective?",
+            "17. Is it possible to have n holes and n-1 pigeons and be sure a hole is full? ",
+            "18. Does this principle rely on the finiteness of the sets in basic form? ",
+            "19. Is it used to find rational approximations to irrationals? ",
+            "20. Did you find this lesson on Dirichlet Principle useful? "
     };
 
     private String[] correctAnswers = {

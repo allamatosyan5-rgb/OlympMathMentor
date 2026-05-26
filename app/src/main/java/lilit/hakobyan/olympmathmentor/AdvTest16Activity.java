@@ -17,26 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdvTest16Activity extends AppCompatActivity {
 
     private String[] questions = {
-            "1. The Cauchy-Schwarz inequality relates the square of a dot product to the product of what? (Type: norms)",
-            "2. For sequences a_i and b_i, (sum a_i * b_i)^2 is less than or equal to what? (Type: sum a_i^2 * sum b_i^2)",
-            "3. When does equality hold in Cauchy-Schwarz? (Type: proportional)",
-            "4. Are Cauchy-Schwarz and AM-GM related? (yes)",
-            "5. What is the generalization of Cauchy-Schwarz to integrals called? (Type: bunyakovsky)",
-            "6. In the Titu's Lemma form of Cauchy-Schwarz, the denominator sum is what? (Type: sum b_i)",
-            "7. Is the Titu's Lemma widely used to prove inequality problems? (yes)",
-            "8. Does Cauchy-Schwarz work for complex numbers? (yes)",
-            "9. If we set all b_i = 1, Cauchy-Schwarz becomes which fundamental inequality? (Type: power)",
-            "10. Can we use Cauchy-Schwarz to prove the Triangle Inequality? (yes)",
-            "11. For two vectors u and v, |u.v| <= |u||v| is which inequality? (Type: cauchy-schwarz)",
-            "12. What is the value of the Titu's denominator when sum b_i = 0? (undefined)",
-            "13. Cauchy-Schwarz is a specific case of which general inequality? (Type: holders)",
-            "14. Holder's inequality extends Cauchy-Schwarz to how many sequences? (Type: more)",
-            "15. If a_i, b_i are positive, does (sum a_i)(sum 1/a_i) >= n^2? (yes)",
-            "16. Which famous physicist has a similar inequality named after him (Bunyakovsky)? (yes)",
-            "17. Is Cauchy-Schwarz considered a linear algebra inequality? (yes)",
-            "18. For n=2, (a1b1+a2b2)^2 <= (a1^2+a2^2)(b1^2+b2^2) is it true? (yes)",
-            "19. Are variables in Cauchy-Schwarz required to be real? (yes)",
-            "20. Did you find this lesson on Cauchy-Schwarz useful? (yes)"
+            "1. The Cauchy-Schwarz inequality relates the square of a dot product to the product of what? ",
+            "2. For sequences a_i and b_i, (sum a_i * b_i)^2 is less than or equal to what? ",
+            "3. When does equality hold in Cauchy-Schwarz? ",
+            "4. Are Cauchy-Schwarz and AM-GM related? ",
+            "5. What is the generalization of Cauchy-Schwarz to integrals called? ",
+            "6. In the Titu's Lemma form of Cauchy-Schwarz, the denominator sum is what? ",
+            "7. Is the Titu's Lemma widely used to prove inequality problems? ",
+            "8. Does Cauchy-Schwarz work for complex numbers? ",
+            "9. If we set all b_i = 1, Cauchy-Schwarz becomes which fundamental inequality? ",
+            "10. Can we use Cauchy-Schwarz to prove the Triangle Inequality? ",
+            "11. For two vectors u and v, |u.v| <= |u||v| is which inequality? ",
+            "12. What is the value of the Titu's denominator when sum b_i = 0? ",
+            "13. Cauchy-Schwarz is a specific case of which general inequality? ",
+            "14. Holder's inequality extends Cauchy-Schwarz to how many sequences? ",
+            "15. If a_i, b_i are positive, does (sum a_i)(sum 1/a_i) >= n^2? ",
+            "16. Which famous physicist has a similar inequality named after him (Bunyakovsky)? ",
+            "17. Is Cauchy-Schwarz considered a linear algebra inequality? ",
+            "18. For n=2, (a1b1+a2b2)^2 <= (a1^2+a2^2)(b1^2+b2^2) is it true? ",
+            "19. Are variables in Cauchy-Schwarz required to be real? ",
+            "20. Did you find this lesson on Cauchy-Schwarz useful? "
     };
 
     private String[] correctAnswers = {
