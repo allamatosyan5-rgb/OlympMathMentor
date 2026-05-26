@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -69,7 +71,30 @@ public class TeacherProfileFragment extends Fragment {
     private int currentStreakCount = 0;
 
     private String currentUserId;
+    private final int TOTAL_LESSONS_IN_APP = 60;
+    private Uri cropOutputUri = null;
 
+    // Նկարը կտրելուց հետո ստացող Launcher
+    private final ActivityResultLauncher<Intent> cropLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Bundle extras = result.getData().getExtras();
+                    if (extras != null) {
+                        Bitmap croppedBitmap = (Bitmap) extras.get("data");
+                        if (croppedBitmap != null) {
+                            profileImage.setImageBitmap(croppedBitmap);
+                            Uri tempUri = saveBitmapToLocalCache(croppedBitmap);
+                            if (tempUri != null) {
+                                saveImageUriLocally(tempUri.toString());
+                            }
+                        }
+                    }
+                }
+            }
+    );
+
+    // Գալերեայից նկար ընտրելու Launcher
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -79,20 +104,9 @@ public class TeacherProfileFragment extends Fragment {
                         try {
                             requireContext().getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         } catch (Exception ignored) {}
-                        profileImage.setImageURI(imageUri);
-                        saveImageUriLocally(imageUri.toString());
-                    }
-                }
-            }
-    );
 
-    private final ActivityResultLauncher<Void> cameraLauncher = registerForActivityResult(
-            new ActivityResultContracts.TakePicturePreview(),
-            bitmap -> {
-                if (bitmap != null) {
-                    profileImage.setImageBitmap(bitmap);
-                    Uri tempUri = saveBitmapToLocalCache(bitmap);
-                    if (tempUri != null) saveImageUriLocally(tempUri.toString());
+                        performCrop(imageUri);
+                    }
                 }
             }
     );
@@ -146,15 +160,62 @@ public class TeacherProfileFragment extends Fragment {
             btnLogout.setOnClickListener(v -> {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Log Out")
-                        .setMessage("Are you sure you want to log out?")
+                        .setMessage("Are you sure you want to log out? Your progress will be saved to the cloud.")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            if (getContext() != null) {
-                                requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE).edit().clear().apply();
-                                FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                if (getActivity() != null) getActivity().finish();
+                            if (getContext() != null && currentUser != null) {
+                                SharedPreferences profilePrefs = getContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+                                SharedPreferences progressPrefs = getContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+                                SharedPreferences myPrefs = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+                                HashMap<String, Object> backupData = new HashMap<>();
+
+                                HashMap<String, String> profileData = new HashMap<>();
+                                profileData.put("name", profilePrefs.getString("name", ""));
+                                profileData.put("surname", profilePrefs.getString("surname", ""));
+                                profileData.put("profile_image_uri", profilePrefs.getString("profile_image_uri", ""));
+                                profileData.put("achievements", profilePrefs.getString("achievements", ""));
+                                profileData.put("currentGoals", profilePrefs.getString("currentGoals", ""));
+                                profileData.put("completedGoals", profilePrefs.getString("completedGoals", ""));
+                                backupData.put("profile", profileData);
+
+                                HashMap<String, Object> progressData = new HashMap<>();
+                                for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
+                                    progressData.put("stars_lesson_" + i, progressPrefs.getInt("stars_lesson_" + i, 0));
+                                }
+                                progressData.put("extra_stars", progressPrefs.getInt("extra_stars", 0));
+                                progressData.put("current_streak", progressPrefs.getInt("current_streak", 0));
+                                progressData.put("last_login_day", progressPrefs.getLong("last_login_day", 0));
+                                backupData.put("progress", progressData);
+
+                                HashMap<String, Object> myPrefsData = new HashMap<>();
+                                for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
+                                    myPrefsData.put("test" + i + "_score", myPrefs.getInt("test" + i + "_score", 0));
+                                    myPrefsData.put("int_test" + i + "_score", myPrefs.getInt("int_test" + i + "_score", 0));
+                                    myPrefsData.put("adv_test" + i + "_score", myPrefs.getInt("adv_test" + i + "_score", 0));
+                                }
+                                myPrefsData.put("intermediate_unlocked", myPrefs.getBoolean("intermediate_unlocked", false));
+                                myPrefsData.put("advanced_unlocked", myPrefs.getBoolean("advanced_unlocked", false));
+                                myPrefsData.put("total_stars", myPrefs.getInt("total_stars", 0));
+                                backupData.put("my_prefs", myPrefsData);
+
+                                Set<String> history = progressPrefs.getStringSet("login_history", new HashSet<>());
+                                backupData.put("login_history", new ArrayList<>(history));
+
+                                Toast.makeText(getContext(), "Syncing data to Cloud...", Toast.LENGTH_SHORT).show();
+
+                                FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid()).child("backup")
+                                        .setValue(backupData).addOnCompleteListener(task -> {
+
+                                            profilePrefs.edit().clear().apply();
+                                            progressPrefs.edit().clear().apply();
+                                            myPrefs.edit().clear().apply();
+
+                                            FirebaseAuth.getInstance().signOut();
+                                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                            if (getActivity() != null) getActivity().finish();
+                                        });
                             }
                         })
                         .setNegativeButton("No", null)
@@ -169,6 +230,95 @@ public class TeacherProfileFragment extends Fragment {
 
         return view;
     }
+
+    private void performCrop(Uri picUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            // Պահանջում ենք, որ կտրվածքը լինի քառակուսի (1:1)
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 400);
+            cropIntent.putExtra("outputY", 400);
+            cropIntent.putExtra("scale", true);
+
+            // Ստեղծում ենք ֆայլ, որտեղ կպահվի կտրած նկարը
+            File cachePath = new File(requireContext().getCacheDir(), "images");
+            cachePath.mkdirs();
+            File outFile = new File(cachePath, "cropped_profile_" + System.currentTimeMillis() + ".jpg");
+
+            // Օգտագործում ենք FileProvider՝ անվտանգության սխալներից խուսափելու համար
+            String authority = requireContext().getPackageName() + ".fileprovider";
+            cropOutputUri = FileProvider.getUriForFile(requireContext(), authority, outFile);
+
+            cropIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, cropOutputUri);
+            cropIntent.putExtra("return-data", false); // Մեծ նկարների դեպքում սա պետք է լինի false
+
+            // Տալիս ենք կարդալու և գրելու ժամանակավոր թույլտվություն Crop ծրագրին
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            List<android.content.pm.ResolveInfo> resInfoList = requireContext().getPackageManager()
+                    .queryIntentActivities(cropIntent, android.content.pm.PackageManager.MATCH_DEFAULT_ONLY);
+            for (android.content.pm.ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                requireContext().grantUriPermission(packageName, cropOutputUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                requireContext().grantUriPermission(packageName, picUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            cropLauncher.launch(cropIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Եթե սարքը չունի Crop ծրագիր, պարզապես դնում ենք օրիգինալ նկարը
+            profileImage.setImageURI(picUri);
+            saveImageUriLocally(picUri.toString());
+            Toast.makeText(getContext(), "Crop feature is not supported on your device.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void showImageOptionsDialog() {
+        String[] options = {"Choose from Gallery", "Delete Photo"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Profile Picture");
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                imagePickerLauncher.launch(intent);
+            } else if (which == 1) {
+                profileImage.setImageResource(android.R.drawable.ic_menu_camera);
+                saveImageUriLocally("");
+            }
+        });
+        builder.show();
+    }
+
+    private Uri saveBitmapToLocalCache(Bitmap bitmap) {
+        try {
+            File cachePath = new File(requireContext().getCacheDir(), "images");
+            cachePath.mkdirs();
+            File newFile = new File(cachePath, "profile_pic.png");
+            FileOutputStream stream = new FileOutputStream(newFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream.close();
+            return Uri.fromFile(newFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // --- ԱՀԱ ԱՅՍՏԵՂ Է ՊԱԿԱՍՈՂ ՖՈՒՆԿՑԻԱՆ ---
+    private void saveImageUriLocally(String uri) {
+        if (getContext() != null) {
+            SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+            prefs.edit().putString("profile_image_uri", uri).apply();
+        }
+    }
+    // ----------------------------------------
 
     private void fetchTeacherStats() {
         if (currentUserId == null) return;
@@ -395,7 +545,9 @@ public class TeacherProfileFragment extends Fragment {
                     dayView.setText("");
                 } else if (currentDay <= maxDays) {
                     dayView.setText(String.valueOf(currentDay));
+
                     String dateStr = String.format(Locale.getDefault(), "%04d-%02d-%02d", currentYear, currentMonth + 1, currentDay);
+
                     if (loginHistory.contains(dateStr)) {
                         GradientDrawable gd = new GradientDrawable();
                         gd.setShape(GradientDrawable.OVAL);
@@ -419,11 +571,6 @@ public class TeacherProfileFragment extends Fragment {
         builder.setView(mainLayout);
         builder.setPositiveButton("Awesome!", null);
         builder.show();
-    }
-
-    private void saveImageUriLocally(String uri) {
-        SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
-        prefs.edit().putString("profile_image_uri", uri).apply();
     }
 
     private void saveNameLocally(String name, String surname) {
@@ -481,40 +628,6 @@ public class TeacherProfileFragment extends Fragment {
 
         completedGoalsList = loadListLocally("completedGoals");
         for (String goal : completedGoalsList) addGoalToView(goal, true);
-    }
-
-    private void showImageOptionsDialog() {
-        String[] options = {"Take Photo", "Choose from Gallery", "Delete Photo"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Profile Picture");
-        builder.setItems(options, (dialog, which) -> {
-            if (which == 0) cameraLauncher.launch(null);
-            else if (which == 1) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                imagePickerLauncher.launch(intent);
-            } else if (which == 2) {
-                profileImage.setImageResource(android.R.drawable.ic_menu_camera);
-                saveImageUriLocally("");
-            }
-        });
-        builder.show();
-    }
-
-    private Uri saveBitmapToLocalCache(Bitmap bitmap) {
-        try {
-            File cachePath = new File(requireContext().getCacheDir(), "images");
-            cachePath.mkdirs();
-            File newFile = new File(cachePath, "profile_pic.png");
-            FileOutputStream stream = new FileOutputStream(newFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            stream.close();
-            return Uri.fromFile(newFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private void showEditNameDialog() {

@@ -3,6 +3,7 @@ package lilit.hakobyan.olympmathmentor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,13 +12,15 @@ import java.util.List;
 public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.ViewHolder> {
 
     private List<Classroom> classroomList;
-    private OnItemClickListener listener;
+    private OnClassClickListener listener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Classroom classroom);
+    // Նոր ինտերֆեյս, որը հասկանում է 2 տարբեր սեղմումներ
+    public interface OnClassClickListener {
+        void onClick(Classroom classroom);
+        void onDeleteClick(Classroom classroom);
     }
 
-    public ClassroomAdapter(List<Classroom> classroomList, OnItemClickListener listener) {
+    public ClassroomAdapter(List<Classroom> classroomList, OnClassClickListener listener) {
         this.classroomList = classroomList;
         this.listener = listener;
     }
@@ -35,7 +38,11 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
         holder.tvClassName.setText(cls.getClassName());
         holder.tvClassCode.setText("Class Code: " + cls.getClassCode());
 
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(cls));
+        // Սեղմում ենք քարտի վրա -> գնում է չաթ
+        holder.itemView.setOnClickListener(v -> listener.onClick(cls));
+
+        // Սեղմում ենք աղբամանի վրա -> ջնջում է դասարանը
+        holder.btnDeleteClass.setOnClickListener(v -> listener.onDeleteClick(cls));
     }
 
     @Override
@@ -45,11 +52,13 @@ public class ClassroomAdapter extends RecyclerView.Adapter<ClassroomAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvClassName, tvClassCode;
+        ImageView btnDeleteClass; // Ավելացրել ենք ջնջելու կոճակը
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvClassName = itemView.findViewById(R.id.tvClassName);
             tvClassCode = itemView.findViewById(R.id.tvClassCode);
+            btnDeleteClass = itemView.findViewById(R.id.btnDeleteClass);
         }
     }
 }

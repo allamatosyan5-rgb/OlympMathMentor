@@ -38,7 +38,7 @@ public class TeacherMatyanActivity extends AppCompatActivity {
 
                 // Կառուցում ենք վերնագրի տողը
                 TableRow header = new TableRow(TeacherMatyanActivity.this);
-                header.addView(createCell("Աշակերտ"));
+                header.addView(createCell("Student "));
                 for (DataSnapshot hw : homeworks.getChildren()) {
                     header.addView(createCell(hw.child("title").getValue(String.class)));
                 }

@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -26,6 +25,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +37,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,32 +68,32 @@ public class ProfileFragment extends Fragment {
     private int totalEarnedStars = 0;
     private int currentStreakCount = 0;
 
-    // 60 դաս ընդհանուր (20 Beginner + 20 Intermediate + 20 Advanced)
     private final int TOTAL_LESSONS_IN_APP = 60;
+    private Uri cropOutputUri = null; // Պահում է կտրած նկարի հասցեն
 
+    // 1. Նկարը կտրելուց հետո ստացող Launcher
+    private final ActivityResultLauncher<Intent> cropLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (cropOutputUri != null) {
+                        profileImage.setImageURI(null); // Թարմացնելու համար զրոյացնում ենք
+                        profileImage.setImageURI(cropOutputUri);
+                        saveImageUriLocally(cropOutputUri.toString());
+                    }
+                }
+            }
+    );
+
+    // 2. Գալերեայից նկար ընտրելու Launcher
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData();
                     if (imageUri != null) {
-                        try {
-                            requireContext().getContentResolver().takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        } catch (Exception ignored) {}
-                        profileImage.setImageURI(imageUri);
-                        saveImageUriLocally(imageUri.toString());
+                        performCrop(imageUri); // Ընտրելուց անմիջապես հետո բացում ենք Crop-ը
                     }
-                }
-            }
-    );
-
-    private final ActivityResultLauncher<Void> cameraLauncher = registerForActivityResult(
-            new ActivityResultContracts.TakePicturePreview(),
-            bitmap -> {
-                if (bitmap != null) {
-                    profileImage.setImageBitmap(bitmap);
-                    Uri tempUri = saveBitmapToLocalCache(bitmap);
-                    if (tempUri != null) saveImageUriLocally(tempUri.toString());
                 }
             }
     );
@@ -159,6 +158,7 @@ public class ProfileFragment extends Fragment {
                             if (getContext() != null && currentUser != null) {
                                 SharedPreferences profilePrefs = getContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
                                 SharedPreferences progressPrefs = getContext().getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+                                SharedPreferences myPrefs = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
                                 HashMap<String, Object> backupData = new HashMap<>();
 
@@ -172,7 +172,6 @@ public class ProfileFragment extends Fragment {
                                 backupData.put("profile", profileData);
 
                                 HashMap<String, Object> progressData = new HashMap<>();
-                                // ՈՒՂՂՈՒՄ. Պահպանում ենք ամբողջ 60 դասերի աստղերը ամպային սերվերում
                                 for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
                                     progressData.put("stars_lesson_" + i, progressPrefs.getInt("stars_lesson_" + i, 0));
                                 }
@@ -183,17 +182,29 @@ public class ProfileFragment extends Fragment {
                                 progressData.put("favourite_problems", progressPrefs.getString("favourite_problems", ""));
                                 backupData.put("progress", progressData);
 
+                                HashMap<String, Object> myPrefsData = new HashMap<>();
+                                for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
+                                    myPrefsData.put("test" + i + "_score", myPrefs.getInt("test" + i + "_score", 0));
+                                    myPrefsData.put("int_test" + i + "_score", myPrefs.getInt("int_test" + i + "_score", 0));
+                                    myPrefsData.put("adv_test" + i + "_score", myPrefs.getInt("adv_test" + i + "_score", 0));
+                                }
+                                myPrefsData.put("intermediate_unlocked", myPrefs.getBoolean("intermediate_unlocked", false));
+                                myPrefsData.put("advanced_unlocked", myPrefs.getBoolean("advanced_unlocked", false));
+                                myPrefsData.put("adv_exam_passed", myPrefs.getBoolean("adv_exam_passed", false));
+                                myPrefsData.put("total_stars", myPrefs.getInt("total_stars", 0));
+                                backupData.put("my_prefs", myPrefsData);
+
                                 Set<String> history = progressPrefs.getStringSet("login_history", new HashSet<>());
                                 backupData.put("login_history", new ArrayList<>(history));
 
                                 Toast.makeText(getContext(), "Syncing data to Cloud...", Toast.LENGTH_SHORT).show();
 
-                                FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid()).child("backup")
+                                FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid()).child("backup")
                                         .setValue(backupData).addOnCompleteListener(task -> {
 
                                             profilePrefs.edit().clear().apply();
                                             progressPrefs.edit().clear().apply();
-                                            getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE).edit().clear().apply();
+                                            myPrefs.edit().clear().apply();
                                             getContext().getSharedPreferences("OlympiadProgress", Context.MODE_PRIVATE).edit().clear().apply();
 
                                             FirebaseAuth.getInstance().signOut();
@@ -212,10 +223,74 @@ public class ProfileFragment extends Fragment {
         loadAllLocalData();
         calculateStatsAndBadges();
         updateMistakesAndFavsCount();
-
         listenForAdminNews();
 
         return view;
+    }
+
+    // ՆՈՐ CROP ԼՈԳԻԿԱՆ, որը ապահով է բոլոր Android տարբերակների համար
+    private void performCrop(Uri picUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            // Պահանջում ենք, որ կտրվածքը լինի քառակուսի (1:1)
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 400);
+            cropIntent.putExtra("outputY", 400);
+            cropIntent.putExtra("scale", true);
+
+            // Ստեղծում ենք ֆայլ, որտեղ կպահվի կտրած նկարը
+            File cachePath = new File(requireContext().getCacheDir(), "images");
+            cachePath.mkdirs();
+            File outFile = new File(cachePath, "cropped_profile_" + System.currentTimeMillis() + ".jpg");
+
+            // Օգտագործում ենք FileProvider՝ անվտանգության սխալներից խուսափելու համար
+            String authority = requireContext().getPackageName() + ".fileprovider";
+            cropOutputUri = FileProvider.getUriForFile(requireContext(), authority, outFile);
+
+            cropIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, cropOutputUri);
+            cropIntent.putExtra("return-data", false); // Մեծ նկարների դեպքում սա պետք է լինի false
+
+            // Տալիս ենք կարդալու և գրելու ժամանակավոր թույլտվություն Crop ծրագրին
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            List<android.content.pm.ResolveInfo> resInfoList = requireContext().getPackageManager()
+                    .queryIntentActivities(cropIntent, android.content.pm.PackageManager.MATCH_DEFAULT_ONLY);
+            for (android.content.pm.ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                requireContext().grantUriPermission(packageName, cropOutputUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                requireContext().grantUriPermission(packageName, picUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+            cropLauncher.launch(cropIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Եթե սարքը չունի Crop ծրագիր, պարզապես դնում ենք օրիգինալ նկարը
+            profileImage.setImageURI(picUri);
+            saveImageUriLocally(picUri.toString());
+            Toast.makeText(getContext(), "Crop feature is not supported on your device.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showImageOptionsDialog() {
+        String[] options = {"Choose from Gallery", "Delete Photo"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Profile Picture");
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                imagePickerLauncher.launch(intent);
+            } else if (which == 1) {
+                profileImage.setImageResource(android.R.drawable.ic_menu_camera);
+                saveImageUriLocally("");
+            }
+        });
+        builder.show();
     }
 
     private void showNewsDialog(String message) {
@@ -249,10 +324,7 @@ public class ProfileFragment extends Fragment {
                     if (viewNewsDot != null) viewNewsDot.setVisibility(View.GONE);
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -355,7 +427,6 @@ public class ProfileFragment extends Fragment {
         totalEarnedStars = 0;
         int solvedCount = 0;
 
-        // ՈՒՂՂՈՒՄ. Ցիկլը պտտվում է 1-ից 60-ը՝ ներառելով բոլոր մակարդակները (Beg, Int, Adv)
         for (int i = 1; i <= TOTAL_LESSONS_IN_APP; i++) {
             int lessonStars = progressPrefs.getInt("stars_lesson_" + i, 0);
             if (lessonStars > 0) {
@@ -365,17 +436,14 @@ public class ProfileFragment extends Fragment {
         }
         totalEarnedStars += progressPrefs.getInt("extra_stars", 0);
 
-        // 2. Ավելացնում ենք AI-ի ստուգած Օլիմպիադաներից վաստակած աստղերը
         SharedPreferences myPrefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         int aiOlympiadStars = myPrefs.getInt("total_stars", 0);
 
         totalEarnedStars += aiOlympiadStars;
 
-        // Ցուցադրում ենք ընդհանուր վիճակագրությունը
         tvTotalStars.setText(String.valueOf(totalEarnedStars));
         tvSolvedProblems.setText(String.valueOf(solvedCount));
 
-        // Ճշգրտված տոկոսային առաջընթացը բոլոր 60 դասերի հիման վրա
         int completionPercentage = (int) (((float) solvedCount / TOTAL_LESSONS_IN_APP) * 100);
         tvAccuracy.setText(completionPercentage + "%");
 
@@ -407,7 +475,6 @@ public class ProfileFragment extends Fragment {
 
         tvStreakDays.setText(currentStreakCount + " Days");
 
-        // Կոչումների դինամիկ համակարգ
         if (totalEarnedStars >= 120) tvUserStatus.setText("Grandmaster Olympian");
         else if (totalEarnedStars >= 75) tvUserStatus.setText("Math Olympian");
         else if (totalEarnedStars >= 40) tvUserStatus.setText("Advanced Thinker");
@@ -560,7 +627,6 @@ public class ProfileFragment extends Fragment {
         if (totalEarnedStars >= 100) createBadgeUI("\uD83D\uDC51", "Math Royalty", true);
         else createBadgeUI("\uD83D\uDD12", "Math Royalty", false);
 
-        // ՈՒՂՂՈՒՄ. Հաշվարկը կատարվում է 60 դասերի առավելագույն աստղերով (60 * 3 = 180)
         if (totalEarnedStars == (TOTAL_LESSONS_IN_APP * 3)) createBadgeUI("\uD83C\uDFC6", "Olympian Legend", true);
         else createBadgeUI("\uD83D\uDD12", "Olympian Legend", false);
     }
@@ -599,40 +665,6 @@ public class ProfileFragment extends Fragment {
         badgeLayout.addView(tvTitle);
 
         badgeContainer.addView(badgeLayout);
-    }
-
-    private void showImageOptionsDialog() {
-        String[] options = {"Take Photo", "Choose from Gallery", "Delete Photo"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Profile Picture");
-        builder.setItems(options, (dialog, which) -> {
-            if (which == 0) cameraLauncher.launch(null);
-            else if (which == 1) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                imagePickerLauncher.launch(intent);
-            } else if (which == 2) {
-                profileImage.setImageResource(android.R.drawable.ic_menu_camera);
-                saveImageUriLocally("");
-            }
-        });
-        builder.show();
-    }
-
-    private Uri saveBitmapToLocalCache(Bitmap bitmap) {
-        try {
-            File cachePath = new File(requireContext().getCacheDir(), "images");
-            cachePath.mkdirs();
-            File newFile = new File(cachePath, "profile_pic.png");
-            FileOutputStream stream = new FileOutputStream(newFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            stream.close();
-            return Uri.fromFile(newFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private void showEditNameDialog() {

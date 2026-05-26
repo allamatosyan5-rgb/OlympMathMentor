@@ -50,13 +50,11 @@ public class JournalTableActivity extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.tvJournalClassName);
         if (className != null) tvTitle.setText(className + " - Journal");
 
-        // Ենթադրում եմ ունես btnBackFromJournal քո activity_journal_table.xml-ում
         View btnBack = findViewById(R.id.btnBackFromJournal);
         if (btnBack != null) btnBack.setOnClickListener(v -> finish());
 
         tableJournal = findViewById(R.id.tableJournal);
 
-        // Ապահովագրում ենք NullPointerException-ից, եթե classId-ն null է եկել
         if (classId == null || classId.isEmpty()) {
             Toast.makeText(this, "Class ID error!", Toast.LENGTH_SHORT).show();
             finish();
@@ -75,14 +73,12 @@ public class JournalTableActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tableJournal.removeAllViews();
 
-                // 1. Հավաքում ենք աշակերտների ID-ները
                 List<String> studentIds = new ArrayList<>();
                 if (snapshot.child("students").exists()) {
                     for (DataSnapshot s : snapshot.child("students").getChildren()) {
                         studentIds.add(s.getKey());
                     }
                 } else if (snapshot.child("submissions").exists()) {
-                    // Եթե students ցուցակ չկա, հավաքում ենք նրանց ովքեր տնային են հանձնել
                     for (DataSnapshot hwSnap : snapshot.child("submissions").getChildren()) {
                         for (DataSnapshot studentSnap : hwSnap.getChildren()) {
                             if (!studentIds.contains(studentSnap.getKey())) {
@@ -92,7 +88,6 @@ public class JournalTableActivity extends AppCompatActivity {
                     }
                 }
 
-                // 2. Հավաքում ենք տնայինները
                 List<DataSnapshot> homeworks = new ArrayList<>();
                 if (snapshot.child("homeworks").exists()) {
                     for (DataSnapshot hw : snapshot.child("homeworks").getChildren()) {
@@ -100,13 +95,11 @@ public class JournalTableActivity extends AppCompatActivity {
                     }
                 }
 
-                // 3. ՍՏՈՒԳՈՒՄ՝ արդյոք ունենք տվյալներ աղյուսակ կառուցելու համար
                 if (studentIds.isEmpty() || homeworks.isEmpty()) {
-                    Toast.makeText(JournalTableActivity.this, "Դեռևս բավարար տվյալներ չկան աղյուսակ կառուցելու համար (կամ տնային չկա, կամ աշակերտ):", Toast.LENGTH_LONG).show();
-                    return; // Դադարեցնում ենք աշխատանքը
+                    Toast.makeText(JournalTableActivity.this, "Not enough data to build the table yet.", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
-                // 4. ԿԱՌՈՒՑՈՒՄ ԵՆՔ ՎԵՐՆԱԳՐԵՐԸ
                 TableRow headerRow = new TableRow(JournalTableActivity.this);
                 headerRow.addView(createCell("Student", true, false));
 
@@ -116,7 +109,6 @@ public class JournalTableActivity extends AppCompatActivity {
                 }
                 tableJournal.addView(headerRow);
 
-                // 5. ԿԱՌՈՒՑՈՒՄ ԵՆՔ ԱՇԱԿԵՐՏՆԵՐԻ ՏՈՂԵՐԸ
                 for (String sId : studentIds) {
                     TableRow row = new TableRow(JournalTableActivity.this);
 
@@ -176,7 +168,7 @@ public class JournalTableActivity extends AppCompatActivity {
         tv.setText(text);
         tv.setPadding(30, 25, 30, 25);
         tv.setGravity(Gravity.CENTER);
-        tv.setBackgroundResource(R.drawable.cell_border); // Համոզվիր որ ունես res/drawable/cell_border.xml
+        tv.setBackgroundResource(R.drawable.cell_border);
 
         if (isHeader) {
             tv.setTypeface(null, Typeface.BOLD);
@@ -194,7 +186,6 @@ public class JournalTableActivity extends AppCompatActivity {
 
     private void showGradeDialog(String studentId, String hwId, DataSnapshot submissionSnap) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Համոզվիր որ ունես res/layout/dialog_grade_submission.xml
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_grade_submission, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
@@ -220,22 +211,42 @@ public class JournalTableActivity extends AppCompatActivity {
                 for (String base64Str : imagesList) {
                     try {
                         byte[] bytes = Base64.decode(base64Str, Base64.DEFAULT);
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        ImageView iv = new ImageView(this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 500);
-                        params.setMargins(0, 0, 16, 0);
-                        iv.setLayoutParams(params);
-                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        iv.setImageBitmap(bmp);
 
-                        iv.setOnClickListener(v -> {
-                            Intent intent = new Intent(JournalTableActivity.this, FullImageActivity.class);
-                            intent.putExtra("IMAGE_BASE64", base64Str);
-                            startActivity(intent);
-                        });
+                        // --- SAFE DECODING TO PREVENT OUT OF MEMORY ERROR ---
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inJustDecodeBounds = true; // Only get dimensions
+                        BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
 
-                        layoutImages.addView(iv);
-                    } catch (Exception e) {}
+                        // Target dimensions for the thumbnail in the dialog
+                        int targetW = 500;
+                        int targetH = 500;
+
+                        options.inSampleSize = calculateInSampleSize(options, targetW, targetH);
+                        options.inJustDecodeBounds = false; // Decode the actual image
+
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+                        // ---------------------------------------------------
+
+                        if (bmp != null) {
+                            ImageView iv = new ImageView(this);
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, 500);
+                            params.setMargins(0, 0, 16, 0);
+                            iv.setLayoutParams(params);
+                            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            iv.setImageBitmap(bmp);
+
+                            iv.setOnClickListener(v -> {
+                                // 💡 ԱՅՍՏԵՂ Է ՓՈՓՈԽՈՒԹՅՈՒՆԸ. Օգտագործում ենք ստատիկ փոփոխականը
+                                FullImageActivity.currentBase64Image = base64Str;
+                                Intent intent = new Intent(JournalTableActivity.this, FullImageActivity.class);
+                                startActivity(intent);
+                            });
+
+                            layoutImages.addView(iv);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -264,5 +275,22 @@ public class JournalTableActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    // Utility method to calculate the scaling factor
+    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
     }
 }

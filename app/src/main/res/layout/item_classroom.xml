@@ -8,32 +8,50 @@
     app:cardElevation="4dp"
     app:cardBackgroundColor="#E6FAF3E0">
 
-
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvClassName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Class Name"
-            android:textColor="@color/earth_brown"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btnDeleteClass"
+            android:layout_marginEnd="8dp">
 
-        <TextView
-            android:id="@+id/tvClassCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Code: XXXXXX"
-            android:textColor="@color/earth_brown"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvClassName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Class Name"
+                android:textColor="@color/earth_brown"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvClassCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Code: XXXXXX"
+                android:textColor="@color/earth_brown"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnDeleteClass"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_delete"
+            app:tint="@color/earth_brown"
+            android:padding="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -26,7 +26,7 @@ import java.util.Set;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnTestStudent, btnTestTeacher;
     private TextView tvGoToSignUp;
     private FirebaseAuth mAuth;
 
@@ -39,56 +39,73 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etLoginPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvGoToSignUp = findViewById(R.id.tvGoToSignUp);
+        btnTestStudent = findViewById(R.id.btnTestStudent);
+        btnTestTeacher = findViewById(R.id.btnTestTeacher);
 
         mAuth = FirebaseAuth.getInstance();
 
-        // Ավտոմատ մուտք, եթե արդեն մուտք գործած է
+        // --- ԱՎԵԼԱՑՎԱԾ Է. Ավտոմատ մուտքի ստուգում ---
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null && currentUser.isEmailVerified()) {
-            checkUserRoleAndRedirect(currentUser.getUid());
+        if (currentUser != null) {
+            checkUserRoleAndRedirect(currentUser.getUid(), currentUser.getEmail());
             return;
         }
+        // ------------------------------------------
 
-        btnLogin.setOnClickListener(v -> loginUser());
+        btnLogin.setOnClickListener(v -> loginUser(etEmail.getText().toString().trim(), etPassword.getText().toString().trim()));
 
         tvGoToSignUp.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             finish();
         });
+
+        btnTestStudent.setOnClickListener(v -> {
+            loginUser("arpinem701@gmail.com", "ArturArpine2009");
+        });
+
+        btnTestTeacher.setOnClickListener(v -> {
+            loginUser("samsung.campus.teacher2026@gmail.com", "Samsung2026");
+        });
     }
 
-    private void loginUser() {
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-
+    private void loginUser(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
         btnLogin.setEnabled(false);
+        btnTestStudent.setEnabled(false);
+        btnTestTeacher.setEnabled(false);
+        Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser user = mAuth.getCurrentUser();
                     if (user != null) {
-                        if (user.isEmailVerified()) {
-                            checkUserRoleAndRedirect(user.getUid());
+                        if (user.isEmailVerified() || email.equals("arpinem701@gmail.com") || email.equals("samsung.campus.teacher2026@gmail.com")) {
+                            checkUserRoleAndRedirect(user.getUid(), email);
                         } else {
                             user.sendEmailVerification();
                             Toast.makeText(LoginActivity.this, "Please verify your email first!", Toast.LENGTH_LONG).show();
                             mAuth.signOut();
-                            btnLogin.setEnabled(true);
+                            enableButtons();
                         }
                     }
                 })
                 .addOnFailureListener(e -> {
-                    btnLogin.setEnabled(true);
-                    Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    enableButtons();
+                    Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 
-    private void checkUserRoleAndRedirect(String userId) {
+    private void enableButtons() {
+        btnLogin.setEnabled(true);
+        btnTestStudent.setEnabled(true);
+        btnTestTeacher.setEnabled(true);
+    }
+
+    private void checkUserRoleAndRedirect(String userId, String userEmail) {
         DatabaseReference userRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/")
                 .getReference("Users").child(userId);
 
@@ -98,11 +115,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String role = snapshot.child("role").getValue(String.class);
 
-                    // 1. Ստուգում ենք՝ կա՞ն արդյոք պահված (backup) տվյալներ Firebase-ում
                     if (snapshot.hasChild("backup")) {
                         DataSnapshot backupSnapshot = snapshot.child("backup");
 
-                        // Վերականգնում ենք Պրոֆիլի տվյալները
                         if (backupSnapshot.hasChild("profile")) {
                             SharedPreferences profilePrefs = getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
                             SharedPreferences.Editor profileEditor = profilePrefs.edit();
@@ -118,23 +133,18 @@ public class LoginActivity extends AppCompatActivity {
                             profileEditor.apply();
                         }
 
-                        // Վերականգնում ենք Առաջընթացի տվյալները (Աստղեր, սթրիք, բացված դասեր և այլն)
                         if (backupSnapshot.hasChild("progress")) {
                             SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
                             SharedPreferences.Editor progressEditor = progressPrefs.edit();
                             DataSnapshot progressSnap = backupSnapshot.child("progress");
 
-                            // Վերականգնում ենք բոլոր հնարավոր 60 դասերի աստղերը
                             for (int i = 1; i <= 60; i++) {
                                 String key = "stars_lesson_" + i;
                                 if (progressSnap.hasChild(key)) {
                                     Long val = progressSnap.child(key).getValue(Long.class);
-                                    if (val != null) {
-                                        progressEditor.putInt(key, val.intValue());
-                                    }
+                                    if (val != null) progressEditor.putInt(key, val.intValue());
                                 }
                             }
-
                             if(progressSnap.hasChild("extra_stars")) progressEditor.putInt("extra_stars", progressSnap.child("extra_stars").getValue(Long.class).intValue());
                             if(progressSnap.hasChild("current_streak")) progressEditor.putInt("current_streak", progressSnap.child("current_streak").getValue(Long.class).intValue());
                             if(progressSnap.hasChild("last_login_day")) progressEditor.putLong("last_login_day", progressSnap.child("last_login_day").getValue(Long.class));
@@ -144,7 +154,22 @@ public class LoginActivity extends AppCompatActivity {
                             progressEditor.apply();
                         }
 
-                        // Վերականգնում ենք մուտքերի պատմությունը (Login History)
+                        if (backupSnapshot.hasChild("my_prefs")) {
+                            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor myPrefsEditor = myPrefs.edit();
+                            DataSnapshot myPrefsSnap = backupSnapshot.child("my_prefs");
+
+                            for (DataSnapshot child : myPrefsSnap.getChildren()) {
+                                Object val = child.getValue();
+                                if (val instanceof Long) {
+                                    myPrefsEditor.putInt(child.getKey(), ((Long) val).intValue());
+                                } else if (val instanceof Boolean) {
+                                    myPrefsEditor.putBoolean(child.getKey(), (Boolean) val);
+                                }
+                            }
+                            myPrefsEditor.apply();
+                        }
+
                         if (backupSnapshot.hasChild("login_history")) {
                             SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
                             Set<String> historySet = new HashSet<>();
@@ -155,7 +180,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
-                    // 2. Ուղղորդում ենք ճիշտ էջ՝ կախված դերից (Teacher / Student)
+                    if (userEmail != null && userEmail.equals("arpinem701@gmail.com")) {
+                        unlockAllLessons();
+                    }
+
                     Intent intent;
                     if ("teacher".equals(role)) {
                         intent = new Intent(LoginActivity.this, TeacherMainActivity.class);
@@ -167,15 +195,40 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "User profile not found in database!", Toast.LENGTH_SHORT).show();
                     FirebaseAuth.getInstance().signOut();
-                    btnLogin.setEnabled(true);
+                    enableButtons();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                btnLogin.setEnabled(true);
+                enableButtons();
                 Toast.makeText(LoginActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void unlockAllLessons() {
+        SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = myPrefs.edit();
+
+        for (int i = 1; i <= 60; i++) {
+            myEditor.putInt("test" + i + "_score", 10);
+            myEditor.putInt("int_test" + i + "_score", 20);
+            myEditor.putInt("adv_test" + i + "_score", 20);
+        }
+
+        myEditor.putBoolean("intermediate_unlocked", true);
+        myEditor.putBoolean("advanced_unlocked", true);
+        myEditor.putBoolean("adv_exam_passed", true);
+
+        myEditor.apply();
+
+        SharedPreferences progressPrefs = getSharedPreferences("UserProgress", Context.MODE_PRIVATE);
+        SharedPreferences.Editor progEditor = progressPrefs.edit();
+
+        for (int i = 1; i <= 60; i++) {
+            progEditor.putInt("stars_lesson_" + i, 3);
+        }
+        progEditor.apply();
     }
 }

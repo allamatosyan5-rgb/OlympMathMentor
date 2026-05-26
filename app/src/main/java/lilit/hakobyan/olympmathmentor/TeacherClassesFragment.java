@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging; // 💡 Ավելացված է
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,20 +45,17 @@ public class TeacherClassesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // 1. Ստեղծում ենք view-ն (էկրանի կառույցը)
         View view = inflater.inflate(R.layout.fragment_teacher_classes, container, false);
 
-        // Ստուգում ենք User-ին և միանում բազային
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             currentUserId = currentUser.getUid();
         } else {
-            currentUserId = "unknown_teacher"; // Ապահովության համար, եթե հանկարծ user չգտնի
+            currentUserId = "unknown_teacher";
         }
 
         classesRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("classes");
 
-        // 2. Գտնում ենք էլեմենտները էկրանի վրա
         tvGreeting = view.findViewById(R.id.tvTeacherGreeting);
         rvClasses = view.findViewById(R.id.rvClasses);
         fabAddClass = view.findViewById(R.id.fabAddClass);
@@ -68,21 +65,27 @@ public class TeacherClassesFragment extends Fragment {
 
         classroomList = new ArrayList<>();
 
-        // 3. Դասարանի վրա սեղմելիս բացվում է Չաթը (կստեղծենք հաջորդիվ)
-        adapter = new ClassroomAdapter(classroomList, classroom -> {
-            Intent intent = new Intent(getActivity(), ClassChatActivity.class);
-            intent.putExtra("CLASS_ID", classroom.getClassId());
-            intent.putExtra("CLASS_NAME", classroom.getClassName());
-            intent.putExtra("CLASS_CODE", classroom.getClassCode());
-            startActivity(intent);
+        // Ճիշտ կանչ՝ OnClassClickListener-ով (onClick և onDeleteClick)
+        adapter = new ClassroomAdapter(classroomList, new ClassroomAdapter.OnClassClickListener() {
+            @Override
+            public void onClick(Classroom classroom) {
+                Intent intent = new Intent(getActivity(), ClassChatActivity.class);
+                intent.putExtra("CLASS_ID", classroom.getClassId());
+                intent.putExtra("CLASS_NAME", classroom.getClassName());
+                intent.putExtra("CLASS_CODE", classroom.getClassCode());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDeleteClick(Classroom classroom) {
+                showDeleteClassDialog(classroom);
+            }
         });
 
         rvClasses.setAdapter(adapter);
 
-        // 4. Նոր դասարան ստեղծելու կոճակը (+)
         fabAddClass.setOnClickListener(v -> showCreateClassDialog());
 
-        // 5. Բեռնում ենք արդեն ստեղծված դասարանները
         loadTeacherClasses();
 
         return view;
@@ -95,7 +98,7 @@ public class TeacherClassesFragment extends Fragment {
         final EditText input = new EditText(getContext());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setHint("e.g. Photon 11th Grade");
-        input.setPadding(40, 40, 40, 40); // Գեղեցկության համար
+        input.setPadding(40, 40, 40, 40);
         builder.setView(input);
 
         builder.setPositiveButton("Create", (dialog, which) -> {
@@ -121,14 +124,12 @@ public class TeacherClassesFragment extends Fragment {
             classesRef.child(classId).setValue(newClass)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getContext(), "Class Created! Code: " + classCode, Toast.LENGTH_LONG).show();
-                        // 💡 Ուսուցիչը ևս բաժանորդագրվում է իր ստեղծած դասարանի ծանուցումներին
                         FirebaseMessaging.getInstance().subscribeToTopic("class_" + classId);
                     })
                     .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 
-    // Այս ֆունկցիան ստեղծում է դասարանի գաղտնի կոդը (օրինակ՝ A7B9Q1)
     private String generateRandomCode() {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder code = new StringBuilder();
@@ -140,7 +141,6 @@ public class TeacherClassesFragment extends Fragment {
     }
 
     private void loadTeacherClasses() {
-        // Բազայից կարդում ենք միայն այն դասարանները, որոնց ուսուցիչը հենց այս User-ն է
         classesRef.orderByChild("teacherId").equalTo(currentUserId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -162,5 +162,25 @@ public class TeacherClassesFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void showDeleteClassDialog(Classroom classroom) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Delete Class")
+                .setMessage("Are you sure you want to permanently delete " + classroom.getClassName() + "? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    deleteClass(classroom.getClassId());
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void deleteClass(String classId) {
+        classesRef.child(classId).removeValue()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Class deleted successfully.", Toast.LENGTH_SHORT).show();
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("class_" + classId);
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Error deleting class: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

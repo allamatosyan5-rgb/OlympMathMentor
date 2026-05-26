@@ -17,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
-import com.google.firebase.messaging.FirebaseMessaging; // 💡 Ավելացված է
+import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +41,24 @@ public class StudentClassesFragment extends Fragment {
 
         db = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference();
 
-        adapter = new ClassroomAdapter(classroomList, classroom -> {
-            Intent intent = new Intent(getActivity(), ClassChatActivity.class);
-            intent.putExtra("CLASS_ID", classroom.getClassId());
-            intent.putExtra("CLASS_NAME", classroom.getClassName());
-            intent.putExtra("CLASS_CODE", classroom.getClassCode());
-            startActivity(intent);
+        // 1. Ադապտերը հիմա ընդունում է նոր ինտերֆեյս՝ 2 տարբեր սեղմումներով
+        adapter = new ClassroomAdapter(classroomList, new ClassroomAdapter.OnClassClickListener() {
+            @Override
+            public void onClick(Classroom classroom) {
+                Intent intent = new Intent(getActivity(), ClassChatActivity.class);
+                intent.putExtra("CLASS_ID", classroom.getClassId());
+                intent.putExtra("CLASS_NAME", classroom.getClassName());
+                intent.putExtra("CLASS_CODE", classroom.getClassCode());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDeleteClick(Classroom classroom) {
+                // Կանչվում է ջնջելու կոճակը սեղմելիս
+                showLeaveClassDialog(classroom);
+            }
         });
+
         rvClasses.setAdapter(adapter);
 
         fabJoinClass.setOnClickListener(v -> showJoinClassDialog());
@@ -98,7 +109,6 @@ public class StudentClassesFragment extends Fragment {
         });
     }
 
-    // 3. Պահում ենք աշակերտի մոտ
     private void saveClassToStudentProfile(String classId) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) return;
@@ -106,19 +116,45 @@ public class StudentClassesFragment extends Fragment {
         db.child("Users").child(user.getUid()).child("joinedClasses").child(classId).setValue(true)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getContext(), "Joined successfully!", Toast.LENGTH_SHORT).show();
-                    // 💡 Բաժանորդագրվում ենք այս դասարանի ծանուցումներին
                     FirebaseMessaging.getInstance().subscribeToTopic("class_" + classId);
                 })
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
-    // 4. Բեռնում ենք ցուցակը
+    // --- ԱՎԵԼԱՑՎԱԾ Է. Ջնջելու հաստատման պատուհան ---
+    private void showLeaveClassDialog(Classroom classroom) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Leave Class")
+                .setMessage("Are you sure you want to leave " + classroom.getClassName() + "?")
+                .setPositiveButton("Yes, Leave", (dialog, which) -> {
+                    leaveClass(classroom.getClassId());
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    // --- ԱՎԵԼԱՑՎԱԾ Է. Ջնջելու ռեալ գործողությունը Firebase-ից ---
+    private void leaveClass(String classId) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) return;
+
+        // Ջնջում ենք դասարանը աշակերտի joinedClasses ցուցակից
+        db.child("Users").child(user.getUid()).child("joinedClasses").child(classId).removeValue()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "You left the class.", Toast.LENGTH_SHORT).show();
+                    // Ապաբաժանորդագրվում ենք ծանուցումներից
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("class_" + classId);
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
     private void loadJoinedClasses() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) return;
 
         DatabaseReference userJoinedRef = db.child("Users").child(user.getUid()).child("joinedClasses");
 
+        // addValueEventListener-ը ավտոմատ կթարմացնի ցուցակը, երբ ջնջենք դասարանը
         userJoinedRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,7 +167,6 @@ public class StudentClassesFragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot classSnap) {
                             Classroom classroom = classSnap.getValue(Classroom.class);
                             if (classroom != null) {
-                                // Ստուգում ենք, որ կրկնակի չավելանա
                                 boolean exists = false;
                                 for (Classroom c : classroomList) {
                                     if (c.getClassId().equals(classroom.getClassId())) {
@@ -148,6 +183,7 @@ public class StudentClassesFragment extends Fragment {
                         @Override public void onCancelled(@NonNull DatabaseError error) {}
                     });
                 }
+                adapter.notifyDataSetChanged();
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
