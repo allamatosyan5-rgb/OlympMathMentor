@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#212121">
+
+    <ImageView
+        android:id="@+id/ivCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnSaveCertificate"
+        android:scaleType="fitCenter"
+        android:padding="16dp"
+        android:adjustViewBounds="true" />
+
+    <Button
+        android:id="@+id/btnSaveCertificate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:text="SAVE TO GALLERY"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/deep_brown"
+        android:textColor="#FFFFFF"/>
+
+</RelativeLayout>

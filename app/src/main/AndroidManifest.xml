@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
 
     <queries>
         <intent>
@@ -218,6 +219,17 @@
         <activity
             android:name=".JournalTableActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".AdvResultActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CertificateActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
 
 
         <service

@@ -123,5 +123,6 @@ public class AdvancedFragment extends Fragment {
         courseList.add(new CourseModel(19, "Lesson 19:\nDerivatives in Problems 1", false, 0));
         courseList.add(new CourseModel(20, "Lesson 20:\nDerivatives in Problems 2", false, 0));
         courseList.add(new CourseModel(21, "Grand Final Exam\nAdvanced Level", false, 0));
+        courseList.add(new CourseModel(22, "GET YOUR\nCERTIFICATE", false, 0));
     }
 }

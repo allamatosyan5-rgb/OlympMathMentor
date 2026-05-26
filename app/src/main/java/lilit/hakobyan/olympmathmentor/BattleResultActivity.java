@@ -47,18 +47,22 @@ public class BattleResultActivity extends AppCompatActivity {
         tvOppScore.setText("Score: " + oppScore);
         tvStars.setText("+" + stars + " Stars");
 
-        // Սահմանում ենք հաղթանակի/պարտության վիճակը
-        if (myScore > oppScore) {
-            tvTitle.setText("YOU WON! 🏆");
+        // Սահմանում ենք հաղթանակի/պարտության վիճակը ԽՍՏՈՐԵՆ
+        if (myScore == oppScore) {
+            // ՄԻԱՅՆ այն դեպքում, երբ միավորները ԼՐԻՎ ՀԱՎԱՍԱՐ ԵՆ
+            tvTitle.setText("IT'S A TIE! ");
+            tvTitle.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            lottieResult.setAnimation(R.raw.trophy);
+        } else if (myScore > oppScore) {
+            // Երբ ավելի շատ ես հավաքել
+            tvTitle.setText("YOU WON! ");
             tvTitle.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
             lottieResult.setAnimation(R.raw.trophy); // Սա սկզբնական 7 վրկ-ի համար է
-        } else if (myScore < oppScore) {
-            tvTitle.setText("YOU LOST! 😢");
+        } else {
+            // Մնացած ԲՈԼՈՐ դեպքերում (երբ պակաս ես հավաքել)
+            tvTitle.setText("YOU LOST! ");
             tvTitle.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
             lottieResult.setAnimation(R.raw.invalid);
-        } else {
-            tvTitle.setText("IT'S A TIE! 🤝");
-            lottieResult.setAnimation(R.raw.trophy);
         }
 
         lottieResult.playAnimation();
@@ -81,9 +85,9 @@ public class BattleResultActivity extends AppCompatActivity {
                     layoutMyAvatar.animate().scaleX(0.8f).scaleY(0.8f).setDuration(800).start();
                     layoutOppAvatar.animate().scaleX(1.2f).scaleY(1.2f).setDuration(800).start();
                 }
+                // Նշում: Ոչ-ոքիի (Tie) դեպքում ավատարների չափերը մնում են նույնը, ոչ մեկինը չի մեծանում կամ փոքրանում:
             }
-        }, 7000); // 7000 միլիվայրկյան = 7 վայրկյան
-
+        }, 7000);
         // Վերադարձ մենյու
         btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(BattleResultActivity.this, MainActivity.class);

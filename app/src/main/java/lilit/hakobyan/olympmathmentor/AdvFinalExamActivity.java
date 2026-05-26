@@ -510,34 +510,23 @@ public class AdvFinalExamActivity extends AppCompatActivity {
     }
 
     private void finishExam() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
+        if (countDownTimer != null) countDownTimer.cancel();
 
-        // Պահպանում ենք քննության արդյունքը և աստղերը
         SharedPreferences myPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        int currentStars = myPrefs.getInt("total_stars", 0);
 
-        // Եթե ճիշտ է պատասխանել հարցերի 80%-ից ավելիին, տալիս ենք Բացառիկ Badge
-        if (score >= questions.length * 0.8) {
+        // 80% շեմը = 80 հարց 100-ից
+        if (score >= 80) {
             myPrefs.edit().putBoolean("adv_exam_passed", true).apply();
         }
 
-        myPrefs.edit().putInt("total_stars", currentStars + score).apply();
+        myPrefs.edit().putInt("total_stars", myPrefs.getInt("total_stars", 0) + score).apply();
 
-        Intent intent = new Intent(AdvFinalExamActivity.this, ResultActivity.class);
-        intent.putExtra("score", score);
-        intent.putExtra("total", questions.length);
-        intent.putExtra("exam_type", "Advanced Final Exam");
+        Intent intent = new Intent(AdvFinalExamActivity.this, AdvResultActivity.class);
+        intent.putExtra("total_score", score);
+        intent.putExtra("max_score", questions.length);
         startActivity(intent);
         finish();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-    }
 }
+
+
