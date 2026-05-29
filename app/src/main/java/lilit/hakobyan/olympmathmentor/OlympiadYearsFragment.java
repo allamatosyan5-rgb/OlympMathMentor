@@ -51,7 +51,6 @@ public class OlympiadYearsFragment extends Fragment {
         return view;
     }
 
-    // 💡 Ավելացված է onResume, որպեսզի էջ վերադառնալիս լուծածների քանակը թարմանա
     @Override
     public void onResume() {
         super.onResume();
@@ -153,7 +152,6 @@ public class OlympiadYearsFragment extends Fragment {
             textParams.setMargins(0, 16, 0, 0);
             tvYear.setLayoutParams(textParams);
 
-            // 💡 Կարդում ենք և տպում լուծված խնդիրների քանակը այս տարվա համար
             int solvedCount = olympPrefs.getStringSet(selectedOlympiad + "_" + year, new HashSet<>()).size();
             TextView tvSolved = new TextView(getContext());
             tvSolved.setText("Solved: " + solvedCount);
@@ -166,7 +164,7 @@ public class OlympiadYearsFragment extends Fragment {
             tvSolved.setLayoutParams(solvedParams);
 
             if (solvedCount > 0) {
-                tvSolved.setTextColor(android.graphics.Color.parseColor("#2E7D32")); // Կանաչ
+                tvSolved.setTextColor(android.graphics.Color.parseColor("#2E7D32"));
                 tvSolved.setTypeface(null, android.graphics.Typeface.BOLD);
             } else {
                 tvSolved.setTextColor(android.graphics.Color.GRAY);

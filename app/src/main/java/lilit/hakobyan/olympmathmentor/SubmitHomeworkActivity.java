@@ -145,8 +145,9 @@ public class SubmitHomeworkActivity extends AppCompatActivity {
     }
 
     private void openFullImage(String base64Str) {
+        // 💡 ԼՈՒԾՈՒՄ. Նկարը փոխանցում ենք ստատիկ հիշողության միջոցով նախքան էջը բացելը
+        FullImageActivity.currentBase64Image = base64Str;
         Intent intent = new Intent(this, FullImageActivity.class);
-        intent.putExtra("IMAGE_BASE64", base64Str);
         startActivity(intent);
     }
 

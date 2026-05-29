@@ -74,7 +74,6 @@ public class TeacherProfileFragment extends Fragment {
     private final int TOTAL_LESSONS_IN_APP = 60;
     private Uri cropOutputUri = null;
 
-    // Նկարը կտրելուց հետո ստացող Launcher
     private final ActivityResultLauncher<Intent> cropLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -94,7 +93,6 @@ public class TeacherProfileFragment extends Fragment {
             }
     );
 
-    // Գալերեայից նկար ընտրելու Launcher
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -236,26 +234,22 @@ public class TeacherProfileFragment extends Fragment {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             cropIntent.setDataAndType(picUri, "image/*");
             cropIntent.putExtra("crop", "true");
-            // Պահանջում ենք, որ կտրվածքը լինի քառակուսի (1:1)
             cropIntent.putExtra("aspectX", 1);
             cropIntent.putExtra("aspectY", 1);
             cropIntent.putExtra("outputX", 400);
             cropIntent.putExtra("outputY", 400);
             cropIntent.putExtra("scale", true);
 
-            // Ստեղծում ենք ֆայլ, որտեղ կպահվի կտրած նկարը
             File cachePath = new File(requireContext().getCacheDir(), "images");
             cachePath.mkdirs();
             File outFile = new File(cachePath, "cropped_profile_" + System.currentTimeMillis() + ".jpg");
 
-            // Օգտագործում ենք FileProvider՝ անվտանգության սխալներից խուսափելու համար
             String authority = requireContext().getPackageName() + ".fileprovider";
             cropOutputUri = FileProvider.getUriForFile(requireContext(), authority, outFile);
 
             cropIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, cropOutputUri);
-            cropIntent.putExtra("return-data", false); // Մեծ նկարների դեպքում սա պետք է լինի false
+            cropIntent.putExtra("return-data", false);
 
-            // Տալիս ենք կարդալու և գրելու ժամանակավոր թույլտվություն Crop ծրագրին
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
@@ -270,13 +264,11 @@ public class TeacherProfileFragment extends Fragment {
             cropLauncher.launch(cropIntent);
         } catch (Exception e) {
             e.printStackTrace();
-            // Եթե սարքը չունի Crop ծրագիր, պարզապես դնում ենք օրիգինալ նկարը
             profileImage.setImageURI(picUri);
             saveImageUriLocally(picUri.toString());
             Toast.makeText(getContext(), "Crop feature is not supported on your device.", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void showImageOptionsDialog() {
         String[] options = {"Choose from Gallery", "Delete Photo"};
@@ -311,44 +303,74 @@ public class TeacherProfileFragment extends Fragment {
         return null;
     }
 
-    // --- ԱՀԱ ԱՅՍՏԵՂ Է ՊԱԿԱՍՈՂ ՖՈՒՆԿՑԻԱՆ ---
     private void saveImageUriLocally(String uri) {
         if (getContext() != null) {
             SharedPreferences prefs = requireContext().getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
             prefs.edit().putString("profile_image_uri", uri).apply();
         }
     }
-    // ----------------------------------------
 
+    // 💡 ԱՅՍՏԵՂ Է ՀԻՄՆԱԿԱՆ ՓՈՓՈԽՈՒԹՅՈՒՆԸ
     private void fetchTeacherStats() {
         if (currentUserId == null) return;
-        DatabaseReference classesRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("classes");
+        DatabaseReference db = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference();
 
-        classesRef.orderByChild("teacherId").equalTo(currentUserId).addValueEventListener(new ValueEventListener() {
+        // 1. Սկզբում գտնում ենք ուսուցչի բոլոր դասարանները
+        db.child("classes").orderByChild("teacherId").equalTo(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot classesSnapshot) {
                 int classes = 0;
-                int students = 0;
                 int homeworks = 0;
+                List<String> teacherClassIds = new ArrayList<>();
 
-                for (DataSnapshot cSnap : snapshot.getChildren()) {
+                for (DataSnapshot cSnap : classesSnapshot.getChildren()) {
                     classes++;
-                    if (cSnap.hasChild("students")) {
-                        students += cSnap.child("students").getChildrenCount();
-                    }
+                    teacherClassIds.add(cSnap.getKey()); // Պահում ենք classId-ն
                     if (cSnap.hasChild("homeworks")) {
                         homeworks += cSnap.child("homeworks").getChildrenCount();
                     }
                 }
 
                 totalClassesCount = classes;
-                totalStudentsCount = students;
                 totalHomeworksCount = homeworks;
 
                 if (tvTotalClasses != null) tvTotalClasses.setText(String.valueOf(totalClassesCount));
-                if (tvTotalStudents != null) tvTotalStudents.setText(String.valueOf(totalStudentsCount));
                 if (tvTotalHomeworks != null) tvTotalHomeworks.setText(String.valueOf(totalHomeworksCount));
 
+                // 2. Հիմա հաշվում ենք իրական աշակերտներին Users բազայից
+                calculateRealStudentsCount(teacherClassIds);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    // Այս ֆունկցիան հաշվում է քանի հոգի ունի իրենց պրոֆիլում ուսուցչի դասարաններից գոնե մեկը
+    private void calculateRealStudentsCount(List<String> teacherClassIds) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance("https://olympmath-mentor-default-rtdb.firebaseio.com/").getReference("Users");
+
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot usersSnap) {
+                Set<String> uniqueStudents = new HashSet<>(); // Օգտագործում ենք Set որպեսզի մի մարդուն երկու անգամ չհաշվի
+
+                for (DataSnapshot uSnap : usersSnap.getChildren()) {
+                    if (uSnap.hasChild("joinedClasses")) {
+                        for (DataSnapshot joinedClassSnap : uSnap.child("joinedClasses").getChildren()) {
+                            String classId = joinedClassSnap.getKey();
+                            if (teacherClassIds.contains(classId)) {
+                                uniqueStudents.add(uSnap.getKey()); // Ավելացնում ենք աշակերտի ID-ն
+                                break; // Եթե գտավ մեկ դասարան, հաջորդներն էլ պետք չի նայել այս աշակերտի համար
+                            }
+                        }
+                    }
+                }
+
+                totalStudentsCount = uniqueStudents.size();
+                if (tvTotalStudents != null) tvTotalStudents.setText(String.valueOf(totalStudentsCount));
+
+                // Թարմացնում ենք բեյջերը նոր տվյալներով
                 generateBadges();
             }
 

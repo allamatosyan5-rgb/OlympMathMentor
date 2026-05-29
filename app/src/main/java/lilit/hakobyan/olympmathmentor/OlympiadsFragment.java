@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import lilit.hakobyan.olympmathmentor.R;
 
 public class OlympiadsFragment extends Fragment {
 
@@ -40,9 +39,12 @@ public class OlympiadsFragment extends Fragment {
         args.putString("OLYMPIAD_NAME", olympiadName);
         yearsFragment.setArguments(args);
 
-        if (getActivity() != null) {
+        // 💡 ԽԵԼԱՑԻ ԼՈՒԾՈՒՄ. Ավտոմատ գտնում ենք, թե որ Activity-ի որ Container-ի մեջ ենք գտնվում
+        if (getActivity() != null && getView() != null && getView().getParent() != null) {
+            int containerId = ((ViewGroup) getView().getParent()).getId();
+
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, yearsFragment)
+                    .replace(containerId, yearsFragment)
                     .addToBackStack(null)
                     .commit();
         }
