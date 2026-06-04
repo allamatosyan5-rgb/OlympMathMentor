@@ -87,18 +87,15 @@ public class CertificateActivity extends AppCompatActivity {
         // 1. Բեռնում ենք օրիգինալ դատարկ նկարը drawable-ից (certificate.png)
         Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.certificate);
 
-        // 2. Ստեղծում ենք պատճեն, որի վրա կարող ենք նկարել (Mutable)
         Bitmap mutableBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(mutableBitmap);
 
-        // --- ԱՆՎԱՆ ԿԱՐԳԱՎՈՐՈՒՄՆԵՐ ---
         Paint namePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         namePaint.setColor(Color.parseColor("#3E2723")); // Մուգ շագանակագույն
         namePaint.setTextSize(mutableBitmap.getHeight() * 0.08f); // Տառաչափը նկարի բարձրության 8%
         namePaint.setTypeface(Typeface.create(Typeface.SERIF, Typeface.BOLD_ITALIC));
         namePaint.setTextAlign(Paint.Align.CENTER); // Կենտրոնացված
 
-        // Անվան կոորդինատները (Նկարի ուղիղ կենտրոնում)
         float xPosName = mutableBitmap.getWidth() / 2f;
         float yPosName = mutableBitmap.getHeight() * 0.49f; // 49% բարձրության վրա
 
